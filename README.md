@@ -37,7 +37,9 @@
 - [03 · V1 外壳/三键/麦克风/扬声器结构方案](docs/03_mechanical_v1.md)
 - [04 · 已研究的硬件及开源案例](docs/04_references.md)
 - [05 · 下单和一次打样前验收清单](docs/05_validation_checklist.md)
-- [方向简图（非尺寸图）](assets/orientation_diagram.svg)
+- [06 · 微雪官方完整资料、规格、原理图、STEP、接口与疑点索引](docs/06_official_board_reference.md)
+- [方向简图：官方 PCB 背面与屏幕正面镜像（非尺寸图）](assets/orientation_diagram.svg)
+- [官方板载图顺时针旋转 90° 在线查看器](assets/official_board_rotated_viewer.html)（下载 HTML 后用浏览器打开；需联网加载原图）
 
 ## **防幻觉规则 / 后续协作规则**
 
