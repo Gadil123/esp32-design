@@ -1,0 +1,9 @@
+name,x_min_mm,y_min_mm,z_min_mm,x_max_mm,y_max_mm,z_max_mm,source,meaning
+ASSEMBLY,-25.2731,-39.5331,-9.5145,25.2731,33.5331,0.7031,STEP:ESP32-C5-TOUCH-LCD-2_8__ASM,entire display+PCB assembly
+DISPLAY,-25.2700,-39.5300,-6.3192,25.2700,33.5300,0.7000,STEP:2_8INCH,display module envelope
+PCB_BOARD,-24.9431,-37.4055,-5.5031,24.9767,31.6117,-3.8969,STEP:PCB/BOARD,board nominal body
+KEY1,21.2424,1.3470,-7.3016,24.9006,5.9004,-5.0984,STEP:PCB/KEY1/SWITCH-TS24CA,mechanical label not yet mapped to BOOT/RESET/BAT_PWR
+KEY3,21.2434,9.1654,-7.3016,24.9016,13.7188,-5.0984,STEP:PCB/KEY3/SWITCH-TS24CA,mechanical label not yet mapped to BOOT/RESET/BAT_PWR
+KEY2,21.2444,16.9838,-7.3016,24.9026,21.5372,-5.0984,STEP:PCB/KEY2/SWITCH-TS24CA,mechanical label not yet mapped to BOOT/RESET/BAT_PWR
+MIC1,-24.1357,-3.0941,-6.6000,-21.5353,0.3062,-5.6020,STEP:PCB/MIC1,package bounds not sound port
+J2_USB_SIDE,-4.7907,-38.2770,-8.7507,4.7919,-30.5654,-4.5883,STEP:PCB/J2,usb-end connector bounds; verify J2 identity on schematic
