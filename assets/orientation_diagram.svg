@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="650" viewBox="0 0 1080 650" role="img" aria-label="Waveshare ESP32-C5-Touch-LCD-2.8 orientation reference, USB-C top">
+<title>Pocket Pi V1 — 官方板载图的方向示意（不是机械尺寸图）</title>
+<rect width="1080" height="650" fill="#f6f7f9"/>
+<text x="42" y="56" fill="#172334" font-size="32" font-family="sans-serif" font-weight="bold">Pocket Pi V1 · USB-C 朝上</text>
+<text x="42" y="87" fill="#485262" font-size="17" font-family="sans-serif">官方原图是 PCB 背面横图。顺时针转 90°：MIC 左 / 三键右；正面观察时左右镜像。</text>
+<g transform="translate(95,132)">
+ <rect width="370" height="425" rx="24" fill="#fdfefe" stroke="#d8e0e8" stroke-width="2"/>
+ <text x="20" y="36" font-family="sans-serif" font-weight="bold" font-size="21" fill="#14283c">① PCB 背面视角</text>
+ <text x="20" y="60" font-family="sans-serif" font-size="14" fill="#526274">微雪原版资源横图顺时针旋转 90°</text>
+ <rect x="86" y="94" width="199" height="285" rx="13" fill="#174a38" stroke="#294a42" stroke-width="3"/>
+ <rect x="156" y="78" width="60" height="25" rx="5" fill="#a8b7bd" stroke="#4a525a" stroke-width="3"/>
+ <text x="187" y="72" font-family="sans-serif" font-size="16" text-anchor="middle" fill="#116ca3" font-weight="bold">USB-C</text>
+ <rect x="127" y="150" width="120" height="100" rx="5" fill="#60717a" stroke="#cad7dd" stroke-width="3"/>
+ <text x="187" y="196" font-family="sans-serif" text-anchor="middle" font-size="17" fill="white">PCB 背面</text>
+ <text x="187" y="217" font-family="sans-serif" text-anchor="middle" font-size="12" fill="white">芯片/接口</text>
+ <rect x="67" y="273" width="24" height="24" rx="5" fill="#ddb16d"/>
+ <path d="M91 284H127" stroke="#df9e34" stroke-width="3"/>
+ <text x="58" y="260" font-family="sans-serif" text-anchor="middle" font-size="16" fill="#bf6328" font-weight="bold">MIC</text>
+ <g fill="#f1c675" stroke="#7b8f94" stroke-width="2"><rect x="281" y="134" width="23" height="26" rx="5"/><rect x="281" y="194" width="23" height="26" rx="5"/><rect x="281" y="254" width="23" height="26" rx="5"/></g>
+ <g font-family="sans-serif" font-size="13" fill="#2d3840"><text x="312" y="151">BAT_PWR</text><text x="312" y="211">RESET</text><text x="312" y="271">BOOT</text></g>
+ <text x="185" y="401" text-anchor="middle" font-size="14" font-family="sans-serif" fill="#596b79">位置与间距仅为逻辑示意</text>
+</g>
+<g transform="translate(590,132)">
+ <rect width="370" height="425" rx="24" fill="#fdfefe" stroke="#d8e0e8" stroke-width="2"/>
+ <text x="20" y="36" font-family="sans-serif" font-weight="bold" font-size="21" fill="#14283c">② 用户看屏幕的正面</text>
+ <text x="20" y="60" font-family="sans-serif" font-size="14" fill="#526274">与背面翻面镜像；不能直接照搬左右</text>
+ <rect x="86" y="94" width="199" height="285" rx="15" fill="#1c232d" stroke="#404955" stroke-width="3"/>
+ <rect x="155" y="78" width="60" height="25" rx="5" fill="#a8b7bd" stroke="#4a525a" stroke-width="3"/>
+ <text x="185" y="72" font-family="sans-serif" font-size="16" text-anchor="middle" fill="#116ca3" font-weight="bold">USB-C</text>
+ <rect x="104" y="117" width="164" height="240" rx="5" fill="#162e4a"/>
+ <text x="186" y="223" font-family="sans-serif" text-anchor="middle" font-size="29" fill="#d1e8fa">Pocket Pi</text>
+ <text x="186" y="246" font-family="sans-serif" text-anchor="middle" font-size="14" fill="#a5cfe7">2.8&quot; 240×320</text>
+ <g fill="#e6bb73" stroke="#72899b" stroke-width="2"><rect x="66" y="134" width="22" height="26" rx="5"/><rect x="66" y="194" width="22" height="26" rx="5"/><rect x="66" y="254" width="22" height="26" rx="5"/></g>
+ <g font-family="sans-serif" font-size="13" fill="#2d3840" text-anchor="end"><text x="59" y="151">BAT_PWR</text><text x="59" y="211">RESET</text><text x="59" y="271">BOOT</text></g>
+ <text x="186" y="401" text-anchor="middle" font-size="14" font-family="sans-serif" fill="#596b79">前面看侧键出现在左边</text>
+</g>
+<rect x="42" y="580" width="996" height="53" fill="#fff3dd" stroke="#f0ca76" rx="9"/>
+<text x="56" y="602" font-size="15" font-family="sans-serif" fill="#714713" font-weight="bold">⚠ 非官方机械工程图 / 非 1:1 尺寸</text>
+<text x="56" y="622" font-size="13" font-family="sans-serif" fill="#714713">开关真实按压方向、精确位置、MIC 声孔、电池和螺丝孔均须用官方 STEP / 实物核对。此图只用于方向纠错。</text>
+</svg>
