@@ -1,0 +1,4 @@
+# Generated CAD assets are reviewed in a viewer; retain exporter bytes.
+*.step binary
+*.stl binary
+*.glb binary

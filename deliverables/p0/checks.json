@@ -1,0 +1,338 @@
+{
+  "status": "PASS",
+  "environment": {
+    "python": "3.13.2",
+    "build123d": "0.13.0",
+    "ocp": "8.0.1.1.0"
+  },
+  "source": {
+    "repository": "https://github.com/waveshareteam/ESP32-C5-Touch-LCD-2.8",
+    "revision": "77a7dceac38a1bd491173b3906205217a382c08c",
+    "path": "dimensions/ESP32-C5-Touch-LCD-2.8.stp",
+    "file_size_bytes": 26358968,
+    "solid_count": 723,
+    "valid_solids": 723,
+    "non_solid_face_count": 298
+  },
+  "original_bounds_comparison": {
+    "ASSEMBLY": {
+      "actual_original_bounds_mm": [
+        -25.27,
+        -39.53,
+        -9.499999439999998,
+        25.27,
+        33.53,
+        0.7
+      ],
+      "max_difference_from_recorded_mm": 0.014500560000001883,
+      "pass": true
+    },
+    "DISPLAY": {
+      "actual_original_bounds_mm": [
+        -25.27,
+        -39.53,
+        -6.319154744317,
+        25.27,
+        33.53,
+        0.7
+      ],
+      "max_difference_from_recorded_mm": 4.525568300017824e-05,
+      "pass": true
+    },
+    "PCB_BOARD": {
+      "actual_original_bounds_mm": [
+        -24.94000009999679,
+        -37.40245983060614,
+        -5.49999944,
+        24.97358133632699,
+        31.60862706775908,
+        -3.8999998999999996
+      ],
+      "max_difference_from_recorded_mm": 0.003118663673010502,
+      "pass": true
+    },
+    "KEY1": {
+      "actual_original_bounds_mm": [
+        21.243999674753017,
+        1.348577700027605,
+        -7.299999439999998,
+        24.89436080633998,
+        5.898848673043023,
+        -5.09999929410302
+      ],
+      "max_difference_from_recorded_mm": 0.006239193660022124,
+      "pass": true
+    },
+    "KEY3": {
+      "actual_original_bounds_mm": [
+        21.245006542009502,
+        9.16697515716453,
+        -7.299999439999998,
+        24.895367673596457,
+        13.717246130179946,
+        -5.09999929410302
+      ],
+      "max_difference_from_recorded_mm": 0.006232326403541322,
+      "pass": true
+    },
+    "KEY2": {
+      "actual_original_bounds_mm": [
+        21.246013408283456,
+        16.985364984911506,
+        -7.299999439999998,
+        24.896374539870408,
+        21.535635957926928,
+        -5.09999929410302
+      ],
+      "max_difference_from_recorded_mm": 0.006225460129591909,
+      "pass": true
+    },
+    "MIC1": {
+      "actual_original_bounds_mm": [
+        -24.135714149720407,
+        -3.0941489091755456,
+        -6.5999996389449995,
+        -21.53527135405787,
+        0.3061943323344638,
+        -5.601998078945
+      ],
+      "max_difference_from_recorded_mm": 4.8909175545563954e-05,
+      "pass": true
+    },
+    "J2_USB_SIDE": {
+      "actual_original_bounds_mm": [
+        -4.7894685363529685,
+        -38.27583100701148,
+        -8.749521244501214,
+        4.790705459449857,
+        -30.566636225424418,
+        -4.589520943804656
+      ],
+      "max_difference_from_recorded_mm": 0.0012362254244173698,
+      "pass": true
+    }
+  },
+  "inverse_transform_bounds_error_mm": {
+    "DISPLAY": 1.0658141036401503e-14,
+    "PCB_BOARD": 1.0658141036401503e-14,
+    "KEY3": 7.105427357601002e-15,
+    "KEY2": 7.105427357601002e-15,
+    "MIC1": 7.382983113757291e-15,
+    "J2_USB_SIDE": 1.0658141036401503e-14,
+    "KEY1": 7.105427357601002e-15,
+    "ASSEMBLY": 1.0658141036401503e-14
+  },
+  "rigid_distance_checks": [
+    {
+      "pair": [
+        "KEY1",
+        "KEY3"
+      ],
+      "distance_mm": 7.818397521970011,
+      "difference_mm": 2.6645352591003757e-15
+    },
+    {
+      "pair": [
+        "KEY3",
+        "KEY2"
+      ],
+      "distance_mm": 7.818389892579999,
+      "difference_mm": 3.552713678800501e-15
+    },
+    {
+      "pair": [
+        "J2_USB_SIDE",
+        "MIC1"
+      ],
+      "distance_mm": 40.15732627337694,
+      "difference_mm": 7.105427357601002e-15
+    }
+  ],
+  "pocket_bounds_mm": {
+    "DISPLAY": [
+      -25.270000000000003,
+      -33.53,
+      -6.319154744317,
+      25.270000000000003,
+      39.53,
+      0.7
+    ],
+    "PCB_BOARD": [
+      -24.973581336326994,
+      -31.608627067759066,
+      -5.49999944,
+      24.940000099996794,
+      37.40245983060614,
+      -3.8999998999999996
+    ],
+    "KEY3": [
+      -24.895367673596457,
+      -13.717246130179943,
+      -7.299999439999998,
+      -21.245006542009506,
+      -9.166975157164522,
+      -5.09999929410302
+    ],
+    "KEY2": [
+      -24.896374539870415,
+      -21.53563595792692,
+      -7.299999439999998,
+      -21.24601340828346,
+      -16.9853649849115,
+      -5.09999929410302
+    ],
+    "MIC1": [
+      21.53527135405787,
+      -0.30619433233446397,
+      -6.5999996389449995,
+      24.135714149720407,
+      3.0941489091755456,
+      -5.601998078945
+    ],
+    "J2_USB_SIDE": [
+      -4.790705459449855,
+      30.566636225424425,
+      -8.749521244501214,
+      4.789468536352972,
+      38.27583100701149,
+      -4.589520943804656
+    ],
+    "KEY1": [
+      -24.894360806339975,
+      -5.898848673043017,
+      -7.299999439999998,
+      -21.24399967475302,
+      -1.3485777000275978,
+      -5.09999929410302
+    ],
+    "ASSEMBLY": [
+      -25.270000000000003,
+      -33.53,
+      -9.499999439999998,
+      25.270000000000003,
+      39.53,
+      0.7
+    ]
+  },
+  "pcb_hole_axes_x_y_radius_mm": [
+    [
+      -20.56818,
+      -27.10044,
+      2.15
+    ],
+    [
+      -20.56045,
+      32.89956,
+      2.15
+    ],
+    [
+      20.43182,
+      -27.10572,
+      2.15
+    ],
+    [
+      20.43955,
+      32.89428,
+      2.15
+    ]
+  ],
+  "pcb_outline": {
+    "basis": "original BOARD solid; no rectangle substituted",
+    "face_count": 168
+  },
+  "dimensions": {
+    "outer_width_mm": 55.34,
+    "outer_height_mm": 77.86,
+    "provisional_total_depth_mm": 16.19999944,
+    "front_top_z_mm": 1.9,
+    "rear_floor_top_z_mm": -12.499999439999998,
+    "rear_bottom_z_mm": -14.299999439999999,
+    "split_z_mm": -4.0,
+    "panel_opening_xy_mm": [
+      -25.870000000000005,
+      -34.13,
+      0,
+      25.870000000000005,
+      40.13,
+      0
+    ],
+    "final_device_thickness": null
+  },
+  "parameters": {
+    "wall_mm": 1.8,
+    "panel_xy_clearance_mm": 0.6,
+    "front_above_glass_mm": 1.2,
+    "split_z_mm": -4.0,
+    "seam_gap_mm": 0.2,
+    "rear_extra_depth_mm": 3.0,
+    "outer_corner_radius_mm": 3.0,
+    "support_outer_radius_mm": 3.1,
+    "mount_screw_clearance_radius_mm": 1.4,
+    "support_contact_gap_mm": 0.05,
+    "usb_clearance_xyz_mm": [
+      1.5,
+      0.5,
+      1.0
+    ],
+    "key_clearance_yz_mm": [
+      0.8,
+      0.8
+    ],
+    "reference_bounds_tolerance_mm": 0.05,
+    "geometry_tolerance_mm": 0.0001,
+    "collision_volume_tolerance_mm3": 0.001,
+    "preview_mesh_deflection_mm": 0.15
+  },
+  "shell_geometry": {
+    "front": {
+      "valid": true,
+      "solid_count": 1,
+      "volume_mm3": 2654.2085515291983
+    },
+    "rear": {
+      "valid": true,
+      "solid_count": 1,
+      "volume_mm3": 11581.216588304833
+    }
+  },
+  "interference": {
+    "broad_phase_candidates": 725,
+    "collisions": [],
+    "shell_overlap_mm3": 0,
+    "corridor_overlap_mm3": {
+      "USB_TOP_FRONT": 0,
+      "USB_TOP_REAR": 0,
+      "KEY_1_FRONT": 0,
+      "KEY_1_REAR": 0,
+      "KEY_2_FRONT": 0,
+      "KEY_2_REAR": 0,
+      "KEY_3_FRONT": 0,
+      "KEY_3_REAR": 0
+    }
+  },
+  "limitations": [
+    "Static CAD only; screw heads/threads, cable bend and insertion assembly are not verified.",
+    "Battery/speaker absent. Rear depth is a replaceable P0 parameter, not final thickness.",
+    "KEY functional mapping, actuator contact/travel and MIC acoustic port direction remain unverified.",
+    "Front/rear fastening and locating features remain preliminary; no print release.",
+    "Source may contain non-solid faces; interference checks cover source solids only."
+  ],
+  "export_checks": {
+    "front_shell": {
+      "step_valid": true,
+      "step_solid_count": 1,
+      "stl_triangles": 304,
+      "stl_nonmanifold_edges": 0,
+      "step_stl_bounds_error_mm": 3.051757815342171e-07,
+      "step_stl_relative_volume_error": 9.962981084395406e-05
+    },
+    "rear_shell": {
+      "step_valid": true,
+      "step_solid_count": 1,
+      "stl_triangles": 2392,
+      "stl_nonmanifold_edges": 0,
+      "step_stl_bounds_error_mm": 3.051757815342171e-07,
+      "step_stl_relative_volume_error": 7.428925098880075e-05
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "wall_mm": 1.8,
+  "panel_xy_clearance_mm": 0.6,
+  "front_above_glass_mm": 1.2,
+  "split_z_mm": -4.0,
+  "seam_gap_mm": 0.2,
+  "rear_extra_depth_mm": 3.0,
+  "outer_corner_radius_mm": 3.0,
+  "support_outer_radius_mm": 3.1,
+  "mount_screw_clearance_radius_mm": 1.4,
+  "support_contact_gap_mm": 0.05,
+  "usb_clearance_xyz_mm": [1.5, 0.5, 1.0],
+  "key_clearance_yz_mm": [0.8, 0.8],
+  "reference_bounds_tolerance_mm": 0.05,
+  "geometry_tolerance_mm": 0.0001,
+  "collision_volume_tolerance_mm3": 0.001,
+  "preview_mesh_deflection_mm": 0.15
+}
