@@ -17,6 +17,8 @@
 
 ![USB-C 顶部的官方图方向逻辑示意；非比例图](../assets/orientation_diagram.svg)
 
+**STEP 文件已经实际解析：** 三颗开关采用同一个 `SWITCH-TS24CA` 三维模型，间距约 7.82mm；STEP 机械名称 `KEY1/KEY3/KEY2` 暂未映射到 BOOT/RESET/BAT_PWR。详见 [07 · 三维实测记录](07_cad_measurements.md)。
+
 **原始图纸 / 官方图片入口**（详见[已核实元件编号、尺寸、引脚及官方不同资料间的疑点](06_official_board_reference.md)）：
 - [官方页面：板载资源图 + 产品尺寸图](https://docs.waveshare.net/ESP32-C5-Touch-LCD-2.8/)
 - [官方机械图 STEP / DXF / PDF 文件目录](https://github.com/waveshareteam/ESP32-C5-Touch-LCD-2.8/tree/main/dimensions)
