@@ -17,7 +17,7 @@
 
 ![USB-C 顶部的官方图方向逻辑示意；非比例图](../assets/orientation_diagram.svg)
 
-**原始图纸 / 官方图片入口**：
+**原始图纸 / 官方图片入口**（详见[已核实元件编号、尺寸、引脚及官方不同资料间的疑点](06_official_board_reference.md)）：
 - [官方页面：板载资源图 + 产品尺寸图](https://docs.waveshare.net/ESP32-C5-Touch-LCD-2.8/)
 - [官方机械图 STEP / DXF / PDF 文件目录](https://github.com/waveshareteam/ESP32-C5-Touch-LCD-2.8/tree/main/dimensions)
 - [官方电路原理图](https://github.com/waveshareteam/ESP32-C5-Touch-LCD-2.8/tree/main/schematic)
@@ -65,7 +65,7 @@
 - dimensions/ESP32-C5-Touch-LCD-2.8.pdf
 - schematic/ESP32-C5-Touch-LCD-2.8.pdf
 
-前期聊天曾引用屏幕总外形约 50.54×73.06mm、PCB 约 49.9×69mm、可视区域约 43.2×57.6mm；**这些值尚未在本仓库从原始工程图逐个核定，不作为加工标注**。正式设计应直接提取官方 DXF/STEP 坐标，不以此处估算值建模。
+已从[微雪官方公开尺寸标注图](https://docs.waveshare.net/assets/images/2.8-5-4fb313cb4149fd08061897e8112016ca.webp)读取：屏幕组件 50.54×73.06mm、PCB 49.90×69.00mm、有效显示区 43.20×57.60mm、四孔 M2.5、孔距图示 41.00×60.00mm。**这只确认官方 2D 标注读数，不等于已经完成 STEP 坐标和打印件干涉核验**；CAD 开模前仍必须读取原始 STEP/DXF 并复核螺钉孔和器件高度。
 
 ## 禁止复用的错误信息
 
