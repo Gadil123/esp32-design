@@ -1,6 +1,6 @@
 # Pocket Pi — ESP32 便携 AI Agent 终端
 
-> 状态：**V1 P0 参数化 CAD 已建立，等待 Review / 未采购验证 / 不可直接打印**
+> 状态：**V1 P1 外壳机械 CAD 已建立，等待 Review / 未采购验证 / 不可直接打印**
 > 更新：2026-10-16。仓库保存设计事实、取舍、来源和待验证项，防止后续对话将概念图误当机械图。
 
 ## 项目目标
@@ -30,7 +30,11 @@
 
 正面两颗有手感的实体按键（可参考 Adafruit Pocket PiGRRL：普通轻触开关、洞洞板、独立键帽）；可能涉及扩展机身长度与接口避让。**不进入 V1 BOM 和结构范围**。
 
-## P0 CAD 工程
+## P1 CAD 工程
+
+P1 以 P0 为基线，增加共用原厂四螺母的可拆连接、独立 BAT_PWR/BOOT 键帽、隐藏 RESET 推杆、装配路径及 USB 独立空间验证。运行 `./scripts/generate-p1.sh` 重建；见 [09 · P1 结构与检查边界](docs/09_cad_p1.md) 和 [P1 查看文件](deliverables/p1)。几何通过不等于实物触发、夹紧强度或打印批准；实际开关行程仍未知。
+
+## P0 CAD 基线
 
 采用 Python + build123d，以并列目录中的微雪原始 STEP 为几何依据。安装后运行 `./scripts/generate-p0.sh` 可重建壳体、轻量装配、四向预览与检查结果。完整环境与坐标说明见 [08 · P0 CAD 工程](docs/08_cad_p0.md)，首版可查看模型见 [P0 交付目录](deliverables/p0)。电池、扬声器、最终整机厚度、键帽行程和声孔方向仍未确认；本阶段不批准下单打印。
 
@@ -44,6 +48,7 @@
 - [06 · 微雪官方完整资料、规格、原理图、STEP、接口与疑点索引](docs/06_official_board_reference.md)
 - [07 · 官方 STEP **实际解析**：侧键、USB-C、MIC 的尺寸与坐标](docs/07_cad_measurements.md)
 - [08 · P0 CAD 工程、复现命令与待验证风险](docs/08_cad_p0.md)
+- [09 · P1 外壳连接、侧键、装配路径与独立验证](docs/09_cad_p1.md)
 - [STEP 元件外包络机读数据 CSV](data/step_component_bounds.csv)
 - [方向简图：官方 PCB 背面与屏幕正面镜像（非尺寸图）](assets/orientation_diagram.svg)
 - [官方板载图顺时针旋转 90° 在线查看器](assets/official_board_rotated_viewer.html)（下载 HTML 后用浏览器打开；需联网加载原图）

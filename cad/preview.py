@@ -10,9 +10,12 @@ COLORS = {'FRONT':'#4e6580', 'REAR':'#72869b', 'PCB_BOARD':'#1c8069',
           'KEY3':'#e9a64a','KEY2':'#e9a64a','MIC1':'#bd6986','MOUNT':'#adb4bc'}
 
 
-def render(out, parts, mounts, front, rear, p):
+def render(out, parts, mounts, front, rear, p, stage='P0', extras=None):
     items = [('FRONT',front),('REAR',rear)] + [(k,parts[k]) for k in COLORS if k in parts]
     items += [('MOUNT',m) for m in mounts]
+    palette=dict(COLORS)
+    for i,(shape,color) in enumerate(extras or []):
+        tag=f'EXTRA_{i}';palette[tag]=color;items.append((tag,shape))
     meshes = []
     for name,shape in items:
         v,t = shape.tessellate(p['preview_mesh_deflection_mm'],0.3)
@@ -31,9 +34,9 @@ def render(out, parts, mounts, front, rear, p):
         for ax,hide in zip(axes,[False,True]):
             triangles=[]; colors=[]
             for name,tri in meshes:
-                if hide and name in ['FRONT','REAR']:continue
+                if hide and (name in ['FRONT','REAR'] or name.startswith('EXTRA_')):continue
                 triangles.extend(tri)
-                colors.extend([COLORS[name]]*len(tri))
+                colors.extend([palette[name]]*len(tri))
             tri=np.asarray(triangles)
             xy=np.stack([tri@u,tri@v],axis=2)
             normals=np.cross(tri[:,1]-tri[:,0],tri[:,2]-tri[:,0])
@@ -47,7 +50,7 @@ def render(out, parts, mounts, front, rear, p):
             ax.imshow(pixels,extent=(-47,47,-48,54),origin='lower',interpolation='nearest')
             ax.set_xlim(-47,47);ax.set_ylim(-48,54);ax.set_aspect('equal')
             ax.set_facecolor('#f0f2f5');ax.set_xlabel('projected mm');ax.set_ylabel('UP / +Y (mm)')
-            ax.set_title('Reference geometry / shells hidden' if hide else 'P0 assembled shells')
+            ax.set_title('Reference geometry / shells hidden' if hide else f'{stage} assembled shells')
             # Projected center labels explicitly verify front/rear handedness.
             if hide:
                 for key in ['J2_USB_SIDE','KEY1','KEY3','KEY2','MIC1']:
@@ -59,15 +62,16 @@ def render(out, parts, mounts, front, rear, p):
                                 fontsize=7,arrowprops={'arrowstyle':'-','lw':.6})
             ax.grid(alpha=.14)
         view_label='SIDE / FRONT right / REAR left' if title=='SIDE' else title
-        fig.suptitle(f'Pocket Pi P0 | VIEW: {view_label} | USB-C = +Y / TOP',fontsize=15)
-        fig.text(.5,.02,'Derived from original STEP. P0 only; no battery/speaker, key travel or acoustic port implied.',
+        fig.suptitle(f'Pocket Pi {stage} | VIEW: {view_label} | USB-C = +Y / TOP',fontsize=15)
+        fig.text(.5,.02,f'Derived from original STEP. {stage} review only; battery/speaker, actual switch travel and acoustic port unverified.',
                  ha='center',fontsize=9)
         fig.tight_layout(rect=(0,.04,1,.95));fig.savefig(out/f'{title.lower()}.png',dpi=160);plt.close(fig)
 
 
-def rasterize(xy, depth, colors):
-    width,height=660,716
-    pixel_xy=(xy-np.array([-47,-48]))*np.array([(width-1)/94,(height-1)/102])
+def rasterize(xy, depth, colors, extent=(-47,47,-48,54), size=(660,716)):
+    width,height=size
+    xmin,xmax,ymin,ymax=extent
+    pixel_xy=(xy-np.array([xmin,ymin]))*np.array([(width-1)/(xmax-xmin),(height-1)/(ymax-ymin)])
     image=np.empty((height,width,3));image[:]=np.array([240,242,245])/255
     zbuffer=np.full((height,width),-np.inf)
     for pts,z,color in zip(pixel_xy,depth,colors):

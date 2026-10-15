@@ -6,9 +6,9 @@ from build123d import import_step
 from reference import bounds
 
 
-def verify_exports(out):
+def verify_exports(out, names=('front_shell','rear_shell')):
     results={}
-    for name in ['front_shell','rear_shell']:
+    for name in names:
         solid=import_step(out/f'{name}.step')
         data=(out/f'{name}.stl').read_bytes()
         count=struct.unpack_from('<I',data,80)[0]
