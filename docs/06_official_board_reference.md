@@ -22,6 +22,8 @@
 | 官方 Arduino 案例 | [Arduino 示例目录](https://github.com/waveshareteam/ESP32-C5-Touch-LCD-2.8/tree/main/examples/arduino) | 基础外围驱动 |
 | 出厂演示固件 | [Firmware](https://github.com/waveshareteam/ESP32-C5-Touch-LCD-2.8/tree/main/Firmware) | 裸板回退至出厂应用，**不直接用于 Pocket Pi 成品** |
 
+**2026-10-16 更新：** 用户提供的官方 STEP/DXF/PDF 已实际载入，三键、麦克风、USB-C 和整板静态几何数据见 [07 · STEP 解析实测](07_cad_measurements.md) 与 [CSV 数据表](../data/step_component_bounds.csv)。三键活动按帽、真实行程、声孔朝向及机械编号到功能键的对应关系仍待验证。
+
 **资料保存策略：** 上表保存**原始官方链接、核对时间、摘要与疑点**；原版 PDF、STEP、DXF 仍由微雪维护。当前不擅自重发布厂商 CAD/图片文件。要做 CAD 时从上方官方链接取得原版。
 
 ### 官方 PCB 背面原图
