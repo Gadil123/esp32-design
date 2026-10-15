@@ -38,6 +38,8 @@
 - [04 · 已研究的硬件及开源案例](docs/04_references.md)
 - [05 · 下单和一次打样前验收清单](docs/05_validation_checklist.md)
 - [06 · 微雪官方完整资料、规格、原理图、STEP、接口与疑点索引](docs/06_official_board_reference.md)
+- [07 · 官方 STEP **实际解析**：侧键、USB-C、MIC 的尺寸与坐标](docs/07_cad_measurements.md)
+- [STEP 元件外包络机读数据 CSV](data/step_component_bounds.csv)
 - [方向简图：官方 PCB 背面与屏幕正面镜像（非尺寸图）](assets/orientation_diagram.svg)
 - [官方板载图顺时针旋转 90° 在线查看器](assets/official_board_rotated_viewer.html)（下载 HTML 后用浏览器打开；需联网加载原图）
 
