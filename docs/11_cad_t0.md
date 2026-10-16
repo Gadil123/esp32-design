@@ -38,7 +38,7 @@ python3.13 -m venv .venv
 ./scripts/generate-t0.sh --thickness 12.4 --output build/t0-12_4
 ```
 
-生成命令从未修改的官方原始 STEP 生成 `build/t0`，不读开发 BREP 缓存。检查失败非零退出并保留 JSON；检查和导出完整成功后才可打包。正式生成包括原始装配树父级位姿累计、绕 Z 180° 的刚性旋转、原始尺寸对照、干涉、路径范围与导出回读。完整 STEP 因包含整套官方精确几何，不放入 Git 历史；交给 Reviewer 的大文件在本 PR 关联的草稿附件中。轻量模型、零件 STEP/STL、报告和图片提交 Git。
+生成命令从未修改的官方原始 STEP 生成 `build/t0`，不读开发 BREP 缓存。检查失败非零退出并保留 JSON；检查和导出完整成功后才可打包。正式生成包括原始装配树父级位姿累计、绕 Z 180° 的刚性旋转、原始尺寸对照、干涉、路径范围与导出回读。完整 STEP 因包含整套官方精确几何，不放入 Git 历史；交给 Reviewer 的大文件在 [T0 草稿附件](https://github.com/Gadil123/esp32-design/releases/tag/untagged-4c8e4087aeeff72f3e90) 中（需仓库权限；草稿不是打印批准）。轻量模型、零件 STEP/STL、报告和图片提交 Git。
 
 ## 坐标与齐平前框
 

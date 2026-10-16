@@ -1,5 +1,7 @@
 """CAD-derived review views; axes always say FRONT/REAR. No dimensions from renders."""
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 from matplotlib import pyplot as plt
 from model import box_between as box
 from p1_preview import panel

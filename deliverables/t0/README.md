@@ -16,6 +16,6 @@
 
 [FRONT](front.png) · [REAR / 盖隐藏布局](rear.png) · [SIDE / FRONT 右 REAR 左](side.png) · [ISO FRONT](iso_front.png) · [厚度剖面](thickness_section.png) · [连接剖面](connection_sections.png) · [右侧连接器](connector_layout.png) · [接口](interface_openings.png) · [检查报告](checks.json)
 
-完整 12mm STEP 包括 723 个官方 solids 及所有已建模外壳、螺钉、螺母、泡棉/胶/阻尼和临时配件/线束。它不表示未知插头的插入鼻、配件端子已被精确还原。该大装配不进入 Git 历史；在本 PR 的草稿附件中下载，附件同时包含 `assembly_complete_12mm.step`、`assembly_complete_12.4mm.step`、两版报告及 12.4mm 单件/轻量文件。本地运行 `./scripts/generate-t0.sh` 也会生成它及 `t0-complete-assembly.zip`。
+完整 12mm STEP 包括 723 个官方 solids 及所有已建模外壳、螺钉、螺母、泡棉/胶/阻尼和临时配件/线束。它不表示未知插头的插入鼻、配件端子已被精确还原。该大装配不进入 Git 历史；在 [T0 完整模型草稿附件](https://github.com/Gadil123/esp32-design/releases/tag/untagged-4c8e4087aeeff72f3e90) 下载，附件同时包含 `assembly_complete_12mm.step`、`assembly_complete_12.4mm.step`、两版报告及 12.4mm 单件/轻量文件。本地运行 `./scripts/generate-t0.sh` 也会生成它及 `t0-complete-assembly.zip`。
 
 [工程说明、尺寸比较、全部未验证项](../../docs/11_cad_t0.md)。报告中 `geometry_status=PASS` 仅覆盖列明的刚性/候选几何；制造、真实连接、TF 动作、声孔和录音门槛另列，不能据此放行。
