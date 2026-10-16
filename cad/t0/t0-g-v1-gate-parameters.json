@@ -1,0 +1,15 @@
+{
+  "stage": "G-V1 first gate only; NOT a completed enclosure",
+  "maximum_thickness_mm": 12.4,
+  "screen_recess_mm": 0.0,
+  "front_lip_overlap_mm": -0.6,
+  "reset_hole_diameter_mm": 2.2,
+  "reset_status": "candidate only; no moving RESET cap; physical pin and native actuator pending",
+  "screw_head_height_mm": 0.85,
+  "screw_head_recess_mm": 0.0,
+  "screw_status": "user supplied product-image envelope, not measured or purchased",
+  "rear_insertion_distance_mm": 20.0,
+  "collision_witness_cap_z_offset_mm": -3.0,
+  "proposed_guide_running_clearance_mm": 0.2,
+  "print_approved": false
+}

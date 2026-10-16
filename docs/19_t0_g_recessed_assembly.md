@@ -1,5 +1,7 @@
 # T0 G：深前壳、四原厂螺丝与嵌入式后盖
 
+> **历史G记录保留。** 最新G-V1按[21](21_t0_g_v1_flush_easy_assembly_revision_brief.md)恢复齐平；[22首闸门报告](22_t0_g_v1_first_gate_stop.md)发现两键后装真实壁干涉，已STOP，未完成G-V1整壳。下文12.9mm旧G结果不适用于G-V1。
+
 执行 [G 任务书](18_t0_g_recessed_full_wrap_cad_task.md) 和 [PR #3 最新授权](https://github.com/Gadil123/esp32-design/pull/3#issuecomment-6217644907)。只开发这一条 G 路线；E 的源码、交付及其余版本保持不变，Pocket OS 文档不变。
 
 **G full nominal assembly CAD complete; geometry reviewed; material/functional acceptance pending.** 本文的“通过”仅指下面明确列出的名义几何及路径。没有批准打印、采购或合并；尤其不能将 0.074mm 键帽间隙、0.8mm 承座或理想弹性姿态解释为 PA12 实际可装配保证。
