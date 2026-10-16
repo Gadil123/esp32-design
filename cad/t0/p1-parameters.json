@@ -1,0 +1,84 @@
+{
+  "wall_mm": 1.8,
+  "panel_xy_clearance_mm": 0.6,
+  "front_above_glass_mm": 0.6,
+  "split_z_mm": -6.4,
+  "seam_gap_mm": 0.15,
+  "rear_extra_depth_mm": 3.0,
+  "outer_corner_radius_mm": 3.0,
+  "bracket_thickness_mm": 1.2,
+  "bracket_radius_mm": 3.1,
+  "bracket_arm_width_mm": 4.8,
+  "rail_width_mm": 1.0,
+  "rail_clearance_mm": 0.15,
+  "support_outer_radius_mm": 3.1,
+  "mount_screw_clearance_radius_mm": 1.4,
+  "foot_radius_mm": 3.5,
+  "foot_height_mm": 3.8,
+  "head_recess_depth_mm": 2.8,
+  "head_recess_radius_mm": 2.5,
+  "screw_shaft_radius_mm": 1.25,
+  "screw_head_radius_mm": 2.25,
+  "screw_head_height_mm": 2.5,
+  "screw_underhead_length_mm": 8.0,
+  "seam_tongue_depth_mm": 0.8,
+  "seam_tongue_width_mm": 0.6,
+  "seam_fit_clearance_mm": 0.15,
+  "key_contact_gap_mm": 0.15,
+  "key_cap_design_motion_mm": 0.4,
+  "switch_actual_travel_mm": null,
+  "key_stem_yz_mm": [
+    1.8,
+    1.4
+  ],
+  "key_guide_clearance_mm": 0.5,
+  "key_flange_yz_mm": [
+    4.2,
+    3.0
+  ],
+  "key_flange_thickness_mm": 1.0,
+  "key_flange_rest_offset_mm": 1.1,
+  "key_head_yz_mm": [
+    4.6,
+    2.2
+  ],
+  "key_head_depth_mm": 1.0,
+  "key_head_corner_mm": 0.35,
+  "key_head_motion_gap_mm": 0.9,
+  "reset_recess_mm": 0.35,
+  "reset_tool_radius_mm": 0.45,
+  "reset_hole_radius_mm": 0.65,
+  "usb_opening_xz_mm": [
+    13.2,
+    7.3
+  ],
+  "usb_opening_backset_mm": 0.3,
+  "usb_plug_body_xz_mm": [
+    12.2,
+    6.3
+  ],
+  "usb_validation_prism_length_mm": 30.0,
+  "usb_min_lateral_clearance_mm": 0.45,
+  "usb_mating_y_adjustment_mm": 0.0,
+  "assembly_translation_mm": 25.0,
+  "assembly_samples": 9,
+  "reference_bounds_tolerance_mm": 0.05,
+  "geometry_tolerance_mm": 0.0001,
+  "collision_volume_tolerance_mm3": 0.001,
+  "preview_mesh_deflection_mm": 0.15,
+  "registration_centers_y_mm": [
+    8.0,
+    -12.0
+  ],
+  "registration_length_mm": 6.0,
+  "minimum_key_running_clearance_mm": 0.29,
+  "key_side_wall_extra_mm": 1.8,
+  "minimum_key_cage_stock_mm": 0.75,
+  "key_tip_yz_mm": [
+    1.4,
+    0.6
+  ],
+  "key_tip_projection_mm": 1.0,
+  "key_tip_transition_mm": 0.2,
+  "key_axial_clearance_mm": 0.3
+}

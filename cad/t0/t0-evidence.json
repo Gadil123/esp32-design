@@ -1,0 +1,45 @@
+{
+  "checked_on": "2026-10-16",
+  "board": "https://docs.waveshare.net/ESP32-C5-Touch-LCD-2.8/",
+  "official_STEP": "https://github.com/waveshareteam/ESP32-C5-Touch-LCD-2.8/tree/77a7dceac38a1bd491173b3906205217a382c08c/dimensions",
+  "official_schematic": "https://github.com/waveshareteam/ESP32-C5-Touch-LCD-2.8/blob/77a7dceac38a1bd491173b3906205217a382c08c/schematic/ESP32-C5-Touch-LCD-2.8.pdf",
+  "resource_identity_only_not_dimensions": "https://docs.waveshare.net/assets/images/2.8-2-b2839d1e49b0c05c1611a558a82ca905.webp",
+  "m2_low_head": {
+    "source": "https://www.nbk1560.com/images/en-US/product/lowsmallheadscrew/SSH/SSH_1.pdf",
+    "example": "SSH-M2-8",
+    "head_diameter_mm": 4.0,
+    "head_height_mm": 1.1,
+    "underhead_length_mm": 8.0,
+    "purchase_and_replacement_status": "unverified; standard tall M2 heads are not interchangeable in this thickness budget"
+  },
+  "m2_nut": {
+    "source": "https://docs.rs-online.com/dc81/A700000007925488.pdf",
+    "across_flats_mm": 4.0,
+    "height_mm": 1.6,
+    "status": "RS PRO M2 maximum envelope reference; final purchased material/dimensions unverified"
+  },
+  "microSD_form_factor": {
+    "source": "https://www.sdcard.org/developers/sd-standard-overview/capacity-sd-sdhc-sdxc-sduc/",
+    "xyz_mm": [
+      15.0,
+      11.0,
+      1.0
+    ],
+    "scope": "outer standard only, not TF-110 seat/eject data"
+  },
+  "process_sources": [
+    "https://jlc3dp.com/help/article/3d-printing-design-guideline",
+    "https://jlc3dp.com/blog/how-to-design-3d-models-for-printing",
+    "https://xometry.pro/wp-content/uploads/2024/05/EN-EU-MJF-Design-Guide.pdf",
+    "https://xometry.asia/en/sla-3d-printing-design-guidelines-8-essential-tip/"
+  ],
+  "inspiration_only": {
+    "source": "https://github.com/FoloToy/ai-passport",
+    "scope": "Functional inspiration from user brief. No Passport teardown dimensions, snap material, port geometry or speaker aperture adopted as verified measurements."
+  },
+  "P1_reuse": {
+    "commit": "106742a",
+    "scope": "Original occurrence transform, geometric intersection helpers, key datums/thick-body caps, mesh validation and headless renderer. No P0/P1 branch modified or merged."
+  },
+  "unverified_accessories": "Battery 50x34x5, speaker 30x20x6.8 from task brief, not measured. Protector, plug and lead envelopes are design assumptions, not purchased-part evidence."
+}
