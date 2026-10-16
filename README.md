@@ -1,11 +1,11 @@
-# Pocket Pi — ESP32 便携 AI Agent 终端
+# Pocket Pi / Pocket OS — ESP32 便携多 APP 终端
 
 > 状态：**硬件方案 V1 定义中 / 未采购验证 / 未进入可打印 CAD 阶段**  
-> 更新：2026-10-15。仓库保存设计事实、取舍、来源和待验证项，防止后续对话将概念图误当机械图。
+> 更新：2026-10-16。仓库保存硬件、CAD 与软件选型的设计事实、取舍、来源和待验证项，防止将概念图或尚未实测的兼容性误当成已完成结果。
 
 ## 项目目标
 
-自制一台接近卡片尺寸的语音优先 AI 小终端，以 ESP32 负责联网、屏幕、麦克风、按钮、音频和电池；**Pi Coding Agent 仍运行在已有 Linux 服务器**，终端只是远程客户端。复用现有 Pi Web / Pi 会话体系，后端可做语音转写、Pi RPC/网关、语音播报。
+自制一台接近卡片尺寸的语音优先、触屏多 APP 小终端，以 ESP32 负责联网、屏幕、麦克风、按钮、音频和电池；ASR/LLM/TTS 及 Pi Coding Agent 等较重的任务主要运行在家用 Linux 服务器或外部 API 上。Pi 会话只是可选 APP 之一，终端还规划家庭照片、日语练习、儿童故事、Home Assistant 和本地 GB 游戏等。
 
 - 预算目标：**整机人民币 200 元以内**，如果报价超出需先明确偏差；价格仅规划，不是已确认订单。
 - 生产方式：淘宝/第三方单件 3D 打印；没有自有打印机，**减少返工**优先于极致手感与花哨结构。
@@ -30,6 +30,14 @@
 
 正面两颗有手感的实体按键（可参考 Adafruit Pocket PiGRRL：普通轻触开关、洞洞板、独立键帽）；可能涉及扩展机身长度与接口避让。**不进入 V1 BOM 和结构范围**。
 
+## 软件路线（2026-10-16 已明确方向；尚未实机验证）
+
+- **长期系统：ESP-IDF + 微雪 BSP + ESP-Brookesia / LVGL**，自研多 APP 桌面；小智主固件不作为长期 APP 平台，但尽量复用其语音组件与开源服务器端。
+- **可复现起点：微雪 `08_bookesia`（Brookesia Core 0.6.0-beta2）**。最新 0.8 的动态 APP / Codex 插件能力尚未在此 C5 板上完成移植，不能直接假定可安装 `.bpk`。
+- **首批场景**：Pocket Chat 语音问答；随后是家庭照片与日语练习、儿童互动、Home Assistant；原版 GB 游戏作为独立离线模拟器实验。V1 不因游戏新增实体 A/B/方向键。
+- **语音后端**：家庭 i5-6600K 服务器优先尝试小智精简 Server + 本地 ASR/VAD，LLM 可使用 DeepSeek API，TTS 先复用现成服务；性能、时延与内存均待测试。
+- 决策、证据分级、完整场景列表与 PoC 退出标准见 **[08 · Pocket OS 软件架构与 APP 路线](docs/08_software_architecture_and_app_roadmap.md)**。
+
 ## 文档导航
 
 - [01 · 需求、决策与历史勘误](docs/01_scope_decisions.md)
@@ -39,6 +47,7 @@
 - [05 · 下单和一次打样前验收清单](docs/05_validation_checklist.md)
 - [06 · 微雪官方完整资料、规格、原理图、STEP、接口与疑点索引](docs/06_official_board_reference.md)
 - [07 · 官方 STEP **实际解析**：侧键、USB-C、MIC 的尺寸与坐标](docs/07_cad_measurements.md)
+- [08 · Pocket OS 软件选型、语音服务端、APP 场景和验证路线](docs/08_software_architecture_and_app_roadmap.md)
 - [STEP 元件外包络机读数据 CSV](data/step_component_bounds.csv)
 - [方向简图：官方 PCB 背面与屏幕正面镜像（非尺寸图）](assets/orientation_diagram.svg)
 - [官方板载图顺时针旋转 90° 在线查看器](assets/official_board_rotated_viewer.html)（下载 HTML 后用浏览器打开；需联网加载原图）
