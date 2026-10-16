@@ -64,13 +64,13 @@ def main():
             if overlap(shell,solid,tol):
                 candidate_count+=1
                 common=shell.intersect(solid)
-                volume=common.volume if common is not None else 0
+                volume=sum(s.volume for s in common) if common else 0
                 if volume>vtol:collisions.append({'shell':shell_name,'source_solid':i,'volume_mm3':volume})
-    common=front.intersect(rear);shell_overlap=common.volume if common is not None else 0
+    common=front.intersect(rear);shell_overlap=sum(s.volume for s in common) if common else 0
     corridors={}
     for name,corridor in [('USB_TOP',usb)]+[(f'KEY_{i+1}',k) for i,k in enumerate(keys)]:
         for sn,shell in [('FRONT',front),('REAR',rear)]:
-            c=shell.intersect(corridor);v=c.volume if c is not None else 0
+            c=shell.intersect(corridor);v=sum(s.volume for s in c) if c else 0
             corridors[f'{name}_{sn}']=v
     source_valid=sum(s.is_valid for s in full_solids)
     solid_faces={hash(f) for solid in full_solids for f in solid.faces()}

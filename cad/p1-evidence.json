@@ -1,0 +1,39 @@
+{
+  "checked_on": "2026-10-16",
+  "key_mapping": {
+    "source": "https://github.com/waveshareteam/ESP32-C5-Touch-LCD-2.8/blob/77a7dceac38a1bd491173b3906205217a382c08c/schematic/ESP32-C5-Touch-LCD-2.8.pdf",
+    "page": 1,
+    "KEY1": "BAT_PWR: Key1 connects U2 ECJ23001-4FCBD6 KEY to GND",
+    "KEY2": "BOOT: Key2 connects BOOT0 / GPIO28 to GND",
+    "KEY3": "RESET: Key3 connects CHIP_PU through R41 to GND",
+    "scope": "Official schematic designators match STEP KEYn names. Physical board revision/labels still to confirm."
+  },
+  "actuator": {
+    "basis": "Each original STEP KEYn has a unique planar face with normal approximately -X at the minimum X. Nominal face is 1.8 x 0.8 mm, area 1.4314 mm2, center Z=-6.4000 mm.",
+    "actual_switch_travel_mm": null,
+    "motion_note": "0.4 mm is a candidate CAP guide budget, NOT the switch travel. Mechanical actuation/return and force remain unverified."
+  },
+  "usb_body": {
+    "manufacturer": "StarTech.com",
+    "product": "USB2CC1MNC",
+    "source": "https://media.startech.com/cms/pdfs/usb2cc1mnc_datasheet.pdf",
+    "page": 3,
+    "width_mm": 12.2,
+    "height_mm": 6.3,
+    "shoulder_offset_mm": null,
+    "metal_nose_length_mm": null,
+    "scope": "Published overall product width/height used as body envelope; shoulder/nose not dimensioned. 30 mm continuous prism begins at the STEP metal rim, granting no benefit from a narrow nose. This is not certification of every USB-C cable."
+  },
+  "fastener": {
+    "product": "Accu SSCF-M2.5-8-A2-BL",
+    "source": "https://www.accu.co.uk/metric-cap-head-screws/152186-SSCF-M2-5-8-A2-BL",
+    "standard": "DIN 912 / ISO 4762",
+    "thread_diameter_mm": 2.5,
+    "underhead_length_mm": 8.0,
+    "head_diameter_mm": 4.5,
+    "head_height_mm": 2.5,
+    "thread_pitch_mm": 0.45,
+    "hex_key_af_mm": 2.0,
+    "scope": "Geometry envelope only; supplier selection, tightening torque, material and clamping strength require verification."
+  }
+}
