@@ -81,3 +81,5 @@ T0 C 的四安装位装入闸门、双 M2.5 局部对照和独立 PA12 小样见
 T0 D 仿 AI Passport 的一次局部短齿/浅窝研究见 [D 闸门报告](docs/16_t0_d_local_passport_study.md)：浅窝缺少 PCB 向 FRONT 的保持约束，停止整壳推进；旧版本保留，不合并、不打印。
 
 T0 E 采用三处原 A PCB 夹位与四浅窝，完成名义装入/止退验证和短齿整壳，见 [E 装配报告](docs/17_t0_e_three_clip_assembly.md) 及 [模型/图纸](deliverables/t0-e/README.md)。12.4mm 名义完整包络不等于 PA12 制造或实物功能通过；等待复审，不合并、不打印。
+
+T0 G 与 E 并列保留：深前壳、屏幕下沉0.5、四颗原厂位 M2.5 锁后盖、四隐藏短舌，完整名义包络12.9mm。见 [G 装配与风险报告](docs/19_t0_g_recessed_assembly.md) 及 [模型、剖面、E/G 同尺度对照](deliverables/t0-g/README.md)。**定位容差未通过**：螺孔0.15游隙可耗尽侧键停靠约0.074mm间隙；0.8mm螺钉座、薄片保持拆卸亦未获实物/PA12放行。不合并、不打印。
