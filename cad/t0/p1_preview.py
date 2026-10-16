@@ -24,5 +24,3 @@ def panel(ax,items,u,v,w,extent):
     img=rasterize(xy,tri@w,np.asarray(colors),extent,(width,height))
     ax.imshow(img,extent=extent,origin='lower',interpolation='nearest')
     ax.set_xlim(extent[:2]);ax.set_ylim(extent[2:]);ax.set_aspect('equal');ax.grid(alpha=.18)
-
-

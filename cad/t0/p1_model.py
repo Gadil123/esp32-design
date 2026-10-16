@@ -26,5 +26,3 @@ def usb_mouth_face(connector):
                 and f.normal_at().Y>.99 and abs(bounds(f)[4]-ymax)<.01]
     assert len(candidates)==1, f'Ambiguous USB mouth: {len(candidates)}'
     return candidates[0]
-
-

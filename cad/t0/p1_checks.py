@@ -65,5 +65,3 @@ def cap_components(cap,data,p):
             else:result.append(piece)
         pieces=result
     return pieces
-
-
