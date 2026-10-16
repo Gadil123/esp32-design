@@ -27,6 +27,7 @@ def build(parts,mounts,p,kp):
     supports=[];pcb_clips=[];pcb_releases=[];clip_data=[]
     pb=bounds(parts['PCB_BOARD']);support_z=pb[2];stop_z=pb[5]+p['pcb_clip_front_gap_mm']
     for i,(x,y,r) in enumerate(hole_axes(parts['PCB_BOARD'])):
+        if i not in p.get('pcb_clip_indices',[0,1,2,3]):continue
         side=1 if x>0 else -1;end=y;root=y+(p['pcb_clip_beam_length_mm'] if y<0 else -p['pcb_clip_beam_length_mm'])
         ya,yb=sorted([root,end]);xc=side*p['pcb_clip_beam_x_abs_mm'];t=p['pcb_clip_beam_thickness_mm'];zh=p['pcb_clip_beam_height_mm']
         beam_z=p['pcb_clip_beam_bottom_z_mm']
@@ -34,6 +35,12 @@ def build(parts,mounts,p,kp):
         # Free space for sideways deflection, independent of rear cover position.
         slot=box([min(xc-t/2-side*1.4,xc-t/2)-.1,ya-.3,-5.3,
                   max(xc+t/2+side*1.4,xc+t/2)+.1,yb+.3,-3.3])
+        if 'pcb_clip_outward_relief_mm' in p:
+            # E only: cover the EXISTING clip's entire outward envelope, including
+            # its rear bearing/front stop, with correct sign on the left side.
+            relief=side*p['pcb_clip_outward_relief_mm'];half=p['pcb_clip_bearing_y_mm']/2
+            slot=box([min(xc-t/2,xc-t/2+relief)-.1,min(ya,end-half)-.2,p['pcb_clip_slot_bottom_z_mm'],
+                      max(xc+t/2,xc+t/2+relief)+.1,max(yb,end+half)+.2,p['pcb_clip_slot_top_z_mm']])
         # Both signs get a deliberately generous side slot; the inside is vacant.
         front=front-slot
         anchor=box([min(xc-1,side*28),root-.7,-5.5,max(xc+1,side*28),root+.7,-2.5])
@@ -93,7 +100,7 @@ def build(parts,mounts,p,kp):
         screws.append(screw);nuts.append(nut);bosses.append(boss);screw_data.append({'axis_mm':[x,y],'head_bottom_z_mm':seat-p['m2_head_height_mm'],'tip_z_mm':tip,'head_seat_z_mm':seat,'nut_z_mm':[nutz,tip]})
     # Four peripheral horizontal beams; free tips engage open-sided receiver windows.
     snaps=[];receivers=[];snap_data=[]
-    for sign in [-1,1]:
+    for sign in p.get('snap_edge_signs',[-1,1]):
         inner=iy if sign<0 else jy
         for end in p['snap_free_x_mm']:
             root=end-p['snap_beam_length_mm'];yc=inner-sign*.8

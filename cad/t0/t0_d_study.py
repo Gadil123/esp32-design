@@ -21,15 +21,16 @@ def build(parts, mounts, p, base):
     for i,m in enumerate(sorted(mounts,key=lambda s:(s.center().X,s.center().Y))):
         fs=[f for f in m.faces() if f.geom_type==GeomType.CYLINDER and abs(f.axis_of_rotation.direction.Z)>.99]
         x,y,_=fs[0].axis_of_rotation.position
-        outer=max(f.radius for f in fs); z=bounds(m)[2]
+        outer=max(f.radius for f in fs);metal_z=bounds(m)[2];z=metal_z-p.get('nest_axial_clearance_mm',0)
         r=outer+p['nest_radial_clearance_mm'][i]; e=p['nest_y_elongation_mm'][i]
-        h=p['nest_capture_height_mm']; w=p['nest_wall_mm']
+        h=p['nest_capture_height_mm']+p.get('nest_axial_clearance_mm',0); w=p['nest_wall_mm']
         seat=capsule(r+w,e,floor-.01,z+h,x,y)-capsule(r,e,z,z+h+.1,x,y)
         seat=seat-cyl(p['thread_bore_keepout_radius_mm'],bottom-.1,z+h+.1,x,y)
         patch=box([x-5,y-5,bottom,x+5,y+5,floor])
         seats.append(seat+patch)
-        rows.append({'index':i,'axis_xy_mm':[x,y],'metal_back_z_mm':z,'nest_radial_clearance_mm':p['nest_radial_clearance_mm'][i],
-                     'nest_y_elongation_mm':e,'inner_outer_radius_mm':[r,r+w],'seat_to_floor_mm':z-floor,'wall_capture_mm':h})
+        rows.append({'index':i,'axis_xy_mm':[x,y],'metal_back_z_mm':metal_z,'seat_z_mm':z,'axial_clearance_mm':metal_z-z,'nest_radial_clearance_mm':p['nest_radial_clearance_mm'][i],
+                     'nest_y_elongation_mm':e,'inner_outer_radius_mm':[r,r+w],'seat_to_floor_mm':z-floor,
+                     'wall_capture_mm':p['nest_capture_height_mm'],'cavity_depth_mm':h})
     # ONE right-edge pair. Short vertical relieved wall, not a 12mm horizontal beam.
     y=p['edge_center_y_mm']; half=p['edge_local_half_length_mm']
     wallx=ex-p['receiver_wall_mm']; tx=wallx-p['lap_clearance_mm']; t=p['tongue_thickness_mm']
@@ -37,11 +38,12 @@ def build(parts, mounts, p, base):
     front=box([wallx,y-half,p['receiver_bottom_z_mm'],ex,y+half,top])
     front=front-box([wallx-.1,y-wy/2,p['window_bottom_z_mm'],ex+.1,y+wy/2,p['window_top_z_mm']])
     rear=box([tx-t-.5,y-half,bottom,ex,y+half,floor])
-    rear=rear+box([wallx,y-half,floor-.01,ex,y+half,p['receiver_bottom_z_mm']-gap])
+    rear=rear+box([wallx,y-half,floor-.01,ex,y+half,p['receiver_bottom_z_mm']-p.get('peripheral_stop_gap_mm',gap)])
     # Continuous overlap outside the relief around this ONE tooth.
     edge=tw/2+p['tongue_side_relief_mm']
-    for a,b in [(y-half,y-edge),(y+edge,y+half)]:
-        rear=rear+box([tx-t,a,floor-.01,tx,b,p['lap_top_z_mm']])
+    setback=p.get('lap_end_setback_mm',0)
+    for a,b in [(y-half+setback,y-edge),(y+edge,y+half-setback)]:
+        if b-a>1e-6:rear=rear+box([tx-t,a,floor-.01,tx,b,p['lap_top_z_mm']])
     tongue=box([tx-t,y-tw/2,floor-.01,tx,y+tw/2,p['tongue_top_z_mm']])
     pr=p['tooth_projection_mm']
     profile=Plane.XZ*Polygon((tx-.1,p['tooth_bottom_z_mm']),(tx+pr,p['tooth_bottom_z_mm']),
