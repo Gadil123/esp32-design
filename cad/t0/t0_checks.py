@@ -1,9 +1,16 @@
 """Independent envelopes, measured maximum thickness and explicit evidence gates."""
 import numpy as np
-from build123d import GeomType,Compound
+from build123d import GeomType,Compound,Cylinder,Axis,Align
 from reference import bounds
 from model import box_between as box
 from p1_checks import clashes,common_volume,intersection,translated_box_sweep,cap_components
+
+
+def cap_axial_sweep(piece,data,kp):
+    b=bounds(piece);motion=kp['key_cap_design_motion_mm']
+    if data['function']=='RESET' and b[3]<=data.get('body_start_x_mm',b[0])+1e-5:
+        return Cylinder((b[4]-b[1])/2,b[3]-b[0]+motion,align=(Align.CENTER,Align.CENTER,Align.MIN)).rotate(Axis.Y,90).translate((b[0],(b[1]+b[4])/2,(b[2]+b[5])/2))
+    return translated_box_sweep(piece,[motion,0,0])
 
 
 def board_insertion_fixture(parts,m,p):
@@ -58,11 +65,28 @@ def validate(parts,m,p,kp,plugs,wires):
     for key,cap in m['caps'].items():
         hits=[]
         for piece in cap_components(cap,m['key_data'][key],kp):
-            hits+=clashes(translated_box_sweep(piece,[kp['key_cap_design_motion_mm'],0,0]),rigid[:2],tol)
+            hits+=clashes(cap_axial_sweep(piece,m['key_data'][key],kp),rigid[:2],tol)
         rec(f'{key}_centered_cap_motion',not hits,collisions=hits,actual_switch_travel_mm=None,
             candidate_budget_mm=kp['key_cap_design_motion_mm'],functional_actuation_verified=False)
+        if p.get('variant')=='A':
+            corner_hits=[]
+            c=kp['key_guide_clearance_mm']
+            for dy in [-c,c]:
+                for dz in [-c,c]:
+                    for piece in cap_components(cap,m['key_data'][key],kp):
+                        hh=clashes(cap_axial_sweep(piece.translate((0,dy,dz)),m['key_data'][key],kp),rigid[:2],tol)
+                        if hh:corner_hits.append({'offset_yz_mm':[dy,dz],'collisions':hh})
+            rec(f'{key}_translated_corner_motion',not corner_hits,collisions=corner_hits,
+                scope='four transverse float corners, continuous conservative axial sweep; tilt/contact force/return remain functional gates')
         rec(f'{key}_nominal_no_preload',cap.distance_to(parts[key])>=kp['key_contact_gap_mm']-.001,
             measured_gap_mm=cap.distance_to(parts[key]),assembled_tolerance_verified=False)
+    if p.get('variant')=='A':
+        yc,zc=m['key_data']['KEY3']['center_yz_mm'];ox=p['outer_x_min_mm']
+        needle=Cylinder(kp['reset_tool_radius_mm'],5+kp['reset_recess_mm'],align=(Align.CENTER,Align.CENTER,Align.MIN)).rotate(Axis.Y,90).translate((ox-5,yc,zc))
+        hh=clashes(needle,[*rigid,*board],tol)
+        rec('RESET_independent_needle_entry',not hh,collisions=hh,probe_diameter_mm=2*kp['reset_tool_radius_mm'],
+            nominal_hole_diameter_mm=2*kp['reset_hole_radius_mm'],front_face_stock_mm=p['reset_face_stock_mm'],
+            recessed_nose_diameter_mm=2*p['reset_nose_radius_mm'],actual_actuation_verified=False)
     for i,clip in enumerate(m['pcb_clips']):
         rec(f'PCB_clip_{i}_support_contact',m['supports'][i].distance_to(parts['PCB_BOARD'])<.001,
             distance_mm=m['supports'][i].distance_to(parts['PCB_BOARD']),**m['clip_data'][i])
@@ -105,5 +129,16 @@ def validate(parts,m,p,kp,plugs,wires):
     negatives['battery_into_PCB']=bool(clashes(m['battery'].translate((-50,0,0)),board,tol))
     negatives['hidden_external_foot']=max(bounds(m['rear'].translate((0,0,-1)))[5],zhi)-min(bounds(m['rear'].translate((0,0,-1)))[2],zlo)>p['target_thickness_mm']+.5
     negatives['broken_snap_catch']=common_volume(m['snaps'][0].translate((0,0,-.5)),m['receivers'][0].translate((10,0,0)))<=tol
+    if p.get('variant')=='A':
+        ex97=p['outer_x_min_mm']+p['initial_width_mm']
+        wall97=box([ex97-p['wall_mm'],p['outer_y_mm'][0],floor,ex97,p['outer_y_mm'][1],m['dimensions']['glass_and_front_z_mm']])
+        v97=common_volume(m['protection'],wall97)
+        negatives['97mm_protection_hits_right_wall']=v97>tol
+        rec('fixed_layout_width_and_right_bay_clearance',m['protection'].distance_to(m['rear'])>=p['minimum_rigid_gap_mm'],
+            protection_to_rear_mm=m['protection'].distance_to(m['rear']),
+            right_wall_net_x_clearance_mm=p['outer_x_min_mm']+p['width_mm']-p['wall_mm']-bounds(m['protection'])[3],
+            fixed_layout_minimum_width_mm=bounds(m['protection'])[3]+p['wall_mm']+p['minimum_rigid_gap_mm']-p['outer_x_min_mm'],
+            rejected_97mm_protection_wall_overlap_mm3=v97,
+            scope='minimum for retained provisional accessory layout only; not a global packing optimum')
     rec('negative_fixtures',all(negatives.values()),fixtures={k:{'detected':v} for k,v in negatives.items()})
     return checks,acoustic,tf

@@ -22,6 +22,7 @@ def main():
     p=json.loads(a.parameters.read_text());
     if a.thickness is not None:p['target_thickness_mm']=a.thickness
     kp=json.loads((ROOT/'cad/t0/p1-parameters.json').read_text())
+    kp.update(p.get('key_overrides',{}))
     print('T0: import complete original STEP and occurrence placements',flush=True)
     path=a.reference/'dimensions/ESP32-C5-Touch-LCD-2.8.stp';parts,mounts,tree=load(path)
     original={k:to_pocket(s) for k,s in parts.items()};recorded=compare_recorded(original,ROOT/'data/step_component_bounds.csv',.05)
@@ -29,7 +30,10 @@ def main():
     print('T0: construct flush shell, separate PCB retainers and side-bay connection',flush=True)
     m=build(parts,mounts,p,kp);plugs,wires,wire_data=build_wiring(parts,p,m)
     checks,acoustic,tfprobe=validate(parts,m,p,kp,plugs,wires)
-    kchecks,keyreport=validate_manufacturing(m,kp,json.loads((ROOT/'cad/t0/p1-manufacturing.json').read_text()));checks.update(kchecks)
+    kchecks,keyreport=validate_manufacturing(m,kp,json.loads((ROOT/'cad/t0/p1-manufacturing.json').read_text()));checks.update({k:v for k,v in kchecks.items() if k!='key_conditional_tolerance_budget'} if p.get('variant')=='A' else kchecks)
+    keyreport['conditional_tolerance_check']=kchecks['key_conditional_tolerance_budget']
+    from t0_key_contact import evaluate
+    contact=evaluate(parts,m,p,kp)
     source_solids=parts['ASSEMBLY'].solids();source_valid=sum(s.is_valid for s in source_solids)
     checks['valid_complete_official_solids']={'pass':source_valid==len(source_solids),'valid':source_valid,'count':len(source_solids)}
     b=bounds(parts['ASSEMBLY']);boarddepth=b[5]-b[2];panel=p['rear_panel_mm'];minimum=boarddepth+panel+p['minimum_rigid_gap_mm']
@@ -44,7 +48,7 @@ def main():
         'required_depth_mm':minimum+.5,'candidate_remaining_clearance_mm':b[2]-m['dimensions']['rear_inside_z_mm']-.5,
         'supplier_and_board_tolerances_confirmed':False},
         'width':{'initial_mm':p['initial_width_mm'],'candidate_mm':p['width_mm'],
-        'minimum_for_current_boss_axes_mm':max(x+p['m2_boss_radius_mm'] for x,y in p['m2_axes_xy_mm'])-p['outer_x_min_mm'],
+        'minimum_for_current_boss_axes_mm':max((x+p['m2_boss_radius_mm']-p['outer_x_min_mm'] for x,y in p['m2_axes_xy_mm']),default=None),
         'height_not_increased_mm':p['outer_y_mm'][1]-p['outer_y_mm'][0]}}
     usb_web=bounds(m['usbcut'])[2]-m['dimensions']['rear_bottom_z_mm']
     manufacturing={'status':'manufacturing_unverified','USB_lower_edge_web_mm':usb_web,
@@ -66,7 +70,7 @@ def main():
         'evidence':json.loads((ROOT/'cad/t0/t0-evidence.json').read_text()),'parameters':p,'key_parameters':kp,'dimensions':m['dimensions'],'thickness_and_layout_comparison':comparison,
         'original_bounds_comparison':recorded,'selected_occurrences':tree,'pocket_bounds_mm':{k:bounds(s) for k,s in parts.items()},
         'PCB_hole_axes_mm':hole_axes(parts['PCB_BOARD']),'PCB_clips':m['clip_data'],'shell_snaps':m['snap_data'],'M2_stack':m['screw_data'],
-        'wiring':wire_data,'microphone_evidence':acoustic,'key_feature_screen':keyreport,'checks':checks,
+        'wiring':wire_data,'microphone_evidence':acoustic,'key_feature_screen':keyreport,'key_contact_reliability':contact,'checks':checks,
         'evidence_gates':{'actual_battery_speaker_and_protection_dimensions':False,'matched_MX1_25_plug_and_polarity':False,
           'SPK_BAT_occurrence_identity_confirmed':False,'connector_pin_to_accessory_terminal_continuity_and_lead_route':False,
           'TF_inside_seating_and_eject_travel':False,'MIC_port_direction_and_board_acoustic_hole':False,

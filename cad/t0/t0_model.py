@@ -1,4 +1,4 @@
-"""T0: flush glass, planar side bay, independent edge clips, two bay screws."""
+"""T0: flush glass, independent PCB clips; B screws or A peripheral snaps."""
 import math
 from build123d import (Align,Axis,Box,Cylinder,Sphere,Plane,RectangleRounded,Rectangle,
                       RegularPolygon,Polyline,FilletPolyline,Circle,extrude,loft,sweep,Compound)
@@ -58,20 +58,23 @@ def build(parts,mounts,p,kp):
         f0=ox+kp['key_flange_rest_offset_mm'];f1=f0+kp['key_flange_thickness_mm'];fw,fh=kp['key_flange_yz_mm']
         stem0=ox+(kp['reset_recess_mm'] if fn=='RESET' else -kp['key_head_motion_gap_mm'])
         be=tip-kp['key_tip_projection_mm'];tr=be+kp['key_tip_transition_mm']
-        body=box([stem0,yc-sy/2,zc-sz/2,be,yc+sy/2,zc+sz/2]);contact=box([tr,yc-ty/2,zc-tz/2,tip,yc+ty/2,zc+tz/2])
+        body0=ox+p['reset_face_stock_mm'] if fn=='RESET' and p.get('variant')=='A' else stem0
+        body=box([body0,yc-sy/2,zc-sz/2,be,yc+sy/2,zc+sz/2]);contact=box([tr,yc-ty/2,zc-tz/2,tip,yc+ty/2,zc+tz/2])
         transition=loft([(Plane.YZ*Rectangle(sy,sz)).translate((be,yc,zc)),(Plane.YZ*Rectangle(ty,tz)).translate((tr,yc,zc))])
+        if body0>stem0:
+            body=body+Cylinder(p['reset_nose_radius_mm'],body0-stem0+.1,align=(Align.CENTER,Align.CENTER,Align.MIN)).rotate(Axis.Y,90).translate((stem0,yc,zc))
         flange=box([f0,yc-fw/2,zc-fh/2,f1,yc+fw/2,zc+fh/2]);cap=body+contact+transition+flange
         if fn!='RESET':
             hw,hh=kp['key_head_yz_mm'];head=extrude(Plane.YZ*RectangleRounded(hw,hh,kp['key_head_corner_mm']),amount=kp['key_head_depth_mm']).translate((stem0-kp['key_head_depth_mm'],yc,zc));cap=cap+head
         gc=kp['key_guide_clearance_mm'];ac=kp['key_axial_clearance_mm'];motion=kp['key_cap_design_motion_mm']
         pocket=box([f0-ac,yc-fw/2-gc,zc-fh/2-gc,f1+motion+ac,yc+fw/2+gc,zc+fh/2+gc])
-        guide0=stem0-gc if fn=='RESET' else ox-1
+        guide0=(ox+p['reset_face_stock_mm'] if p.get('variant')=='A' else stem0-gc) if fn=='RESET' else ox-1
         pocket=pocket+box([guide0,yc-sy/2-gc,zc-sz/2-gc,tip+gc,yc+sy/2+gc,zc+sz/2+gc])
         if fn=='RESET':pocket=pocket+Cylinder(kp['reset_hole_radius_mm'],2,align=(Align.CENTER,Align.CENTER,Align.MIN)).rotate(Axis.Y,90).translate((ox-1,yc,zc))
         front=front-pocket;rear=rear-pocket;caps[key]=cap
         features[key]={'body':body,'contact':contact,'transition':transition,'flange':flange}
         key_data[key]={'function':fn,'static_actuator_face_bounds_mm':fb,'center_yz_mm':[yc,zc],'flange_x_mm':[f0,f1],
-                       'body_end_x_mm':be,'tip_root_x_mm':tr,'tip_x_mm':tip}
+                       'body_start_x_mm':body0,'body_end_x_mm':be,'tip_root_x_mm':tr,'tip_x_mm':tip}
     # Two bay screws close the shells; PCB clips stay attached when rear is removed.
     screws=[];nuts=[];bosses=[];screw_data=[]
     seat=bottom+p['m2_head_recess_mm']+p['m2_head_height_mm'];tip=seat+p['m2_length_mm']
@@ -107,6 +110,28 @@ def build(parts,mounts,p,kp):
             clearance=box([end-1.8,min(inner-sign*.2,inner+sign*(wall+.2)),-8.8,end+1.8,max(inner-sign*.2,inner+sign*(wall+.2)),split+1])
             rear=rear-clearance+rootblock+snap
             snaps.append(snap);receivers.append(recv);snap_data.append({'free_x_mm':end,'edge_sign':sign,'release_vector_mm':[0,-sign*p['snap_release_mm'],0],'strain_estimate':1.5*p['snap_beam_thickness_mm']*p['snap_release_mm']/p['snap_beam_length_mm']**2})
+    # Additional long-edge snaps use the same beam/window geometry rotated 90deg.
+    for spec in p.get('side_snaps',[]):
+        right=spec['side']=='right';sign=-1 if right else 1
+        inner=-(ex-wall if right else ox+wall);end=spec['end_y_mm'];root=end-p['snap_beam_length_mm'];yc=inner-sign*.8
+        def turn(s):return s.rotate(Axis.Z,90)
+        beam=box([root,yc-.5,-8.3,end+.6,yc+.5,-7.3])
+        upper=box([end-.6,min(inner-sign*.4,inner+sign*.6),-6.9,end+.6,max(inner-sign*.4,inner+sign*.6),-5.9])
+        lower=box([end-.6,yc-.5,-8.3,end+.6,yc+.5,-5.9]);snap=turn(beam+lower+upper)
+        rootblock=turn(box([root-.5,min(inner,yc-.5),-9,root+1,max(inner,yc+.5),-7.3]))
+        recv=box([end-1.6,min(inner,inner+sign*wall),-8.6,end+1.6,max(inner,inner+sign*wall),-5.4])
+        window=box([end-1,min(inner-sign*.1,inner+sign*(wall+.1)),-7.1,end+1,max(inner-sign*.1,inner+sign*(wall+.1)),-5.6]);recv=turn(recv-window)
+        channel=turn(box([end-1.8,min(inner-sign*2.4,inner+sign*wall),-8.8,end+1.8,max(inner-sign*2.4,inner+sign*wall),-5.6]))
+        clearance=turn(box([end-1.8,min(inner-sign*.2,inner+sign*(wall+.2)),-8.8,end+1.8,max(inner-sign*.2,inner+sign*(wall+.2)),split+1]))
+        front=front-channel+recv;rear=rear-clearance+rootblock+snap
+        snaps.append(snap);receivers.append(recv);snap_data.append({'side':spec['side'],'end_y_mm':end,'release_vector_mm':[sign*p['snap_release_mm'],0,0],'strain_estimate':1.5*p['snap_beam_thickness_mm']*p['snap_release_mm']/p['snap_beam_length_mm']**2})
+    # Discrete, non-locking registration pads: no extra clamp path through the cell.
+    registrations=[]
+    if p.get('variant')=='A':
+        for y in p['registration_centers_y_mm']:
+            pad=box([ex-wall-.6,y-1,-7.5,ex-wall+.2,y+1,-5.8])
+            rear=rear-box([ex-wall-.8,y-1.2,-7.7,ex-wall+.4,y+1.2,split+.2])
+            front=front+pad;registrations.append(pad)
     b=p['battery'];bw,bh,bt=b['xyz_mm'];bx,by=b['center_xy_mm'];bz=floor+b['adhesive_mm']
     battery=box([bx-bw/2,by-bh/2,bz,bx+bw/2,by+bh/2,bz+bt]);adhesive=box([bx-bw/2,by-bh/2,floor,bx+bw/2,by+bh/2,bz])
     c=b['tray_clearance_mm'];tw=b['tray_wall_mm'];h=b['tray_height_mm']
@@ -147,4 +172,4 @@ def build(parts,mounts,p,kp):
     return dict(front=front,rear=rear,caps=caps,key_data=key_data,cap_features=features,pcb_clips=pcb_clips,pcb_releases=pcb_releases,
                 supports=supports,clip_data=clip_data,screws=screws,nuts=nuts,bosses=bosses,screw_data=screw_data,snaps=snaps,receivers=receivers,snap_data=snap_data,
                 battery=battery,adhesive=adhesive,protection=protection,speaker=speaker,damping=damping,foam=foam,usbprobe=usbprobe,usbcut=usbcut,tfcut=tfcut,
-                dimensions={'outer_x_mm':[ox,ex],'outer_y_mm':[oy,ey],'glass_and_front_z_mm':top,'rear_bottom_z_mm':bottom,'rear_inside_z_mm':floor,'target_thickness_mm':p['target_thickness_mm']})
+                registrations=registrations,dimensions={'outer_x_mm':[ox,ex],'outer_y_mm':[oy,ey],'glass_and_front_z_mm':top,'rear_bottom_z_mm':bottom,'rear_inside_z_mm':floor,'target_thickness_mm':p['target_thickness_mm']})

@@ -46,7 +46,7 @@ def usb_probe(parts,p):
 def cap_components(cap,data,p):
     # Split at the flange planes to get tighter conservative installation/path boxes.
     b=bounds(cap);f0,f1=data['flange_x_mm']
-    cuts=sorted([b[0],f0,f1,data['body_end_x_mm'],data['tip_root_x_mm'],b[3]])
+    cuts=sorted([b[0],data.get('body_start_x_mm',b[0]),f0,f1,data['body_end_x_mm'],data['tip_root_x_mm'],b[3]])
     pieces=[]
     for a,z in zip(cuts,cuts[1:]):
         if z-a<1e-6:continue

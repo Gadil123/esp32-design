@@ -73,3 +73,5 @@
 ## T0 Ultra-Thin 独立 CAD 研究
 
 [T0 工程、复现命令与验收门槛](docs/11_cad_t0.md) · [模型/图/报告](deliverables/t0/README.md)。本分支从 main 独立开发，未合并/变基 P0/P1 PR；Pocket OS 软件架构保留。12mm 名义几何不等于加工、实际接线或录音通过，不批准打印。
+
+T0 Review 后的 A 纯卡扣修订、B 对照和准确 CAD 图纸见 [修订说明](docs/13_t0_snap_revision.md)。两版均等待 Reviewer，不批准打印。
