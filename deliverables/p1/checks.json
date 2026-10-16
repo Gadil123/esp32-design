@@ -3,6 +3,117 @@
   "status": "PASS",
   "release_status": "REVIEW_ONLY_NOT_PRINTABLE",
   "functional_actuation_status": "UNVERIFIED",
+  "manufacturing_status": "manufacturing_unverified",
+  "manufacturing": {
+    "status": "manufacturing_unverified",
+    "candidate_profile": {
+      "status": "manufacturing_unverified",
+      "candidate_process": "SLA, separately printed caps and split guides; tough engineering resin candidate, supplier/material not selected",
+      "scope": "Key mechanism screening only; no whole-enclosure manufacturing qualification or strength certification",
+      "supplier_acceptance": false,
+      "physical_coupon_tested": false,
+      "sources_accessed": "2026-10-16",
+      "sources": {
+        "sla_features_and_moving_gap": "https://xometry.asia/en/sla-3d-printing-design-guidelines-8-essential-tip/",
+        "sla_example_dimensional_accuracy": "https://jlc3dp.com/blog/how-to-design-3d-models-for-printing",
+        "fdm_wall_comparison": "https://jlc3dp.com/blog/how-to-design-3d-models-for-printing"
+      },
+      "published_sla_reference": {
+        "unsupported_wall_min_mm": 0.6,
+        "needle_diameter_min_mm": 1.0,
+        "detail_min_mm": 0.2,
+        "moving_gap_nominal_min_mm": 0.5
+      },
+      "engineering_screening_limits": {
+        "body_min_section_mm": 1.2,
+        "body_max_slenderness": 4.0,
+        "flange_min_thickness_mm": 1.0,
+        "local_contact_min_thickness_mm": 0.6,
+        "local_contact_max_projection_mm": 1.0,
+        "local_contact_max_slenderness": 2.0,
+        "guide_effective_gap_min_mm": 0.2,
+        "head_effective_gap_min_mm": 0.04,
+        "axial_extra_clearance_min_mm": 0.1
+      },
+      "conditional_tolerance_budget": {
+        "per_part_size_error_mm": 0.2,
+        "per_face_position_error_mm": 0.2,
+        "cleanup_reserve_mm": 0.05,
+        "note": "Proposed acceptance bounds, not a supplier commitment. Overall shrinkage, warp, datum error and load deflection require supplier review and measurements. Static switch gap is not guaranteed."
+      },
+      "fdm_comparison_min_wall_mm": 1.2,
+      "coupon_half_extent_yz_mm": [
+        3.6,
+        3.0
+      ],
+      "coupon_inner_end_x_mm": -24.5
+    },
+    "conditional_key_feature_screen": "PASS",
+    "fdm_qualified": false,
+    "fdm_minimum_feature_comparison_pass": false,
+    "contact_strength_qualified": false,
+    "switch_actuation_verified": false,
+    "off_axis_actuation_status": "UNVERIFIED",
+    "datum_preload_status": "UNVERIFIED",
+    "tolerance_budget": {
+      "transverse_effective_per_side_mm": 0.25,
+      "head_end_nominal_mm": 0.5,
+      "head_end_effective_mm": 0.049999999999999975,
+      "axial_cavity_freeplay_mm": 1.0,
+      "axial_extra_after_motion_and_errors_mm": 0.19999999999999996,
+      "cage_stock_after_size_error_mm": 0.6000000000000001
+    },
+    "metrics": {
+      "KEY1": {
+        "body_section_mm": 1.4000000000000004,
+        "body_length_mm": 4.325639294490863,
+        "body_slenderness": 3.0897423532077584,
+        "flange_thickness_mm": 1.0,
+        "contact_thickness_mm": 0.5999999999999996,
+        "contact_flat_length_mm": 0.8000000000000007,
+        "contact_projection_mm": 1.0000002000000023,
+        "contact_slenderness": 1.6666670000000048,
+        "nominal_contact_face_edge_margins_yz_mm": [
+          0.1999999925182232,
+          0.10000000000018971
+        ],
+        "nominal_guide_float_per_side_mm": 0.5,
+        "full_contact_coverage_for_all_guide_float": false
+      },
+      "KEY2": {
+        "body_section_mm": 1.4000000000000004,
+        "body_length_mm": 4.323625560960423,
+        "body_slenderness": 3.088303972114587,
+        "flange_thickness_mm": 1.0,
+        "contact_thickness_mm": 0.5999999999999996,
+        "contact_flat_length_mm": 0.8000000000000007,
+        "contact_projection_mm": 1.0000002000000023,
+        "contact_slenderness": 1.6666670000000048,
+        "nominal_contact_face_edge_margins_yz_mm": [
+          0.19999999251822587,
+          0.10000000000018971
+        ],
+        "nominal_guide_float_per_side_mm": 0.5,
+        "full_contact_coverage_for_all_guide_float": false
+      },
+      "KEY3": {
+        "body_section_mm": 1.4000000000000004,
+        "body_length_mm": 3.074632427234377,
+        "body_slenderness": 2.196166019453126,
+        "flange_thickness_mm": 1.0,
+        "contact_thickness_mm": 0.5999999999999996,
+        "contact_flat_length_mm": 0.8000000000000007,
+        "contact_projection_mm": 1.0000002000000023,
+        "contact_slenderness": 1.6666670000000048,
+        "nominal_contact_face_edge_margins_yz_mm": [
+          0.1999999925182241,
+          0.10000000000018971
+        ],
+        "nominal_guide_float_per_side_mm": 0.5,
+        "full_contact_coverage_for_all_guide_float": false
+      }
+    }
+  },
   "source": {
     "repository": "https://github.com/waveshareteam/ESP32-C5-Touch-LCD-2.8",
     "revision": "77a7dceac38a1bd491173b3906205217a382c08c",
@@ -46,23 +157,23 @@
     "key_cap_design_motion_mm": 0.4,
     "switch_actual_travel_mm": null,
     "key_stem_yz_mm": [
-      1.2,
-      0.5
+      1.8,
+      1.4
     ],
-    "key_guide_clearance_mm": 0.15,
+    "key_guide_clearance_mm": 0.5,
     "key_flange_yz_mm": [
-      3.8,
-      2.0
+      4.2,
+      3.0
     ],
-    "key_flange_thickness_mm": 0.4,
-    "key_flange_rest_offset_mm": 0.95,
+    "key_flange_thickness_mm": 1.0,
+    "key_flange_rest_offset_mm": 1.1,
     "key_head_yz_mm": [
       4.6,
       2.2
     ],
     "key_head_depth_mm": 1.0,
     "key_head_corner_mm": 0.35,
-    "key_head_motion_gap_mm": 0.45,
+    "key_head_motion_gap_mm": 0.9,
     "reset_recess_mm": 0.35,
     "reset_tool_radius_mm": 0.45,
     "reset_hole_radius_mm": 0.65,
@@ -89,9 +200,16 @@
       -12.0
     ],
     "registration_length_mm": 6.0,
-    "minimum_key_running_clearance_mm": 0.04,
-    "key_side_wall_extra_mm": 0.9,
-    "minimum_key_cage_stock_mm": 0.75
+    "minimum_key_running_clearance_mm": 0.29,
+    "key_side_wall_extra_mm": 1.8,
+    "minimum_key_cage_stock_mm": 0.75,
+    "key_tip_yz_mm": [
+      1.4,
+      0.6
+    ],
+    "key_tip_projection_mm": 1.0,
+    "key_tip_transition_mm": 0.2,
+    "key_axial_clearance_mm": 0.3
   },
   "evidence": {
     "checked_on": "2026-10-16",
@@ -330,7 +448,7 @@
   ],
   "dimensions": {
     "xy_mm": [
-      56.24000000000001,
+      57.140000000000015,
       77.86
     ],
     "main_body_bottom_z_mm": -14.299999439999999,
@@ -339,7 +457,7 @@
     "provisional_depth_including_feet_mm": 17.599999439999998,
     "final_device_thickness_mm": null,
     "outer_x_mm": [
-      -28.570000000000004,
+      -29.470000000000006,
       27.670000000000005
     ],
     "outer_y_mm": [
@@ -423,17 +541,19 @@
         -6.399999392453879
       ],
       "tip_x_mm": -25.044360705509142,
+      "body_end_x_mm": -26.044360705509142,
+      "tip_root_x_mm": -25.844360705509143,
       "rest_gap_mm": 0.15,
       "cap_motion_budget_mm": 0.4,
       "switch_actual_travel_mm": null,
       "flange_x_mm": [
-        -27.620000000000005,
-        -27.220000000000006
+        -28.370000000000005,
+        -27.370000000000005
       ],
-      "guide_clearance_per_side_mm": 0.15,
+      "guide_clearance_per_side_mm": 0.5,
       "reset_recess_mm": null,
       "outer_cage_stock_mm": 0.8000000000000007,
-      "inner_cage_stock_mm": 0.8000000000000043
+      "inner_cage_stock_mm": 0.8000000000000007
     },
     "KEY2": {
       "function": "BOOT",
@@ -456,17 +576,19 @@
         -6.399999392453879
       ],
       "tip_x_mm": -25.04637443903958,
+      "body_end_x_mm": -26.04637443903958,
+      "tip_root_x_mm": -25.846374439039582,
       "rest_gap_mm": 0.15,
       "cap_motion_budget_mm": 0.4,
       "switch_actual_travel_mm": null,
       "flange_x_mm": [
-        -27.620000000000005,
-        -27.220000000000006
+        -28.370000000000005,
+        -27.370000000000005
       ],
-      "guide_clearance_per_side_mm": 0.15,
+      "guide_clearance_per_side_mm": 0.5,
       "reset_recess_mm": null,
       "outer_cage_stock_mm": 0.8000000000000007,
-      "inner_cage_stock_mm": 0.8000000000000043
+      "inner_cage_stock_mm": 0.8000000000000007
     },
     "KEY3": {
       "function": "RESET",
@@ -489,17 +611,19 @@
         -6.399999392453879
       ],
       "tip_x_mm": -25.045367572765628,
+      "body_end_x_mm": -26.045367572765628,
+      "tip_root_x_mm": -25.84536757276563,
       "rest_gap_mm": 0.15,
       "cap_motion_budget_mm": 0.4,
       "switch_actual_travel_mm": null,
       "flange_x_mm": [
-        -27.620000000000005,
-        -27.220000000000006
+        -28.370000000000005,
+        -27.370000000000005
       ],
-      "guide_clearance_per_side_mm": 0.15,
+      "guide_clearance_per_side_mm": 0.5,
       "reset_recess_mm": 0.35,
       "outer_cage_stock_mm": 0.8000000000000007,
-      "inner_cage_stock_mm": 0.8000000000000043
+      "inner_cage_stock_mm": 0.8000000000000007
     }
   },
   "usb_mouth_face_bounds_mm": [
@@ -523,7 +647,7 @@
     "valid_front": {
       "pass": true,
       "solid_count": 1,
-      "volume_mm3": 4229.650348954752
+      "volume_mm3": 4710.92270752131
     },
     "board_interference_front": {
       "pass": true,
@@ -533,7 +657,7 @@
     "valid_rear": {
       "pass": true,
       "solid_count": 1,
-      "volume_mm3": 10959.05451795104
+      "volume_mm3": 11423.56391965572
     },
     "board_interference_rear": {
       "pass": true,
@@ -543,7 +667,7 @@
     "valid_KEY1": {
       "pass": true,
       "solid_count": 1,
-      "volume_mm3": 15.200228676759258
+      "volume_mm3": 31.99278945551506
     },
     "board_interference_KEY1": {
       "pass": true,
@@ -553,7 +677,7 @@
     "valid_KEY2": {
       "pass": true,
       "solid_count": 1,
-      "volume_mm3": 15.199020436641
+      "volume_mm3": 31.987714847018353
     },
     "board_interference_KEY2": {
       "pass": true,
@@ -563,7 +687,7 @@
     "valid_KEY3": {
       "pass": true,
       "solid_count": 1,
-      "volume_mm3": 4.7047794563406145
+      "volume_mm3": 18.825407049963964
     },
     "board_interference_KEY3": {
       "pass": true,
@@ -878,8 +1002,8 @@
       "pass": true,
       "collisions": [],
       "minimum_shell_distances_mm": [
-        0.4999999999999991,
-        0.4999999999999991
+        0.5,
+        0.5
       ],
       "probe_bounds_mm": [
         -6.099793535910903,
@@ -920,13 +1044,13 @@
       "sections": [
         {
           "stock_mm": 0.8000000000000007,
-          "witness_volume_mm3": 0.032000000000000084,
-          "occupied_volume_mm3": 0.032000000000000084
+          "witness_volume_mm3": 0.024000000000000025,
+          "occupied_volume_mm3": 0.024000000000000025
         },
         {
-          "stock_mm": 0.8000000000000043,
-          "witness_volume_mm3": 0.03200000000000023,
-          "occupied_volume_mm3": 0.03200000000000023
+          "stock_mm": 0.8000000000000007,
+          "witness_volume_mm3": 0.024000000000000025,
+          "occupied_volume_mm3": 0.024000000000000025
         }
       ]
     },
@@ -938,12 +1062,12 @@
       "pass": true,
       "collisions": [],
       "shell_clearance_rest_then_end_mm": [
-        0.14999999999999858,
-        0.14999999999999858,
-        0.05000000000000071,
-        0.05000000000000071
+        0.3000000000000007,
+        0.3000000000000007,
+        0.3000000000000007,
+        0.3000000000000007
       ],
-      "minimum_required_mm": 0.04,
+      "minimum_required_mm": 0.29,
       "design_cap_motion_mm": 0.4,
       "actual_switch_travel_mm": null
     },
@@ -952,30 +1076,30 @@
       "blocking_intersections": [
         {
           "obstacle": "front",
-          "volume_mm3": 0.7568753493390192
+          "volume_mm3": 2.2680006804516553
         },
         {
           "obstacle": "rear",
-          "volume_mm3": 0.7568746506609804
+          "volume_mm3": 2.267999319548344
         }
       ]
     },
-    "KEY1_inward_hard_stop": {
+    "KEY1_inward_capture_boundary": {
       "pass": true,
       "blocking_intersections": [
         {
           "obstacle": "front",
-          "volume_mm3": 2.2180989010379077
+          "volume_mm3": 1.955227518366903
         },
         {
           "obstacle": "rear",
-          "volume_mm3": 2.2180968839847877
+          "volume_mm3": 1.9552260116525229
         }
       ]
     },
     "KEY1_no_preload": {
       "pass": true,
-      "rest_distance_mm": 0.15003868792942165
+      "rest_distance_mm": 0.15002579007992323
     },
     "KEY1_virtual_path_except_static_actuator": {
       "pass": true,
@@ -987,13 +1111,13 @@
       "sections": [
         {
           "stock_mm": 0.8000000000000007,
-          "witness_volume_mm3": 0.03199999999999994,
-          "occupied_volume_mm3": 0.03199999999999994
+          "witness_volume_mm3": 0.023999999999999813,
+          "occupied_volume_mm3": 0.023999999999999813
         },
         {
-          "stock_mm": 0.8000000000000043,
-          "witness_volume_mm3": 0.032000000000000084,
-          "occupied_volume_mm3": 0.032000000000000084
+          "stock_mm": 0.8000000000000007,
+          "witness_volume_mm3": 0.023999999999999813,
+          "occupied_volume_mm3": 0.023999999999999813
         }
       ]
     },
@@ -1005,12 +1129,12 @@
       "pass": true,
       "collisions": [],
       "shell_clearance_rest_then_end_mm": [
-        0.14999999999999858,
-        0.14999999999999858,
-        0.05000000000000071,
-        0.05000000000000071
+        0.3000000000000007,
+        0.3000000000000007,
+        0.3000000000000007,
+        0.3000000000000007
       ],
-      "minimum_required_mm": 0.04,
+      "minimum_required_mm": 0.29,
       "design_cap_motion_mm": 0.4,
       "actual_switch_travel_mm": null
     },
@@ -1019,30 +1143,30 @@
       "blocking_intersections": [
         {
           "obstacle": "front",
-          "volume_mm3": 0.7568753493390188
+          "volume_mm3": 2.268000680451662
         },
         {
           "obstacle": "rear",
-          "volume_mm3": 0.7568746506609797
+          "volume_mm3": 2.267999319548352
         }
       ]
     },
-    "KEY2_inward_hard_stop": {
+    "KEY2_inward_capture_boundary": {
       "pass": true,
       "blocking_intersections": [
         {
           "obstacle": "front",
-          "volume_mm3": 2.2180989010379077
+          "volume_mm3": 1.9552275183669074
         },
         {
           "obstacle": "rear",
-          "volume_mm3": 2.2180968839847868
+          "volume_mm3": 1.9552260116525284
         }
       ]
     },
     "KEY2_no_preload": {
       "pass": true,
-      "rest_distance_mm": 0.15003868792942165
+      "rest_distance_mm": 0.15002579007992323
     },
     "KEY2_virtual_path_except_static_actuator": {
       "pass": true,
@@ -1054,13 +1178,13 @@
       "sections": [
         {
           "stock_mm": 0.8000000000000007,
-          "witness_volume_mm3": 0.03199999999999994,
-          "occupied_volume_mm3": 0.03199999999999994
+          "witness_volume_mm3": 0.024000000000000098,
+          "occupied_volume_mm3": 0.024000000000000098
         },
         {
-          "stock_mm": 0.8000000000000043,
-          "witness_volume_mm3": 0.032000000000000084,
-          "occupied_volume_mm3": 0.032000000000000084
+          "stock_mm": 0.8000000000000007,
+          "witness_volume_mm3": 0.024000000000000098,
+          "occupied_volume_mm3": 0.024000000000000098
         }
       ]
     },
@@ -1072,12 +1196,12 @@
       "pass": true,
       "collisions": [],
       "shell_clearance_rest_then_end_mm": [
-        0.14999999999999858,
-        0.14999999999999858,
-        0.14999999999999858,
-        0.14999999999999858
+        0.3000000000000007,
+        0.3000000000000007,
+        0.3000000000000007,
+        0.3000000000000007
       ],
-      "minimum_required_mm": 0.04,
+      "minimum_required_mm": 0.29,
       "design_cap_motion_mm": 0.4,
       "actual_switch_travel_mm": null
     },
@@ -1086,30 +1210,30 @@
       "blocking_intersections": [
         {
           "obstacle": "front",
-          "volume_mm3": 0.7568753493390193
+          "volume_mm3": 2.2680006804516544
         },
         {
           "obstacle": "rear",
-          "volume_mm3": 0.7568746506609804
+          "volume_mm3": 2.267999319548343
         }
       ]
     },
-    "KEY3_inward_hard_stop": {
+    "KEY3_inward_capture_boundary": {
       "pass": true,
       "blocking_intersections": [
         {
           "obstacle": "front",
-          "volume_mm3": 0.7568753493390293
+          "volume_mm3": 1.4175004252822831
         },
         {
           "obstacle": "rear",
-          "volume_mm3": 0.7568746506609902
+          "volume_mm3": 1.4174995747177146
         }
       ]
     },
     "KEY3_no_preload": {
       "pass": true,
-      "rest_distance_mm": 0.1500386879294181
+      "rest_distance_mm": 0.15002579007992323
     },
     "KEY3_virtual_path_except_static_actuator": {
       "pass": true,
@@ -1119,7 +1243,7 @@
     "RESET_recessed_tool_access": {
       "pass": true,
       "collisions": [],
-      "minimum_shell_distance_mm": 0.15000000000000213
+      "minimum_shell_distance_mm": 0.75
     },
     "rear_closure_sampled": {
       "pass": true,
@@ -1173,9 +1297,173 @@
           "mutated_geometry_check_result": "FAIL"
         }
       }
+    },
+    "KEY1_minimum_features": {
+      "pass": true,
+      "criteria": {
+        "body_section": true,
+        "body_slenderness": true,
+        "flange_thickness": true,
+        "local_contact_thickness": true,
+        "local_contact_projection": true,
+        "local_contact_slenderness": true
+      },
+      "measured_from_BRep": {
+        "body_section_mm": 1.4000000000000004,
+        "body_length_mm": 4.325639294490863,
+        "body_slenderness": 3.0897423532077584,
+        "flange_thickness_mm": 1.0,
+        "contact_thickness_mm": 0.5999999999999996,
+        "contact_flat_length_mm": 0.8000000000000007,
+        "contact_projection_mm": 1.0000002000000023,
+        "contact_slenderness": 1.6666670000000048,
+        "nominal_contact_face_edge_margins_yz_mm": [
+          0.1999999925182232,
+          0.10000000000018971
+        ],
+        "nominal_guide_float_per_side_mm": 0.5,
+        "full_contact_coverage_for_all_guide_float": false
+      },
+      "features_contained_in_cap": true,
+      "scope": "conditional local feature screen; contact pad is a short exception to the 1mm long-pin rule, not strength qualified"
+    },
+    "KEY2_minimum_features": {
+      "pass": true,
+      "criteria": {
+        "body_section": true,
+        "body_slenderness": true,
+        "flange_thickness": true,
+        "local_contact_thickness": true,
+        "local_contact_projection": true,
+        "local_contact_slenderness": true
+      },
+      "measured_from_BRep": {
+        "body_section_mm": 1.4000000000000004,
+        "body_length_mm": 4.323625560960423,
+        "body_slenderness": 3.088303972114587,
+        "flange_thickness_mm": 1.0,
+        "contact_thickness_mm": 0.5999999999999996,
+        "contact_flat_length_mm": 0.8000000000000007,
+        "contact_projection_mm": 1.0000002000000023,
+        "contact_slenderness": 1.6666670000000048,
+        "nominal_contact_face_edge_margins_yz_mm": [
+          0.19999999251822587,
+          0.10000000000018971
+        ],
+        "nominal_guide_float_per_side_mm": 0.5,
+        "full_contact_coverage_for_all_guide_float": false
+      },
+      "features_contained_in_cap": true,
+      "scope": "conditional local feature screen; contact pad is a short exception to the 1mm long-pin rule, not strength qualified"
+    },
+    "KEY3_minimum_features": {
+      "pass": true,
+      "criteria": {
+        "body_section": true,
+        "body_slenderness": true,
+        "flange_thickness": true,
+        "local_contact_thickness": true,
+        "local_contact_projection": true,
+        "local_contact_slenderness": true
+      },
+      "measured_from_BRep": {
+        "body_section_mm": 1.4000000000000004,
+        "body_length_mm": 3.074632427234377,
+        "body_slenderness": 2.196166019453126,
+        "flange_thickness_mm": 1.0,
+        "contact_thickness_mm": 0.5999999999999996,
+        "contact_flat_length_mm": 0.8000000000000007,
+        "contact_projection_mm": 1.0000002000000023,
+        "contact_slenderness": 1.6666670000000048,
+        "nominal_contact_face_edge_margins_yz_mm": [
+          0.1999999925182241,
+          0.10000000000018971
+        ],
+        "nominal_guide_float_per_side_mm": 0.5,
+        "full_contact_coverage_for_all_guide_float": false
+      },
+      "features_contained_in_cap": true,
+      "scope": "conditional local feature screen; contact pad is a short exception to the 1mm long-pin rule, not strength qualified"
+    },
+    "key_conditional_tolerance_budget": {
+      "pass": true,
+      "budget": {
+        "transverse_effective_per_side_mm": 0.25,
+        "head_end_nominal_mm": 0.5,
+        "head_end_effective_mm": 0.049999999999999975,
+        "axial_cavity_freeplay_mm": 1.0,
+        "axial_extra_after_motion_and_errors_mm": 0.19999999999999996,
+        "cage_stock_after_size_error_mm": 0.6000000000000001
+      },
+      "nominal_transverse_gap_meets_published_reference": true,
+      "supplier_confirmed": false,
+      "includes_switch_datum_or_warp": false
+    },
+    "manufacturing_negative_fixtures": {
+      "pass": true,
+      "fixtures": {
+        "legacy_thin_long_body": {
+          "detected": true,
+          "mutated_geometry_check_result": "FAIL"
+        },
+        "legacy_0_4mm_flange": {
+          "detected": true,
+          "mutated_geometry_check_result": "FAIL"
+        },
+        "overlong_contact_pad": {
+          "detected": true,
+          "mutated_geometry_check_result": "FAIL"
+        },
+        "legacy_0_05mm_head_end_gap": {
+          "detected": true,
+          "mutated_geometry_check_result": "FAIL"
+        },
+        "legacy_0_15mm_guide_gap": {
+          "detected": true,
+          "mutated_geometry_check_result": "FAIL"
+        }
+      }
+    },
+    "valid_coupon_front_guide": {
+      "pass": true,
+      "solid_count": 1,
+      "bounds_mm": [
+        -29.470000000000006,
+        -7.223397243720067,
+        -6.325,
+        -25.870000000000005,
+        -0.02339724372006735,
+        -3.3999993924538794
+      ]
+    },
+    "valid_coupon_rear_guide": {
+      "pass": true,
+      "solid_count": 1,
+      "bounds_mm": [
+        -29.470000000000006,
+        -7.223397243720067,
+        -9.399999392453878,
+        -25.870000000000005,
+        -0.02339724372006735,
+        -6.4750000000000005
+      ]
+    },
+    "valid_coupon_key1_cap": {
+      "pass": true,
+      "solid_count": 1,
+      "bounds_mm": [
+        -31.370000000000005,
+        -5.923397243720067,
+        -7.899999392453879,
+        -25.04436070550914,
+        -1.3233972437200672,
+        -4.899999392453879
+      ]
     }
   },
   "unverified": [
+    "Candidate SLA/material/supplier unconfirmed. Short contact pad strength, guide wear, warp, support removal and coupon fit untested.",
+    "Guide float exceeds full-contact edge margins. Off-axis actuation/case contact and assembled datum preload are UNVERIFIED; axial centered paths only.",
     "Actual switch travel, return force and actuation remain unknown; cap motion budget does not prove functional operation.",
     "USB datum/metal nose and cable-specific shoulder geometry require physical seating test; only sourced body clearance verified.",
     "Assembly poses are rigid; rear closure and screws sampled, not a full continuous proof.",
@@ -1187,42 +1475,66 @@
     "front_shell": {
       "step_valid": true,
       "step_solid_count": 1,
-      "stl_triangles": 3856,
+      "stl_triangles": 3648,
       "stl_nonmanifold_edges": 0,
-      "step_stl_bounds_error_mm": 3.6926513757862267e-07,
-      "step_stl_relative_volume_error": 3.938711571741087e-05
+      "step_stl_bounds_error_mm": 6.866455066756316e-07,
+      "step_stl_relative_volume_error": 3.5427230521725316e-05
     },
     "rear_shell": {
       "step_valid": true,
       "step_solid_count": 1,
-      "stl_triangles": 7660,
+      "stl_triangles": 7452,
       "stl_nonmanifold_edges": 0,
-      "step_stl_bounds_error_mm": 3.051757815342171e-07,
-      "step_stl_relative_volume_error": 2.430128528832961e-05
+      "step_stl_bounds_error_mm": 6.866455066756316e-07,
+      "step_stl_relative_volume_error": 2.333620176059442e-05
     },
     "key1_cap": {
       "step_valid": true,
       "step_solid_count": 1,
-      "stl_triangles": 492,
+      "stl_triangles": 520,
       "stl_nonmanifold_edges": 0,
-      "step_stl_bounds_error_mm": 4.5776367230132564e-07,
-      "step_stl_relative_volume_error": 1.3500574399796896e-05
+      "step_stl_bounds_error_mm": 8.392333974427402e-07,
+      "step_stl_relative_volume_error": 6.662015646464628e-06
     },
     "key2_cap": {
       "step_valid": true,
       "step_solid_count": 1,
-      "stl_triangles": 492,
+      "stl_triangles": 520,
       "stl_nonmanifold_edges": 0,
-      "step_stl_bounds_error_mm": 8.356182021884706e-07,
-      "step_stl_relative_volume_error": 1.3550545775829111e-05
+      "step_stl_bounds_error_mm": 8.392333974427402e-07,
+      "step_stl_relative_volume_error": 6.637084419541138e-06
     },
     "key3_cap": {
       "step_valid": true,
       "step_solid_count": 1,
-      "stl_triangles": 44,
+      "stl_triangles": 76,
       "stl_nonmanifold_edges": 0,
-      "step_stl_bounds_error_mm": 6.866455066756316e-07,
-      "step_stl_relative_volume_error": 2.0795996592404838e-06
+      "step_stl_bounds_error_mm": 8.392333974427402e-07,
+      "step_stl_relative_volume_error": 9.322155035727911e-08
+    },
+    "coupon_front_guide": {
+      "step_valid": true,
+      "step_solid_count": 1,
+      "stl_triangles": 60,
+      "stl_nonmanifold_edges": 0,
+      "step_stl_bounds_error_mm": 8.392333974427402e-07,
+      "step_stl_relative_volume_error": 5.408046652416217e-07
+    },
+    "coupon_rear_guide": {
+      "step_valid": true,
+      "step_solid_count": 1,
+      "stl_triangles": 60,
+      "stl_nonmanifold_edges": 0,
+      "step_stl_bounds_error_mm": 8.392333974427402e-07,
+      "step_stl_relative_volume_error": 4.5989301513336174e-07
+    },
+    "coupon_key1_cap": {
+      "step_valid": true,
+      "step_solid_count": 1,
+      "stl_triangles": 520,
+      "stl_nonmanifold_edges": 0,
+      "step_stl_bounds_error_mm": 8.392333974427402e-07,
+      "step_stl_relative_volume_error": 6.662015646464628e-06
     }
   },
   "exports_complete": true

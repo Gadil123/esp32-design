@@ -49,6 +49,7 @@ P1 以 P0 为基线，增加共用原厂四螺母的可拆连接、独立 BAT_PW
 - [07 · 官方 STEP **实际解析**：侧键、USB-C、MIC 的尺寸与坐标](docs/07_cad_measurements.md)
 - [08 · P0 CAD 工程、复现命令与待验证风险](docs/08_cad_p0.md)
 - [09 · P1 外壳连接、侧键、装配路径与独立验证](docs/09_cad_p1.md)
+- [10 · P1 键帽可制造性修订、候选工艺、公差试样及软件整合保护](docs/10_p1_manufacturability_review.md)
 - [STEP 元件外包络机读数据 CSV](data/step_component_bounds.csv)
 - [方向简图：官方 PCB 背面与屏幕正面镜像（非尺寸图）](assets/orientation_diagram.svg)
 - [官方板载图顺时针旋转 90° 在线查看器](assets/official_board_rotated_viewer.html)（下载 HTML 后用浏览器打开；需联网加载原图）

@@ -1,5 +1,5 @@
 """P1: four shared factory-nut fasteners, split guides, captive key pistons."""
-from build123d import Align, Axis, Cylinder, GeomType, Plane, RectangleRounded, extrude
+from build123d import Align, Axis, Cylinder, GeomType, Plane, Rectangle, RectangleRounded, extrude, loft
 from model import box_between
 from reference import bounds
 
@@ -91,7 +91,7 @@ def make_p1(parts,mounts,holes,p):
                          ucx+uw/2,oy1+1,ucz+uh/2])
     front=front-usb_cut;rear=rear-usb_cut
 
-    caps={};key_data={};key_pockets={}
+    caps={};key_data={};key_pockets={};cap_features={}
     for key,function in FUNCTIONS.items():
         face=contact_face(parts[key]);fb=bounds(face)
         # Planar face normal is almost -X (the source board has a tiny in-plane rotation).
@@ -103,17 +103,25 @@ def make_p1(parts,mounts,holes,p):
             stem0=ox0+p['reset_recess_mm']
         else:
             stem0=ox0-p['key_head_motion_gap_mm']
-        cap=box_between([stem0,yc-sy/2,zc-sz/2,tip,yc+sy/2,zc+sz/2])
-        cap=cap+box_between([flange0,yc-fw/2,zc-fh/2,flange1,yc+fw/2,zc+fh/2])
+        ty,tz=p['key_tip_yz_mm'];body_end=tip-p['key_tip_projection_mm']
+        tip_root=body_end+p['key_tip_transition_mm']
+        body=box_between([stem0,yc-sy/2,zc-sz/2,body_end,yc+sy/2,zc+sz/2])
+        transition=loft([(Plane.YZ*Rectangle(sy,sz)).translate((body_end,yc,zc)),
+                         (Plane.YZ*Rectangle(ty,tz)).translate((tip_root,yc,zc))])
+        contact=box_between([tip_root,yc-ty/2,zc-tz/2,tip,yc+ty/2,zc+tz/2])
+        flange=box_between([flange0,yc-fw/2,zc-fh/2,flange1,yc+fw/2,zc+fh/2])
+        cap=body+transition+contact+flange
+        cap_features[key]={'body':body,'flange':flange,'contact':contact,'transition':transition}
         if function!='RESET':
             hw,hh=p['key_head_yz_mm']
             head=extrude(Plane.YZ*RectangleRounded(hw,hh,p['key_head_corner_mm']),amount=p['key_head_depth_mm'])
             head=head.translate((stem0-p['key_head_depth_mm'],yc,zc))
             cap=cap+head
-        # Two shell halves capture a large flange in a blind pocket, while the narrow
-        # stem exits through a smaller rectangular guide. No flexure or added switch.
-        pocket=box_between([flange0-clear,yc-fw/2-clear,zc-fh/2-clear,
-                            flange1+stroke+clear,yc+fw/2+clear,zc+fh/2+clear])
+        # Split guides capture the flange. A thick body carries the load; only the
+        # last short contact pad fits the original actuator. No switch travel inferred.
+        axial=p['key_axial_clearance_mm']
+        pocket=box_between([flange0-axial,yc-fw/2-clear,zc-fh/2-clear,
+                            flange1+stroke+axial,yc+fw/2+clear,zc+fh/2+clear])
         if function=='RESET':
             guide=box_between([stem0-clear,yc-sy/2-clear,zc-sz/2-clear,tip+clear,yc+sy/2+clear,zc+sz/2+clear])
             tool=Cylinder(p['reset_hole_radius_mm'],stem0-ox0+clear+1,
@@ -126,16 +134,16 @@ def make_p1(parts,mounts,holes,p):
         cap.label=f'{key}_{function}_CAP_P1';caps[key]=cap;key_pockets[key]=pocket
         key_data[key]={'function':function,'static_actuator_face_bounds_mm':fb,'face_area_mm2':face.area,
                        'face_normal':list(face.normal_at()),'center_yz_mm':[yc,zc],
-                       'tip_x_mm':tip,'rest_gap_mm':p['key_contact_gap_mm'],
+                       'tip_x_mm':tip,'body_end_x_mm':body_end,'tip_root_x_mm':tip_root,'rest_gap_mm':p['key_contact_gap_mm'],
                        'cap_motion_budget_mm':stroke,'switch_actual_travel_mm':None,
                        'flange_x_mm':[flange0,flange1],'guide_clearance_per_side_mm':clear,
                        'reset_recess_mm':p['reset_recess_mm'] if function=='RESET' else None,
-                       'outer_cage_stock_mm':flange0-clear-ox0,
-                       'inner_cage_stock_mm':ix0-(flange1+stroke+clear)}
+                       'outer_cage_stock_mm':flange0-axial-ox0,
+                       'inner_cage_stock_mm':ix0-(flange1+stroke+axial)}
     front.label='FRONT_P1_shared_screw_brackets';rear.label='REAR_P1_split_guides_and_supports'
     return {'front':front,'rear':rear,'caps':caps,'screws':screws,'pads':pads,'rails':rails,
             'supports':supports,'key_data':key_data,'mount_data':mount_data,'usb_cut':usb_cut,
-            'key_pockets':key_pockets,'usb_mouth_face_bounds_mm':ub,'dimensions':{'xy_mm':[ox1-ox0,oy1-oy0],
+            'cap_features':cap_features,'key_pockets':key_pockets,'usb_mouth_face_bounds_mm':ub,'dimensions':{'xy_mm':[ox1-ox0,oy1-oy0],
             'main_body_bottom_z_mm':bottom,'front_top_z_mm':top,'floor_top_z_mm':floor,
             'provisional_depth_including_feet_mm':top-min(m['foot_bottom_z_mm'] for m in mount_data),
             'final_device_thickness_mm':None,'outer_x_mm':[ox0,ox1],'outer_y_mm':[oy0,oy1]}}

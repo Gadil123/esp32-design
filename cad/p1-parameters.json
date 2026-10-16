@@ -28,23 +28,23 @@
   "key_cap_design_motion_mm": 0.4,
   "switch_actual_travel_mm": null,
   "key_stem_yz_mm": [
-    1.2,
-    0.5
+    1.8,
+    1.4
   ],
-  "key_guide_clearance_mm": 0.15,
+  "key_guide_clearance_mm": 0.5,
   "key_flange_yz_mm": [
-    3.8,
-    2.0
+    4.2,
+    3.0
   ],
-  "key_flange_thickness_mm": 0.4,
-  "key_flange_rest_offset_mm": 0.95,
+  "key_flange_thickness_mm": 1.0,
+  "key_flange_rest_offset_mm": 1.1,
   "key_head_yz_mm": [
     4.6,
     2.2
   ],
   "key_head_depth_mm": 1.0,
   "key_head_corner_mm": 0.35,
-  "key_head_motion_gap_mm": 0.45,
+  "key_head_motion_gap_mm": 0.9,
   "reset_recess_mm": 0.35,
   "reset_tool_radius_mm": 0.45,
   "reset_hole_radius_mm": 0.65,
@@ -71,7 +71,14 @@
     -12.0
   ],
   "registration_length_mm": 6.0,
-  "minimum_key_running_clearance_mm": 0.04,
-  "key_side_wall_extra_mm": 0.9,
-  "minimum_key_cage_stock_mm": 0.75
+  "minimum_key_running_clearance_mm": 0.29,
+  "key_side_wall_extra_mm": 1.8,
+  "minimum_key_cage_stock_mm": 0.75,
+  "key_tip_yz_mm": [
+    1.4,
+    0.6
+  ],
+  "key_tip_projection_mm": 1.0,
+  "key_tip_transition_mm": 0.2,
+  "key_axial_clearance_mm": 0.3
 }

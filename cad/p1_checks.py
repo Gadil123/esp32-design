@@ -46,7 +46,7 @@ def usb_probe(parts,p):
 def cap_components(cap,data,p):
     # Split at the flange planes to get tighter conservative installation/path boxes.
     b=bounds(cap);f0,f1=data['flange_x_mm']
-    cuts=[b[0],f0,f1,b[3]]
+    cuts=sorted([b[0],f0,f1,data['body_end_x_mm'],data['tip_root_x_mm'],b[3]])
     pieces=[]
     for a,z in zip(cuts,cuts[1:]):
         if z-a<1e-6:continue
@@ -134,11 +134,12 @@ def validate(parts,mounts,holes,m,p):
         # Verify material remains at the closed ends of the capture cavity, away
         # from the stem opening. These witness solids must be fully in the shell.
         yc,zc=data['center_yz_mm'];ox=m['dimensions']['outer_x_mm'][0]
-        f0,f1=data['flange_x_mm'];gc=p['key_guide_clearance_mm']
+        f0,f1=data['flange_x_mm'];gc=p['key_axial_clearance_mm']
         wall_sections=[(ox,f0-gc),(f1+p['key_cap_design_motion_mm']+gc,ox+p['wall_mm']+p['key_side_wall_extra_mm'])]
         witnesses=[]
         for lo,hi in wall_sections:
-            witness=box_between([lo,yc+1,zc+.6,hi,yc+1.2,zc+.8])
+            wy=p['key_stem_yz_mm'][0]/2+p['key_guide_clearance_mm']+.1
+            witness=box_between([lo,yc+wy,zc+.6,hi,yc+wy+.15,zc+.8])
             material=common_volume(witness,front)+common_volume(witness,rear)
             witnesses.append({'stock_mm':hi-lo,'witness_volume_mm3':witness.volume,'occupied_volume_mm3':material})
         record(f'{key}_capture_wall_stock',all(w['stock_mm']>=p['minimum_key_cage_stock_mm']-p['geometry_tolerance_mm'] and abs(w['witness_volume_mm3']-w['occupied_volume_mm3'])<1e-6 for w in witnesses),sections=witnesses)
@@ -153,11 +154,11 @@ def validate(parts,mounts,holes,m,p):
         record(f'{key}_guide_motion_continuous_AABBs',not motion_hits and min(clearances)>=p['minimum_key_running_clearance_mm'],collisions=motion_hits,
                shell_clearance_rest_then_end_mm=clearances,minimum_required_mm=p['minimum_key_running_clearance_mm'],
                design_cap_motion_mm=p['key_cap_design_motion_mm'],actual_switch_travel_mm=None)
-        # Retention/stop are verified by moving the ACTUAL cap beyond its allowed range.
-        outward=clashes(cap.translate((-.4,0,0)),[('front',front),('rear',rear)],tol)
-        inward=clashes(cap.translate((.8,0,0)),[('front',front),('rear',rear)],tol)
+        # Detect modeled capture boundaries; these are NOT verified safe switch stops.
+        outward=clashes(cap.translate((-1.2,0,0)),[('front',front),('rear',rear)],tol)
+        inward=clashes(cap.translate((1.2,0,0)),[('front',front),('rear',rear)],tol)
         record(f'{key}_outward_retention_stop',bool(outward),blocking_intersections=outward)
-        record(f'{key}_inward_hard_stop',bool(inward),blocking_intersections=inward)
+        record(f'{key}_inward_capture_boundary',bool(inward),blocking_intersections=inward)
         # Actual switch is static; first contact is a measured gap, not a travel claim.
         rest_distance=cap.distance_to(parts[key])
         record(f'{key}_no_preload',rest_distance>=p['key_contact_gap_mm']-.001,rest_distance_mm=rest_distance)
@@ -207,7 +208,7 @@ def validate(parts,mounts,holes,m,p):
     negatives['mount_axis_offset_0_6mm']={'detected':bool(bad_axis_error>=.02),'error_mm':bad_axis_error}
     obstruction=box_between(bounds(parts['PCB_BOARD']))
     negatives['shell_into_board']={'detected':bool(clashes(front+obstruction,[('PCB_BOARD',parts['PCB_BOARD'])],tol))}
-    bad_cap=m['caps']['KEY1'].translate((0,.6,0))
+    bad_cap=m['caps']['KEY1'].translate((0,1.2,0))
     negatives['key_guide_misaligned']={'detected':bool(clashes(bad_cap,[('front',front),('rear',rear)],tol))}
     obstruction=box_between([-1,-1,5,1,1,7])
     negatives['board_insertion_blocked']={'detected':bool(clashes(board_sweep,[('front_with_bar',front+obstruction)],tol))}
