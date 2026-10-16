@@ -1,0 +1,98 @@
+{
+  "stage": "C feasibility gate and independent PA12 coupons",
+  "maximum_thickness_mm": 12.4,
+  "outer_xy_mm": [
+    99.6,
+    77.86
+  ],
+  "rear_panel_mm": 1.2,
+  "rear_nest_radial_clearance_mm": [
+    0.1,
+    0.1,
+    0.3,
+    0.3
+  ],
+  "rear_nest_y_elongation_mm": [
+    0.0,
+    0.3,
+    0.0,
+    0.0
+  ],
+  "rear_nest_wall_mm": 1.5,
+  "rear_nest_capture_height_mm": 0.8,
+  "thread_bore_keepout_radius_mm": 1.6,
+  "front_stop_outer_radius_mm": 3.2,
+  "front_stop_inner_radius_mm": 1.7,
+  "front_stop_PCB_gap_mm": 0.15,
+  "front_stop_thickness_mm": 0.75,
+  "front_stop_arm_width_mm": 3.0,
+  "front_stop_arm_end_x_abs_mm": 26.3,
+  "backup_screw_mount_indices": [
+    0,
+    3
+  ],
+  "backup_screw": {
+    "thread_mm": 2.5,
+    "length_mm": 4.0,
+    "head_diameter_mm": 5.0,
+    "head_height_mm": 1.3,
+    "head_recess_mm": 0.1,
+    "shaft_bore_diameter_mm": 2.8,
+    "head_pocket_diameter_mm": 5.4,
+    "source": "NBK SSH-M2.5-4 reference only; original supplied screws not identified"
+  },
+  "reset_hole_diameters_mm": [
+    2.0,
+    2.2,
+    2.5
+  ],
+  "reset_initial_candidate_diameter_mm": 2.2,
+  "reset_face_stock_mm": 0.8,
+  "reset_body_recess_mm": 1.0,
+  "key_guide_clearances_per_side_mm": [
+    0.2,
+    0.3,
+    0.4
+  ],
+  "key_flange_rest_offset_mm": 1.4,
+  "key_axial_clearance_mm": 0.15,
+  "usb_rib_centers_xy_mm": [
+    [
+      -7.8,
+      39.8
+    ],
+    [
+      7.8,
+      39.8
+    ]
+  ],
+  "usb_rib_xy_mm": [
+    2.0,
+    4.0
+  ],
+  "usb_rib_corner_radius_mm": 0.6,
+  "usb_rib_top_z_mm": -8.0,
+  "four_latch_A_indices": [
+    1,
+    4,
+    3,
+    6
+  ],
+  "release_entry_x_mm": [
+    20.0,
+    25.2
+  ],
+  "release_entry_depth_mm": 0.8,
+  "release_entry_bottom_z_mm": -7.3,
+  "local_anti_recapture_gap_mm": 3.0,
+  "material": "JLC black PA12 MJF requested; order-specific acceptance unverified",
+  "print_approved": false,
+  "outer_x_min_mm": -29.47,
+  "left_wall_depth_mm": 3.6,
+  "split_z_mm": -6.4,
+  "seam_gap_mm": 0.15,
+  "coupon_half_yz_mm": [
+    4.2,
+    3.5
+  ]
+}
