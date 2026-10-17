@@ -1,0 +1,39 @@
+{
+  "status": "manufacturing_unverified",
+  "candidate_process": "SLA, separately printed caps and split guides; tough engineering resin candidate, supplier/material not selected",
+  "scope": "Key mechanism screening only; no whole-enclosure manufacturing qualification or strength certification",
+  "supplier_acceptance": false,
+  "physical_coupon_tested": false,
+  "sources_accessed": "2026-10-16",
+  "sources": {
+    "sla_features_and_moving_gap": "https://xometry.asia/en/sla-3d-printing-design-guidelines-8-essential-tip/",
+    "sla_example_dimensional_accuracy": "https://jlc3dp.com/blog/how-to-design-3d-models-for-printing",
+    "fdm_wall_comparison": "https://jlc3dp.com/blog/how-to-design-3d-models-for-printing"
+  },
+  "published_sla_reference": {
+    "unsupported_wall_min_mm": 0.6,
+    "needle_diameter_min_mm": 1.0,
+    "detail_min_mm": 0.2,
+    "moving_gap_nominal_min_mm": 0.5
+  },
+  "engineering_screening_limits": {
+    "body_min_section_mm": 1.2,
+    "body_max_slenderness": 4.0,
+    "flange_min_thickness_mm": 1.0,
+    "local_contact_min_thickness_mm": 0.6,
+    "local_contact_max_projection_mm": 1.0,
+    "local_contact_max_slenderness": 2.0,
+    "guide_effective_gap_min_mm": 0.2,
+    "head_effective_gap_min_mm": 0.04,
+    "axial_extra_clearance_min_mm": 0.1
+  },
+  "conditional_tolerance_budget": {
+    "per_part_size_error_mm": 0.2,
+    "per_face_position_error_mm": 0.2,
+    "cleanup_reserve_mm": 0.05,
+    "note": "Proposed acceptance bounds, not a supplier commitment. Overall shrinkage, warp, datum error and load deflection require supplier review and measurements. Static switch gap is not guaranteed."
+  },
+  "fdm_comparison_min_wall_mm": 1.2,
+  "coupon_half_extent_yz_mm": [3.6, 3.0],
+  "coupon_inner_end_x_mm": -24.5
+}

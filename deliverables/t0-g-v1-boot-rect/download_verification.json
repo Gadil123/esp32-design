@@ -1,0 +1,109 @@
+{
+  "verified_date": "2026-10-17",
+  "status": "OLD_AND_NEW_AUTHORIZED_DOWNLOADS_VERIFIED",
+  "release_tag": "t0-cad-review-20261016-9ec1022",
+  "release_is_draft": true,
+  "original_e805d38": {
+    "source": "Actual authorized gh release download; not local build copy",
+    "asset": "t0-g-v1-review-complete.zip",
+    "STEP_bytes": 163264502,
+    "solids": 739,
+    "valid_solids": 739,
+    "bounds_mm": [
+      -29.47,
+      -35.93,
+      -11.66952083502,
+      70.13,
+      41.93,
+      0.7
+    ],
+    "SHA_check_performed": false
+  },
+  "boot_rect_task26": {
+    "status": "DOWNLOADED_ZIP_AND_EXACT_PARTSET_VERIFIED",
+    "asset": "t0-g-v1-boot-rect-task26-viewer.zip",
+    "downloaded_bytes": 58889019,
+    "zip_entries": [
+      "README.md",
+      "baseline_e805d38/FrontShell.step",
+      "boot_rect_task26/FrontShell.step",
+      "boot_rect_task26/assembly_complete_12_4mm.step",
+      "checks.json",
+      "common/Accessories_UNVERIFIED.step",
+      "common/Hardware.step",
+      "common/OfficialBoard_723.step",
+      "common/RearShell.step",
+      "view_g_v1_freecad.py"
+    ],
+    "complete_valid_solids": 739,
+    "component_valid_solids": {
+      "FrontShell": 1,
+      "Accessories_UNVERIFIED": 10,
+      "Hardware": 4,
+      "OfficialBoard_723": 723,
+      "RearShell": 1
+    },
+    "maximum_per_solid_bounds_difference_mm": 0.0,
+    "maximum_per_solid_relative_volume_difference": 0.0,
+    "per_solid_face_counts_match": true,
+    "complete_bounds_mm": [
+      -29.47,
+      -35.93,
+      -11.66952083502,
+      70.13,
+      41.93,
+      0.7
+    ],
+    "maximum_thickness_mm": 12.36952083502,
+    "verification_scope": "Actual downloaded archive, STEP validity and same-coordinate export consistency; no FreeCAD GUI run or physical-fit approval."
+  },
+  "release_assets_preserved": [
+    {
+      "name": "t0-a-review-complete.zip",
+      "size": 65072275,
+      "state": "uploaded"
+    },
+    {
+      "name": "t0-e-review-complete.zip",
+      "size": 29912291,
+      "state": "uploaded"
+    },
+    {
+      "name": "t0-g-review-complete.zip",
+      "size": 29771676,
+      "state": "uploaded"
+    },
+    {
+      "name": "t0-g-v1-blocked-gate.zip",
+      "size": 59930296,
+      "state": "uploaded"
+    },
+    {
+      "name": "t0-g-v1-boot-rect-task26-viewer.zip",
+      "size": 58889019,
+      "state": "uploaded"
+    },
+    {
+      "name": "t0-g-v1-integrated-local-review.zip",
+      "size": 60001083,
+      "state": "uploaded"
+    },
+    {
+      "name": "t0-g-v1-review-complete.zip",
+      "size": 29772013,
+      "state": "uploaded"
+    },
+    {
+      "name": "t0-review-complete-assemblies.zip",
+      "size": 62163885,
+      "state": "uploaded"
+    }
+  ],
+  "commands_actually_tested": [
+    "gh release download t0-cad-review-20261016-9ec1022 -R Gadil123/esp32-design --pattern t0-g-v1-review-complete.zip --dir build/t26-download-verification/old",
+    "gh release download t0-cad-review-20261016-9ec1022 -R Gadil123/esp32-design --pattern t0-g-v1-boot-rect-task26-viewer.zip --dir build/t26-download-verification/new"
+  ],
+  "FreeCAD_GUI_executed": false,
+  "FreeCAD_viewer_script": "syntax checked; standard Part.read/Placement APIs; no GUI runtime claim",
+  "print_approved": false
+}

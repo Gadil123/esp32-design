@@ -1,0 +1,412 @@
+{
+  "stage": "D",
+  "status": "BLOCKED_MISSING_FRONTWARD_PCB_RESTRAINT",
+  "primary_blocker": "Rear shallow nests provide -Z support and bounded XY while seated, but no +Z reaction. No glass/battery/component clamp is permitted. Whole board moves +Z with cover closed.",
+  "full_D_enclosure_completed": false,
+  "print_approved": false,
+  "parameters": {
+    "stage": "D single local short tooth and shallow nests; NOT a complete enclosure",
+    "maximum_thickness_mm": 12.4,
+    "body_xy_mm": [
+      99.6,
+      77.86
+    ],
+    "rear_panel_mm": 1.2,
+    "nest_radial_clearance_mm": [
+      0.1,
+      0.1,
+      0.3,
+      0.3
+    ],
+    "nest_y_elongation_mm": [
+      0.0,
+      0.3,
+      0.0,
+      0.0
+    ],
+    "nest_wall_mm": 1.5,
+    "nest_capture_height_mm": 0.8,
+    "thread_bore_keepout_radius_mm": 1.6,
+    "edge_center_y_mm": -4.0,
+    "edge_local_half_length_mm": 8.0,
+    "receiver_wall_mm": 1.5,
+    "lap_clearance_mm": 0.3,
+    "tongue_thickness_mm": 1.5,
+    "tongue_width_mm": 5.0,
+    "tongue_side_relief_mm": 0.7,
+    "tongue_top_z_mm": -5.4,
+    "tooth_projection_mm": 0.7,
+    "tooth_bottom_z_mm": -6.0,
+    "tooth_tip_top_z_mm": -5.9,
+    "window_bottom_z_mm": -6.1,
+    "window_top_z_mm": -4.8,
+    "window_width_mm": 5.6,
+    "receiver_bottom_z_mm": -7.6,
+    "lap_top_z_mm": -5.0,
+    "release_deflection_mm": 0.5,
+    "release_pull_mm": 2.8,
+    "pick_thickness_z_mm": 0.35,
+    "pick_width_y_mm": 2.0,
+    "pick_center_z_mm": -5.7,
+    "board_escape_witness_z_mm": 0.4,
+    "collision_volume_tolerance_mm3": 0.001,
+    "material": "JLC black MJF PA12; elasticity/tolerance/supplier acceptance unverified",
+    "print_approved": false
+  },
+  "dimensions": {
+    "body_target_xy_mm": [
+      99.6,
+      77.86
+    ],
+    "front_top_z_mm": 0.7,
+    "rear_bottom_z_mm": -11.700000000000001,
+    "rear_inside_z_mm": -10.500000000000002,
+    "local_max_thickness_mm": 12.4,
+    "edge_wall_inner_x_mm": 68.63,
+    "tongue_outer_x_mm": 68.33,
+    "hook_overlap_mm": 0.39999999999999997,
+    "compliant_length_to_tip_load_mm": 4.600000000000001,
+    "display_aperture_xy_mm": [
+      -25.870000000000005,
+      -34.13,
+      25.870000000000005,
+      40.13
+    ]
+  },
+  "original_STEP_solid_count": 723,
+  "local_fixtures_vs_all_official_solids": {
+    "FRONT_open_frame": [],
+    "REAR_nest_0": [],
+    "REAR_nest_1": [],
+    "REAR_nest_2": [],
+    "REAR_nest_3": [],
+    "edge_FRONT": [],
+    "edge_REAR": []
+  },
+  "mounts": [
+    {
+      "index": 0,
+      "axis_xy_mm": [
+        -20.568177706598007,
+        -27.100437863023274
+      ],
+      "metal_back_z_mm": -9.499999439999998,
+      "nest_radial_clearance_mm": 0.1,
+      "nest_y_elongation_mm": 0.0,
+      "inner_outer_radius_mm": [
+        2.85,
+        4.35
+      ],
+      "seat_to_floor_mm": 1.0000005600000037,
+      "wall_capture_mm": 0.8
+    },
+    {
+      "index": 1,
+      "axis_xy_mm": [
+        -20.56045079905781,
+        32.89956101943423
+      ],
+      "metal_back_z_mm": -9.499999439999998,
+      "nest_radial_clearance_mm": 0.1,
+      "nest_y_elongation_mm": 0.3,
+      "inner_outer_radius_mm": [
+        2.85,
+        4.35
+      ],
+      "seat_to_floor_mm": 1.0000005600000037,
+      "wall_capture_mm": 0.8
+    },
+    {
+      "index": 2,
+      "axis_xy_mm": [
+        20.431821233414617,
+        -27.10571791647091
+      ],
+      "metal_back_z_mm": -9.499999439999998,
+      "nest_radial_clearance_mm": 0.3,
+      "nest_y_elongation_mm": 0.0,
+      "inner_outer_radius_mm": [
+        3.05,
+        4.55
+      ],
+      "seat_to_floor_mm": 1.0000005600000037,
+      "wall_capture_mm": 0.8
+    },
+    {
+      "index": 3,
+      "axis_xy_mm": [
+        20.439548140954813,
+        32.89428096598659
+      ],
+      "metal_back_z_mm": -9.499999439999998,
+      "nest_radial_clearance_mm": 0.3,
+      "nest_y_elongation_mm": 0.0,
+      "inner_outer_radius_mm": [
+        3.05,
+        4.55
+      ],
+      "seat_to_floor_mm": 1.0000005600000037,
+      "wall_capture_mm": 0.8
+    }
+  ],
+  "PCB_insertion_open_frame": {
+    "all_official_solids_inside_open_xy_passage": true,
+    "minimum_xy_clearance_mm": 0.6000000000000014,
+    "xy_margins_mm": [
+      0.6000000000000014,
+      0.6000000000000014,
+      0.6000000000000014,
+      0.6000000000000014
+    ],
+    "scope": "Continuous straight Z translation through this open frame only; keys/leads not certified by this containment test."
+  },
+  "shallow_nest_cover_closing_samples": [
+    {
+      "rear_offset_z_mm": -8,
+      "nest_collisions": [
+        [],
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "rear_offset_z_mm": -2,
+      "nest_collisions": [
+        [],
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "rear_offset_z_mm": -1,
+      "nest_collisions": [
+        [],
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "rear_offset_z_mm": 0,
+      "nest_collisions": [
+        [],
+        [],
+        [],
+        []
+      ]
+    }
+  ],
+  "closed_cover_frontward_escape": {
+    "module_displacement_z_mm": 0.4,
+    "continuous_fixture_sweeps_vs_original_solids": {
+      "FRONT_open_frame": [],
+      "REAR_nest_0": [],
+      "REAR_nest_1": [],
+      "REAR_nest_2": [],
+      "REAR_nest_3": [],
+      "edge_FRONT": [],
+      "edge_REAR": []
+    },
+    "witness_clear": true,
+    "screen_front_would_be_above_flush_mm": 0.4,
+    "DOF_gate": "FAIL",
+    "note": "Fixture swept -Z is relative equivalent of entire board swept +Z. Positive BRep witness disproves reliable Z location; no need for an escape-to-infinity path."
+  },
+  "DOF": {
+    "X_Y": "Finite radial free play only while four metal exteriors remain inside shallow nests. Left pair nominal .1mm; upper left Y elongated .3mm; right pair .3mm relief. Manufacturing not proven.",
+    "rotation_about_Z": "Two separated left datum nests bound yaw while seated; no validated preload or interference fit.",
+    "minus_Z_and_tilt": "Four rear annular bearing faces support rearward load; one-sided support only.",
+    "plus_Z": "UNRESTRAINED; cannot replace the absent stop with glass, keys, connectors or battery."
+  },
+  "local_additions_vs_unchanged_unverified_accessories": {
+    "REAR_nest_0": [],
+    "REAR_nest_1": [],
+    "REAR_nest_2": [],
+    "REAR_nest_3": [],
+    "edge_FRONT": [],
+    "edge_REAR": []
+  },
+  "edge_pair": {
+    "nominal_front_rear_overlap_mm3": 0,
+    "hold_after_rear_pull_0_3_mm3": 0.3650000000000053,
+    "retracted_approach_sweep_collisions": [],
+    "external_pick_fixed_geometry_collisions": [],
+    "retracted_withdrawal_sweep_collisions": [],
+    "relaxed_after_release_pull_overlap_mm3": 0.0,
+    "local_clearance_gate": "PASS",
+    "beam_proxy_linear_strain": 0.05316635160680526,
+    "mechanics_status": "UNVERIFIED: root-fixed actual wall bending is NOT a rigid translation; tongue translation only bounds free-end clearance. No fatigue/force or full-cover sequential-release proof.",
+    "features_mm": {
+      "rear_panel": 1.2,
+      "tongue_thickness": 1.5,
+      "tooth_projection": 0.7,
+      "tip_flat_height": 0.09999999999999964,
+      "window_lower_ligament": 1.5,
+      "lap_gap": 0.3
+    },
+    "process_risks": "1.2mm panel, .7mm tooth projection/.1mm tip flat, 1.5mm local retaining ligament and .3mm running clearance require MJF PA12 supplier review; sharp root/stress concentration and ~5% linear strain estimate not qualified."
+  },
+  "assembly_sequence": [
+    {
+      "step": "1 place existing independent caps from REAR",
+      "status": "UNVERIFIED; existing A/C native-switch fixed-frame risk retained; no key redesign"
+    },
+    {
+      "step": "2 complete official PCB/display through open FRONT frame from REAR",
+      "status": "Open-frame continuous passage clear; cap/native-switch crossing and wire installation not qualified"
+    },
+    {
+      "step": "3 close four shallow REAR nests around native metal exteriors",
+      "status": "Sampled source-geometry approach clear; zero nominal rear-face gap; no thread pins"
+    },
+    {
+      "step": "4 engage ONE short tooth/window",
+      "status": "Local free-end clearance only; actual PA12 bending unverified"
+    },
+    {
+      "step": "5 keep cover closed and apply FRONT +Z board displacement",
+      "status": "FAIL: no reaction; stop before whole-enclosure redesign"
+    },
+    {
+      "step": "6 pry through window, hold inward .5mm and local gap 2.8mm, withdraw board toward REAR",
+      "status": "Single local edge clearance studied; complete assembly/disassembly NOT validated"
+    }
+  ],
+  "unchanged_gates": [
+    "native key travel/frame identity/return; no actual switch travel assumed",
+    "MIC1 port/recording; no acoustic redesign",
+    "TF actual seating/ejection",
+    "MX identities/polarity/mating plugs and lead routing",
+    "temporary battery/speaker dimensions and .23mm protection-side gap",
+    "PA12 bending, cleaning, tolerances, supplier acceptance"
+  ],
+  "stop": "One primary missing +Z restraint. No C2 screw fallback, no restored four PCB flexclips, no further mechanism search or whole D shell.",
+  "exports": {
+    "D_one_short_tooth_pair_LOCAL": {
+      "solids": 2,
+      "all_valid": true,
+      "bounds_mm": [
+        66.33,
+        -12.0,
+        -11.7,
+        70.13000000000001,
+        4.0,
+        0.7
+      ],
+      "max_z_mm": 12.399999999999999
+    },
+    "D_four_nests_open_frame_BLOCKED": {
+      "solids": 12,
+      "all_valid": true,
+      "bounds_mm": [
+        -29.47,
+        -35.93,
+        -11.7,
+        27.67,
+        41.93,
+        0.7000000000000002
+      ],
+      "max_z_mm": 12.399999999999999
+    }
+  },
+  "original_coordinate_round_trip_vs_recorded": {
+    "ASSEMBLY": {
+      "actual_original_bounds_mm": [
+        -25.27000000000001,
+        -39.53000000000001,
+        -9.499999439999998,
+        25.270000000000007,
+        33.53000000000001,
+        0.7
+      ],
+      "max_difference_from_recorded_mm": 0.014500560000001883,
+      "pass": true
+    },
+    "DISPLAY": {
+      "actual_original_bounds_mm": [
+        -25.27000000000001,
+        -39.53000000000001,
+        -6.319154744317,
+        25.270000000000007,
+        33.53000000000001,
+        0.7
+      ],
+      "max_difference_from_recorded_mm": 4.525568300017824e-05,
+      "pass": true
+    },
+    "PCB_BOARD": {
+      "actual_original_bounds_mm": [
+        -24.9400000999968,
+        -37.40245983060613,
+        -5.49999944,
+        24.973581336326998,
+        31.608627067759073,
+        -3.8999998999999996
+      ],
+      "max_difference_from_recorded_mm": 0.0031186636730033968,
+      "pass": true
+    },
+    "KEY1": {
+      "actual_original_bounds_mm": [
+        21.24399967475302,
+        1.3485777000275978,
+        -7.299999439999998,
+        24.894360806339975,
+        5.898848673043017,
+        -5.09999929410302
+      ],
+      "max_difference_from_recorded_mm": 0.006239193660025677,
+      "pass": true
+    },
+    "KEY3": {
+      "actual_original_bounds_mm": [
+        21.245006542009506,
+        9.166975157164522,
+        -7.299999439999998,
+        24.895367673596457,
+        13.717246130179943,
+        -5.09999929410302
+      ],
+      "max_difference_from_recorded_mm": 0.006232326403541322,
+      "pass": true
+    },
+    "KEY2": {
+      "actual_original_bounds_mm": [
+        21.24601340828346,
+        16.9853649849115,
+        -7.299999439999998,
+        24.896374539870415,
+        21.53563595792692,
+        -5.09999929410302
+      ],
+      "max_difference_from_recorded_mm": 0.006225460129584803,
+      "pass": true
+    },
+    "MIC1": {
+      "actual_original_bounds_mm": [
+        -24.13571414972041,
+        -3.094148909175539,
+        -6.5999996389449995,
+        -21.535271354057873,
+        0.3061943323344712,
+        -5.601998078945
+      ],
+      "max_difference_from_recorded_mm": 4.8909175538902616e-05,
+      "pass": true
+    },
+    "J2_USB_SIDE": {
+      "actual_original_bounds_mm": [
+        -4.789468536352979,
+        -38.27583100701149,
+        -8.749521244501214,
+        4.79070545944985,
+        -30.56663622542442,
+        -4.589520943804656
+      ],
+      "max_difference_from_recorded_mm": 0.0012362254244209225,
+      "pass": true
+    }
+  }
+}

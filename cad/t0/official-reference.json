@@ -1,0 +1,6 @@
+{
+  "repository": "https://github.com/waveshareteam/ESP32-C5-Touch-LCD-2.8.git",
+  "revision": "77a7dceac38a1bd491173b3906205217a382c08c",
+  "sparse_paths": ["dimensions", "schematic", "docs"],
+  "step": "dimensions/ESP32-C5-Touch-LCD-2.8.stp"
+}

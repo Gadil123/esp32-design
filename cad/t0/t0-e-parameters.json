@@ -1,0 +1,26 @@
+{
+  "stage": "E: three existing A PCB clips plus four D shallow nests",
+  "target_thickness_mm": 12.4,
+  "pcb_clip_indices": [1, 2, 3],
+  "pcb_clip_front_gap_mm": 0.0,
+  "pcb_clip_outward_relief_mm": 1.4,
+  "pcb_clip_slot_bottom_z_mm": -6.6,
+  "pcb_clip_slot_top_z_mm": -2.9,
+  "board_insertion_z_mm": 20.0,
+  "positive_z_witness_mm": 0.4,
+  "tilt_witness_degrees": 0.5,
+  "clip_deformation_segments": 16,
+  "clip_root_fixed_length_mm": 0.7,
+  "lap_end_setback_mm": 0.2,
+  "nest_axial_clearance_mm": 0.1,
+  "peripheral_stop_gap_mm": 0.0,
+  "short_tooth_sites": [
+    {"edge": "bottom", "coordinate_mm": -15.0, "half_length_mm": 8.0},
+    {"edge": "right", "coordinate_mm": -17.0, "half_length_mm": 8.0},
+    {"edge": "right", "coordinate_mm": 26.0, "half_length_mm": 8.0},
+    {"edge": "top", "coordinate_mm": -15.0, "half_length_mm": 8.0},
+    {"edge": "left", "coordinate_mm": 16.8, "half_length_mm": 3.2}
+  ],
+  "material": "JLC black MJF PA12; process acceptance and elasticity unverified",
+  "print_approved": false
+}

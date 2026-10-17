@@ -1,0 +1,333 @@
+{
+  "status": "BLOCKED_G_V1_FIRST_ASSEMBLY_GATE",
+  "print_approved": false,
+  "full_G_V1_completed": false,
+  "parameters": {
+    "stage": "G-V1 first gate only; NOT a completed enclosure",
+    "maximum_thickness_mm": 12.4,
+    "screen_recess_mm": 0.0,
+    "front_lip_overlap_mm": -0.6,
+    "reset_hole_diameter_mm": 2.2,
+    "reset_status": "candidate only; no moving RESET cap; physical pin and native actuator pending",
+    "screw_head_height_mm": 0.85,
+    "screw_head_recess_mm": 0.0,
+    "screw_status": "user supplied product-image envelope, not measured or purchased",
+    "rear_insertion_distance_mm": 20.0,
+    "collision_witness_cap_z_offset_mm": -3.0,
+    "proposed_guide_running_clearance_mm": 0.2,
+    "print_approved": false
+  },
+  "official_solids": 723,
+  "coordinate_system": "USB +Y; FRONT +Z; REAR -Z; native keys LEFT -X",
+  "source_bounds_comparison": {
+    "ASSEMBLY": {
+      "actual_original_bounds_mm": [
+        -25.27000000000001,
+        -39.53000000000001,
+        -9.499999439999998,
+        25.270000000000007,
+        33.53000000000001,
+        0.7
+      ],
+      "max_difference_from_recorded_mm": 0.014500560000001883,
+      "pass": true
+    },
+    "DISPLAY": {
+      "actual_original_bounds_mm": [
+        -25.27000000000001,
+        -39.53000000000001,
+        -6.319154744317,
+        25.270000000000007,
+        33.53000000000001,
+        0.7
+      ],
+      "max_difference_from_recorded_mm": 4.525568300017824e-05,
+      "pass": true
+    },
+    "PCB_BOARD": {
+      "actual_original_bounds_mm": [
+        -24.9400000999968,
+        -37.40245983060613,
+        -5.49999944,
+        24.973581336326998,
+        31.608627067759073,
+        -3.8999998999999996
+      ],
+      "max_difference_from_recorded_mm": 0.0031186636730033968,
+      "pass": true
+    },
+    "KEY1": {
+      "actual_original_bounds_mm": [
+        21.24399967475302,
+        1.3485777000275978,
+        -7.299999439999998,
+        24.894360806339975,
+        5.898848673043017,
+        -5.09999929410302
+      ],
+      "max_difference_from_recorded_mm": 0.006239193660025677,
+      "pass": true
+    },
+    "KEY3": {
+      "actual_original_bounds_mm": [
+        21.245006542009506,
+        9.166975157164522,
+        -7.299999439999998,
+        24.895367673596457,
+        13.717246130179943,
+        -5.09999929410302
+      ],
+      "max_difference_from_recorded_mm": 0.006232326403541322,
+      "pass": true
+    },
+    "KEY2": {
+      "actual_original_bounds_mm": [
+        21.24601340828346,
+        16.9853649849115,
+        -7.299999439999998,
+        24.896374539870415,
+        21.53563595792692,
+        -5.09999929410302
+      ],
+      "max_difference_from_recorded_mm": 0.006225460129584803,
+      "pass": true
+    },
+    "MIC1": {
+      "actual_original_bounds_mm": [
+        -24.13571414972041,
+        -3.094148909175539,
+        -6.5999996389449995,
+        -21.535271354057873,
+        0.3061943323344712,
+        -5.601998078945
+      ],
+      "max_difference_from_recorded_mm": 4.8909175538902616e-05,
+      "pass": true
+    },
+    "J2_USB_SIDE": {
+      "actual_original_bounds_mm": [
+        -4.789468536352979,
+        -38.27583100701149,
+        -8.749521244501214,
+        4.79070545944985,
+        -30.56663622542442,
+        -4.589520943804656
+      ],
+      "max_difference_from_recorded_mm": 0.0012362254244209225,
+      "pass": true
+    }
+  },
+  "board_without_caps_continuous_insertion": [],
+  "installed_front_source_hits": [],
+  "two_caps_after_board": [
+    {
+      "key": "KEY1",
+      "function": "BAT_PWR",
+      "installed_source_hits": [],
+      "installed_front_overlap_mm3": 0,
+      "continuous_rear_insertion_hits": [
+        {
+          "obstacle": "deep_FRONT",
+          "volume_mm3": 8.28000120294133
+        },
+        {
+          "obstacle": "deep_FRONT",
+          "volume_mm3": 10.584001786185528
+        }
+      ],
+      "actual_cap_offset_z_mm": -3.0,
+      "actual_cap_front_overlap_mm3": 11.003999999999948,
+      "actual_overlap_bounds_mm": [
+        -29.47,
+        -5.723397243720067,
+        -10.899999392453878,
+        -27.67,
+        -1.5233972437200674,
+        -8.09999939245388
+      ],
+      "reverse_removal_uses_same_blocked_path": true
+    },
+    {
+      "key": "KEY2",
+      "function": "BOOT",
+      "installed_source_hits": [],
+      "installed_front_overlap_mm3": 0,
+      "continuous_rear_insertion_hits": [
+        {
+          "obstacle": "deep_FRONT",
+          "volume_mm3": 8.280001202941314
+        },
+        {
+          "obstacle": "deep_FRONT",
+          "volume_mm3": 10.58400178618554
+        }
+      ],
+      "actual_cap_offset_z_mm": -3.0,
+      "actual_cap_front_overlap_mm3": 11.003999999999952,
+      "actual_overlap_bounds_mm": [
+        -29.47,
+        -21.36018452860397,
+        -10.899999392453878,
+        -27.67,
+        -17.160184528603967,
+        -8.09999939245388
+      ],
+      "reverse_removal_uses_same_blocked_path": true
+    }
+  ],
+  "part_export_checks": {
+    "deep_front_GATE_ONLY": {
+      "step_valid": true,
+      "step_solid_count": 1,
+      "stl_triangles": 4704,
+      "stl_nonmanifold_edges": 0,
+      "step_stl_bounds_error_mm": 2.7465820267025265e-06,
+      "step_stl_relative_volume_error": 1.8684354154107403e-05
+    },
+    "rear_seats_GATE_ONLY": {
+      "step_valid": true,
+      "step_solid_count": 1,
+      "stl_triangles": 6476,
+      "stl_nonmanifold_edges": 0,
+      "step_stl_bounds_error_mm": 2.7465820267025265e-06,
+      "step_stl_relative_volume_error": 3.5844591572429495e-06
+    },
+    "key1_cap": {
+      "step_valid": true,
+      "step_solid_count": 1,
+      "stl_triangles": 508,
+      "stl_nonmanifold_edges": 0,
+      "step_stl_bounds_error_mm": 8.392333974427402e-07,
+      "step_stl_relative_volume_error": 6.4059626565512755e-06
+    },
+    "key2_cap": {
+      "step_valid": true,
+      "step_solid_count": 1,
+      "stl_triangles": 508,
+      "stl_nonmanifold_edges": 0,
+      "step_stl_bounds_error_mm": 9.356182033570803e-07,
+      "step_stl_relative_volume_error": 6.351838764014302e-06
+    }
+  },
+  "incomplete_fixture_bounds_mm": [
+    -31.369999999999997,
+    -35.93,
+    -11.700000000000001,
+    70.13,
+    41.93,
+    0.7
+  ],
+  "incomplete_fixture_maximum_thickness_mm": 12.4,
+  "thickness_status": "12.4mm only for unfinished gate fixture; not full assembly PASS; no new latches or tolerance float included",
+  "preliminary_screw_rows": [
+    {
+      "index": 0,
+      "axis_xy_mm": [
+        -20.568177706598007,
+        -27.100437863023274
+      ],
+      "metalback_z_mm": -9.499999439999998,
+      "head_bottom_z_mm": -11.700000000000001,
+      "head_seat_z_mm": -10.850000000000001,
+      "tip_z_mm": -6.850000000000001,
+      "PA12_bearing_thickness_mm": 1.3500005600000033,
+      "nominal_thread_engagement_mm": 2.6499994399999967
+    },
+    {
+      "index": 1,
+      "axis_xy_mm": [
+        -20.56045079905781,
+        32.89956101943423
+      ],
+      "metalback_z_mm": -9.499999439999998,
+      "head_bottom_z_mm": -11.700000000000001,
+      "head_seat_z_mm": -10.850000000000001,
+      "tip_z_mm": -6.850000000000001,
+      "PA12_bearing_thickness_mm": 1.3500005600000033,
+      "nominal_thread_engagement_mm": 2.6499994399999967
+    },
+    {
+      "index": 2,
+      "axis_xy_mm": [
+        20.431821233414617,
+        -27.10571791647091
+      ],
+      "metalback_z_mm": -9.499999439999998,
+      "head_bottom_z_mm": -11.700000000000001,
+      "head_seat_z_mm": -10.850000000000001,
+      "tip_z_mm": -6.850000000000001,
+      "PA12_bearing_thickness_mm": 1.3500005600000033,
+      "nominal_thread_engagement_mm": 2.6499994399999967
+    },
+    {
+      "index": 3,
+      "axis_xy_mm": [
+        20.439548140954813,
+        32.89428096598659
+      ],
+      "metalback_z_mm": -9.499999439999998,
+      "head_bottom_z_mm": -11.700000000000001,
+      "head_seat_z_mm": -10.850000000000001,
+      "tip_z_mm": -6.850000000000001,
+      "PA12_bearing_thickness_mm": 1.3500005600000033,
+      "nominal_thread_engagement_mm": 2.6499994399999967
+    }
+  ],
+  "first_failure": "Rear-inserted daily cap flange/stem physically intersects the continuous deep FRONT sidewall before reaching its closed guide pocket. Reverse removal blocked too.",
+  "one_minimum_concession": {
+    "description": "Open the two daily-key guides to REAR; rear lid then provides axial cap retention. Not implemented or validated; user decision required by task 21 STOP.",
+    "candidate_slots": [
+      {
+        "key": "KEY1",
+        "minimum_wall_sweep_y_mm": [
+          -5.723397243720068,
+          -1.5233972437200674
+        ],
+        "proposed_slot_y_mm": [
+          -5.923397243720069,
+          -1.3233972437200674
+        ],
+        "slot_from_rear_z_mm": -11.700000000000001,
+        "slot_frontmost_z_mm": -4.699999392453878,
+        "nominal_added_width_mm": 0.0
+      },
+      {
+        "key": "KEY2",
+        "minimum_wall_sweep_y_mm": [
+          -21.36018452860397,
+          -17.160184528603967
+        ],
+        "proposed_slot_y_mm": [
+          -21.56018452860397,
+          -16.960184528603968
+        ],
+        "slot_from_rear_z_mm": -11.700000000000001,
+        "slot_frontmost_z_mm": -4.699999392453878,
+        "nominal_added_width_mm": 0.0
+      }
+    ],
+    "pending": "Retention while lid absent; finger/tweezer access; positive fit clearance; cap-to-native moving actuator under PCB XY play; shell ligament strength"
+  },
+  "not_run_after_STOP": [
+    "PCB safe independent forward support and four-hole alignment before tightening",
+    "worst-case operating cap contact / actual switch travel",
+    "two shallow latches and single-card sequential release",
+    "USB/TF/pin operation; provisional accessories / live harness service slack",
+    "full G-V1 shell and maximum retained thickness"
+  ],
+  "MIC_status": "MIC_AUDIO_PATH_BLOCKED_UNTIL_HARDWARE",
+  "material_status": "PA12 unqualified; no print approval; reviewer/Gemini failure probabilities and strain limits are not adopted as facts",
+  "witness_STEP_roundtrip": {
+    "solids": 725,
+    "valid_solids": 725,
+    "bounds_mm": [
+      -31.37,
+      -35.93,
+      -11.7,
+      70.13,
+      41.93,
+      0.7
+    ],
+    "scope": "KEY1 collision pose; 723 official solids + FRONT + cap at Z offset -3mm; not a completed assembly"
+  }
+}

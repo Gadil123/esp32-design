@@ -1,0 +1,51 @@
+{
+  "stage": "Task26 BOOT rounded rectangle only; BAT_PWR L unchanged",
+  "maximum_thickness_mm": 12.4,
+  "body_xy_mm": [
+    99.6,
+    77.86
+  ],
+  "wall_mm": 1.8,
+  "leaf_thickness_mm": 1.2,
+  "root_to_pad_mm": 12.0,
+  "fixed_root_length_mm": 1.0,
+  "leaf_z_mm": [
+    -3.33,
+    -1.33
+  ],
+  "pad_half_y_mm": 1.0,
+  "pad_half_z_mm": 1.0,
+  "slot_mm": 1.0,
+  "root_radius_mm": 0.5,
+  "bump_yz_mm": [
+    0.8,
+    0.8
+  ],
+  "bump_y_precompensation_mm": 0.5,
+  "shell_stop_thickness_mm": 0.9,
+  "shell_stop_anchor_width_mm": 1.2,
+  "shell_stop_height_mm": 1.0,
+  "glass_projection_clearance_mm": 0.55,
+  "candidate_press_mm": 0.4,
+  "candidate_stop_mm": 1.4,
+  "pcb_xy_radial_play_mm": 0.15,
+  "printed_feature_offset_budget_mm": 0.3,
+  "reset_hole_diameter_mm": 2.2,
+  "actual_switch_travel_mm": null,
+  "function_status": "UNVERIFIED_UNTIL_HARDWARE",
+  "print_approved": false,
+  "boot_rectangle": {
+    "height_mm": 3.0,
+    "outer_radius_mm": 0.5,
+    "status": "unverified PA12 stiffness and native switch function",
+    "stop_y_relative_mm": [
+      -2.5,
+      -1.3
+    ],
+    "stop_contact_top_inset_mm": 0.05,
+    "stop_foot_z_mm": [
+      -3.7,
+      -2.9
+    ]
+  }
+}
