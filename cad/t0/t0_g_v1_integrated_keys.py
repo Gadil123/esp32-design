@@ -4,7 +4,7 @@ Root-fixed press poses are clearance proxies using an end-force beam curve,
 including end rotation. Neither stiffness nor fatigue is qualified by CAD.
 """
 import math
-from build123d import Axis, Plane, Polygon, Circle, extrude, offset, fillet, Compound
+from build123d import Axis, Plane, Polygon, Circle, extrude, offset, fillet, Compound, RectangleRounded, Align
 from model import box_between as box
 from reference import bounds
 from p1_checks import intersection
@@ -36,15 +36,20 @@ def build_keys(parts,m,base,q):
     zl,zh=q['leaf_z_mm'];h=q['pad_half_y_mm'];bump_y,bump_z=q['bump_yz_mm'];tip=bounds(parts['DISPLAY'])[0]-q['glass_projection_clearance_mm']
     for key,direction in [('KEY1',-1),('KEY2',1)]:
         y,z=m['key_data'][key]['center_yz_mm'];root=y-direction*L
+        rect=q.get('boot_rectangle') if key=='KEY2' else None
+        lz,hz=(z-rect['height_mm']/2,z+rect['height_mm']/2) if rect else (zl,zh)
         # Local sketch axes (s,Z); three open sides surround an L-shaped
         # leaf/pad. Elevated beam avoids the TF opening and RESET bore.
-        outline=Polygon((0,zh),(L+h,zh),(L+h,z-q['pad_half_z_mm']),
-                        (L-h,z-q['pad_half_z_mm']),(L-h,zl),(0,zl),align=None)
+        if rect:
+            outline=RectangleRounded(L+h,rect['height_mm'],rect['outer_radius_mm'],align=(Align.MIN,Align.CENTER)).translate((0,z,0))
+        else:
+            outline=Polygon((0,zh),(L+h,zh),(L+h,z-q['pad_half_z_mm']),
+                            (L-h,z-q['pad_half_z_mm']),(L-h,zl),(0,zl),align=None)
         ring=offset(outline,amount=g)-outline
         slot=extrude(Plane.YZ*ring,amount=base['wall_mm']+.2,dir=(1,0,0)).translate((ox-.1,0,0))
         slot=intersection(slot,box([ox-.2,.5,-20,ix+.2,L+h+g+1,2]))
         # Actual radius-.5 circular endpoints of the U slots (axis X).
-        for zz in [zh+g/2,zl-g/2]:
+        for zz in [hz+g/2,lz-g/2]:
             slot+=extrude(Plane.YZ*Circle(g/2),amount=base['wall_mm']+.2,dir=(1,0,0)).translate((ox-.1,.5,zz))
         solid_region=extrude(Plane.YZ*outline,amount=base['wall_mm']+5,dir=(1,0,0)).translate((ox,0,0))
         # A rounded milling-style recess supplies an actual XY root transition
@@ -60,22 +65,31 @@ def build_keys(parts,m,base,q):
         bump=box([ox+t-.01,by-bump_y/2,z-bump_z/2,tip,by+bump_y/2,z+bump_z/2])
         m['front']+=bump
         # Separate only a free-end clearance region; it remains fused in FRONT.
-        region=intersection(tr(box([ox-.1,q['fixed_root_length_mm'],-10,ix+5,L+h+.1,zh+.1])),tr(solid_region))
+        region=intersection(tr(box([ox-.1,q['fixed_root_length_mm'],-10,ix+5,L+h+.1,hz+.1])),tr(solid_region))
         # Only the actual connected U-leaf outline may deform. A rectangular
         # crop would accidentally move the fixed wall below the U-slot too.
         free=intersection(m['front'],region)
         row=dict(key=key,y=y,z=z,root_y=root,direction=direction,
-                 free=free,bump=bump,slot=tr(slot),region=region,tip_x=tip)
+                 free=free,bump=bump,slot=tr(slot),region=region,tip_x=tip,leaf_z_mm=[lz,hz],profile_kind='rounded_rectangle' if rect else 'L')
         m['integrated_keys'].append(row)
         # Independent non-glass inward stop above the contact bump. Measure its
         # X plane from the rotating pad at design travel, not from delta alone.
         pressed,_=press_pose(row,base,q,q['candidate_stop_mm'])
-        sz0=zl+.2;sz1=sz0+q['shell_stop_height_mm']
-        face=intersection(pressed,box([ox-1,y-2,sz0,ix+5,y+2,sz1]))
-        stop_x=bounds(face)[3];th=q['shell_stop_thickness_mm'];aw=q['shell_stop_anchor_width_mm']
-        ya,yb=sorted([y-direction*.8,y+direction*(h+g+aw)])
-        anchor_a,anchor_b=sorted([y+direction*(h+g),y+direction*(h+g+aw)])
-        stop=box([stop_x,ya,sz0,stop_x+th,yb,sz1])+box([ix-.05,anchor_a,sz0,stop_x+th,anchor_b,sz1])
+        if rect:
+            # Keep the relocated stop away from the bump in Y. A top foot
+            # joins fixed wall ABOVE the U-slot; no .05mm moving slit.
+            ya,yb=[y+v for v in rect['stop_y_relative_mm']]
+            sz0=hz-rect['stop_contact_top_inset_mm']-q['shell_stop_height_mm'];sz1=sz0+q['shell_stop_height_mm']
+            face=intersection(pressed,box([ox-1,ya,sz0,ix+5,yb,sz1]))
+            stop_x=bounds(face)[3];th=q['shell_stop_thickness_mm'];fz0,fz1=rect['stop_foot_z_mm']
+            stop=box([stop_x,ya,sz0,stop_x+th,yb,fz1])+box([ix-.05,ya,fz0,stop_x+th,yb,fz1])
+        else:
+            sz0=lz+.2;sz1=sz0+q['shell_stop_height_mm']
+            face=intersection(pressed,box([ox-1,y-2,sz0,ix+5,y+2,sz1]))
+            stop_x=bounds(face)[3];th=q['shell_stop_thickness_mm'];aw=q['shell_stop_anchor_width_mm']
+            ya,yb=sorted([y-direction*.8,y+direction*(h+g+aw)])
+            anchor_a,anchor_b=sorted([y+direction*(h+g),y+direction*(h+g+aw)])
+            stop=box([stop_x,ya,sz0,stop_x+th,yb,sz1])+box([ix-.05,anchor_a,sz0,stop_x+th,anchor_b,sz1])
         m['front']+=stop
         row.update(stop=stop,stop_x=stop_x,stop_z_mm=[sz0,sz1])
     return m
@@ -88,7 +102,7 @@ def press_pose(row,base,q,delta):
     The first 1mm remains fixed, and the clearance proxy conserves leaf thickness.
     """
     ox=base['outer_x_min_mm'];t=q['leaf_thickness_mm'];L=q['root_to_pad_mm']-q['fixed_root_length_mm']
-    start=row['root_y']+row['direction']*q['fixed_root_length_mm'];y=row['y'];zl,zh=q['leaf_z_mm'];h=q['pad_half_y_mm']
+    start=row['root_y']+row['direction']*q['fixed_root_length_mm'];y=row['y'];zl,zh=row.get('leaf_z_mm',q['leaf_z_mm']);h=q['pad_half_y_mm']
     pad=intersection(row['free'],box([ox-1,y-h,-10,row['tip_x']+1,y+h,zh+.1]))
     angle=-row['direction']*math.degrees(math.atan(1.5*delta/L))
     pad=pad.rotate(Axis((ox+t/2,y,0),(0,0,1)),angle).translate((delta,0,0))

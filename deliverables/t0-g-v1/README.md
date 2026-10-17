@@ -1,5 +1,7 @@
 # G-V1 一体 PA12 侧键整壳候选
 
+> 下载入口修订（任务26）：私有Draft标签页曾404，请使用[已验证的授权下载与FreeCAD说明](../../docs/28_g_v1_private_download_freecad.md)。本页旧版CAD结果与原附件保留。
+
 **名义CAD/装拆路径完成；累计公差下按键触达 BLOCKED（约0.054–0.056mm正间隙）。不是可靠按键或制造通过。**
 
 完整复现、装拆顺序及制造风险见 [报告24](../../docs/24_t0_g_v1_integrated_pa12_assembly.md)。不打印、不下单；实物按键/PA12/接线/MIC仍未验证。

@@ -1,0 +1,101 @@
+{
+  "status": "LOCAL_BOOT_NOMINAL_PASS_PHYSICAL_PENDING",
+  "print_approved": false,
+  "official_solids": 723,
+  "coordinates": "USB +Y / FRONT +Z / REAR -Z / native keys LEFT -X",
+  "installed_source_hits": [],
+  "continuous_board_insertion_and_reverse_removal": [],
+  "rest_proxy_identity_error_mm3": 2.1316282072803006e-13,
+  "poses": [
+    {
+      "pad_reference_mm": 0,
+      "rotation_deg": -0.0,
+      "native_distance_mm": 0.9237545055478318,
+      "native_overlap_mm3": 0.0,
+      "outside_face_PROXY_overlap_mm3": 0.0,
+      "fixed_front_overlap_mm3": 0,
+      "stop_overlap_mm3": 0,
+      "other_722_source_hits": []
+    },
+    {
+      "pad_reference_mm": 0.4,
+      "rotation_deg": -3.1221304621157087,
+      "native_distance_mm": 0.47934512740169216,
+      "native_overlap_mm3": 0.0,
+      "outside_face_PROXY_overlap_mm3": 0.0,
+      "fixed_front_overlap_mm3": 0,
+      "stop_overlap_mm3": 0,
+      "other_722_source_hits": []
+    },
+    {
+      "pad_reference_mm": 1.4,
+      "rotation_deg": -10.80823094031979,
+      "native_distance_mm": 1.1901590823981678e-13,
+      "native_overlap_mm3": 0.33614634694445056,
+      "outside_face_PROXY_overlap_mm3": 0,
+      "fixed_front_overlap_mm3": 0,
+      "stop_overlap_mm3": 0,
+      "other_722_source_hits": []
+    },
+    {
+      "pad_reference_mm": 1.43,
+      "rotation_deg": -11.03420900325025,
+      "native_distance_mm": 1.1901590823981678e-13,
+      "native_overlap_mm3": 0.35574075471784894,
+      "outside_face_PROXY_overlap_mm3": 0,
+      "fixed_front_overlap_mm3": 0,
+      "stop_overlap_mm3": 0.0017255991407529776,
+      "other_722_source_hits": []
+    }
+  ],
+  "local_allowed_change_bounds_mm": [
+    -29.6,
+    -33.0,
+    -10.0,
+    -25.5,
+    -15.8,
+    -0.1999999999999993
+  ],
+  "changes_outside_BOOT_mm3": 0,
+  "added_volume_mm3": 66.30014388266966,
+  "removed_volume_mm3": 56.53323751195717,
+  "rest_bump_to_continuous_board_gap_mm": 0.5500000000000007,
+  "stop_to_continuous_board_gap_mm": 0.9363823207327648,
+  "bore_0_15_and_tip_minus_0_30_reach_gap_mm": 1.1912191218711845e-13,
+  "free_leaf_bounds_mm": [
+    -29.47,
+    -30.26018452860397,
+    -7.899999392453879,
+    -25.820000000000004,
+    -18.26018452860397,
+    -4.8999993924538785
+  ],
+  "dimensions": {
+    "outline_root_to_end_mm": 13.0,
+    "free_leaf_length_mm": 12.0,
+    "effective_length_mm": 11.0,
+    "leaf_X_mm": 1.2,
+    "leaf_Z_height_mm": 3.0,
+    "slot_mm": 1.0,
+    "outer_YZ_radius_mm": 0.5,
+    "root_XY_radius_mm": 0.5
+  },
+  "strength_comparison": {
+    "old_beam_Z_height_mm": 2,
+    "new_beam_Z_height_mm": 3.0,
+    "nominal_bending_stiffness_ratio_same_material": 1.5,
+    "root_strain_at_stop_proxy": 0.020826446280991732,
+    "old_root_strain_at_stop_proxy": 0.020826446280991732,
+    "force_N": null,
+    "allowable_strain": null,
+    "life_cycles": null,
+    "limits": "Same11mm effective length and1.2mm thickness; +50% nominal beam stiffness, NOT same force or verified comfort. Old L pad Z eccentricity reduced. Root concentration, torsion, nonlinear PA12 and printing orientation unverified."
+  },
+  "actual_native_travel_mm": null,
+  "function": "UNVERIFIED_UNTIL_HARDWARE",
+  "limits": [
+    "1.4mm is pad-reference displacement, not native travel. Contact with whole KEY BRep is not triggering proof.",
+    "Outside-face fixed-frame test is a proxy; actual moving head/overpressure remain unverified.",
+    "Known register .20 + bore .15 + tip -.30 failure retained; no automatic .12mm tip extension."
+  ]
+}

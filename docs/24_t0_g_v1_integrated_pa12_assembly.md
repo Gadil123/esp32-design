@@ -1,5 +1,7 @@
 # T0 G-V1：一体 PA12 侧键与齐平整壳候选
 
+> 下载入口修订（任务26）：私有Draft标签页曾404，请使用[已验证的授权下载与FreeCAD说明](28_g_v1_private_download_freecad.md)。本页旧版CAD结果与原附件保留。
+
 对应 [任务23](23_t0_g_v1_integrated_pa12_sidekeys_task.md)、[任务21](21_t0_g_v1_flush_easy_assembly_revision_brief.md)、[G Reviewer](https://github.com/Gadil123/esp32-design/pull/3#pullrequestreview-5550461898) 和 [Gemini 风险线索](20_design_e_independent_review.md)。本轮仅新增 G-V1；E、A–F、旧 G、[22 失败证据](22_t0_g_v1_first_gate_stop.md)和 Pocket OS 均保留。
 
 **结论：名义装拆几何通过；全机累积公差与凸点缩短叠加时，两键触达为 `BLOCKED_CONDITIONAL_PRINT_FIT`。** 该条件下KEY1/KEY2在壳止挡处仍分别留约0.056/0.054mm间隙，不能触到原键。本轮停止结构微调，只交付已有名义整壳及失败见证，等待复审。
