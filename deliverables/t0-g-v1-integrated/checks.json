@@ -1,0 +1,399 @@
+{
+  "status": "LOCAL_NOMINAL_GATE_PASS_PHYSICAL_PENDING",
+  "full_G_V1_completed": false,
+  "print_approved": false,
+  "parameters": {
+    "stage": "Task23 G-V1 integrated PA12 sidekeys; single local candidate",
+    "maximum_thickness_mm": 12.4,
+    "body_xy_mm": [
+      99.6,
+      77.86
+    ],
+    "wall_mm": 1.8,
+    "leaf_thickness_mm": 1.2,
+    "root_to_pad_mm": 12.0,
+    "fixed_root_length_mm": 1.0,
+    "leaf_z_mm": [
+      -3.33,
+      -1.33
+    ],
+    "pad_half_y_mm": 1.0,
+    "pad_half_z_mm": 1.0,
+    "slot_mm": 1.0,
+    "root_radius_mm": 0.5,
+    "bump_yz_mm": [
+      0.8,
+      0.8
+    ],
+    "bump_y_precompensation_mm": 0.5,
+    "shell_stop_thickness_mm": 0.9,
+    "shell_stop_anchor_width_mm": 1.2,
+    "shell_stop_height_mm": 1.0,
+    "glass_projection_clearance_mm": 0.55,
+    "candidate_press_mm": 0.4,
+    "candidate_stop_mm": 1.4,
+    "pcb_xy_radial_play_mm": 0.15,
+    "printed_feature_offset_budget_mm": 0.3,
+    "reset_hole_diameter_mm": 2.2,
+    "actual_switch_travel_mm": null,
+    "function_status": "UNVERIFIED_UNTIL_HARDWARE",
+    "print_approved": false
+  },
+  "source": {
+    "official_solids": 723,
+    "coordinate_system": "USB +Y TOP / FRONT +Z / REAR -Z / keys LEFT -X",
+    "recorded_bounds": {
+      "ASSEMBLY": {
+        "actual_original_bounds_mm": [
+          -25.27000000000001,
+          -39.53000000000001,
+          -9.499999439999998,
+          25.270000000000007,
+          33.53000000000001,
+          0.7
+        ],
+        "max_difference_from_recorded_mm": 0.014500560000001883,
+        "pass": true
+      },
+      "DISPLAY": {
+        "actual_original_bounds_mm": [
+          -25.27000000000001,
+          -39.53000000000001,
+          -6.319154744317,
+          25.270000000000007,
+          33.53000000000001,
+          0.7
+        ],
+        "max_difference_from_recorded_mm": 4.525568300017824e-05,
+        "pass": true
+      },
+      "PCB_BOARD": {
+        "actual_original_bounds_mm": [
+          -24.9400000999968,
+          -37.40245983060613,
+          -5.49999944,
+          24.973581336326998,
+          31.608627067759073,
+          -3.8999998999999996
+        ],
+        "max_difference_from_recorded_mm": 0.0031186636730033968,
+        "pass": true
+      },
+      "KEY1": {
+        "actual_original_bounds_mm": [
+          21.24399967475302,
+          1.3485777000275978,
+          -7.299999439999998,
+          24.894360806339975,
+          5.898848673043017,
+          -5.09999929410302
+        ],
+        "max_difference_from_recorded_mm": 0.006239193660025677,
+        "pass": true
+      },
+      "KEY3": {
+        "actual_original_bounds_mm": [
+          21.245006542009506,
+          9.166975157164522,
+          -7.299999439999998,
+          24.895367673596457,
+          13.717246130179943,
+          -5.09999929410302
+        ],
+        "max_difference_from_recorded_mm": 0.006232326403541322,
+        "pass": true
+      },
+      "KEY2": {
+        "actual_original_bounds_mm": [
+          21.24601340828346,
+          16.9853649849115,
+          -7.299999439999998,
+          24.896374539870415,
+          21.53563595792692,
+          -5.09999929410302
+        ],
+        "max_difference_from_recorded_mm": 0.006225460129584803,
+        "pass": true
+      },
+      "MIC1": {
+        "actual_original_bounds_mm": [
+          -24.13571414972041,
+          -3.094148909175539,
+          -6.5999996389449995,
+          -21.535271354057873,
+          0.3061943323344712,
+          -5.601998078945
+        ],
+        "max_difference_from_recorded_mm": 4.8909175538902616e-05,
+        "pass": true
+      },
+      "J2_USB_SIDE": {
+        "actual_original_bounds_mm": [
+          -4.789468536352979,
+          -38.27583100701149,
+          -8.749521244501214,
+          4.79070545944985,
+          -30.56663622542442,
+          -4.589520943804656
+        ],
+        "max_difference_from_recorded_mm": 0.0012362254244209225,
+        "pass": true
+      }
+    }
+  },
+  "whole_front_installed_source_hits": [],
+  "complete_module_continuous_insertion_and_reverse_removal": [],
+  "assembly_scope": "Resting integral leaves, both bumps, fixed stops, all723 solids; continuous conservative Z AABB. No simultaneous external leaf holding required.",
+  "buttons": [
+    {
+      "key": "KEY1",
+      "function": "BAT_PWR",
+      "native_outward_face_bounds_mm": [
+        -24.894360705509143,
+        -4.52339723623829,
+        -6.799999392454069,
+        -24.89412855733022,
+        -2.723397251201843,
+        -5.99999939245369
+      ],
+      "root_y_mm": 8.376602756279933,
+      "direction": -1,
+      "rest_bump_x_mm": -25.820000000000004,
+      "rest_first_contact_axial_gap_mm": 0.9256392944908605,
+      "continuous_module_AABB_to_rest_bump_gap_mm": 0.5500000000000007,
+      "continuous_module_AABB_to_stop_gap_mm": 0.5231213817275453,
+      "rest_proxy_identity_volume_error_mm3": 1.2789769243681803e-13,
+      "nominal_press_poses": [
+        {
+          "pad_reference_displacement_mm": 0,
+          "end_rotation_degrees": 0.0,
+          "whole_native_switch_distance_mm": 0.9256392937409325,
+          "whole_native_switch_overlap_mm3": 0.0,
+          "outside_face_footprint_PROXY_overlap_mm3": 0.0,
+          "independent_shell_stop_overlap_mm3": 0,
+          "other_front_overlap_mm3": 0,
+          "other_source_hits": []
+        },
+        {
+          "pad_reference_displacement_mm": 0.4,
+          "end_rotation_degrees": 3.1221304621157087,
+          "whole_native_switch_distance_mm": 0.48116992720505736,
+          "whole_native_switch_overlap_mm3": 0.0,
+          "outside_face_footprint_PROXY_overlap_mm3": 0.0,
+          "independent_shell_stop_overlap_mm3": 0,
+          "other_front_overlap_mm3": 0,
+          "other_source_hits": []
+        },
+        {
+          "pad_reference_displacement_mm": 1.4,
+          "end_rotation_degrees": 10.80823094031979,
+          "whole_native_switch_distance_mm": 1.1723955140041653e-13,
+          "whole_native_switch_overlap_mm3": 0.3348372205075446,
+          "outside_face_footprint_PROXY_overlap_mm3": 0,
+          "independent_shell_stop_overlap_mm3": 0,
+          "other_front_overlap_mm3": 0,
+          "other_source_hits": []
+        },
+        {
+          "pad_reference_displacement_mm": 1.42,
+          "end_rotation_degrees": 10.958921237386894,
+          "whole_native_switch_distance_mm": 1.1723955140041653e-13,
+          "whole_native_switch_overlap_mm3": 0.34789858265956863,
+          "outside_face_footprint_PROXY_overlap_mm3": 0,
+          "independent_shell_stop_overlap_mm3": 0.0013304111063105674,
+          "other_front_overlap_mm3": 0,
+          "other_source_hits": []
+        }
+      ],
+      "tolerance_witness": {
+        "PCB_X_mm": 0.15,
+        "bump_terminal_X_undersize_mm": 0.3,
+        "at_shell_stop_displacement_mm": 1.4,
+        "whole_native_switch_gap_mm": 1.1901590823981678e-13,
+        "additional_conservative_square_Y_endpoints": [
+          {
+            "PCB_Y_mm": -0.15,
+            "gap_mm": 1.2790077635248396e-13,
+            "native_overlap_mm3": 0.045162979154297324
+          },
+          {
+            "PCB_Y_mm": 0.15,
+            "gap_mm": 1.1013770534918321e-13,
+            "native_overlap_mm3": 0.045187205799918924
+          }
+        ],
+        "outward_face_gap_mm": 1.1901590823981678e-13,
+        "native_switch_overlap_mm3": 0.04517509166508597,
+        "shell_stop_overlap_mm3": 0,
+        "source_identity_note": "Whole unmodified official KEY BRep; positive gap means no contact with ANY modeled part, no moving-head assumption required.",
+        "status": "CONTACT_ONLY_FUNCTION_UNVERIFIED"
+      }
+    },
+    {
+      "key": "KEY2",
+      "function": "BOOT",
+      "native_outward_face_bounds_mm": [
+        -24.896374439039583,
+        -20.160184521122194,
+        -6.799999392454069,
+        -24.89614229086066,
+        -18.360184536085743,
+        -5.99999939245369
+      ],
+      "root_y_mm": -31.26018452860397,
+      "direction": 1,
+      "rest_bump_x_mm": -25.820000000000004,
+      "rest_first_contact_axial_gap_mm": 0.9236255609604207,
+      "continuous_module_AABB_to_rest_bump_gap_mm": 0.5500000000000007,
+      "continuous_module_AABB_to_stop_gap_mm": 0.5231213817275453,
+      "rest_proxy_identity_volume_error_mm3": 1.7053025658242404e-13,
+      "nominal_press_poses": [
+        {
+          "pad_reference_displacement_mm": 0,
+          "end_rotation_degrees": -0.0,
+          "whole_native_switch_distance_mm": 0.9237545055478318,
+          "whole_native_switch_overlap_mm3": 0.0,
+          "outside_face_footprint_PROXY_overlap_mm3": 0.0,
+          "independent_shell_stop_overlap_mm3": 0,
+          "other_front_overlap_mm3": 0,
+          "other_source_hits": []
+        },
+        {
+          "pad_reference_displacement_mm": 0.4,
+          "end_rotation_degrees": -3.1221304621157087,
+          "whole_native_switch_distance_mm": 0.47934512740169216,
+          "whole_native_switch_overlap_mm3": 0.0,
+          "outside_face_footprint_PROXY_overlap_mm3": 0.0,
+          "independent_shell_stop_overlap_mm3": 0,
+          "other_front_overlap_mm3": 0,
+          "other_source_hits": []
+        },
+        {
+          "pad_reference_displacement_mm": 1.4,
+          "end_rotation_degrees": -10.80823094031979,
+          "whole_native_switch_distance_mm": 1.1901590823981678e-13,
+          "whole_native_switch_overlap_mm3": 0.33614634694445056,
+          "outside_face_footprint_PROXY_overlap_mm3": 0,
+          "independent_shell_stop_overlap_mm3": 0,
+          "other_front_overlap_mm3": 0,
+          "other_source_hits": []
+        },
+        {
+          "pad_reference_displacement_mm": 1.42,
+          "end_rotation_degrees": -10.958921237386894,
+          "whole_native_switch_distance_mm": 1.1906892201003595e-13,
+          "whole_native_switch_overlap_mm3": 0.34920885747589936,
+          "outside_face_footprint_PROXY_overlap_mm3": 0,
+          "independent_shell_stop_overlap_mm3": 0.001330411106309947,
+          "other_front_overlap_mm3": 0,
+          "other_source_hits": []
+        }
+      ],
+      "tolerance_witness": {
+        "PCB_X_mm": 0.15,
+        "bump_terminal_X_undersize_mm": 0.3,
+        "at_shell_stop_displacement_mm": 1.4,
+        "whole_native_switch_gap_mm": 1.1912191218711845e-13,
+        "additional_conservative_square_Y_endpoints": [
+          {
+            "PCB_Y_mm": -0.15,
+            "gap_mm": 1.270591926046597e-13,
+            "native_overlap_mm3": 0.04643276364344233
+          },
+          {
+            "PCB_Y_mm": 0.15,
+            "gap_mm": 1.1019141097727089e-13,
+            "native_overlap_mm3": 0.04645734445211404
+          }
+        ],
+        "outward_face_gap_mm": 1.1912191218711845e-13,
+        "native_switch_overlap_mm3": 0.04644505323469871,
+        "shell_stop_overlap_mm3": 0,
+        "source_identity_note": "Whole unmodified official KEY BRep; positive gap means no contact with ANY modeled part, no moving-head assumption required.",
+        "status": "CONTACT_ONLY_FUNCTION_UNVERIFIED"
+      }
+    }
+  ],
+  "local_fixture_bounds_mm": [
+    -29.47,
+    -35.93,
+    -11.700000000000001,
+    70.13,
+    41.93,
+    0.7
+  ],
+  "local_fixture_Z_span_mm": 12.4,
+  "thickness_scope": "Local unfinished FRONT+board only; not a full enclosure/retained-thickness pass",
+  "strength_risk": {
+    "effective_length_mm": 11.0,
+    "end_force_small_deflection_root_strain_at_0_4": 0.0059504132231404955,
+    "end_force_small_deflection_root_strain_at_stop": 0.020826446280991732,
+    "actual_allowable_strain": null,
+    "force_N": null,
+    "life_cycles": null,
+    "limits": "End-force Euler-Bernoulli clearance proxy with end rotation; no zero-slope free end assumption. Fillet concentration, pad eccentricity, torsion, nonlinear/material and print orientation effects pending."
+  },
+  "physical_switch_function": "UNVERIFIED_UNTIL_HARDWARE",
+  "actual_switch_travel_mm": null,
+  "MIC_status": "MIC_AUDIO_PATH_BLOCKED_UNTIL_HARDWARE",
+  "manufacturing": {
+    "source": "https://jlc3dp.com/help/article/3d-printing-design-guideline",
+    "status": "PENDING_VENDOR_ACCEPTANCE_NOT_DFM_PASS",
+    "facts": "MJF guide: 10x10 local wall1.2; moving clearance .6; model tolerance +/- .3 below100mm; protrusions/snaps recommended >1.5. These do NOT approve this flexure.",
+    "exception": "Contact tip .8x.8 below nylon wall/small-column recommendations; not accepted merely because embossed-detail resolution is .8. Root return, powder removal and bead blasting need supplier review."
+  },
+  "stopped_work": [],
+  "one_minimum_concession": null,
+  "front_export_checks": {
+    "front_integrated_GATE_ONLY": {
+      "step_valid": true,
+      "step_solid_count": 1,
+      "stl_triangles": 6540,
+      "stl_nonmanifold_edges": 0,
+      "step_stl_bounds_error_mm": 2.7465820267025265e-06,
+      "step_stl_relative_volume_error": 1.831810874953848e-05
+    }
+  },
+  "exported_named_local_features": {
+    "leaf_X_thickness_mm": [
+      1.1999999999999993,
+      1.1999999999999993
+    ],
+    "TF_to_U_slot_ligament_mm": 1.0299807132960002,
+    "FRONT_rim_above_U_slot_mm": 1.03,
+    "U_slot_pair_distance_mm": 11.636787284883901,
+    "stop_axial_section_height_mm": 1.0,
+    "note": "Named sections, not global minimum wall certificate; rounded boundaries are not zero-thickness defects."
+  },
+  "exported_root_transition_cylinders": [
+    {
+      "radius_mm": 0.5,
+      "axis_origin_mm": [
+        -27.77,
+        -30.7601845286,
+        -15.0
+      ]
+    },
+    {
+      "radius_mm": 0.5,
+      "axis_origin_mm": [
+        -27.77,
+        7.87660275628,
+        -15.0
+      ]
+    }
+  ],
+  "nominal_reference_STEP_roundtrip": {
+    "solids": 724,
+    "valid_solids": 724,
+    "bounds_mm": [
+      -29.47,
+      -35.93,
+      -11.7,
+      70.13,
+      41.93,
+      0.7
+    ],
+    "scope": "Local FRONT+723 official, no complete rear/accessory assembly"
+  }
+}
