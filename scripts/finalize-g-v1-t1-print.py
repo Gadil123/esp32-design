@@ -72,7 +72,8 @@ def volume(shape):
 def bbox(shape):
     b = Bnd_Box()
     BRepBndLib.Add_s(shape, b)
-    return tuple(float(x) for x in b.Get())
+    lo, hi = b.CornerMin(), b.CornerMax()
+    return (lo.X(), lo.Y(), lo.Z(), hi.X(), hi.Y(), hi.Z())
 
 
 def write_step(shape, path):
