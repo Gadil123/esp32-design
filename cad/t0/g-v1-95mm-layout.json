@@ -1,0 +1,64 @@
+{
+  "mechanical_baseline": "ee8ec9d",
+  "target_width_mm": 95.6,
+  "width_reduction_mm": 4.0,
+  "speaker_search_shift_x_mm": [
+    0.0,
+    -1.5,
+    -3.0
+  ],
+  "selected_speaker_center_xy_mm": [
+    44.5,
+    -22.4
+  ],
+  "speaker_xyz_mm": [
+    30,
+    20,
+    6.5
+  ],
+  "speaker_lead_mm": 40,
+  "speaker_lead_evidence": "User physically placed speaker at intended location and confirmed sufficient lead. Old79.46mm proxy is NOT an infeasibility test. New shifted placement and service slack still need physical check.",
+  "battery_center_xy_mm": [
+    46.4,
+    14.5
+  ],
+  "battery_complete_xyz_mm": [
+    29.49,
+    42.26,
+    7.61
+  ],
+  "battery_evidence": "User confirms measured COMPLETE component; do not add another protection-board stack.",
+  "battery_adhesive_candidate_mm": 0.2,
+  "battery_swelling_candidate_mm": 1.0,
+  "terminal_keepout_xyz_mm": [
+    2,
+    8,
+    1.5
+  ],
+  "terminal_keepout_status": "UNVERIFIED free space beside complete battery, NOT an additional protection PCB",
+  "mic_candidate_xy_mm": [
+    27.3,
+    1.395
+  ],
+  "mic_candidate_diameter_mm": 1.5,
+  "print_approved": false,
+  "wiring": {
+    "battery_left_lane_x_mm": 29.9,
+    "battery_top_lane_y_mm": 37.4,
+    "battery_right_lane_x_mm": 62.8,
+    "battery_terminal_y_mm": 14.5,
+    "speaker_loop_y_mm": -13,
+    "speaker_left_lane_x_mm": 26.635,
+    "speaker_staging_x_mm": 28.5
+  },
+  "speaker_wire_search_loop_y_mm": [
+    -13,
+    -12,
+    -11
+  ],
+  "battery_xy_dimension_and_position_budget_mm": 0.5,
+  "battery_z_tolerance_candidate_mm": 0.3,
+  "battery_tray_clearance_mm": 0.75,
+  "speaker_socket": "MX1 lower, Y approximately-19.48mm",
+  "speaker_socket_evidence": "User explicitly confirmed lower2pin socket2026-10-20"
+}
