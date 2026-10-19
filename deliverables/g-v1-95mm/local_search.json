@@ -1,0 +1,31 @@
+{
+  "stage": "LOCAL_REAL_BREP_SEARCH_ONLY",
+  "reference": "Frozen shell STEP and original official occurrence BReps, USB+Y FRONT+Z; final acceptance requires full rebuilt assembly.",
+  "rows": [
+    {
+      "speaker_shift_x_mm": 0.0,
+      "receiver_fence_overlap_mm3": 17.12520000000005,
+      "receiver_to_fence_distance_mm": 0.0,
+      "fence_source_hits": [],
+      "body_source_hits": [],
+      "fence_to_display_mm": 4.2594600608527875
+    },
+    {
+      "speaker_shift_x_mm": -1.5,
+      "receiver_fence_overlap_mm3": 0.0,
+      "receiver_to_fence_distance_mm": 0.8299999999999983,
+      "fence_source_hits": [],
+      "body_source_hits": [],
+      "fence_to_display_mm": 2.775427896739532
+    },
+    {
+      "speaker_shift_x_mm": -3.0,
+      "receiver_fence_overlap_mm3": 0.0,
+      "receiver_to_fence_distance_mm": 2.3299999999999983,
+      "fence_source_hits": [],
+      "body_source_hits": [],
+      "fence_to_display_mm": 1.3277801060416627
+    }
+  ],
+  "selected_shift_x_mm": -1.5
+}

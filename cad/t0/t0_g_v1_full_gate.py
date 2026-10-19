@@ -54,9 +54,9 @@ def rear_cells(fixed,m,base,q):
     return pieces,error
 
 
-def evaluate(parts,mounts,m,base,kq,q):
+def evaluate(parts,mounts,m,base,kq,q,wiring_builder=build_wiring):
     tol=base['volume_tolerance_mm3'];source=[(f'official_{i}',s) for i,s in enumerate(parts['ASSEMBLY'].solids())]
-    plugs,wires,wiredata=build_wiring(parts,base,m)
+    plugs,wires,wiredata=wiring_builder(parts,base,m)
     accessories=[(k,m[k]) for k in ['battery','adhesive','protection','speaker','foam','damping']]+list(plugs.items())+[(f'{k}_wire_{i}',s) for k,ss in wires.items() for i,s in enumerate(ss)]
     installed=[('FRONT',m['front']),('REAR',m['rear']),*accessories]
     print('G-V1: nominal source and installed-pair checks',flush=True)

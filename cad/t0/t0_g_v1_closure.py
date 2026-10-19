@@ -77,7 +77,7 @@ def build(m,parts,mounts,base,q):
         end_region=tr(box([a-g-.1,.5,floor,bxclip+g+.1,L+1.1,floor+2]))
         rear-=intersection(reg,end_region)
         hz0,hz1=q['hook_z_mm']
-        stem=box([67.83+dx,y-1,floor-.01,68.63+dx,y+1,hz1])
+        stem=box([a+.3+dx,y-1,floor-.01,bxclip+dx,y+1,hz1])
         hook=extrude(Plane.XZ*Polygon((q['hook_x_mm'][0],hz0),(q['hook_x_mm'][1],hz0),
                       (q['hook_x_mm'][1],hz1),(q['hook_x_mm'][0]+.5,hz1),(q['hook_x_mm'][0],hz1-.2),align=None),amount=1,both=True).translate((dx,y,0))
         rear=rear+stem+hook
