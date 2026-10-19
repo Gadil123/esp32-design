@@ -1,0 +1,44 @@
+{
+  "mechanical_baseline": "ee8ec9d",
+  "coordinates": "USB +Y / FRONT +Z / REAR -Z / native keys LEFT -X",
+  "battery": {
+    "body_xyz_mm": [
+      29.49,
+      42.26,
+      7.61
+    ],
+    "orientation": "29.49 along X; 42.26 along Y; 7.61 along Z",
+    "center_xy_mm": [
+      48.4,
+      14.5
+    ],
+    "status": "user_measured_body_only",
+    "adhesive_candidate_mm": 0.2,
+    "swelling_candidate_mm": 1.0,
+    "protection_board_envelope_mm": null,
+    "connector_and_bend_envelope_mm": null,
+    "complete_installation_envelope_status": "UNVERIFIED"
+  },
+  "speaker": {
+    "body_xyz_mm": [
+      30,
+      20,
+      6.5
+    ],
+    "lead_length_approx_mm": 40,
+    "terminal_position_and_sound_aperture": "UNVERIFIED",
+    "status": "user_measured_body_only"
+  },
+  "mic_candidate": {
+    "front_xy_mm": [
+      27.3,
+      1.395
+    ],
+    "diameter_mm": 1.5,
+    "air_probe_radius_mm": 0.25,
+    "status": "CONDITIONAL_LOCATION_ONLY_NOT_DRILLED",
+    "actual_chip_port_location_mm": null,
+    "actual_chip_port_direction": "UNVERIFIED"
+  },
+  "print_approved": false
+}

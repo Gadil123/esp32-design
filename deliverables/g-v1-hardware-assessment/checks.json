@@ -1,0 +1,816 @@
+{
+  "status": "ASSESSMENT_ONLY_HARDWARE_EVIDENCE_REQUIRED",
+  "print_approved": false,
+  "mechanical_baseline": "ee8ec9d",
+  "coordinates": "USB +Y / FRONT +Z / REAR -Z / native keys LEFT -X",
+  "frozen_shell_symmetric_difference_mm3": {
+    "front": 0,
+    "rear": 0
+  },
+  "official_physical_solids": 723,
+  "battery_body_bounds_mm": [
+    33.655,
+    -6.629999999999997,
+    -9.950000000000003,
+    63.144999999999996,
+    35.629999999999995,
+    -2.3400000000000025
+  ],
+  "old_battery_body_bounds_mm": [
+    31.400000000000002,
+    -10.5,
+    -9.950000000000003,
+    65.4,
+    39.5,
+    -4.950000000000003
+  ],
+  "speaker_body_bounds_mm": [
+    31.0,
+    -32.4,
+    -7.500000000000001,
+    61.0,
+    -12.399999999999999,
+    -1.0000000000000009
+  ],
+  "old_speaker_body_bounds_mm": [
+    31.0,
+    -32.4,
+    -7.800000000000001,
+    61.0,
+    -12.399999999999999,
+    -1.0000000000000009
+  ],
+  "inherited_gate_with_measured_body_only": {
+    "status": "NOMINAL_FULL_ASSEMBLY_GATE_PASS_PHYSICAL_PENDING",
+    "source_collisions": {
+      "FRONT": [],
+      "REAR": [],
+      "battery": [],
+      "adhesive": [],
+      "protection": [],
+      "speaker": [],
+      "foam": [],
+      "damping": [],
+      "MX0": [],
+      "MX1": [],
+      "MX0_wire_0": [],
+      "MX1_wire_0": []
+    },
+    "installed_pair_collisions": [],
+    "complete_board_insertion": [],
+    "fixed_rear_exact_partition": {
+      "cells": 43,
+      "relative_volume_error": 1.9481642357359431e-16
+    },
+    "fixed_rear_continuous_straight_closure": [],
+    "fixed_rear_continuous_first_lift": [],
+    "fixed_rear_continuous_final_withdrawal": [],
+    "first_lift_degrees": 1.854010516310068,
+    "moving_battery_group_during_first_lift": [
+      {
+        "part": "battery",
+        "hits": []
+      },
+      {
+        "part": "adhesive",
+        "hits": []
+      },
+      {
+        "part": "protection",
+        "hits": []
+      }
+    ],
+    "clips": [
+      {
+        "index": 0,
+        "y_mm": -28.0,
+        "held_straight_closure": [],
+        "held_at_closed": [],
+        "first_lift_or_second_retained_envelope": [],
+        "lower_relaxed_at_first_lift": [],
+        "lower_continuous_relax_at_first_lift": [],
+        "receiver_hold_probe_mm3": 0.0059999999999998145,
+        "root_fixed_point_load_strain_estimate": 0.013043478260869499
+      },
+      {
+        "index": 1,
+        "y_mm": 37.2,
+        "held_straight_closure": [],
+        "held_at_closed": [],
+        "first_lift_or_second_retained_envelope": [],
+        "lower_relaxed_at_first_lift": [],
+        "lower_continuous_relax_at_first_lift": [],
+        "receiver_hold_probe_mm3": 0.0060000000000001,
+        "root_fixed_point_load_strain_estimate": 0.013043478260869499
+      }
+    ],
+    "single_pick": [
+      {
+        "index": 0,
+        "plastic_pick_thickness_mm": 0.8,
+        "point_displacement_mm": 0.2391304347826087,
+        "insertion": [],
+        "near_corner_press_envelope": [],
+        "pressed_endpoint": [],
+        "pick_to_held_beam_overlap_mm3": 0,
+        "second_access_with_lid_tilt": [],
+        "material_tool_force": "UNVERIFIED: actual plastic pick stiffness/edge and PA12 force; no printed tool or simultaneous holding set"
+      },
+      {
+        "index": 1,
+        "plastic_pick_thickness_mm": 0.8,
+        "point_displacement_mm": 0.2391304347826087,
+        "insertion": [],
+        "near_corner_press_envelope": [],
+        "pressed_endpoint": [],
+        "pick_to_held_beam_overlap_mm3": 0,
+        "second_access_with_lid_tilt": [],
+        "material_tool_force": "UNVERIFIED: actual plastic pick stiffness/edge and PA12 force; no printed tool or simultaneous holding set"
+      }
+    ],
+    "four_screws": [
+      {
+        "index": 0,
+        "axis_xy_mm": [
+          -20.568177706598007,
+          -27.100437863023274
+        ],
+        "head_bottom_mm": -11.350000000000001,
+        "head_seat_mm": -10.500000000000002,
+        "tip_mm": -6.500000000000002,
+        "seat_mm": 1.0000005600000037,
+        "nominal_engagement_mm": 2.9999994399999963,
+        "nonmating_source": [],
+        "rear_clearance": [],
+        "driver_access": [],
+        "head_bearing_area_mm2": 13.477432483900213
+      },
+      {
+        "index": 1,
+        "axis_xy_mm": [
+          -20.56045079905781,
+          32.89956101943423
+        ],
+        "head_bottom_mm": -11.350000000000001,
+        "head_seat_mm": -10.500000000000002,
+        "tip_mm": -6.500000000000002,
+        "seat_mm": 1.0000005600000037,
+        "nominal_engagement_mm": 2.9999994399999963,
+        "nonmating_source": [],
+        "rear_clearance": [],
+        "driver_access": [],
+        "head_bearing_area_mm2": 13.477432483900213
+      },
+      {
+        "index": 2,
+        "axis_xy_mm": [
+          20.431821233414617,
+          -27.10571791647091
+        ],
+        "head_bottom_mm": -11.350000000000001,
+        "head_seat_mm": -10.500000000000002,
+        "tip_mm": -6.500000000000002,
+        "seat_mm": 1.0000005600000037,
+        "nominal_engagement_mm": 2.9999994399999963,
+        "nonmating_source": [],
+        "rear_clearance": [],
+        "driver_access": [],
+        "head_bearing_area_mm2": 13.477432483900213
+      },
+      {
+        "index": 3,
+        "axis_xy_mm": [
+          20.439548140954813,
+          32.89428096598659
+        ],
+        "head_bottom_mm": -11.350000000000001,
+        "head_seat_mm": -10.500000000000002,
+        "tip_mm": -6.500000000000002,
+        "seat_mm": 1.0000005600000037,
+        "nominal_engagement_mm": 2.9999994399999963,
+        "nonmating_source": [],
+        "rear_clearance": [],
+        "driver_access": [],
+        "head_bearing_area_mm2": 13.477432483900213
+      }
+    ],
+    "USB_independent_body": [],
+    "TF_independent_card": [],
+    "RESET_pin_to_native_key_only": [],
+    "negative_too_thick_pick": {
+      "thickness_mm": 1.1,
+      "U_slot_mm": 1.0,
+      "actual_fixed_rear_overlap_mm3": 0.10579999999999398,
+      "rejected": true
+    },
+    "conditional_wiring": {
+      "MX0": {
+        "socket_bounds_mm": [
+          17.43999999999712,
+          20.45234160069025,
+          -8.899999339999999,
+          22.63999999999719,
+          28.10234160069025,
+          -5.4999993399999285
+        ],
+        "opening_direction_inferred_from_cavity": [
+          -1,
+          0,
+          0
+        ],
+        "plug_body_status": "unverified",
+        "wire_spec_and_bend_radius_status": "unverified",
+        "function_identity": "upper/lower connector occurrence; SPK/BAT association requires board/official silkscreen confirmation",
+        "destination_candidate": "speaker lead staging",
+        "wire_centerline_polyline_before_fillets_mm": [
+          [
+            [
+              13.43999999999712,
+              24.27734160069025,
+              -7.3
+            ],
+            [
+              10.43999999999712,
+              24.27734160069025,
+              -7.3
+            ],
+            [
+              10.43999999999712,
+              29.15,
+              -7.3
+            ],
+            [
+              28.4,
+              29.15,
+              -7.3
+            ],
+            [
+              28.4,
+              29.15,
+              -4.0
+            ],
+            [
+              28.4,
+              -22.4,
+              -4.0
+            ],
+            [
+              30.4,
+              -22.4,
+              -4.0
+            ]
+          ]
+        ],
+        "bend_radius_mm": 1.5,
+        "terminal_connection_verified": false,
+        "wire_model": "circumscribed bundle, not individual conductor simulation",
+        "bundle_diameter_mm": 1.5
+      },
+      "MX1": {
+        "socket_bounds_mm": [
+          17.439999999997006,
+          -23.30581092720877,
+          -8.899999339999999,
+          22.639999999997077,
+          -15.65581092720877,
+          -5.4999993399999285
+        ],
+        "opening_direction_inferred_from_cavity": [
+          -1,
+          0,
+          0
+        ],
+        "plug_body_status": "unverified",
+        "wire_spec_and_bend_radius_status": "unverified",
+        "function_identity": "upper/lower connector occurrence; SPK/BAT association requires board/official silkscreen confirmation",
+        "destination_candidate": "battery lead staging above cell",
+        "wire_centerline_polyline_before_fillets_mm": [
+          [
+            [
+              13.439999999997006,
+              -19.480810927208772,
+              -7.3
+            ],
+            [
+              10.439999999997006,
+              -19.480810927208772,
+              -7.3
+            ],
+            [
+              10.439999999997006,
+              -9.98,
+              -7.3
+            ],
+            [
+              30.2,
+              -9.98,
+              -7.3
+            ],
+            [
+              30.2,
+              -9.98,
+              -2.0
+            ],
+            [
+              66.7,
+              -9.98,
+              -2.0
+            ],
+            [
+              66.7,
+              6.0,
+              -2.0
+            ]
+          ]
+        ],
+        "bend_radius_mm": 1.5,
+        "terminal_connection_verified": false,
+        "wire_model": "circumscribed bundle, not individual conductor simulation",
+        "bundle_diameter_mm": 1.5
+      }
+    },
+    "closed_complete_bounds_mm": [
+      -29.47,
+      -35.93,
+      -11.669520835024437,
+      70.13,
+      41.93,
+      0.7
+    ],
+    "closed_maximum_thickness_mm": 12.369520835024437,
+    "maximum_with_retained_rear_play_mm": 12.386283281103278,
+    "retained_rigid_pose_bound": {
+      "status": "NOMINAL_RIGID_CONTACT_BOUND",
+      "forward_patches": [
+        {
+          "contact_bounds_mm": [
+            -27.47,
+            -33.883939201417135,
+            -10.150000000000002,
+            -26.769999999999946,
+            -32.5,
+            -10.149900000000002
+          ],
+          "eroded_support_points_xy_mm": [
+            [
+              -27.269999999999996,
+              -32.93
+            ],
+            [
+              -27.269999999999996,
+              -32.7
+            ],
+            [
+              -26.97,
+              -33.55449979983983
+            ],
+            [
+              -26.970000000000002,
+              -32.7
+            ]
+          ]
+        },
+        {
+          "contact_bounds_mm": [
+            -27.440619517519043,
+            39.17061951751905,
+            -10.150000000000002,
+            -26.769999999999964,
+            39.883939201417064,
+            -10.149900000000002
+          ],
+          "eroded_support_points_xy_mm": [
+            [
+              -27.117379332385575,
+              39.400000000000006
+            ],
+            [
+              -26.969999999999995,
+              39.554499799839846
+            ],
+            [
+              -26.97,
+              39.400000000000006
+            ]
+          ]
+        },
+        {
+          "contact_bounds_mm": [
+            67.42999999999999,
+            -33.88393920141694,
+            -10.150000000000002,
+            68.13,
+            -32.5,
+            -10.149900000000002
+          ],
+          "eroded_support_points_xy_mm": [
+            [
+              67.63,
+              -32.7
+            ],
+            [
+              67.63,
+              -33.55449979983983
+            ],
+            [
+              67.92999999999999,
+              -32.93
+            ],
+            [
+              67.92999999999999,
+              -32.7
+            ]
+          ]
+        },
+        {
+          "contact_bounds_mm": [
+            67.42999999999999,
+            38.6,
+            -10.150000000000002,
+            68.13,
+            39.88393920141694,
+            -10.149900000000002
+          ],
+          "eroded_support_points_xy_mm": [
+            [
+              67.63,
+              38.800000000000004
+            ],
+            [
+              67.92999999999999,
+              38.800000000000004
+            ],
+            [
+              67.92999999999999,
+              38.93
+            ],
+            [
+              67.62999999999998,
+              39.554499799839846
+            ]
+          ]
+        }
+      ],
+      "diagonal_hook_patches": [
+        {
+          "center_xy_mm": [
+            67.28,
+            -28.0
+          ],
+          "uncertainty_half_xy_mm": [
+            0.3999999999999986,
+            1.25
+          ],
+          "contact_bounds_mm": [
+            67.13,
+            -29.0,
+            -9.3501,
+            67.42999999999999,
+            -27.0,
+            -9.35
+          ]
+        },
+        {
+          "center_xy_mm": [
+            -27.450000000000003,
+            37.2
+          ],
+          "uncertainty_half_xy_mm": [
+            0.4000000000000057,
+            1.25
+          ],
+          "contact_bounds_mm": [
+            -27.60000000000001,
+            36.2,
+            -9.3501,
+            -27.299999999999997,
+            38.2,
+            -9.35
+          ]
+        }
+      ],
+      "maximum_rear_plane_drop_mm": 0.32542812752553585,
+      "maximum_glass_plane_rise_mm": 0.0008551535777413521,
+      "quadratic_plane_correction_bound_mm": 4.150803719716878e-05,
+      "guard_mm": 0.005,
+      "conservative_z_min_mm": -11.680428127525538,
+      "conservative_z_max_mm": 0.7058551535777413,
+      "maximum_thickness_mm": 12.386283281103278,
+      "LP_objective_evaluations": 32,
+      "nominal_closed_pose_witnesses": [
+        {
+          "target": "rear",
+          "xy_mm": [
+            -29.77,
+            -36.23
+          ],
+          "plane_abc": [
+            0.0015682650724868803,
+            0.002278554452709849,
+            -0.1961888484959236
+          ],
+          "delta_z_mm": -0.32542812752553585
+        },
+        {
+          "target": "glass",
+          "xy_mm": [
+            -25.67,
+            39.93
+          ],
+          "plane_abc": [
+            0.0,
+            0.0022773718293002602,
+            -0.09008030356621805
+          ],
+          "delta_z_mm": 0.0008551535777413521
+        }
+      ],
+      "limits": "Actual CAD contact patches eroded .2; hook contact location expanded .25; rear footprint expanded .3 and glass .4. Four slope-sign LPs bound rigid plane rocking. Contact overlap, friction, elasticity and printer warp still require physical verification. This does not certify arbitrary loaded deformation."
+    },
+    "assembly_order": [
+      "FRONT down on clean soft support; do not flip unscrewed module; support native metal mounting parts when handling",
+      "Complete board straight from REAR; integral keys stay at rest, no caps to install",
+      "Route conditional leads; close rear with two shallow lead-in hooks, then four M2.5x4 machine screws from REAR",
+      "Opening: FRONT down, remove ALL four PCB screws first; PCB stays in FRONT on soft support",
+      "One .8mm plastic pick in lower existing U-slot, deflect beam outward; lift lower lid corner2.2mm, then release/remove same pick",
+      "Move same pick to upper existing U-slot; release second, withdraw lid; real service-lead slack/unplug access pending"
+    ],
+    "limits": [
+      "No verified PA12 force, fatigue, creep, print tolerance approval or actual switch travel.",
+      "A single pick is moved between two existing latch U-slots; no four simultaneous shims or 8.3mm held module withdrawal.",
+      "PCB does not follow lid after all screws removed. Workbench/soft-support handling required; no open-shell flip restraint.",
+      "Conditional plugs/lead endpoints, battery and speaker remain unverified; static routing is not real connector/lead qualification.",
+      "MIC_AUDIO_PATH_BLOCKED_UNTIL_HARDWARE. No speculative sound hole."
+    ]
+  },
+  "inherited_fit_checks": {
+    "screw_to_other_nonmating_parts": [
+      {
+        "index": 0,
+        "hits": []
+      },
+      {
+        "index": 1,
+        "hits": []
+      },
+      {
+        "index": 2,
+        "hits": []
+      },
+      {
+        "index": 3,
+        "hits": []
+      }
+    ],
+    "combined_register_bore_print_reach": {
+      "status": "BLOCKED_CONDITIONAL_PRINT_FIT",
+      "witnesses": [
+        {
+          "key": "KEY1",
+          "PCB_X_mm": 0.35,
+          "printed_tip_undersize_mm": 0.3,
+          "gap_at_shell_stop_mm": 0.05572178179733241,
+          "native_overlap_mm3": 0.0
+        },
+        {
+          "key": "KEY2",
+          "PCB_X_mm": 0.35,
+          "printed_tip_undersize_mm": 0.3,
+          "gap_at_shell_stop_mm": 0.05380305002624554,
+          "native_overlap_mm3": 0.0
+        }
+      ],
+      "limits": "Rear register .2 plus screw-bore radial .15 are cumulative freedoms. Printed-tip .3 undersize is a conditional guide-tolerance budget, not measured hardware. Nominal insertion gates do not certify this combined manufactured fit."
+    }
+  },
+  "limits": "All official board and frozen shell collisions use real BRep. Battery/speaker are measured body-only envelopes. Legacy protection/plug/wires are UNVERIFIED, not actual complete installation envelopes.",
+  "microphone": {
+    "package_bounds_mm": [
+      21.53527135405787,
+      -0.30619433233446397,
+      -6.5999996389449995,
+      24.135714149720407,
+      3.0941489091755456,
+      -5.601998078945
+    ],
+    "package_faces": 6,
+    "package_geom_types": [
+      "GeomType.PLANE",
+      "GeomType.PLANE",
+      "GeomType.PLANE",
+      "GeomType.PLANE",
+      "GeomType.PLANE",
+      "GeomType.PLANE"
+    ],
+    "candidate": {
+      "front_xy_mm": [
+        27.3,
+        1.395
+      ],
+      "diameter_mm": 1.5,
+      "air_probe_radius_mm": 0.25,
+      "status": "CONDITIONAL_LOCATION_ONLY_NOT_DRILLED",
+      "actual_chip_port_location_mm": null,
+      "actual_chip_port_direction": "UNVERIFIED"
+    },
+    "candidate_bore_intersections": [],
+    "candidate_front_cut_volume_mm3": 2.120575041173109,
+    "air_probe_points_mm": [
+      [
+        27.3,
+        1.395,
+        -0.8
+      ],
+      [
+        27.3,
+        1.395,
+        -7.1
+      ],
+      [
+        22.835492751889138,
+        1.395,
+        -7.1
+      ],
+      [
+        22.835492751889138,
+        1.395,
+        -6.85
+      ]
+    ],
+    "air_probe_hits": [
+      [],
+      [],
+      []
+    ],
+    "pcb_center_probe_volume_mm3": 0.4523891555063272,
+    "pcb_center_full_cylinder_volume_mm3": 0.45238934211693027,
+    "port_direction": "UNVERIFIED",
+    "pcb_acoustic_hole": "UNVERIFIED; center probe only is not an exhaustive hole search",
+    "acoustic_performance": "UNVERIFIED; geometric access to package exterior is not connection to actual acoustic port",
+    "finger_occlusion": "UNVERIFIED: right of glass near mid-height, right thumb/palm may cover it"
+  },
+  "battery_z_chain": {
+    "rear_outer_mm": -11.350000000000001,
+    "rear_panel_mm": 1.2,
+    "rear_floor_mm": -10.150000000000002,
+    "adhesive_candidate_mm": 0.2,
+    "body_mm": 7.61,
+    "body_front_mm": -2.3400000000000025,
+    "front_inner_mm": -0.5,
+    "geometric_headroom_mm": 1.8400000000000025,
+    "swelling_candidate_mm": 1.0,
+    "remaining_after_candidate_swelling_mm": 0.8400000000000025,
+    "protection_and_wires_Z_mm": null,
+    "complete_package_fit": "UNVERIFIED",
+    "swelling_probe_hits": []
+  },
+  "wiring": {
+    "MX0": {
+      "socket_bounds_mm": [
+        17.43999999999712,
+        20.45234160069025,
+        -8.899999339999999,
+        22.63999999999719,
+        28.10234160069025,
+        -5.4999993399999285
+      ],
+      "opening_direction_inferred_from_cavity": [
+        -1,
+        0,
+        0
+      ],
+      "plug_body_status": "unverified",
+      "wire_spec_and_bend_radius_status": "unverified",
+      "function_identity": "upper/lower connector occurrence; SPK/BAT association requires board/official silkscreen confirmation",
+      "destination_candidate": "speaker lead staging",
+      "wire_centerline_polyline_before_fillets_mm": [
+        [
+          [
+            13.43999999999712,
+            24.27734160069025,
+            -7.3
+          ],
+          [
+            10.43999999999712,
+            24.27734160069025,
+            -7.3
+          ],
+          [
+            10.43999999999712,
+            29.15,
+            -7.3
+          ],
+          [
+            28.4,
+            29.15,
+            -7.3
+          ],
+          [
+            28.4,
+            29.15,
+            -4.0
+          ],
+          [
+            28.4,
+            -22.4,
+            -4.0
+          ],
+          [
+            30.4,
+            -22.4,
+            -4.0
+          ]
+        ]
+      ],
+      "bend_radius_mm": 1.5,
+      "terminal_connection_verified": false,
+      "wire_model": "circumscribed bundle, not individual conductor simulation",
+      "bundle_diameter_mm": 1.5,
+      "sharp_polyline_length_mm": 82.68265839931263,
+      "filleted_centerline_length_mm": 79.46363085027436,
+      "approx_40mm_speaker_lead_sufficient_for_this_route": false
+    },
+    "MX1": {
+      "socket_bounds_mm": [
+        17.439999999997006,
+        -23.30581092720877,
+        -8.899999339999999,
+        22.639999999997077,
+        -15.65581092720877,
+        -5.4999993399999285
+      ],
+      "opening_direction_inferred_from_cavity": [
+        -1,
+        0,
+        0
+      ],
+      "plug_body_status": "unverified",
+      "wire_spec_and_bend_radius_status": "unverified",
+      "function_identity": "upper/lower connector occurrence; SPK/BAT association requires board/official silkscreen confirmation",
+      "destination_candidate": "battery lead staging above cell",
+      "wire_centerline_polyline_before_fillets_mm": [
+        [
+          [
+            13.439999999997006,
+            -19.480810927208772,
+            -7.3
+          ],
+          [
+            10.439999999997006,
+            -19.480810927208772,
+            -7.3
+          ],
+          [
+            10.439999999997006,
+            -9.98,
+            -7.3
+          ],
+          [
+            30.2,
+            -9.98,
+            -7.3
+          ],
+          [
+            30.2,
+            -9.98,
+            -2.0
+          ],
+          [
+            66.7,
+            -9.98,
+            -2.0
+          ],
+          [
+            66.7,
+            6.0,
+            -2.0
+          ]
+        ]
+      ],
+      "bend_radius_mm": 1.5,
+      "terminal_connection_verified": false,
+      "wire_model": "circumscribed bundle, not individual conductor simulation",
+      "bundle_diameter_mm": 1.5,
+      "sharp_polyline_length_mm": 90.04081092721177,
+      "filleted_centerline_length_mm": 86.8217833781735,
+      "approx_40mm_speaker_lead_sufficient_for_this_route": null
+    }
+  },
+  "width": {
+    "old_outer_xyz_mm": [
+      99.6,
+      77.86,
+      12.369520835024437
+    ],
+    "body_only_X_saving_mm": 4.510000000000002,
+    "body_only_Y_saving_mm": 7.740000000000002,
+    "proposed_final_outer_xyz_mm": null,
+    "approved_width_reduction_mm": 0,
+    "reason": "Existing 30mm speaker, latch receiver/release lane, unknown battery terminal envelope and inadequate legacy speaker route preclude committing a narrower production shell."
+  },
+  "speaker_support": {
+    "rear_pad_to_new_damping_gap_mm": 0.29999999999999893,
+    "new_foam_seal": "not designed; real rim, port and adhesive thickness required",
+    "isolation": "Existing fence is interrupted at wire exit; no complete PCB/bay partition. No sealed enclosure or acoustic isolation proved."
+  }
+}

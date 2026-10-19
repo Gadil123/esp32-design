@@ -1,0 +1,24 @@
+{
+  "authenticated_download_succeeded": true,
+  "asset_id": 656608441,
+  "asset_name": "g-v1-hardware-arrival-assessment-20261019.zip",
+  "downloaded_bytes": 29708479,
+  "step_uncompressed_bytes": 160916993,
+  "packaged_export_report": {
+    "solids": 727,
+    "valid_solids": 727,
+    "bounds_mm": [
+      -29.47,
+      -35.93,
+      -11.66952083502,
+      70.13,
+      41.93,
+      0.7
+    ],
+    "status": "ASSESSMENT_ONLY_NOT_RELEASED",
+    "includes": "723 real board solids + frozen front + frozen rear + battery body + speaker body. NOT full harness, protection, fastener or manufacturing assembly."
+  },
+  "validation_scope": "Actual authenticated GitHub ZIP downloaded and opened. Geometry validity comes from separate local STEP roundtrip; no repeated semantic check of downloaded STEP, no SHA validation.",
+  "private_draft_published": false,
+  "old_assets_overwritten": false
+}

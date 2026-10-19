@@ -1,0 +1,14 @@
+{
+  "solids": 727,
+  "valid_solids": 727,
+  "bounds_mm": [
+    -29.47,
+    -35.93,
+    -11.66952083502,
+    70.13,
+    41.93,
+    0.7
+  ],
+  "status": "ASSESSMENT_ONLY_NOT_RELEASED",
+  "includes": "723 real board solids + frozen front + frozen rear + battery body + speaker body. NOT full harness, protection, fastener or manufacturing assembly."
+}
