@@ -1,0 +1,42 @@
+{
+  "frozen_receiver_probe_bounds_mm": [
+    65.83,
+    -29.8,
+    -9.5,
+    67.43,
+    -26.2,
+    -1.0
+  ],
+  "rows": [
+    {
+      "reduction_mm": 2.0,
+      "receiver_bounds_mm": [
+        63.83,
+        -29.8,
+        -9.5,
+        65.43,
+        -26.2,
+        -1.0
+      ],
+      "hits": []
+    },
+    {
+      "reduction_mm": 4.0,
+      "receiver_bounds_mm": [
+        61.83,
+        -29.8,
+        -9.5,
+        63.43000000000001,
+        -26.2,
+        -1.0
+      ],
+      "hits": [
+        {
+          "obstacle": "unchanged_front_including_speaker_fence",
+          "volume_mm3": 17.12520000000005
+        }
+      ]
+    }
+  ],
+  "limitation": "Only a cropped real lower-right latch receiver translated in X. Rear beam, support, registration, wall, tray and tool paths NOT redesigned or validated. A clear local probe is not full-case approval."
+}
