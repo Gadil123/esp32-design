@@ -1,0 +1,45 @@
+{
+  "candidate": "G-V1 95.60mm / T1 first print",
+  "source": "PR #6 reviewed CAD; PR #7 CONDITIONAL GO",
+  "status": "FILES_VERIFIED_MANUFACTURER_CHECKS_PENDING",
+  "actual_mic_port_acoustic_response": "UNVERIFIED; T1 functional test required",
+  "front_mic_aperture": {
+    "x_mm": 27.3,
+    "y_mm": 1.395,
+    "diameter_mm": 1.5,
+    "through_front_panel": true,
+    "removed_mm3": 2.12057504117311
+  },
+  "original_front_volume_mm3": 10588.177961349655,
+  "finished_front_volume_mm3": 10586.057386308594,
+  "rear_unchanged": true,
+  "front_bbox_mm": [
+    -29.470000100000004,
+    -35.9300001,
+    -11.66952093502,
+    66.13000009999999,
+    41.9300001,
+    0.700000100000001
+  ],
+  "mesh_checks": {
+    "front": {
+      "triangles": 7362,
+      "watertight": true,
+      "winding_consistent": true,
+      "mesh_volume_mm3": 10585.867215097303,
+      "step_volume_mm3": 10586.057386308594
+    },
+    "rear": {
+      "triangles": 8672,
+      "watertight": true,
+      "winding_consistent": true,
+      "mesh_volume_mm3": 9028.421119763021,
+      "step_volume_mm3": 9028.421350066355
+    }
+  },
+  "order_or_print_approved": false,
+  "remaining_preorder_conditions": [
+    "MJF PA12 supplier sign-off for 0.81mm continuous wall, 1mm U slot, latch/keys/0.15mm play, 1mm screw seats, clean-out, no tumbling or grit blasting on mating surfaces, no arbitrary scaling",
+    "Verify real metal inserts and M2.5 screw pitch with physical screw"
+  ]
+}
