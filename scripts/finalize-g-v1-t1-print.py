@@ -86,7 +86,7 @@ def write_stl(shape, path):
     mesh.Perform()
     assert mesh.IsDone(), "mesher failed"
     writer = StlAPI_Writer()
-    writer.SetASCIIMode(False)
+    writer.ASCIIMode = False
     assert writer.Write(shape, str(path)), f"write STL failed: {path}"
 
 
