@@ -1,6 +1,6 @@
 """Conditional bundle clearances, separate from user's successful 40mm fit test.
 
-Upper/lower allocation remains a silkscreen check, not inferred from STEP names.
+Lower speaker socket confirmed by user; upper battery/plug details remain checks.
 No route length from the obsolete79.46mm proxy is used as a failure criterion.
 """
 from build123d import FilletPolyline,Plane,Circle,sweep

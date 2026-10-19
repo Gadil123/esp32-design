@@ -30,16 +30,7 @@ def render(out,parts,old,m,b0,base,c0,c,cfg,r):
         ax.annotate('MIC1 candidate space',(27.3,1.395),(33,1),fontsize=8,arrowprops={'arrowstyle':'->'})
     fig.suptitle('RIGHT BAY / actual sectioned case+723-board BReps, measured accessory envelopes\nBattery complete29.49x42.26x7.61; speaker30x20x6.5. Dashed/omitted wiring is not real harness certification.')
     save(fig,out,'old_new_bay_same_scale_FRONT_cutaway')
-    fig,axs=plt.subplots(1,2,figsize=(13,7));slab=box([25,-34,-6.52,69,-10,-6.28])
-    oldfence=intersection(old['front'],box([29.4,-34,-8.2,62.6,-10.8,-.5001]));shifted=intersection(old['front'],box([65.7,-30,-9.5,67.45,-26,-1])).translate((-4,0,0))
-    items=[(oldfence,SPK),(shifted,'#d54949')]
-    panel(axs[0],[(section(s,slab),co) for s,co in items],[1,0,0],[0,1,0],[0,0,1],(25,69,-34,-10))
-    axs[0].set_title('PR5 direct receiver X-4 only\n17.1252mm3 overlap / BLOCKED',fontsize=10)
-    panel(axs[1],[(section(m['front'],slab),BLUE),(section(m['speaker'],slab),SPK)],[1,0,0],[0,1,0],[0,0,1],(25,69,-34,-10))
-    axs[1].set_title('Joint layout: speaker+fence X-1.5, receiver X-4\n0.83mm nominal gap / frame and tooth retained',fontsize=10)
-    for ax in axs:ax.set_xlabel('X mm');ax.set_ylabel('Y mm / FRONT +Z observer')
-    fig.suptitle('Resolve the original collision by MOVING the complete speaker/frame/grille/support system\nNo fence thinning, removed support, smaller tooth or reduced clearance. Real section Z=-6.40 +/-0.12.')
-    save(fig,out,'receiver_speaker_interference_resolved')
+    receiver_fence_view(out,old,m)
     fig,axs=plt.subplots(1,3,figsize=(14,7));y=c['clip_sites'][0]['y_mm'];slab=box([-30,y-.12,-12,71,y+.12,1])
     for ax,mm,cc,title in zip(axs[:2],[old,m],[c0,c],['Frozen lower latch','95.60 lower latch / identical translated geometry']):
         a=cc['clip_x_mm'][0]
@@ -88,3 +79,16 @@ def mic_wiring_view(out,parts,m,base,r):
     axs[1].legend(fontsize=8,loc='lower left');axs[1].set_title('FRONT +Z wiring placement / USB +Y TOP\nLowerMX1=SPK user confirmed; upperBAT allocation pending\nUser40mm fit accepted; staged endpoint/service slack pending',fontsize=9);axs[1].set_xlabel('X mm');axs[1].set_ylabel('Y mm')
     fig.suptitle('MIC SPACE AND SERVICE ROUTING / exact checked paths, not supplier harness CAD\nOld79.46mm proxy is not used as evidence against the user-tested40mm lead.')
     save(fig,out,'MIC_and_conditional_wiring')
+
+
+def receiver_fence_view(out,old,m):
+    fig,axs=plt.subplots(1,2,figsize=(13,7));slab=box([25,-34,-6.52,69,-10,-6.28])
+    oldfence=intersection(old['front'],box([29.4,-34,-8.2,62.6,-10.8,-.5001]));shifted=intersection(old['front'],box([65.7,-30,-9.5,67.45,-26,-1])).translate((-4,0,0))
+    items=[(oldfence,SPK),(shifted,'#d54949')]
+    panel(axs[0],[(section(s,slab),co) for s,co in items],[1,0,0],[0,1,0],[0,0,1],(25,69,-34,-10))
+    axs[0].set_title('PR5 direct receiver X-4 only\n17.1252mm3 overlap / BLOCKED',fontsize=10)
+    panel(axs[1],[(section(m['front'],slab),BLUE),(section(m['speaker'],slab),SPK)],[1,0,0],[0,1,0],[0,0,1],(25,69,-34,-10))
+    axs[1].set_title('Joint layout: speaker+fence X-1.5, receiver X-4\n0.83mm nominal gap / frame and tooth retained',fontsize=10)
+    for ax in axs:ax.set_xlabel('X mm');ax.set_ylabel('Y mm / FRONT +Z observer')
+    fig.suptitle('Resolve the original collision by MOVING the complete speaker/frame/grille/support system\nFrame wall, tooth and body-to-frame clearance retained; receiver gap is explicitly reduced. Real section Z=-6.40 +/-0.12.')
+    save(fig,out,'receiver_speaker_interference_resolved')

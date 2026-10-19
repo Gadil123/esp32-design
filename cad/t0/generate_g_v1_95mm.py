@@ -29,6 +29,7 @@ def main():
     OUT.mkdir(parents=True,exist_ok=True);build=ROOT/'build/g-v1-95mm';build.mkdir(parents=True,exist_ok=True)
     cfg=read('g-v1-95mm-layout.json');kq=read('t0-g-v1-boot-rect.json');c0=read('t0-g-v1-closure.json')
     p=read('t0-g-parameters.json');b0=read('t0-a-parameters.json');b0.update(p['layout_overrides'])
+    cfg['width_reduction_mm']=b0['width_mm']-cfg['target_width_mm']
     print('Import RAW official STEP / all723 real solids / cumulative placements / Rz180',flush=True)
     parts,mounts,_=load(ROOT.parent/'ESP32-C5-Touch-LCD-2.8/dimensions/ESP32-C5-Touch-LCD-2.8.stp')
     search=study(parts,OUT,cfg);assert next(row for row in search['rows'] if row['speaker_shift_x_mm']==search['selected_shift_x_mm'])['receiver_fence_overlap_mm3']<.001
@@ -58,6 +59,7 @@ def main():
     comparisons['lower_root_neighborhood_delta_mm3']=delta(intersection(m['rear'].translate((d,0,0)),rootzone),intersection(old['rear'],rootzone))
     comparisons['screw_seat_deltas_mm3']=[delta(a,b) for a,b in zip(m['seats'],old['seats'])]
     comparisons['screw_deltas_mm3']=[delta(a,b) for a,b in zip(m['screws'],old['screws'])]
+    assert all(v<.001 for key in ['screw_seat_deltas_mm3','screw_deltas_mm3'] for v in comparisons[key])
     for n in ['all_front_material_X_below_25_9_delta_mm3','lower_free_latch_translated_back_delta_mm3','upper_free_latch_delta_mm3','lower_root_neighborhood_delta_mm3']:
         assert comparisons[n]<.001,(n,comparisons[n])
     report=dict(status='CHECKING',print_approved=False,mechanical_baseline='ee8ec9d',coordinates='USB+Y / FRONT+Z / REAR-Z / native keys LEFT-X',
@@ -91,7 +93,7 @@ def main():
     reread=import_step(build/'assembly_complete.step');ss=reread.solids();bb=bounds(reread)
     report['assembly_export']=dict(solids=len(ss),valid_solids=sum(s.is_valid for s in ss),bounds_mm=bb,maximum_thickness_mm=bb[5]-bb[2])
     assert len(ss)==report['assembly_export']['valid_solids']==739
-    assert abs(bb[3]-bb[0]-95.6)<1e-5 and abs(bb[4]-bb[1]-77.86)<1e-5 and bb[5]-bb[2]<=12.400001
+    assert abs(bb[3]-bb[0]-cfg['target_width_mm'])<1e-5 and abs(bb[4]-bb[1]-77.86)<1e-5 and bb[5]-bb[2]<=12.400001
     del reread,ss;gc.collect()
     lightparts=[m['front'],m['rear'],*m['screws'],parts['PCB_BOARD'],*mounts]
     for n in ['DISPLAY','J2_USB_SIDE','TF','KEY1','KEY2','KEY3','MIC1','MX0','MX1']:
@@ -106,5 +108,20 @@ def main():
     export_step(Compound(m['speaker'].wrapped,label='Measured_Speaker_Body'),viewer/'Speaker.step')
     shutil.copy2(ROOT/'cad/t0/view_g_v1_95mm_freecad.py',viewer/'view_g_v1_95mm_freecad.py')
     (OUT/'checks.json').write_text(json.dumps(report,indent=2)+'\n')
+    package_review(OUT,build)
     print(report['status']+'; NOT PRINT APPROVED',flush=True)
+
+def package_review(out,build):
+    archive=build/'g-v1-95mm-layout-review-20261020.zip'
+    with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED) as z:
+        z.write(build/'assembly_complete.step','assembly_complete.step')
+        for f in sorted((build/'viewer').glob('*')):
+            if f.is_file():z.write(f,'viewer/'+f.name)
+        for f in sorted(out.iterdir()):
+            if f.is_file() and f.name!='download_verification.json':z.write(f,'report/'+f.name)
+        z.write(ROOT/'docs/31_g_v1_95mm_layout_optimization.md','REPORT.md')
+        z.write(ROOT/'deliverables/t0-g-v1-boot-rect/front_shell.step','baseline_ee8ec9d/front_shell.step')
+        z.write(ROOT/'deliverables/t0-g-v1/rear_shell.step','baseline_ee8ec9d/rear_shell.step')
+    return archive
+
 if __name__=='__main__':main()

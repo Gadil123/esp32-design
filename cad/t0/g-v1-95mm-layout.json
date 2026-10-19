@@ -1,7 +1,6 @@
 {
   "mechanical_baseline": "ee8ec9d",
   "target_width_mm": 95.6,
-  "width_reduction_mm": 4.0,
   "speaker_search_shift_x_mm": [
     0.0,
     -1.5,

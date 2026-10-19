@@ -27,7 +27,7 @@ gh release download t0-cad-review-20261016-9ec1022 \
   --dir ./g-v1-95mm-review
 ```
 
-ZIP含 `assembly_complete.step`、同坐标分组`viewer/`、原ee8ec9d壳体对照、新壳STEP/STL和检查/剖面。下载验证另见 `download_verification.json`（在PR中，不作为ZIP几何认证）。
+ZIP含 `assembly_complete.step`、同坐标分组`viewer/`、原ee8ec9d壳体对照、新壳STEP/STL和检查/剖面。下载验证另见 `download_verification.json`（在PR中，不作为ZIP几何认证）。ZIP是本轮模型交付快照，最新图注和审查说明以本PR内报告31及图片为准；此后的说明修订未改动模型几何。
 
 FreeCAD可直接打开完整STEP；或解压后在桌面Python控制台执行：
 
@@ -41,3 +41,5 @@ assembled()
 按五组显隐检查；`Battery.step`和`Speaker.step`是单独查看用，不要与包含它们的完整配件组重复计数。实际拆卸路径及其限制以报告31和JSON为准。FreeCAD GUI未在服务器执行；STEP经OCP真实回读，脚本检查Python语法，未声称FreeCAD GUI验收。
 
 旧冻结前/后壳、E和PR #5保留。原按键不利公差失败、实际按力/行程、PA12薄特征、螺丝扭矩、真实线束服务与收音门槛均未关闭。
+
+命令结束后以`checks.json`状态为准；CONDITIONAL不等于制造或真实功能PASS。
