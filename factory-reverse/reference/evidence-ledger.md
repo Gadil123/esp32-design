@@ -25,6 +25,14 @@ One row per major claim. "Static" means derived from the BIN/source/schematic;
 | factory does not read CH32 ADC | no command byte 6 and no matching `transmit_receive` site; string absence is secondary (linker may GC it) | high | static negative |
 | StatusBar battery is initialized, not periodically updated | `0x4206cc28`, `0x4206ea62`, `0x4206c53e` | medium-high | static, CFG gap |
 | Brookesia 0.7 stock battery ADC cannot read CH32 | `battery_adc_impl.cpp` | high | confirmed |
+| Bootloader body ends at `0x7a68`; image end `0x7a91` | segment lengths + checksum/SHA | high | confirmed |
+| Partition table is at `0x8000`, `nvs` at `0x9000` | 7 partition entries + valid MD5 | high | confirmed |
+| ota_0 contains vendor `CustomBoard` source path | rodata string `./main/boards/waveshare/esp32-c5-touch-lcd-2.8/esp32-c5-touch-lcd-2.8.cc` | high | static |
+| ota_0 `CustomBoard` drives ST7789 at 40 MHz | ctor `0x42021c2c`, display init `0x42021a4e`, `pclk=40000000` | high | static |
+| ota_0 `CustomBoard` has no CST3530/touch init | no touch symbols/strings/calls in ctor/display chain | medium-high | static negative |
+| ota_0 backlight writes fixed `{0x05,0xff}` | `CustomBacklight` method `0x4202186c` | high | static |
+| factory display uses 80 MHz and CST3530 `0x58` | `0x420243f2`, `0x420245b2` | high | static |
+| ota_0 I2C disables glitch filter/internal pull-up | zeroed config, SCL=1, clk=0x10 | medium | inferred struct layout |
 | CH32 PWM controls backlight | `0x42046b2c`, only caller brightness | high | static |
 | Backlight has no standard 0.7 device | 0.7 HAL interfaces | high | confirmed |
 | microSD is on shared SPI, not SDMMC | schematic/BSP | high | confirmed |

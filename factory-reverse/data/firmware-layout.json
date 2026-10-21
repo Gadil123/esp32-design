@@ -1,5 +1,5 @@
 {
-  "schema": "esp32-c5-factory-firmware-layout/v1",
+  "schema": "esp32-c5-factory-firmware-layout/v2",
   "binary": {
     "name": "ESP32-C5-Touch-LCD-2.8-FactoryAppV1.1.bin",
     "size": 13699516,
@@ -19,9 +19,23 @@
   },
   "bootloader": {
     "offset": "0x2000",
-    "size": "0x8000",
+    "body_end": "0x7a68",
+    "checksum_offset": "0x7a70",
+    "sha256_offset": "0x7a71",
+    "image_end": "0x7a91",
+    "image_size": "0x5a91",
+    "window": "0x2000..0x8000",
     "entry": "0x4084bbaa",
     "segments": 3
+  },
+  "partition_table": {
+    "offset": "0x8000",
+    "entries": 7,
+    "end_marker_offset": "0x80e0",
+    "md5_offset": "0x80f0",
+    "md5": "cf713ae992b641a7e5a868f1f6dc81b4",
+    "md5_covers": "0x8000..0x80df",
+    "first_data_partition_offset": "0x9000"
   },
   "partitions": [
     {"label": "nvs", "type": "data", "subtype": "nvs", "offset": "0x9000", "size": "0x4000"},

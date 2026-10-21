@@ -16,9 +16,9 @@ first display/touch/audio bring-up.
 | I2C port / SDA / SCL | `0` / `0` / `1` | factory `bsp_i2c_init` |
 | LCD SPI host | `SPI2_HOST` | public BSP |
 | LCD SCLK / MOSI / MISO / CS / DC | `6` / `7` / `8` / `10` / `9` | factory `bsp_display_new` |
-| LCD pixel clock | `80 MHz`, SPI mode `0` | factory `bsp_display_new` |
+| LCD pixel clock | `40 MHz`, SPI mode `0` | ota_0 `CustomBoard` (`0x42021a4e`); factory/public BSP use `80 MHz` |
 | LCD panel | ST7789, 240x320, RGB565, invert on | factory + public BSP |
-| Touch | CST3530 at `0x58`, 400 kHz, INT `5` | factory `bsp_touch_new` |
+| Touch | CST3530 at `0x58`, 400 kHz, INT `5` | factory `bsp_touch_new`; ota_0 has no touch init |
 | Touch reset | CH32V003 pin `0` | factory masks |
 | LCD reset | CH32V003 pin `1` | factory masks |
 | Power amplifier enable | CH32V003 pin `3` | factory masks |

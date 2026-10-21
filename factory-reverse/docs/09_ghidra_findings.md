@@ -134,7 +134,7 @@ CH32 相关代码只覆盖方向/输出/PWM/输入；扫描 `i2c_master_transmit
 
 ```c
 FUN_ram_4200c072(
-    this,
+    g_codec,    /* 全局 codec 存储 @ 0x4081d2b8 */
     i2c_handle,
     0,          /* i2c port */
     24000,      /* input sample rate */
@@ -156,7 +156,35 @@ FUN_ram_4200c072(
 且 V5 实测支持 RX27。三方冲突及验证方法见
 [原理图交叉核对](12_schematic_crosscheck.md)。
 
-## 5. XREF 方法与限制
+## 5. OTA CustomBoard
+
+ota_0 的厂商板级类不是公共 BSP 的简单封装，而是独立 `CustomBoard`：
+
+| 地址 | 语义 |
+| --- | --- |
+| `0x42021c2c` | `CustomBoard` 构造函数 |
+| `0x42021df6` | board 分配/构造入口（调用者负责 guard） |
+| `0x42021a4e` | `InitializeSt7789Display` |
+| `0x42021820` | `GetDisplay()` |
+| `0x4202186c` | `CustomBacklight` 写 CH32 PWM |
+| `0x42021876` | `GetAudioCodec()` |
+| `0x42020d7a` | `WifiBoard` 基类构造 |
+
+构造函数顺序：I2C（SDA0/SCL1）→ CH32 `0x24` → 方向 `0xb` → EXIO0/1
+一起复位 → EXIO3/PA 高 → SPI host1（6/7，MISO -1，max transfer
+`0x25800`）→ ST7789（40 MHz）→ 背光。
+
+与 factory/公共 BSP 的关键差异：
+
+- OTA 显示 SPI 是 **40 MHz**，factory/公共 BSP 是 80 MHz。
+- OTA 没有 CST3530/touch 字符串或调用；触摸不能从 OTA 反推。
+- OTA 背光固定写 `{0x05, 0xff}`，没有亮度参数；factory/公共 BSP 支持 PWM。
+- OTA PA 在构造阶段直接拉高；bring-up 时建议等 codec 就绪后再拉高。
+
+详见 [显示与触摸](13_display_touch.md) 和
+[OTA CustomBoard](15_ota_custom_board.md)。
+
+## 6. XREF 方法与限制
 
 Ghidra 的 `FindRefs.java` 对未定义的 data/string 仍返回 0；当前用文本管线：
 
@@ -174,7 +202,7 @@ factory 约 `19457` 个 LUI/ADDI pair，ota 约 `14631` 个。这个方法能恢
 
 因此文档中的函数名都是“语义名”，地址和参数字节才是证据。
 
-## 6. 复现
+## 7. 复现
 
 ```bash
 # 1. 生成 combined image（每个 segment 按 vaddr - 0x40800000 放置）
@@ -191,9 +219,11 @@ factory 约 `19457` 个 LUI/ADDI pair，ota 约 `14631` 个。这个方法能恢
 - `DumpDisasm.java`
 - `FindRefs.java`（当前对 string 无效，保留作对照）
 
-## 7. 相关文档
+## 8. 相关文档
 
 - [逆向方法](07_reverse_method.md)
 - [音频与 I2S](03_audio_i2s.md)
 - [Brookesia 0.7 适配](08_brookesia07_board_adaptation.md)
+- [显示与触摸](13_display_touch.md)
+- [ota_0 CustomBoard](15_ota_custom_board.md)
 - [完整静态分析](../reference/full-static-analysis.md)

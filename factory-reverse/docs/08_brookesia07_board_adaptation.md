@@ -68,7 +68,7 @@ sdkconfig.defaults.board
 | 项目 | 值 |
 | --- | --- |
 | 面板 | ST7789，240x320，RGB565 |
-| SPI mode / pclk | `0` / `80 MHz` |
+| SPI mode / pclk | `0`；factory/公共 BSP `80 MHz`，ota_0 `40 MHz` |
 | cmd / param bits | `8` / `8` |
 | queue depth | `10` |
 | invert color | `true` |
@@ -81,6 +81,11 @@ sdkconfig.defaults.board
 
 `esp_lcd_touch_config_t` 的 `x_max=240, y_max=320, int_gpio_num=5` 可从 factory
 栈上的初始化结构直接读出；`rst_gpio_num=-1` 因为复位走 expander。
+
+> 显示时钟以 40 MHz 作为 bring-up 基线：ota_0 的 `CustomBoard` 明确使用
+> 40 MHz（`0x42021a4e`），factory/公共 BSP 使用 80 MHz。80 MHz 是否稳定
+> 取决于排线/面板批次，需实测。ota_0 **没有** CST3530 触摸初始化，触摸
+> 证据只能来自 factory `0x420245b2` 和公共 BSP。
 
 ### 3.4 音频
 
@@ -166,6 +171,9 @@ sdkconfig.defaults.board
    直接打开 power device 不会读到电池。需要 custom `PowerBatteryIface`。
 8. 模块物理 32 MB Flash，但 factory 分区表只到 `0xf10000`；不要只因
    模块型号就把 board draft 改成 32 MB。
+9. ota_0 `CustomBoard` 未包含 CST3530 触摸，也未提供可调背光；不要把它
+   当作完整板级实现。详见 [显示与触摸](13_display_touch.md) 和
+   [ota_0 CustomBoard](15_ota_custom_board.md)。
 
 ## 7. Bring-up 验收
 

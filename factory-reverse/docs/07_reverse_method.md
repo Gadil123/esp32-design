@@ -44,14 +44,14 @@ bytes 12..13 chip ID
 本 BIN：
 
 ```text
-bootloader @ 0x2000: entry 0x4084bbaa, chip 23, 16MB, DIO 80MHz
+bootloader @ 0x2000: entry 0x4084bbaa, body end 0x7a68, image end 0x7a91, chip 23, 16MB, DIO 80MHz
 factory    @ 0x20000: entry 0x408002b0, 5 segments
 ota_0      @ 0x910000: entry 0x408003a6, 5 segments
 ```
 
 ### 2.2 分区表
 
-偏移 `0x8000`，每条 32 字节：
+偏移 `0x8000`，每条 32 字节，共 7 条：
 
 ```text
 magic 0xAA50 (bytes aa 50)
@@ -61,7 +61,9 @@ label[16]
 flags
 ```
 
-注意：分区表尾部可能是 MD5/尾数据，不一定全 `0xFF`。不要因为看到 `ebeb...` 就判定表损坏。
+结束标记在 `0x80e0`，随后 16 字节 MD5 覆盖 `0x8000..0x80df`。
+注意：分区表尾部是 MD5/尾数据，不一定全 `0xFF`；不要因为看到
+`ebeb...` 就判定表损坏。`nvs` 从 `0x9000` 开始，`0x9000` 不是表偏移。
 
 ### 2.3 App descriptor
 

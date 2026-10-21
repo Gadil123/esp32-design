@@ -190,7 +190,10 @@ Application::Initialize()
 ### 2.1 Bootloader
 
 - 偏移：`0x2000`
-- 大小：`0x8000`（32 KB）
+- body 结束：`0x7a68`
+- 校验/SHA：`0x7a70..0x7a90`
+- 镜像结束：`0x7a91`（exclusive），镜像跨度 `0x5a91` 字节
+- 窗口：`0x2000..0x8000`（窗口不是镜像长度）
 - 芯片：ESP32-C5，chip ID `23`
 - 入口：`0x4084bbaa`
 - Flash：镜像头 16 MB；模组 N32R8 物理 32 MB（见 docs/11）
@@ -198,6 +201,9 @@ Application::Initialize()
 - IDF 版本字符串：`v5.5.4`
 
 ### 2.2 分区表
+
+分区表位于 `0x8000`，共 7 个 entry；结束标记 `0xebeb` 在 `0x80e0`，
+其后 16 字节 MD5 覆盖 `0x8000..0x80df`。`nvs` 数据从 `0x9000` 开始。
 
 | 分区 | 类型 | 子类型 | 偏移 | 大小 | 结束 |
 |---|---|---:|---:|---:|---:|
@@ -211,7 +217,8 @@ Application::Initialize()
 
 补充：
 
-- 分区表结束处是 MD5/尾数据，不是全 `0xFF`；解析器在偏移 `224` 看到 `ebeb...` 属于正常尾数据。
+- 分区表结束处是 MD5/尾数据，不是全 `0xFF`；解析器在表内偏移 `224`（绝对地址 `0x80e0`）看到 `ebeb...` 属于正常尾数据。
+- 表自身在 `0x8000`；`nvs` 在 `0x9000`，两者不要混淆。
 - `otadata` 两个 entry 全 `0xFF`。
 - `nvs` 全空，没有 Wi-Fi/激活信息。
 - 因此首次启动选择 `factory`，不是 `ota_0`。
@@ -675,6 +682,34 @@ data  0x42240020
 `factory_code2.dis` 得到 805365 条指令、9295 个函数；`ota_code2.dis` 得到
 567197 条指令、9010 个函数。关键 BSP 函数图和 OTA ES8311 ctor 证据见
 [09 · Ghidra 发现](../docs/09_ghidra_findings.md)。
+
+### 9.2.2 ota_0 `CustomBoard`
+
+ota_0 的厂商板级类已从字符串/vtable/调用链恢复：
+
+| 地址 | 语义 |
+| --- | --- |
+| `0x42021c2c` | `CustomBoard` 构造函数 |
+| `0x42021df6` | board 分配/构造入口（调用者负责 guard） |
+| `0x42021a4e` | `InitializeSt7789Display` |
+| `0x42021820` | `GetDisplay` |
+| `0x4202186c` | `CustomBacklight` 写 CH32 PWM |
+| `0x42021876` | `GetAudioCodec` |
+
+构造顺序：I2C（SDA0/SCL1）→ CH32 `0x24` → 方向 `0xb` → EXIO0/1
+复位 → EXIO3/PA 高 → SPI host1（6/7，MISO -1，max transfer `0x25800`）
+→ ST7789（**40 MHz**）→ 背光。
+
+与 factory/公共 BSP 的差异：
+
+- factory/公共 BSP 显示 SPI 为 80 MHz；ota_0 为 40 MHz。
+- ota_0 没有 CST3530/touch 字符串或初始化调用；factory/公共 BSP 有
+  CST3530 `0x58`、INT5、EXIO0 复位。
+- ota_0 背光固定写 `{0x05,0xff}`；factory/公共 BSP 支持 PWM 0–255。
+- ota_0 PA 在构造阶段拉高；bring-up 应延迟到 codec 就绪后。
+
+详见 [13 · 显示与触摸](../docs/13_display_touch.md) 和
+[15 · ota_0 CustomBoard](../docs/15_ota_custom_board.md)。
 
 ### 9.3 局限
 

@@ -75,7 +75,9 @@ devices:
         cs_gpio_num: 10
         dc_gpio_num: 9
         spi_mode: 0
-        pclk_hz: 80000000
+        # ota_0 CustomBoard uses 40 MHz; factory/public BSP use 80 MHz.
+        # Start bring-up at 40 MHz and validate 80 MHz on hardware.
+        pclk_hz: 40000000
         trans_queue_depth: 10
         lcd_cmd_bits: 8
         lcd_param_bits: 8

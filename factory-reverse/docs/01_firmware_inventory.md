@@ -10,7 +10,7 @@
 | --- | --- |
 | 文件大小 | `13699516` 字节（`0xd109bc`） |
 | 芯片 | ESP32-C5（image chip ID `23`） |
-| Bootloader | `0x2000`，32 KB，entry `0x4084bbaa` |
+| Bootloader | `0x2000`，镜像 `0x5a91` 字节，body 结束 `0x7a68`，entry `0x4084bbaa` |
 | Flash | 镜像/分区按 16 MB（模块物理 32 MB，见 [审计](11_flash_capacity_audit.md)），DIO，80 MHz |
 | IDF | `v5.5.4` |
 | 默认启动 | `factory`（`otadata` 全 `0xFF`） |
@@ -20,21 +20,33 @@
 Bootloader 字段：
 
 ```text
-offset      0x2000
-size        0x8000
-magic       0xe9
-segments    3
-entry       0x4084bbaa
-chip id     23
-flash size  16 MB
-mode/freq   DIO / 80 MHz
+offset        0x2000
+body end      0x7a68
+checksum      0x7a70
+SHA256        0x7a71..0x7a90
+image end     0x7a91 (exclusive)
+window        0x2000..0x8000
+magic         0xe9
+segments      3
+entry         0x4084bbaa
+chip id       23
+flash size    16 MB
+mode/freq     DIO / 80 MHz
 ```
+
+`0x2000..0x8000` 是 bootloader 窗口，不是镜像长度；镜像在 `0x7a91`
+已经结束，`0x7a91..0x8000` 为保留/填充。详见
+[bootloader 与分区表内存边界](14_bootloader_memory_map.md)。
 
 这里的 `flash size 16 MB` 是镜像头声明，不是模组物理容量；模组为
 `ESP32-C5-WROOM-1-N32R8`（32 MB Flash / 8 MB PSRAM），但 factory 分区表
 只到 `0xf10000`。详见 [Flash 容量审计](11_flash_capacity_audit.md)。
 
 ## 2. 分区表
+
+分区表自身位于 `0x8000`，共 7 个 entry；结束 entry 在 `0x80e0`，
+MD5 在 `0x80f0..0x80ff`；第一个数据分区 `nvs` 从 `0x9000` 开始。不要把
+`nvs` 的 `0x9000` 当成表偏移。
 
 | 分区 | 类型 | 子类型 | 偏移 | 大小 | 结束 |
 |---|---|---:|---:|---:|---:|
@@ -186,5 +198,6 @@ https://api.tenclass.net/xiaozhi/ota/
 
 - [双 APP 与启动链](02_dual_app_boot.md)
 - [音频与 I2S](03_audio_i2s.md)
+- [Bootloader 与分区表内存边界](14_bootloader_memory_map.md)
 - [AI 启动与网络](06_ai_bringup.md)
 - [完整静态分析](../reference/full-static-analysis.md)

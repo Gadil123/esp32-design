@@ -12,7 +12,8 @@
 2. **官方 AI 为什么能用？** factory app 里的 `AIChats` 是**启动器**：它把 `ota_0` 设为启动分区并重启，完整 Xiaozhi 语音栈在 `ota_0`，不在 factory app。
 3. **本板 ES8311 I2S 到底怎么接？** V5 实测和 OTA 配置支持 **TX/DOUT=26、RX/DIN=27**；但原理图网名 `GPIO26=ASDOUT/GPIO27=DSDIN` 与公共 BSP 指向相反方向。当前把 26/27 作为工作基线，冲突未静态闭环，见 [原理图交叉核对](docs/12_schematic_crosscheck.md)。
 4. **电池和 Flash 到底是多少？** 模块是 32 MB Flash + 8 MB PSRAM；factory 镜像/分区按 16 MB，电池 ADC 在 CH32 `PC4` 而不是 ESP32。
-5. **多 APP、重力球 95%、AI 初始化循环能复用/借鉴什么？** 可复用 Brookesia 的 app registry/生命周期/资源管理；重力球和 AI 循环目前只有假设，必须先拿串口日志，不能从字符串直接定因。
+5. **显示/触摸在 factory 和 AI app 里是否一致？** 面板、引脚一致；factory 用 80 MHz + CST3530 触摸，ota_0 `CustomBoard` 用 40 MHz 且未链接触摸驱动。
+6. **多 APP、重力球 95%、AI 初始化循环能复用/借鉴什么？** 可复用 Brookesia 的 app registry/生命周期/资源管理；重力球和 AI 循环目前只有假设，必须先拿串口日志，不能从字符串直接定因。
 
 ## 关键结论
 
@@ -23,7 +24,9 @@
 | I2S 数据脚 | **TX=26、RX=27** 为工作基线；原理图网名/公共 BSP 指向相反方向，三方冲突未闭环 | 中高；V5 RX27 实测 |
 | 电池检测 | `BAT_ADC` 经 200K/100K 分压到 CH32 `PC4`；factory 未发现 ADC 读取；0.7 需 custom `PowerBatteryIface` | 硬件路径高；软件未用高置信 |
 | Flash/PSRAM | 模块 32 MB Flash + 8 MB PSRAM；factory 镜像头 16 MB、ota_0 32 MB，分区表只到 `0xf10000` | 已确认 |
-| 出厂镜像布局 | 双 app：`01_factory` + `xiaozhi 2.2.6`；初始 `otadata` 全 FF，默认 factory | 已确认 |
+| 出厂镜像布局 | 双 app：`01_factory` + `xiaozhi 2.2.6`；初始 `otadata` 全 FF，默认 factory；分区表在 `0x8000`，`nvs` 在 `0x9000` | 已确认 |
+| 显示/触摸差异 | factory/公共 BSP：ST7789 80 MHz + CST3530；ota_0：40 MHz、无触摸驱动 | 静态高置信 |
+| ota_0 板级类 | `CustomBoard` 源码路径已恢复；构造时初始化 I2C/CH32/SPI/ST7789/背光，ES8311 由 `GetAudioCodec` 懒加载 | 静态高置信 |
 | Assets | 24 个文件，`index.json` version 1，`srmodels.bin` 存在 | 已确认 |
 | 重力球 95% | 校准不稳定/重试/进度未刷新等候选，未定因 | 未证明 |
 | AI 初始化循环 | 优先查无 SSID/配网、OTA 重试、激活；assets 本镜像有效 | 未证明 |
@@ -45,6 +48,9 @@
 | [10 · 电池检测](docs/10_battery_ch32_adc.md) | `BAT_ADC` → CH32 `PC4`、ADC 寄存器 `0x06`、factory 未读 ADC 的证据 |
 | [11 · Flash 容量审计](docs/11_flash_capacity_audit.md) | 32 MB 模块 / 16 MB factory 分区 / OTA 32 MB 头的分层结论 |
 | [12 · 原理图交叉核对](docs/12_schematic_crosscheck.md) | 网表、I2S 三方冲突、电池/PSRAM/Flash 的图面事实 |
+| [13 · 显示与触摸对照](docs/13_display_touch.md) | factory / ota_0 / 公共 BSP 的 SPI、ST7789、CST3530、背光差异 |
+| [14 · Bootloader 与分区表](docs/14_bootloader_memory_map.md) | 修正 `0x8000` 分区表、`0x2000` bootloader 真实边界 |
+| [15 · ota_0 CustomBoard](docs/15_ota_custom_board.md) | 厂商板级类、构造顺序、CH32/SPI/显示/背光/ES8311 证据 |
 | [板级草案](board-draft/esp32_c5_touch_lcd_2_8/README.md) | 可直接放进 `brookesia_hal_boards` 的 0.7 草案（未编译） |
 | [完整静态分析](reference/full-static-analysis.md) | 全部地址、分区、字符串、Ghidra 记录和原始结论 |
 | [证据账本](reference/evidence-ledger.md) | 每条主要结论的证据、置信度和未决状态 |
