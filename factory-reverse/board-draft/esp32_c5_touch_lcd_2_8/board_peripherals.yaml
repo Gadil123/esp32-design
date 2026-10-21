@@ -1,0 +1,52 @@
+peripherals:
+  - name: i2c_master
+    type: i2c
+    role: master
+    config:
+      port: 0
+      pins:
+        sda: 0
+        scl: 1
+
+  # ESP32-C5 is the I2S master.  dout/din are MCU-side pins:
+  # dout=26 is MCU TX -> ES8311 DSDIN; din=27 is MCU RX <- ES8311 ASDOUT.
+  - name: i2s_audio_out
+    type: i2s
+    role: master
+    format: std-out
+    config: &i2s_config
+      port: 0
+      sample_rate_hz: 16000
+      clk_src: I2S_CLK_SRC_DEFAULT
+      mclk_multiple: 256
+      data_bit_width: 16
+      slot_bit_width: I2S_SLOT_BIT_WIDTH_AUTO
+      slot_mode: I2S_SLOT_MODE_STEREO
+      slot_mask: I2S_STD_SLOT_BOTH
+      ws_width: 16
+      pins:
+        mclk: -1
+        bclk: 24
+        ws: 25
+        dout: 26
+        din: 27
+
+  - name: i2s_audio_in
+    type: i2s
+    role: master
+    format: std-in
+    config: *i2s_config
+
+  # LCD and microSD share SPI2_HOST: SCLK=6, MOSI=7, MISO=8, LCD CS=10, SD CS=23.
+  - name: spi_display
+    type: spi
+    role: master
+    config:
+      spi_bus_config:
+        spi_port: SPI2_HOST
+        mosi_io_num: 7
+        miso_io_num: 8
+        sclk_io_num: 6
+        quadwp_io_num: -1
+        quadhd_io_num: -1
+        max_transfer_sz: 6400

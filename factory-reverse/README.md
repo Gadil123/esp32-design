@@ -10,7 +10,7 @@
 
 1. **能不能从 BIN 恢复完整源码？** 不能。可以恢复镜像结构、板级常量、启动链、字符串和部分逻辑，但不能得到可编译的 factory 工程。
 2. **官方 AI 为什么能用？** factory app 里的 `AIChats` 是**启动器**：它把 `ota_0` 设为启动分区并重启，完整 Xiaozhi 语音栈在 `ota_0`，不在 factory app。
-3. **本板 ES8311 I2S 到底怎么接？** factory BIN 的 BSP 配置使用 **TX/DOUT=26、RX/DIN=27**；当前公共 BSP 的“修正版”写成 27/26，方向很可能反了。
+3. **本板 ES8311 I2S 到底怎么接？** factory BSP 和 OTA Xiaozhi codec ctor 都使用 **TX/DOUT=26、RX/DIN=27**；当前公共 BSP 的“修正版”写成 27/26，方向很可能反了。
 4. **多 APP、重力球 95%、AI 初始化循环能复用/借鉴什么？** 可复用 Brookesia 的 app registry/生命周期/资源管理；重力球和 AI 循环目前只有假设，必须先拿串口日志，不能从字符串直接定因。
 
 ## 关键结论
@@ -19,7 +19,7 @@
 | --- | --- | --- |
 | 完整官方源码 | **NO-GO**：factory 的 `main.cpp`、自定义 app、2.8 板 Xiaozhi board profile 未公开 | 高 |
 | 官方 AI 路径 | factory `AIChats` → 设置 `ota_0` 启动 → 重启 → Xiaozhi v2.2.6 | 高置信推断 |
-| I2S 数据脚 | **TX=26、RX=27**；公共 BSP 当前 27/26 很可能反了 | 高；仍需实板复核 |
+| I2S 数据脚 | **TX=26、RX=27**；factory + OTA 双证据；公共 BSP 当前 27/26 很可能反了 | 高；仍需实板复核 |
 | 出厂镜像布局 | 双 app：`01_factory` + `xiaozhi 2.2.6`；初始 `otadata` 全 FF，默认 factory | 已确认 |
 | Assets | 24 个文件，`index.json` version 1，`srmodels.bin` 存在 | 已确认 |
 | 重力球 95% | 校准不稳定/重试/进度未刷新等候选，未定因 | 未证明 |
@@ -37,20 +37,24 @@
 | [05 · 重力球校准](docs/05_gravity_ball_calibration.md) | 校准状态机设计、超时/重试/UI 进度建议、串口排查清单 |
 | [06 · AI 启动与网络](docs/06_ai_bringup.md) | Xiaozhi 初始化链、配网/OTA/激活失败矩阵、bring-up checklist |
 | [07 · 逆向方法](docs/07_reverse_method.md) | 官方 BIN 获取、Ghidra/objdump 工作流、证据边界、工具限制 |
+| [08 · Brookesia 0.7 板级适配](docs/08_brookesia07_board_adaptation.md) | 从 BIN 到 board YAML/setup_device 的映射、缺口与 bring-up 顺序 |
+| [09 · Ghidra 发现](docs/09_ghidra_findings.md) | 双 code range、BSP 函数图、OTA ES8311 ctor、XREF 方法 |
+| [板级草案](board-draft/esp32_c5_touch_lcd_2_8/README.md) | 可直接放进 `brookesia_hal_boards` 的 0.7 草案（未编译） |
 | [完整静态分析](reference/full-static-analysis.md) | 全部地址、分区、字符串、Ghidra 记录和原始结论 |
 
 机器可读数据：
 
 - [`data/firmware-layout.json`](data/firmware-layout.json)：分区、app、assets 摘要
-- [`data/audio-pin-evidence.json`](data/audio-pin-evidence.json)：factory BSP 配置地址和字节
+- [`data/audio-pin-evidence.json`](data/audio-pin-evidence.json)：factory BSP 配置地址、字节和 OTA ctor 交叉证据
+- [`data/board-esp32-c5-touch-lcd-2.8.json`](data/board-esp32-c5-touch-lcd-2.8.json)：完整引脚、设备、Brookesia 0.7 映射
 
 ## 对 Pocket OS 的直接建议
 
 ### 应该复用
 
 1. **双 APP 边界的思路**：UI 桌面和完整语音应用解耦，避免把 Xiaozhi 的全部协议/音频栈塞进 Brookesia 桌面。
-2. **音频引脚事实**：本板 BSP 采用 `BCLK=24`、`WS=25`、`TX=26`、`RX=27`、`MCLK=NC`；先用这组值做录音 bring-up。
-3. **Brookesia 的 app registry/生命周期**：公开 `08_bookesia` 已提供 Phone、registry、LvLock、app install/uninstall、最近任务和资源回收，适合作为 Pocket OS 的多 APP 基线。
+2. **音频引脚事实**：本板 BSP 和 OTA codec 都采用 `BCLK=24`、`WS=25`、`TX=26`、`RX=27`、`MCLK=NC`；先用这组值做录音 bring-up。
+3. **Brookesia 0.7 的 HAL board package + app registry/生命周期**：板级初始化走 `brookesia_hal_boards`，app 层继续复用 registry/LvLock/资源回收；公开 `08_bookesia` 可参考 Phone 行为。
 4. **启动/初始化可观测性**：AIChats 的“找不到分区/设置启动分区失败”与 Xiaozhi 的 OTA/激活重试都说明：每一步要有明确状态和错误，不要静默循环。
 
 ### 不应该直接复制

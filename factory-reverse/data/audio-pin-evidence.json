@@ -1,7 +1,7 @@
 {
   "schema": "esp32-c5-audio-pin-evidence/v1",
   "board": "Waveshare ESP32-C5-Touch-LCD-2.8",
-  "status": "high-confidence static evidence plus one working V5 observation; re-verify on hardware",
+  "status": "high-confidence static evidence from factory BSP and OTA Xiaozhi, plus one working V5 observation; re-verify on hardware",
   "factory_bsp_config": {
     "virtual_address": "0x423c1a54",
     "file_offset": "0x1a1a54",
@@ -29,7 +29,7 @@
       "dout": "BSP_I2S_DSIN (27)",
       "din": "BSP_I2S_DOUT (26)"
     },
-    "assessment": "likely reversed for this board; conflicts with factory BIN and V5 observation"
+    "assessment": "likely reversed for this board; conflicts with factory BSP, OTA Xiaozhi ctor, and the V5 observation"
   },
   "recommendation": {
     "mclk": "GPIO_NUM_NC",
@@ -57,6 +57,27 @@
     "Factory app AIChats is a launcher; the actual voice stack is in ota_0 Xiaozhi.",
     "Factory BSP sample rate 22050 is not necessarily the Xiaozhi voice sample rate.",
     "Public BSP declares bsp_audio_codec_microphone_init() but does not implement it.",
-    "Re-verify pin mapping on the exact board revision before production."
-  ]
+    "Re-verify pin mapping on the exact board revision before production.",
+    "OTA Xiaozhi uses a duplex 24 kHz codec; cross-check the desired Brookesia sample rate before copying it."
+  ],
+  "ota_xiaozhi_codec": {
+    "get_audio_codec_address": "0x42021876",
+    "ctor_address": "0x4200c072",
+    "duplex_channels_address": "0x4200bee0",
+    "ctor_arguments": {
+      "i2c_port": 0,
+      "in_sample_rate_hz": 24000,
+      "out_sample_rate_hz": 24000,
+      "mclk": -1,
+      "bclk": 24,
+      "ws": 25,
+      "dout_tx": 26,
+      "din_rx": 27,
+      "pa_pin": -1,
+      "es8311_address": "0x30",
+      "use_mclk": false,
+      "pa_inverted": false
+    },
+    "source_reference": "xiaozhi-v2.2.6/main/audio/codecs/es8311_audio_codec.cc"
+  }
 }

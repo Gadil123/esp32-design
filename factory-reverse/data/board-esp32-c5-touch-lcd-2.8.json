@@ -1,0 +1,171 @@
+{
+  "schema": "esp32-c5-touch-lcd-2-8-board/v1",
+  "board": "Waveshare ESP32-C5-Touch-LCD-2.8",
+  "status": "static evidence high-confidence; Brookesia 0.7 mapping is a draft and has not been built or flashed",
+  "chip": {
+    "name": "ESP32-C5",
+    "flash_size": "16MB",
+    "psram": "quad, 80MHz (public C5 example configuration)"
+  },
+  "sources": {
+    "factory_image": {
+      "name": "ESP32-C5-Touch-LCD-2.8-FactoryAppV1.1.bin",
+      "sha256": "92d0f25d7b8c43900c8882e2ca9cee1ca7c8a9338504bd392567f3d1e8cdf174"
+    },
+    "ota_image": {
+      "project": "xiaozhi",
+      "version": "2.2.6",
+      "sha256": "52664f27cfc4b2ebbd1750c9137e761072a49fdf91ec8e72fbbcac038481f8cc"
+    },
+    "public_bsp": "https://github.com/waveshareteam/ESP32-C5-Touch-LCD-2.8",
+    "brookesia": "release/v0.7, brookesia_hal_boards v0.7.5, commit c5742af3594ef0b4ba257ae6b8c9af5a92822620"
+  },
+  "buses": {
+    "i2c": {
+      "port": 0,
+      "sda": 0,
+      "scl": 1,
+      "glitch_ignore_cnt": 7,
+      "internal_pullup": true,
+      "frequency_hz": 400000
+    },
+    "spi": {
+      "host": "SPI2_HOST",
+      "sclk": 6,
+      "mosi": 7,
+      "miso": 8,
+      "lcd_cs": 10,
+      "lcd_dc": 9,
+      "sd_cs": 23
+    },
+    "i2s": {
+      "port": 0,
+      "role": "master",
+      "mclk": -1,
+      "bclk": 24,
+      "ws": 25,
+      "dout_tx": 26,
+      "din_rx": 27,
+      "factory_sample_rate_hz": 22050,
+      "ota_sample_rate_hz": 24000,
+      "factory_slot_mode": "mono",
+      "ota_slot_mode": "duplex"
+    }
+  },
+  "io_expander": {
+    "chip": "CH32V003",
+    "i2c_address": "0x24",
+    "pins": {
+      "touch_lcd_reset": 0,
+      "lcd_reset": 1,
+      "power_amp_enable": 3
+    },
+    "output_mask": "0xb",
+    "pwm_register": "0x05",
+    "pwm_range": [0, 255]
+  },
+  "display": {
+    "controller": "ST7789",
+    "width": 240,
+    "height": 320,
+    "color_depth": 16,
+    "invert_color": true,
+    "spi_mode": 0,
+    "pixel_clock_hz": 80000000,
+    "lcd_cmd_bits": 8,
+    "lcd_param_bits": 8,
+    "trans_queue_depth": 10,
+    "reset_gpio": -1,
+    "reset_via_expander_pin": 1,
+    "reset_delay_ms": [200, 200]
+  },
+  "touch": {
+    "controller": "CST3530",
+    "i2c_address": "0x58",
+    "frequency_hz": 400000,
+    "x_max": 240,
+    "y_max": 320,
+    "int_gpio": 5,
+    "rst_gpio": -1,
+    "reset_via_expander_pin": 0,
+    "reset_delay_ms": [10, 10],
+    "io_lcd_cmd_bits": 32,
+    "io_lcd_param_bits": 8,
+    "disable_control_phase": true
+  },
+  "audio": {
+    "codec": "ES8311",
+    "i2c_address": "0x30",
+    "frequency_hz": 400000,
+    "pa_pin": -1,
+    "pa_via_expander_pin": 3,
+    "duplex": true,
+    "frame_rate_hz": 16000,
+    "note": "16000 Hz is the Brookesia draft choice; factory BSP used 22050 mono, OTA used 24000 duplex."
+  },
+  "other_i2c_devices": {
+    "qmi8658": {
+      "address_candidates": ["0x6a", "0x6b"],
+      "public_bsp_selection": "QMI8658_ADDRESS_HIGH"
+    },
+    "pcf85063a": {
+      "address": "0x51"
+    },
+    "shtc3": {
+      "address": "0x70"
+    }
+  },
+  "brookesia_0_7_mapping": {
+    "package_path": "hal/brookesia_hal_boards/boards/waveshare/esp32_c5_touch_lcd_2_8",
+    "draft_path": "factory-reverse/board-draft/esp32_c5_touch_lcd_2_8",
+    "supported": [
+      "i2c",
+      "i2s_std_out",
+      "i2s_std_in",
+      "spi",
+      "gpio_expander_custom",
+      "display_st7789",
+      "touch_cst3530_custom",
+      "audio_codec_es8311_duplex"
+    ],
+    "not_supported_by_stock_board_manager": [
+      "CH32V003 PWM backlight (needs custom DisplayBacklightIface)",
+      "microSD on shared SPI (needs custom sdspi fs device)",
+      "QMI8658 / PCF85063A / SHTC3 (no HAL interface)",
+      "battery ADC (pin not proven)"
+    ]
+  },
+  "conflicts": [
+    {
+      "item": "I2S dout/din",
+      "factory_and_ota": "dout=26, din=27",
+      "public_bsp_source": "dout=BSP_I2S_DSIN(27), din=BSP_I2S_DOUT(26)",
+      "resolution": "use dout=26/din=27; public BSP source direction is likely reversed"
+    }
+  ],
+  "evidence": {
+    "factory_bsp": {
+      "i2s_config": "0x423c1a54",
+      "i2s_sample_rate": "0x423c1a24",
+      "i2c_init": "0x420237ec",
+      "io_expander_init": "0x42023858",
+      "spi_init": "0x420238fc",
+      "audio_init": "0x42023e06",
+      "display_new": "0x420243f2",
+      "touch_new": "0x420245b2",
+      "display_indev_init": "0x42024718",
+      "brightness_set": "0x42024368"
+    },
+    "ota": {
+      "get_audio_codec": "0x42021876",
+      "es8311_ctor": "0x4200c072",
+      "es8311_duplex_channels": "0x4200bee0"
+    }
+  },
+  "caveats": [
+    "Function names are semantic labels, not recovered symbols.",
+    "No hardware validation was performed for this dossier.",
+    "The Brookesia YAML schema fields for CST3530 and recorder channel labels are unverified.",
+    "Do not flash the official factory image or modify the device as part of this work."
+  ]
+}

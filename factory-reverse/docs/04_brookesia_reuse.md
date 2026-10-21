@@ -37,6 +37,11 @@ factory BIN 也包含同一套 core 的字符串：
 
 说明 factory 桌面与公开 `08_bookesia` 同源，但 factory 增加了自定义 app 和 `AIChats` 启动器。
 
+> 2026-10 更新：板级迁移已改用 ESP-Brookesia `release/v0.7` 的
+> `brookesia_hal_boards` 静态 board package；公开 `08_bookesia` 仍可作为
+> Phone/app 行为的参考，但不再是板级初始化的基线。详见
+> [08 · Brookesia 0.7 板级适配](08_brookesia07_board_adaptation.md)。
+
 ## 2. factory 的 APP 清单
 
 | APP | 类型 | 可复用点 |
@@ -139,14 +144,14 @@ APP 通过服务层访问硬件；服务层负责互斥、引用计数和错误�
 3. **假设公开 `08_bookesia` 就是完整 FactoryApp**  
    公开示例只有 Phone + DrawingBoard 等少量 app，不含 factory 的 AIChats/相册/天气/游戏完整实现。
 
-4. **假设 Brookesia 0.8 可直接替换 0.6**  
-   动态 `.bpk`、HAL、内存和 C5 适配需要单独 PoC；本项目仍以公开 0.6 示例为可复现基线。
+4. **假设 Brookesia 0.8 可直接替换 0.7**
+   动态 `.bpk`、HAL、内存和 C5 适配需要单独 PoC；本项目以 0.7 的静态 board package 为基线。
 
 ## 5. 对 Pocket OS 的落地建议
 
 最稳妥的路线：
 
-1. 以公开 `08_bookesia` 为基线，先跑通 Phone/触摸/屏幕。
+1. 以 Brookesia 0.7 board package 为基线，先跑通屏幕/触摸/音频；手机 UI 可参考公开 `08_bookesia`。
 2. 抽出一个最小的 `PocketChat` app，只做按键录音/状态显示，不先接完整 ASR。
 3. 把音频服务抽成共享层，解决 speaker/mic 的引脚、采样率和互斥。
 4. 再增加相册/日语等 app，验证 registry、后台任务和资源释放。

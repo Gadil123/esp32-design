@@ -656,6 +656,23 @@ export PATH="$JAVA_HOME/bin:$PATH"
 - Python 脚本失败，因为 Ghidra 未以 PyGhidra 启动。
 - Java 脚本成功，证明 headless + raw binary + RISC-V 可行。
 
+### 9.2.1 第二轮修正：必须同时反汇编两个 code range
+
+第一轮只把 IRAM `0x40800000-0x40822e70` 作为代码，漏掉了 IROM
+`0x42000020-0x42235a00`，因此字符串 XREF 全部为 0。第二轮使用
+`SetupAnalysis2.java` 同时建立：
+
+```text
+entry
+code1 0x40800000..0x40822e70
+code2 0x42000020..0x42235a00
+data  0x42240020
+```
+
+`factory_code2.dis` 得到 805365 条指令、9295 个函数；`ota_code2.dis` 得到
+567197 条指令、9010 个函数。关键 BSP 函数图和 OTA ES8311 ctor 证据见
+[09 · Ghidra 发现](../docs/09_ghidra_findings.md)。
+
 ### 9.3 局限
 
 - raw binary 没有符号表、段名、重定位信息。

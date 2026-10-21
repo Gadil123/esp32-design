@@ -1,6 +1,6 @@
 # 03 · 音频与 I2S：本板 ES8311 引脚结论
 
-> 结论等级：**高置信**（factory BIN 的 BSP 配置 + V5 实测）；仍应在新板批次上复核。  
+> 结论等级：**高置信**（factory BSP + OTA Xiaozhi codec ctor + V5 实测）；仍应在新板批次上复核。
 > 这是本子项目最重要的可复用硬件结论。
 
 ## 1. 推荐引脚
@@ -65,6 +65,23 @@ din  = 0x1B = 27
 
 这是 factory BSP 的 `i2s_std_config_t` 字段，不是 Xiaozhi `Es8311AudioCodec` 的构造参数。它证明官方 factory BSP 使用 **TX26/RX27**。
 
+### 2.1 OTA Xiaozhi 的独立交叉验证
+
+`ota_0` 的 `GetAudioCodec()`（`0x42021876`）直接调用
+`Es8311AudioCodec` 构造函数（`0x4200c072`），参数为：
+
+```text
+i2c port 0, in/out 24000 Hz,
+mclk=-1, bclk=0x18(24), ws=0x19(25),
+dout=0x1a(26), din=0x1b(27),
+pa=-1, es8311=0x30, use_mclk=0, pa_inverted=0
+```
+
+这与 Xiaozhi v2.2.6 的
+`main/audio/codecs/es8311_audio_codec.cc` 构造签名逐项一致。两个官方 app
+（factory BSP 与 OTA Xiaozhi）都给出 **TX26/RX27**，因此这不是单一镜像的
+偶然常量。
+
 ## 3. 公共 BSP 的不一致
 
 公共 BSP 头文件：
@@ -101,11 +118,11 @@ din  = 0x1B = 27
 
 ## 4. 采样率不要盲目复制
 
-factory BSP 的默认采样率是 **22050 Hz**：
+factory BSP 的默认采样率是 **22050 Hz**，OTA Xiaozhi 的 duplex codec 是 **24000 Hz**：
 
-- 它说明 BSP 的默认 duplex mono 配置。
-- 不代表 Xiaozhi 语音链路一定用 22050；`Es8311AudioCodec`/Opus 可能使用其他采样率。
-- 复用引脚时，采样率按语音组件和 ES8311 的实际配置设置，不要只改引脚后照抄 22050。
+- 它们分别对应两套 app 的默认配置，不应互相覆盖。
+- Brookesia 0.7 草案选 16000 Hz，是为了对齐 recorder/player 的默认值；这是迁移选择，不是官方原值。
+- 复用引脚时，采样率按语音组件和 ES8311 的实际配置设置，不要只改引脚后照抄 22050/24000。
 
 ## 5. 麦克风初始化边界
 
