@@ -7,6 +7,10 @@ peripherals:
       pins:
         sda: 0
         scl: 1
+      # Match factory / public BSP. Board Manager defaults are the same, but
+      # keep them explicit so a future default change cannot alter bring-up.
+      glitch_count: 7
+      enable_internal_pullup: true
 
   # ESP32-C5 is the I2S master.  dout/din are MCU-side pins:
   # dout=26 is MCU TX -> ES8311 DSDIN; din=27 is MCU RX <- ES8311 ASDOUT.
@@ -49,4 +53,6 @@ peripherals:
         sclk_io_num: 6
         quadwp_io_num: -1
         quadhd_io_num: -1
-        max_transfer_sz: 6400
+        # One full 240x320 RGB565 frame. The display adapter may flush in
+        # smaller chunks, but the bus must not reject a larger LVGL buffer.
+        max_transfer_sz: 153600

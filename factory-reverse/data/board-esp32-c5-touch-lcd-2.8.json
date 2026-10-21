@@ -1,7 +1,7 @@
 {
   "schema": "esp32-c5-touch-lcd-2-8-board/v2",
   "board": "Waveshare ESP32-C5-Touch-LCD-2.8",
-  "status": "static evidence high-confidence; Brookesia 0.7 mapping is a draft and has not been built or flashed",
+  "status": "static evidence high-confidence; board YAML parser-validated with Board Manager 0.5.15; not built or flashed",
   "chip": {
     "name": "ESP32-C5",
     "module": "ESP32-C5-WROOM-1-N32R8",
@@ -80,7 +80,7 @@
   },
   "io_expander": {
     "chip": "CH32V003",
-    "i2c_address": "0x24",
+    "i2c_address": "0x24 (7-bit)",
     "pins": {
       "touch_lcd_reset": 0,
       "lcd_reset": 1,
@@ -91,7 +91,8 @@
     "pwm_range": [
       0,
       255
-    ]
+    ],
+    "i2c_address_yaml": "0x48 (8-bit, left-shifted)"
   },
   "battery": {
     "adc_path": "VBAT -> R7 200K -> BAT_ADC -> R52 10K -> CH32V003 PC4/EXIO_ADC (pin 11)",
@@ -165,7 +166,7 @@
   },
   "touch": {
     "controller": "CST3530",
-    "i2c_address": "0x58",
+    "i2c_address": "0x58 (7-bit)",
     "frequency_hz": 400000,
     "x_max": 240,
     "y_max": 320,
@@ -176,8 +177,6 @@
       10,
       10
     ],
-    "io_lcd_cmd_bits": 32,
-    "io_lcd_param_bits": 8,
     "disable_control_phase": true,
     "ota_custom_board": {
       "present": false,
@@ -187,11 +186,14 @@
         "no I2C 0x58 touch init chain found"
       ],
       "conclusion": "use factory 0x420245b2 and public BSP bsp_touch_new; ota_0 has no reusable touch implementation"
-    }
+    },
+    "i2c_address_yaml": "0xB0 (8-bit, left-shifted)",
+    "lcd_cmd_bits": 32,
+    "lcd_param_bits": 8
   },
   "audio": {
     "codec": "ES8311",
-    "i2c_address": "0x30",
+    "i2c_address": "0x30 (7-bit)",
     "frequency_hz": 400000,
     "pa_pin": -1,
     "pa_via_expander_pin": 3,
@@ -288,8 +290,10 @@
     "Function names are semantic labels, not recovered symbols.",
     "The only recorded hardware observation is the V5 microphone test; display/touch/battery/PSRAM are not hardware-validated in this dossier.",
     "I2S TX26/RX27 is a working baseline, not a closed static fact: schematic net names and public BSP point the other way.",
+    "Board draft I2S is stereo while the Brookesia recorder default is mono; esp_codec_dev slot-mode reconfiguration needs loopback verification.",
+    "CST3530 user_data workaround creates a second I2C device at fixed 0x58, and the driver's del does not call i2c_master_bus_rm_device; plan cleanup if touch is reinitialized.",
     "Battery ADC path is from the schematic; factory did not appear to read it, and voltage/percentage mapping is unverified.",
-    "The Brookesia YAML schema fields for CST3530 and recorder channel labels are unverified.",
+    "Board Manager YAML parsed successfully, but the local components, C hooks, sdkconfig, full build, and hardware remain unverified.",
     "Do not flash the official factory image or modify the device as part of this work.",
     "ota_0 CustomBoard uses 40 MHz SPI and has no CST3530 touch init; fan-out factory/public touch evidence is required.",
     "ota_0 I2C glitch filter/internal pull-up settings are inferred from a zeroed config struct and have not been checked against OTA IDF headers."
@@ -316,5 +320,22 @@
       "public_bsp": "CH32 PWM register 0x05, 0-255",
       "resolution": "Brookesia needs custom DisplayBacklightIface for dimming"
     }
-  ]
+  ],
+  "board_draft_validation": {
+    "generator": "ESP Board Manager 0.5.15 gen_bmgr_config_codes.py",
+    "result": "4 peripherals and 5 devices parsed; gen_bmgr_codes and idf_component.yml generated; no unknown-key warnings",
+    "not_validated": [
+      "local CH32/CST3530 components",
+      "setup_device.c compile",
+      "sdkconfig.defaults.board",
+      "full ESP-IDF build",
+      "hardware"
+    ],
+    "notes": [
+      "Board Manager gpio_expander/lcd_touch i2c_addr uses 8-bit/left-shifted values; dev_audio_codec keeps 7-bit 0x30",
+      "io_i2c_config.dev_addr omitted; address comes from i2c_addr",
+      "esp_lcd_st7789 is built into IDF esp_lcd; no external dependency declared",
+      "CST3530 hook passes the i2c_master bus via touch_config.user_data, matching the public BSP workaround"
+    ]
+  }
 }

@@ -100,7 +100,7 @@ CustomBoard::CustomBoard(this)
     i2c_new_master_bus(&cfg, &this->i2c_bus);   // this+0x9c
 
     custom_io_expander_new_i2c_ch32v003(
-        this->i2c_bus, 0x24, &this->expander);  // this+0xa4
+        this->i2c_bus, 0x24, &this->expander);  // 7-bit; YAML would use 0x48
 
     esp_io_expander_set_dir(this->expander, 0xb, OUTPUT);
     esp_io_expander_set_level(this->expander, 0x3, 1);
@@ -157,9 +157,9 @@ factory 和公共 BSP 都使用 SDA 0 / SCL 1，但会设置 `glitch_ignore_cnt=
 是 1 个 tick，不是硬编码 1 ms；tick rate 未在本镜像中确认。
 
 随后 `set_level(0x8, 1)` 拉高 bit 3 = `EXIO3` / `PA_CTRL`。也就是说
-OTA 在构造阶段就把功放使能打开，而不是等音频 codec 初始化完成。这可能
-导致上电/复位时的 PA 爆音；Brookesia bring-up 不应盲抄这个顺序，建议
-先保持 PA 低，显示和 codec 就绪后再拉高。
+OTA 在构造阶段就把功放使能打开，而不是等音频 codec 初始化完成。factory
+的 `bsp_io_expander_init` 同样在初始化时拉高，所以当前 board draft 也保持
+常高。若实测有上电爆音，再改为先保持低、codec 就绪后拉高。
 
 ### 3.3 SPI bus
 
@@ -283,7 +283,7 @@ Es8311AudioCodec(
 - ota_0 中没有 `CST3530`、`esp_lcd_touch_new_i2c_cst3530`、
   `esp_lcd_touch_read_data`、`esp_lcd_touch_register_interrupt_callback`
   等字符串/符号。
-- 没有 I2C 地址 `0x58` 的 touch 初始化调用链。
+- 没有 I2C 7-bit 地址 `0x58`（YAML `0xB0`）的 touch 初始化调用链。
 
 因此：
 
@@ -300,7 +300,7 @@ factory `0x420245b2` 和公共 BSP `bsp_touch_new` 为证据。
 | 显示引脚、240×320、ST7789 | 三套一致，可直接采用 |
 | SPI 时钟 | 先 40 MHz（OTA）做 bring-up，再验证 80 MHz |
 | SPI bus max transfer | 按 Brookesia LVGL buffer 决定，不盲抄 0x25800 |
-| CH32 复位/PA | 采用 factory 的分离复位；PA 延后拉高 |
+| CH32 复位/PA | 采用 factory 的分离复位；PA 默认按 factory 常高，若实测爆音再延后拉高 |
 | 背光 | 采用 factory/公共 BSP 的 PWM 0–255；不要用 OTA 固定 0xff |
 | 触摸 | 采用 factory/公共 BSP；OTA 无参考价值 |
 | 音频 | 采用 OTA `GetAudioCodec` 的 24 kHz duplex + 26/27 基线 |

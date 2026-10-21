@@ -1,7 +1,8 @@
 # Draft ESP-Brookesia 0.7 board package, reconstructed from FactoryApp V1.1
 # and the public Waveshare BSP.  Not build-tested yet; see README.md.
 devices:
-  # CH32V003 I2C GPIO expander at 0x24.
+  # CH32V003 I2C GPIO expander at 7-bit 0x24.
+  # Board Manager uses 8-bit / left-shifted addresses: 0x24 << 1 = 0x48.
   # Pin 0 = LCD/touch reset, pin 1 = LCD reset, pin 3 = power amplifier enable.
   # The same chip also owns the LCD backlight PWM register (0x05).
   - name: gpio_expander
@@ -18,7 +19,7 @@ devices:
       input_io_mask: NULL
     peripherals:
       - name: i2c_master
-        i2c_addr: [0x24]
+        i2c_addr: [0x48]
 
   - name: audio_dac
     chip: es8311
@@ -35,6 +36,7 @@ devices:
     peripherals:
       - name: i2s_audio_out
       - name: i2c_master
+        # dev_audio_codec takes 7-bit addresses; do not left-shift ES8311.
         address: 0x30
         frequency: 400000
 
@@ -47,11 +49,13 @@ devices:
       adc_enabled: true
       adc_max_channel: 1
       adc_channel_mask: "1"
-      adc_channel_labels: ["M"]
+      # Board Manager labels are FC/RE/FL/FR/..., not the app's MIC_LAYOUT "M".
+      adc_channel_labels: ["FC"]
       adc_init_gain: 30
     peripherals:
       - name: i2s_audio_in
       - name: i2c_master
+        # dev_audio_codec takes 7-bit addresses; do not left-shift ES8311.
         address: 0x30
         frequency: 400000
 
@@ -61,8 +65,6 @@ devices:
     depends_on: gpio_expander
     sub_type: spi
     version: default
-    dependencies:
-      espressif/esp_lcd_st7789: "^2"
     config:
       invert_color: true
       need_reset: false
@@ -104,8 +106,9 @@ devices:
       esp_lcd_touch_cst3530:
         override_path: "${BOARD_PATH}/components/esp_lcd_touch_cst3530"
     config:
+      # The address is selected by the i2c_addr peripheral property below and
+      # is shifted to 7-bit by Board Manager; do not set io_i2c_config.dev_addr.
       io_i2c_config:
-        dev_addr: 0x58
         control_phase_bytes: 1
         dc_bit_offset: 0
         lcd_cmd_bits: 32
@@ -128,7 +131,8 @@ devices:
           mirror_y: false
     peripherals:
       - name: i2c_master
-        i2c_addr: [0x58]
+        # CST3530 7-bit address is 0x58; Board Manager wants 0x58 << 1 = 0xB0.
+        i2c_addr: [0xB0]
 
   # No lcd_brightness device: the backlight is CH32V003 PWM register 0x05,
   # not an ESP32 LEDC GPIO.  A custom display/backlight HAL implementation is

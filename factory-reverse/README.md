@@ -51,7 +51,7 @@
 | [13 · 显示与触摸对照](docs/13_display_touch.md) | factory / ota_0 / 公共 BSP 的 SPI、ST7789、CST3530、背光差异 |
 | [14 · Bootloader 与分区表](docs/14_bootloader_memory_map.md) | 修正 `0x8000` 分区表、`0x2000` bootloader 真实边界 |
 | [15 · ota_0 CustomBoard](docs/15_ota_custom_board.md) | 厂商板级类、构造顺序、CH32/SPI/显示/背光/ES8311 证据 |
-| [板级草案](board-draft/esp32_c5_touch_lcd_2_8/README.md) | 可直接放进 `brookesia_hal_boards` 的 0.7 草案（未编译） |
+| [板级草案](board-draft/esp32_c5_touch_lcd_2_8/README.md) | 可直接放进 `brookesia_hal_boards` 的 0.7 草案（YAML parser 已验证，未编译/未实机） |
 | [完整静态分析](reference/full-static-analysis.md) | 全部地址、分区、字符串、Ghidra 记录和原始结论 |
 | [证据账本](reference/evidence-ledger.md) | 每条主要结论的证据、置信度和未决状态 |
 

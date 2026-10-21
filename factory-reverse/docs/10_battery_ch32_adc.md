@@ -37,7 +37,11 @@ ESP 侧组件 `custom_io_expander_ch32v003` 定义：
 | ADC | `0x06` | 返回 2 字节，小端 |
 | RTC/INT | `0x07` | 中断状态 |
 
-ADC 读取是标准 I2C `write reg 0x06, read 2 bytes`：
+公开的 CH32 component（`custom_io_expander_ch32v003` 1.0.2）已经提供
+`custom_io_expander_get_adc(handle, &adc)`，内部就是读寄存器 `0x06`，文档
+标称返回 `0..1023`。迁移时应优先复用该 helper，而不是自己拼 I2C 事务。
+
+底层协议是标准 I2C `write reg 0x06, read 2 bytes`：
 
 ```c
 uint8_t temp[2] = {0};
@@ -59,6 +63,9 @@ Vbat     = Vbat_adc * (200K + 100K) / 100K = Vbat_adc * 3.0
 
 ### 3.1 CH32 驱动函数
 
+CH32 的 7-bit I2C 地址是 `0x24`；Board Manager YAML 使用左移后的 `0x48`，
+运行时由 `dev_gpio_expander` 右移回 `0x24`。
+
 factory app 中可定位：
 
 | 地址 | 语义 |
@@ -74,8 +81,11 @@ factory app 中可定位：
 
 ### 3.2 没找到 ADC 路径
 
-- factory / OTA 字符串中**没有** `Read adc reg failed`。这条单独看很弱：
-  若 `get_adc` 未被引用，链接器可能整个函数/字符串都丢掉。
+- factory / OTA 字符串中**没有** `Read adc reg failed`；也就是说公开
+  component 的 `custom_io_expander_get_adc()` 没有被链接进来。这条单独看
+  很弱：若函数未被引用，链接器可能把整个函数/字符串都丢掉。
+- 公开 component 的 helper 确实存在（见第 2 节），所以“没有字符串”只说明
+  **stock app 没调用**，不说明驱动不支持。
 - CH32 相关代码只出现 command byte `4`（输入寄存器）；**没有 command byte 6**。
   这是比“字符串不存在”更强的证据。
 - 扫描所有 `i2c_master_transmit_receive` 调用点，未发现 `0x06` 的
@@ -116,8 +126,9 @@ CONFIG_ESP_BOARD_PERIPH_ADC_SUPPORT
 
 迁移需要二选一：
 
-1. 自定义 `PowerBatteryIface`：持有 CH32 expander handle，读 `0x06`，
-   换算电压/百分比；这是最小改动。
+1. 自定义 `PowerBatteryIface`：持有 CH32 expander handle，调用
+   `custom_io_expander_get_adc()`（内部读 `0x06`），换算电压/百分比；这是
+   最小改动。
 2. 在 HAL adaptor 中新增 CH32 ADC backend，并让 `battery_adc_impl` 按
    board 选择后端；改动更大，但可复用。
 

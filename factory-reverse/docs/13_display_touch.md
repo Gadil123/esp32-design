@@ -23,11 +23,13 @@
 | LCD reset | CH32 `EXIO1` / pin 1 | 低有效；不是 ESP32 GPIO |
 | 触摸 reset | CH32 `EXIO0` / pin 0 | 低有效；不是 ESP32 GPIO |
 | 触摸 INT | GPIO 5 | factory `esp_lcd_touch_config_t.int_gpio_num=5` |
-| 触摸控制器 | CST3530，I2C `0x58` | factory 与公共 BSP |
+| 触摸控制器 | CST3530，I2C 7-bit `0x58`（YAML `0xB0`） | factory 与公共 BSP |
 | 背光 | CH32 PWM，寄存器 `0x05`，0–255 | 公共 BSP / factory / OTA 写同一寄存器 |
 
 CH32 方向 mask 为 `0xb`，即 pin 0、1、3 输出；pin 3 是 `PA_CTRL`/功放使能。
-I2C 地址 `0x24`。详见 [电池与 CH32](10_battery_ch32_adc.md)。
+CH32 的 7-bit I2C 地址是 `0x24`；Board Manager YAML 使用左移后的 `0x48`。
+触摸同理：7-bit `0x58` 在 YAML 中写 `0xB0`。详见
+[电池与 CH32](10_battery_ch32_adc.md)。
 
 ## 2. Factory 实现
 
@@ -73,7 +75,7 @@ bsp_touch_new
 ├─ set_level(EXIO0=1, 0); delay 10 ms
 ├─ set_level(EXIO0=1, 1); delay 10 ms
 ├─ esp_lcd_new_panel_io_i2c(bus0,
-│        dev_addr=0x58, scl=400 kHz,
+│        dev_addr=0x58 (7-bit), scl=400 kHz,
 │        CST3530 32-bit command)
 ├─ esp_lcd_touch_new_i2c_cst3530(io, cfg)
 └─ esp_lcd_touch_register_interrupt_callback(...)
@@ -94,9 +96,16 @@ bsp_touch_new
 
 触摸 IO 的精确结构体字段排布仍受 Ghidra 栈变量影响；可确认的是
 I2C 地址 `0x58`、400 kHz、CST3530 的 32 位命令模式，以及复位/中断脚。
-board draft 里的 `io_lcd_cmd_bits=32`、`io_lcd_param_bits=8`、
+board draft 里的 `lcd_cmd_bits=32`、`lcd_param_bits=8`、
 `disable_control_phase=true` 来自公共 BSP 的
 `ESP_LCD_TOUCH_IO_I2C_CST3530_CONFIG()`，不是从 factory 栈完全恢复。
+公共 BSP 还在 `esp_lcd_touch_config_t.user_data` 里传 I2C bus handle，让
+CST3530 驱动自己创建设备，避免依赖 `esp_lcd_panel_io` 的私有结构体布局；
+draft 的 `lcd_touch_factory_entry_t` 同样设置了这个字段。代价是驱动会在固定
+7-bit `0x58`、400 kHz 下再建一个 I2C device，而 `dev_lcd_touch` 的 panel IO
+device 仍然存在；驱动的 `del` 只清空静态 handle，不调用
+`i2c_master_bus_rm_device`。单次 bring-up 可接受，重复 init/deinit 需要
+自行清理。
 
 ## 3. ota_0 `CustomBoard` 实现
 
@@ -224,16 +233,17 @@ i2c_master_transmit(ch32_i2c_handle, buf, 2, 1000);
 5. **复位顺序**：factory 是 LCD 先复位、触摸后复位；OTA 在构造时把两路
    一起脉冲。Bring-up 建议采用 factory 的分离顺序，便于定位是显示还是
    触摸失败。
-6. **PA 使能**：EXIO3 高有效。上电/复位时先保持低，显示和 codec 初始化
-   完成后再拉高，避免上电爆音。OTA 在构造末尾直接拉高；factory 的音频
-   路径还需要进一步核对。
+6. **PA 使能**：EXIO3 高有效。factory 的 `bsp_io_expander_init` 在初始化
+   expander 时就把 EXIO3 拉高，OTA 也在构造末尾直接拉高；当前 board draft
+   按 factory 保持常高。若实测有上电爆音，可改成初始化时保持低，并在
+   codec 就绪后通过自定义音频钩子拉高。
 
 ## 6. 验证清单
 
 - [ ] 逻辑分析仪测 SPI SCLK：确认 40 MHz / 80 MHz 实际频率和 CS 时序。
 - [ ] 读 ST7789 ID，确认面板批次和初始化命令无差异。
 - [ ] 检查 240×320 方向、RGB/BGR、反色是否符合预期。
-- [ ] 触摸 I2C `0x58` 探测；读取 CST3530 数据并核对坐标范围。
+- [ ] 触摸 I2C 7-bit `0x58` 探测；读取 CST3530 数据并核对坐标范围。
 - [ ] 测 INT5 中断和复位脉冲宽度。
 - [ ] 用示波器/逻辑分析仪确认 CH32 `0x05` PWM 与背光亮度关系。
 - [ ] 测 EXIO3 拉高时的 PA 爆音/底噪。

@@ -52,7 +52,7 @@ sdkconfig.defaults.board
 
 | 项目 | 值 |
 | --- | --- |
-| I2C 地址 | `0x24` |
+| I2C 地址 | 7-bit `0x24`；YAML 用 8-bit `0x48` |
 | 方向 mask | `0xb` = pin 0/1/3 输出 |
 | 初始 level | pin 0/1/3 高 |
 | pin 0 | LCD/touch reset |
@@ -62,6 +62,12 @@ sdkconfig.defaults.board
 
 注意：factory 的 `esp_io_expander_set_level(handle, 2, ...)` / `(handle, 1, ...)`
 中的 `2`、`1` 是**引脚 mask**，不是引脚编号。`0xb` 同理。
+
+对 `dev_gpio_expander` 和 `dev_lcd_touch`，Board Manager 的 `i2c_addr`
+使用 8-bit（左移一位）格式，驱动在运行时再右移回 7-bit。因此 CH32 在 YAML
+里写 `0x48`，触摸写 `0xB0`；I2C 探测仍然用 7-bit `0x24` / `0x58`。
+`dev_audio_codec` 是例外：它直接使用 7-bit 地址，ES8311 的 `address`
+保持 `0x30`，不能左移成 `0x60`。
 
 ### 3.3 显示与触摸
 
@@ -74,7 +80,7 @@ sdkconfig.defaults.board
 | invert color | `true` |
 | panel reset | `-1`（由 expander pin 1 控制） |
 | LCD reset 时序 | 低 200 ms → 高 200 ms |
-| 触摸 | CST3530，`0x58`，400 kHz |
+| 触摸 | CST3530，7-bit `0x58`（YAML `0xB0`），400 kHz |
 | 触摸 INT | GPIO `5` |
 | 触摸 reset | expander pin 0 |
 | 触摸 reset 时序 | 低 10 ms → 高 10 ms |
@@ -91,7 +97,7 @@ sdkconfig.defaults.board
 
 | 项目 | 值 |
 | --- | --- |
-| ES8311 | `0x30`，400 kHz |
+| ES8311 | 7-bit `0x30`，400 kHz |
 | MCLK | `NC` |
 | BCLK / WS | `24` / `25` |
 | MCU TX / DOUT | `26` |
@@ -148,7 +154,7 @@ sdkconfig.defaults.board
 
 | 项目 | 1.8 参考板 | 本板 |
 | --- | --- | --- |
-| IO expander | TCA9554 `0x40` | CH32V003 `0x24` |
+| IO expander | TCA9554 `0x40` | CH32V003 7-bit `0x24`（YAML `0x48`） |
 | 背光 | LEDC / 自定义 | CH32 PWM，寄存器 `0x05` |
 | 触摸 | FT5x06 | CST3530，32-bit command |
 | I2S MCLK | GPIO 16 | 未连接 |
@@ -160,10 +166,14 @@ sdkconfig.defaults.board
 ## 6. 已知风险
 
 1. CST3530 的 `io_i2c_config`（`lcd_cmd_bits=32`、
-   `disable_control_phase=true`）是否被 0.7.5 的 YAML 解析器完整接受，未验证。
-2. `adc_channel_labels: ["M"]` 是否合法，未验证；可先删掉让 HAL 用默认。
+   `disable_control_phase=true`）已通过 Board Manager 0.5.15 的 YAML
+   parser；尚未经过完整 IDF 编译/实机验证。
+2. `adc_channel_labels` 已从非标准 `"M"` 改为 Board Manager 支持的 `"FC"`
+   （单麦克风）。应用侧 `MIC_LAYOUT` 仍是 `"M"`，两者语义不同。
 3. `audio_dac` 与 `audio_adc` 同时初始化同一个 ES8311，参考 1.8 可行，但
-   duplex 时钟/通道仍需实测。
+   duplex 时钟/通道仍需实测。board I2S 配成 stereo，而 recorder 默认
+   1 channel；需确认 `esp_codec_dev_open` 会正确重配 slot mode，否则改成
+   mono 或把 recorder 配成 2 channel。
 4. 16 kHz 是迁移选择，不是 factory/OTA 的原值。
 5. 背光只做了“常亮”兜底，没有运行时亮度。
 6. SD 卡与 LCD 共用 SPI，DMA/总线互斥需要在应用层验证。
@@ -174,6 +184,9 @@ sdkconfig.defaults.board
 9. ota_0 `CustomBoard` 未包含 CST3530 触摸，也未提供可调背光；不要把它
    当作完整板级实现。详见 [显示与触摸](13_display_touch.md) 和
    [ota_0 CustomBoard](15_ota_custom_board.md)。
+10. board YAML 已用 Board Manager 0.5.15 的生成器做 parser 验证，但本地
+    CH32/CST3530 component、`setup_device.c` 和 `sdkconfig.defaults.board`
+    仍未编译。parser 通过不等于能构建或能点亮。
 
 ## 7. Bring-up 验收
 
@@ -181,7 +194,7 @@ sdkconfig.defaults.board
 
 ```text
 1. YAML parse + build
-2. I2C probe: 0x24 / 0x30 / 0x58 / 0x51 / 0x6A / 0x70
+2. I2C probe (7-bit): 0x24 / 0x30 / 0x58 / 0x51 / 0x6A / 0x70
 3. LCD reset waveform + ST7789 init + 纯色填充
 4. Touch coordinates + INT 5
 5. Speaker 1 kHz tone
