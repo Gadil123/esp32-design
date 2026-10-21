@@ -10,7 +10,9 @@
   "chip": {
     "name": "ESP32-C5",
     "image_chip_id": 23,
-    "flash_size": "16MB",
+    "flash_size_header": "16MB",
+    "flash_size_module": "32MB (ESP32-C5-WROOM-1-N32R8)",
+    "psram_module": "8MB",
     "flash_mode": "DIO",
     "flash_frequency": "80MHz",
     "idf_version": "v5.5.4"
@@ -46,6 +48,8 @@
       "time": "15:06:55",
       "entry": "0x408002b0",
       "segments": 5,
+      "flash_size_code": 4,
+      "flash_size_header": "16MB",
       "image_total": "0x4caed0",
       "elf_sha256": "f3f904b5c103fe9fe67a10f7f401a10e0eb378181f11502cdb91f7f63b96b21a",
       "role": "brookesia phone shell + AIChats launcher"
@@ -60,6 +64,8 @@
       "time": "14:24:47",
       "entry": "0x408003a6",
       "segments": 5,
+      "flash_size_code": 5,
+      "flash_size_header": "32MB",
       "image_total": "0x262060",
       "elf_sha256": "52664f27cfc4b2ebbd1750c9137e761072a49fdf91ec8e72fbbcac038481f8cc",
       "role": "xiaozhi voice application"

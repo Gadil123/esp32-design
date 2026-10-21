@@ -70,7 +70,8 @@ FF FF FF FF  18 00 00 00  19 00 00 00  1A 00 00 00  1B 00 00 00
 mclk=NC      bclk=24      ws=25        dout=26      din=27
 ```
 
-即 factory BSP 使用 **DOUT/TX=26、DIN/RX=27**。
+若按公共 BSP 的 `mclk,bclk,ws,dout,din` 字段序解释，即 factory BSP 使用
+**DOUT/TX=26、DIN/RX=27**；factory 自己的 BSP 结构体字段序未从类型信息确认。
 
 当前公共 BSP 头文件仍是：
 
@@ -88,11 +89,11 @@ mclk=NC      bclk=24      ws=25        dout=26      din=27
 
 这与 factory 二进制相反。结合 V4 使用 RX26 失败、V5 使用 `.din=27` 成功，结论是：
 
-- **本板录音应使用 RX=27、TX=26。**
-- 公共 BSP 的“schematic 修正”很可能把数据脚方向改反了。
-- schematic 上的 `ASDOUT/DSDIN` 网络名容易误导，应以 factory BSP 配置和实测为准。
+- **本板工作基线是 RX=27、TX=26。**
+- 公共 BSP 的“schematic 修正”与 OTA 配置和 V5 实测冲突，不能直接照抄。
+- schematic 上的 `ASDOUT/DSDIN` 网络名指向相反方向；原理图/固件/实板三方冲突未静态闭环。
 
-注意：factory app 的 `bsp_audio_init` 确实创建了 duplex I2S 并初始化 ES8311，但 factory app 的字符串里只明确出现 `bsp_audio_codec_speaker_init`，没有公开 BSP 中缺失的 microphone init 实现。因此“factory app 是否完整启用了麦克风路径”不能仅凭这一点断言；引脚配置本身是强证据。
+注意：factory app 的 `bsp_audio_init` 确实创建了 duplex I2S 并初始化 ES8311，但 factory app 的字符串里只明确出现 `bsp_audio_codec_speaker_init`，没有公开 BSP 中缺失的 microphone init 实现。因此“factory app 是否完整启用了麦克风路径”不能仅凭这一点断言；引脚字节本身是强证据；但“dout 在前、din 在后”仍依赖字段序假设。
 
 ### 1.4 重力球卡 95%：尚未证明根因
 
@@ -192,7 +193,7 @@ Application::Initialize()
 - 大小：`0x8000`（32 KB）
 - 芯片：ESP32-C5，chip ID `23`
 - 入口：`0x4084bbaa`
-- Flash：16 MB
+- Flash：镜像头 16 MB；模组 N32R8 物理 32 MB（见 docs/11）
 - 模式/频率：DIO，80 MHz
 - IDF 版本字符串：`v5.5.4`
 
@@ -230,6 +231,7 @@ Application::Initialize()
 | image total | `0x4caed0` | `0x262060` |
 | 分区填充 | 到 `0x4e2000` | 到 `0x300000` |
 | app header flash size code | 4（16 MB） | 5（32 MB） |
+| 物理模组 | N32R8：32 MB Flash / 8 MB PSRAM | 同左 |
 | ELF SHA256 | `f3f904b5c103fe9fe67a10f7f401a10e0eb378181f11502cdb91f7f63b96b21a` | `52664f27cfc4b2ebbd1750c9137e761072a49fdf91ec8e72fbbcac038481f8cc` |
 
 factory app 的主要 segment：
@@ -357,7 +359,8 @@ din  = 27
 - V4：RX26，数据全 0，PCNT 0 edge。
 - V5：`.din=27`，录音正常。
 
-因此当前共享 BSP 的修正版很可能把 `DOUT/DIN` 与 `DSDIN/ASDOUT` 的命名关系理解反了。对于本板，建议使用：
+因此当前共享 BSP 的修正版与 OTA/V5 冲突；原理图网名也与 OTA/V5 冲突。
+在完成扬声器 A/B 或逻辑分析仪抓取前，本板暂用以下工作基线：
 
 ```c
 .dout = 26,  // MCU -> codec
@@ -767,8 +770,8 @@ export PATH="$JAVA_HOME/bin:$PATH"
 | 首次启动 factory | 已确认 | otadata 全 FF + 分区表 |
 | AIChats 是 ota_0 启动器 | 高置信 | factory 中文字符串 + 双 app 结构 |
 | factory 无 Xiaozhi 语音栈 | 高置信 | 字符串计数为 0，完整栈在 ota_0 |
-| factory BSP RX27/TX26 | 高置信 | 二进制 gpio_cfg + V5 实测 |
-| 公共 BSP 修正可能反了 | 中高置信 | 源码与 factory/实测冲突 |
+| factory BSP RX27/TX26 | 中高 | 二进制 gpio_cfg（字段序假设）+ V5 实测；原理图/公共 BSP 相反 |
+| I2S 方向三方冲突 | 未裁决 | 原理图网名 vs 公共 BSP vs OTA/实测 |
 | 重力球 95% 根因 | 未证明 | 只有字符串和公共代码参考 |
 | AI 初始化循环根因 | 未证明 | 公共源码 + 镜像状态推断 |
 | Ghidra 可导入/反汇编 | 已确认 | headless Java 脚本成功 |

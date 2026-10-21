@@ -10,8 +10,9 @@
 
 1. **能不能从 BIN 恢复完整源码？** 不能。可以恢复镜像结构、板级常量、启动链、字符串和部分逻辑，但不能得到可编译的 factory 工程。
 2. **官方 AI 为什么能用？** factory app 里的 `AIChats` 是**启动器**：它把 `ota_0` 设为启动分区并重启，完整 Xiaozhi 语音栈在 `ota_0`，不在 factory app。
-3. **本板 ES8311 I2S 到底怎么接？** factory BSP 和 OTA Xiaozhi codec ctor 都使用 **TX/DOUT=26、RX/DIN=27**；当前公共 BSP 的“修正版”写成 27/26，方向很可能反了。
-4. **多 APP、重力球 95%、AI 初始化循环能复用/借鉴什么？** 可复用 Brookesia 的 app registry/生命周期/资源管理；重力球和 AI 循环目前只有假设，必须先拿串口日志，不能从字符串直接定因。
+3. **本板 ES8311 I2S 到底怎么接？** V5 实测和 OTA 配置支持 **TX/DOUT=26、RX/DIN=27**；但原理图网名 `GPIO26=ASDOUT/GPIO27=DSDIN` 与公共 BSP 指向相反方向。当前把 26/27 作为工作基线，冲突未静态闭环，见 [原理图交叉核对](docs/12_schematic_crosscheck.md)。
+4. **电池和 Flash 到底是多少？** 模块是 32 MB Flash + 8 MB PSRAM；factory 镜像/分区按 16 MB，电池 ADC 在 CH32 `PC4` 而不是 ESP32。
+5. **多 APP、重力球 95%、AI 初始化循环能复用/借鉴什么？** 可复用 Brookesia 的 app registry/生命周期/资源管理；重力球和 AI 循环目前只有假设，必须先拿串口日志，不能从字符串直接定因。
 
 ## 关键结论
 
@@ -19,7 +20,9 @@
 | --- | --- | --- |
 | 完整官方源码 | **NO-GO**：factory 的 `main.cpp`、自定义 app、2.8 板 Xiaozhi board profile 未公开 | 高 |
 | 官方 AI 路径 | factory `AIChats` → 设置 `ota_0` 启动 → 重启 → Xiaozhi v2.2.6 | 高置信推断 |
-| I2S 数据脚 | **TX=26、RX=27**；factory + OTA 双证据；公共 BSP 当前 27/26 很可能反了 | 高；仍需实板复核 |
+| I2S 数据脚 | **TX=26、RX=27** 为工作基线；原理图网名/公共 BSP 指向相反方向，三方冲突未闭环 | 中高；V5 RX27 实测 |
+| 电池检测 | `BAT_ADC` 经 200K/100K 分压到 CH32 `PC4`；factory 未发现 ADC 读取；0.7 需 custom `PowerBatteryIface` | 硬件路径高；软件未用高置信 |
+| Flash/PSRAM | 模块 32 MB Flash + 8 MB PSRAM；factory 镜像头 16 MB、ota_0 32 MB，分区表只到 `0xf10000` | 已确认 |
 | 出厂镜像布局 | 双 app：`01_factory` + `xiaozhi 2.2.6`；初始 `otadata` 全 FF，默认 factory | 已确认 |
 | Assets | 24 个文件，`index.json` version 1，`srmodels.bin` 存在 | 已确认 |
 | 重力球 95% | 校准不稳定/重试/进度未刷新等候选，未定因 | 未证明 |
@@ -39,8 +42,12 @@
 | [07 · 逆向方法](docs/07_reverse_method.md) | 官方 BIN 获取、Ghidra/objdump 工作流、证据边界、工具限制 |
 | [08 · Brookesia 0.7 板级适配](docs/08_brookesia07_board_adaptation.md) | 从 BIN 到 board YAML/setup_device 的映射、缺口与 bring-up 顺序 |
 | [09 · Ghidra 发现](docs/09_ghidra_findings.md) | 双 code range、BSP 函数图、OTA ES8311 ctor、XREF 方法 |
+| [10 · 电池检测](docs/10_battery_ch32_adc.md) | `BAT_ADC` → CH32 `PC4`、ADC 寄存器 `0x06`、factory 未读 ADC 的证据 |
+| [11 · Flash 容量审计](docs/11_flash_capacity_audit.md) | 32 MB 模块 / 16 MB factory 分区 / OTA 32 MB 头的分层结论 |
+| [12 · 原理图交叉核对](docs/12_schematic_crosscheck.md) | 网表、I2S 三方冲突、电池/PSRAM/Flash 的图面事实 |
 | [板级草案](board-draft/esp32_c5_touch_lcd_2_8/README.md) | 可直接放进 `brookesia_hal_boards` 的 0.7 草案（未编译） |
 | [完整静态分析](reference/full-static-analysis.md) | 全部地址、分区、字符串、Ghidra 记录和原始结论 |
+| [证据账本](reference/evidence-ledger.md) | 每条主要结论的证据、置信度和未决状态 |
 
 机器可读数据：
 
@@ -59,7 +66,7 @@
 
 ### 不应该直接复制
 
-1. **公共 BSP 当前的 `.dout=DSIN(27)/.din=DOUT(26)`**：与 factory BIN 和 V5 实测冲突；直接复制很可能再次得到 RX26 全 0。
+1. **公共 BSP 当前的 `.dout=DSIN(27)/.din=DOUT(26)`**：与 OTA 配置和 V5 实测冲突；在完成扬声器 A/B 或逻辑分析仪验证前，不要静默采用任一方。
 2. **把 factory app 当成 Xiaozhi 源码库**：factory 内没有完整语音栈；要研究 AI，应分析 `ota_0` 的 Xiaozhi。
 3. **把双 APP 当默认架构**：双 slot 切换会增加 otadata、回退、分区维护和调试复杂度；Pocket OS 若能在单 app 内完成桌面 + 语音组件，优先单 app。
 4. **把 95%/初始化循环的字符串当根因**：这些只是线索；没有串口日志不能定因。

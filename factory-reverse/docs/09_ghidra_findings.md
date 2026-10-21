@@ -76,6 +76,12 @@ OTA entry：`0x408003a6`。
 | `0x42024718` | `bsp_display_indev_init` | 调 display_new + touch_new |
 | `0x42024368` | `bsp_display_brightness_set` | 调 `0x42046b2c` PWM wrapper |
 | `0x42046950` | `custom_io_expander_new_i2c_ch32v003` wrapper | 地址 `0x24` |
+| `0x42046724` / `0x420467a6` | CH32 写方向 `0x02` / 输出 `0x03` | I2C 2-byte write |
+| `0x4204682a` | CH32 reset | 方向 `0xff`、输出 `0x00` |
+| `0x420468ce` | CH32 读输入 `0x04` | `i2c_master_transmit_receive` @ `0x420468f2` |
+| `0x42046b2c` | `custom_io_expander_set_pwm` | 唯一 caller `0x42024368` |
+| `0x4206cc28` | StatusBar `setBatteryPercent` | 唯一 caller `0x4206ea62` |
+| `0x4206c53e` | StatusBar `updateBatteryByNewData` | 读 field `+0x60/+0x63`，无 ADC |
 | `0x4204890c` | `esp_io_expander_set_dir` | mask 参数 |
 | `0x42048b14` | `esp_io_expander_set_level` | mask 参数 |
 | `0x420241a8` | `qmi_init`（近似） | 接在 audio 初始化后的传感器链 |
@@ -105,6 +111,11 @@ bsp_display_start
 `bsp_audio_init` 在没有外部 I2S data interface 时会先创建 TX/RX 通道；speaker
 初始化再创建 ES8311 codec device。factory app 只做 speaker，麦克风路径不完整；
 录音参考 OTA 的 duplex codec。
+
+CH32 相关代码只覆盖方向/输出/PWM/输入；扫描 `i2c_master_transmit_receive`
+调用点未发现 ADC command byte `0x06`。StatusBar 电池只在 `beginBattery`
+（`0x4206ea62`）初始化时设值，没有周期 ADC 路径。详见
+[电池检测](10_battery_ch32_adc.md)。
 
 ## 4. OTA Xiaozhi 音频
 
@@ -141,7 +152,9 @@ FUN_ram_4200c072(
 ```
 
 与 `xiaozhi-v2.2.6/main/audio/codecs/es8311_audio_codec.cc` 的构造签名逐项
-一致。这是 I2S 方向的第二个独立证据。
+一致。这是 I2S 方向的一个独立证据；但原理图网名和公共 BSP 指向相反方向，
+且 V5 实测支持 RX27。三方冲突及验证方法见
+[原理图交叉核对](12_schematic_crosscheck.md)。
 
 ## 5. XREF 方法与限制
 

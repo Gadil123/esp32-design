@@ -1,7 +1,8 @@
 # 03 · 音频与 I2S：本板 ES8311 引脚结论
 
-> 结论等级：**高置信**（factory BSP + OTA Xiaozhi codec ctor + V5 实测）；仍应在新板批次上复核。
-> 这是本子项目最重要的可复用硬件结论。
+> 结论等级：**高置信工作假设**（OTA Xiaozhi codec ctor + V5 实测；factory 结构体字段序待定）；仍应在新板批次上复核。
+> 这是本子项目最重要的可复用硬件结论。2026-10-21 的原理图复核发现网名与
+> 实测方向冲突，详见 [原理图交叉核对](12_schematic_crosscheck.md)。
 
 ## 1. 推荐引脚
 
@@ -63,7 +64,10 @@ dout = 0x1A = 26
 din  = 0x1B = 27
 ```
 
-这是 factory BSP 的 `i2s_std_config_t` 字段，不是 Xiaozhi `Es8311AudioCodec` 的构造参数。它证明官方 factory BSP 使用 **TX26/RX27**。
+这是 factory BSP 的 `i2s_std_config_t` 字段，不是 Xiaozhi `Es8311AudioCodec`
+的构造参数。若该结构按公共 BSP 的 `mclk,bclk,ws,dout,din` 顺序解释，则
+官方 factory BSP 使用 **TX26/RX27**；factory 自己使用的 BSP 版本字段顺序
+尚未从类型信息确认。
 
 ### 2.1 OTA Xiaozhi 的独立交叉验证
 
@@ -78,9 +82,9 @@ pa=-1, es8311=0x30, use_mclk=0, pa_inverted=0
 ```
 
 这与 Xiaozhi v2.2.6 的
-`main/audio/codecs/es8311_audio_codec.cc` 构造签名逐项一致。两个官方 app
-（factory BSP 与 OTA Xiaozhi）都给出 **TX26/RX27**，因此这不是单一镜像的
-偶然常量。
+`main/audio/codecs/es8311_audio_codec.cc` 构造签名逐项一致。OTA 的
+**TX26/RX27** 是确定的；factory 结构体在字段序确认前只能作为旁证。
+真正把方向钉在实板上的是 V5 的 RX27 录音观察。
 
 ## 3. 公共 BSP 的不一致
 
@@ -98,7 +102,8 @@ pa=-1, es8311=0x30, use_mclk=0, pa_inverted=0
 .din  = BSP_I2S_DOUT,  /* 26, 注释称 MCU RX <- codec ASDOUT */
 ```
 
-这与 factory BIN 相反。
+这与 OTA Xiaozhi 的 ctor 参数相反；factory BIN 若按常见
+`mclk,bclk,ws,dout,din` 字段序解释也相反，但字段序尚未从类型信息确认。
 
 结合本项目之前的实测：
 
@@ -109,12 +114,19 @@ pa=-1, es8311=0x30, use_mclk=0, pa_inverted=0
 
 结论：
 
-- **本板应使用 RX27/TX26。**
-- 公共 BSP 的“schematic 修正”很可能把数据脚方向理解反了。
-- schematic 网络名 `ASDOUT/DSDIN` 容易误导；以 factory BSP 和实板录音为准。
+- **本板工作基线是 RX27/TX26。**
+- 公共 BSP 的“schematic 修正”与 V5 实测冲突，不能直接照抄。
+- schematic 网络名 `ASDOUT/DSDIN` 容易误导；当前以 OTA 配置和实板录音为工作基线。
 - 不要在未验证的情况下把 `.dout` 和 `.din` 再互换一次。
 
-> 说明：官方 factory app 的 `AIChats` 只是启动器；真正使用 `Es8311AudioCodec` 的是 `ota_0` 的 Xiaozhi。因此 factory BSP 的引脚配置是硬件事实，但“factory app 是否完整启用麦克风”不是本结论的依据。
+> 2026-10-21 补充：原理图确实把 `GPIO26` 标为 `I2S_ASDOUT`、
+> `GPIO27` 标为 `I2S_DSDIN`；若按 ES8311 数据手册直译，会得到 RX26/TX27。
+> 这与 V5 实测和 OTA 配置相反，说明网名/走线至少有一处不能按字面理解。
+> 在完成扬声器 A/B 或逻辑分析仪抓取前，保留 **RX27/TX26** 作为工作基线，
+> 不把任何一方写成最终硬件事实。详见
+> [原理图交叉核对](12_schematic_crosscheck.md)。
+
+> 说明：官方 factory app 的 `AIChats` 只是启动器；真正使用 `Es8311AudioCodec` 的是 `ota_0` 的 Xiaozhi。因此 factory BSP 的引脚配置是强旁证，但仍受结构体字段序限制；“factory app 是否完整启用麦克风”也不是本结论的依据。
 
 ## 4. 采样率不要盲目复制
 

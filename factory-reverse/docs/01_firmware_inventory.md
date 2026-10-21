@@ -11,7 +11,7 @@
 | 文件大小 | `13699516` 字节（`0xd109bc`） |
 | 芯片 | ESP32-C5（image chip ID `23`） |
 | Bootloader | `0x2000`，32 KB，entry `0x4084bbaa` |
-| Flash | 16 MB，DIO，80 MHz |
+| Flash | 镜像/分区按 16 MB（模块物理 32 MB，见 [审计](11_flash_capacity_audit.md)），DIO，80 MHz |
 | IDF | `v5.5.4` |
 | 默认启动 | `factory`（`otadata` 全 `0xFF`） |
 | 出厂 app | `01_factory`，version `1` |
@@ -29,6 +29,10 @@ chip id     23
 flash size  16 MB
 mode/freq   DIO / 80 MHz
 ```
+
+这里的 `flash size 16 MB` 是镜像头声明，不是模组物理容量；模组为
+`ESP32-C5-WROOM-1-N32R8`（32 MB Flash / 8 MB PSRAM），但 factory 分区表
+只到 `0xf10000`。详见 [Flash 容量审计](11_flash_capacity_audit.md)。
 
 ## 2. 分区表
 

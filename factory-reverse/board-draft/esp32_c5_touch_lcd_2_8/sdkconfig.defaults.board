@@ -1,5 +1,8 @@
 CONFIG_IDF_TARGET="esp32c5"
 CONFIG_ESPTOOLPY_FLASHMODE_QIO=y
+# The module is N32R8 (32 MB Flash / 8 MB PSRAM), but factory partitions end
+# at 0xf10000. Stay on the 16 MB layout until a 32 MB partition table and OTA
+# layout are validated.
 CONFIG_ESPTOOLPY_FLASHSIZE_16MB=y
 CONFIG_ESPTOOLPY_FLASHFREQ_80M=y
 CONFIG_PARTITION_TABLE_CUSTOM=y
@@ -51,7 +54,8 @@ CONFIG_BROOKESIA_HAL_ADAPTOR_DISPLAY_LCD_PANEL_H_RES=240
 CONFIG_BROOKESIA_HAL_ADAPTOR_DISPLAY_LCD_PANEL_V_RES=320
 CONFIG_BROOKESIA_HAL_ADAPTOR_DISPLAY_ENABLE_LCD_TOUCH_IMPL=y
 # Storage and battery are intentionally disabled for the first bring-up:
-# the microSD is SPI (not SDMMC) and no battery ADC pin has been proven yet.
+# the microSD is SPI (not SDMMC), and battery ADC is on CH32 (not ESP32 ADC).
+# Stock battery_adc_impl cannot read it; a custom PowerBatteryIface is needed.
 CONFIG_BROOKESIA_HAL_ADAPTOR_ENABLE_STORAGE_DEVICE=n
 CONFIG_BROOKESIA_HAL_ADAPTOR_ENABLE_POWER_DEVICE=n
 

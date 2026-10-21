@@ -4,8 +4,9 @@
   "status": "static evidence high-confidence; Brookesia 0.7 mapping is a draft and has not been built or flashed",
   "chip": {
     "name": "ESP32-C5",
-    "flash_size": "16MB",
-    "psram": "quad, 80MHz (public C5 example configuration)"
+    "module": "ESP32-C5-WROOM-1-N32R8",
+    "flash_size": "32MB physical; factory image header 16MB; ota_0 header 32MB; factory partition table ends at 0xf10000",
+    "psram": "8MB physical; public C5 example uses quad, 80MHz, XIP from PSRAM"
   },
   "sources": {
     "factory_image": {
@@ -63,6 +64,27 @@
     "output_mask": "0xb",
     "pwm_register": "0x05",
     "pwm_range": [0, 255]
+  },
+  "battery": {
+    "adc_path": "VBAT -> R7 200K -> BAT_ADC -> R52 10K -> CH32V003 PC4/EXIO_ADC (pin 11)",
+    "divider": {
+      "top_ohm": 200000,
+      "bottom_ohm": 100000,
+      "series_ohm": 10000,
+      "filters": ["C9 100nF to GND", "C10 100nF to GND"],
+      "nominal_ratio": "BAT_ADC = VBAT / 3"
+    },
+    "ch32_register": "0x06",
+    "ch32_adc_bits": 10,
+    "factory_uses_adc": false,
+    "factory_evidence": [
+      "no CH32 command byte 0x06 in scanned i2c_master_transmit_receive call sites",
+      "no 'Read adc reg failed' string (weak: unused function may be linker-GC'd)",
+      "set_pwm at 0x42046b2c has only caller 0x42024368 (display brightness)",
+      "StatusBar setBatteryPercent 0x4206cc28 is called only from beginBattery 0x4206ea62"
+    ],
+    "brookesia_0_7": "stock battery_adc_impl only supports ESP32 ADC; CH32 needs a custom PowerBatteryIface",
+    "status": "hardware path confirmed by schematic; factory software use not found; voltage/percentage mapping unverified"
   },
   "display": {
     "controller": "ST7789",
@@ -132,7 +154,7 @@
       "CH32V003 PWM backlight (needs custom DisplayBacklightIface)",
       "microSD on shared SPI (needs custom sdspi fs device)",
       "QMI8658 / PCF85063A / SHTC3 (no HAL interface)",
-      "battery ADC (pin not proven)"
+      "battery ADC on CH32 (needs custom PowerBatteryIface)"
     ]
   },
   "conflicts": [
@@ -140,7 +162,17 @@
       "item": "I2S dout/din",
       "factory_and_ota": "dout=26, din=27",
       "public_bsp_source": "dout=BSP_I2S_DSIN(27), din=BSP_I2S_DOUT(26)",
-      "resolution": "use dout=26/din=27; public BSP source direction is likely reversed"
+      "schematic_net_names": "GPIO26=I2S_ASDOUT (codec out), GPIO27=I2S_DSDIN (codec in)",
+      "empirical": "V5: RX26 all zero; RX27 recording works",
+      "resolution": "working baseline dout=26/din=27 (TX26/RX27); three-way conflict is not statically resolved; needs speaker A/B or logic analyzer"
+    },
+    {
+      "item": "flash capacity",
+      "module": "32MB flash / 8MB PSRAM",
+      "factory_header": "16MB",
+      "ota_header": "32MB",
+      "partition_table_end": "0xf10000 (16MB)",
+      "resolution": "keep 16MB board draft partition layout; 32MB needs a new partition CSV and OTA validation"
     }
   ],
   "evidence": {
@@ -154,7 +186,13 @@
       "display_new": "0x420243f2",
       "touch_new": "0x420245b2",
       "display_indev_init": "0x42024718",
-      "brightness_set": "0x42024368"
+      "brightness_set": "0x42024368",
+      "ch32_set_pwm": "0x42046b2c",
+      "ch32_read_input": "0x420468ce",
+      "statusbar_set_battery_percent": "0x4206cc28",
+      "statusbar_begin_battery": "0x4206ea62",
+      "statusbar_update_battery": "0x4206c53e",
+      "schematic": "schematic/ESP32-C5-Touch-LCD-2.8.pdf"
     },
     "ota": {
       "get_audio_codec": "0x42021876",
@@ -164,7 +202,9 @@
   },
   "caveats": [
     "Function names are semantic labels, not recovered symbols.",
-    "No hardware validation was performed for this dossier.",
+    "The only recorded hardware observation is the V5 microphone test; display/touch/battery/PSRAM are not hardware-validated in this dossier.",
+    "I2S TX26/RX27 is a working baseline, not a closed static fact: schematic net names and public BSP point the other way.",
+    "Battery ADC path is from the schematic; factory did not appear to read it, and voltage/percentage mapping is unverified.",
     "The Brookesia YAML schema fields for CST3530 and recorder channel labels are unverified.",
     "Do not flash the official factory image or modify the device as part of this work."
   ]

@@ -96,14 +96,18 @@ sdkconfig.defaults.board
 | OTA Xiaozhi | 24000 Hz duplex |
 | 0.7 草案 | 16000 Hz stereo，便于与 recorder/player 默认对齐 |
 
-**I2S 方向已由两个官方 app 交叉确认**：
+**I2S 方向是工作假设，不是已闭环硬件事实**：
 
-- factory BSP `i2s_std_gpio_config_t`：`dout=0x1a(26), din=0x1b(27)`
-- OTA `GetAudioCodec()` 调 `Es8311AudioCodec` ctor：
-  `mclk=-1, bclk=0x18, ws=0x19, dout=0x1a, din=0x1b`
+- OTA `GetAudioCodec()`（`0x42021876`）调 `Es8311AudioCodec` ctor：
+  `mclk=-1, bclk=0x18, ws=0x19, dout=0x1a(26), din=0x1b(27)`。
+- V5 实板观察：`.din=27` 录音正常；`.din=26` 时 PCM 全 0。
+- factory `0x423c1a24` 结构体含 `24,25,26,27`，但字段顺序未从类型信息
+  确认，不能单独当作方向证据。
 
 公共 BSP 源码里的 `.dout = BSP_I2S_DSIN(27)` / `.din = BSP_I2S_DOUT(26)`
-与本板两个官方 app 都相反。迁移时按 **TX26/RX27**，但仍建议在实板批次上复核。
+与 OTA/V5 相反；原理图网名 `GPIO26=I2S_ASDOUT`、`GPIO27=I2S_DSDIN` 也
+指向相反方向。三方冲突未静态解决，迁移时暂按 **TX26/RX27**，并保留
+[原理图交叉核对](12_schematic_crosscheck.md) 中的 A/B 测试要求。
 
 ### 3.5 存储与传感器
 
@@ -113,7 +117,8 @@ sdkconfig.defaults.board
 | QMI8658 | `0x6A` 或 `0x6B`（公共 BSP 用 high） | HAL 无 IMU 接口 |
 | PCF85063A | `0x51` | HAL 无 RTC 接口 |
 | SHTC3 | `0x70` | HAL 无温湿度接口 |
-| 电池 | 未证明 ADC 引脚 | 草案关闭 power device |
+| 电池 | CH32 `PC4/EXIO_ADC`；`BAT_ADC` 经 200K/100K 分压 | 0.7 标准 battery ADC 不支持 CH32；草案关闭 |
+| Flash/PSRAM | 模块 32 MB Flash / 8 MB PSRAM；factory 分区只用 16 MB | 草案保持 16 MB 分区 |
 
 ## 4. 0.7 board package 映射
 
@@ -128,6 +133,7 @@ sdkconfig.defaults.board
 | `bsp_audio_codec_speaker_init` | `audio_dac` | `dac_enabled: true`, `mclk_enabled: false` |
 | 录音 | `audio_adc` | 同一 ES8311 duplex，`adc_enabled: true` |
 | `bsp_display_brightness_set` | 无标准 device | CH32 PWM，需 custom backlight |
+| `bsp_io_expander_init` + battery | 无标准 device | CH32 ADC `0x06`，需 custom `PowerBatteryIface` |
 | PA enable | expander 初始化 | pin 3 常高，无 `gpio_pa_control` |
 | SD/传感器 | 应用层 | 不放进第一版 board YAML |
 
@@ -156,6 +162,10 @@ sdkconfig.defaults.board
 4. 16 kHz 是迁移选择，不是 factory/OTA 的原值。
 5. 背光只做了“常亮”兜底，没有运行时亮度。
 6. SD 卡与 LCD 共用 SPI，DMA/总线互斥需要在应用层验证。
+7. 电池 ADC 在 CH32 上；0.7 的 `battery_adc_impl` 只支持 ESP32 ADC，
+   直接打开 power device 不会读到电池。需要 custom `PowerBatteryIface`。
+8. 模块物理 32 MB Flash，但 factory 分区表只到 `0xf10000`；不要只因
+   模块型号就把 board draft 改成 32 MB。
 
 ## 7. Bring-up 验收
 
@@ -168,9 +178,10 @@ sdkconfig.defaults.board
 4. Touch coordinates + INT 5
 5. Speaker 1 kHz tone
 6. Mic loopback, check non-zero RMS and 1 kHz peak
-7. Runtime brightness via custom backlight
-8. SD mount via sdspi
-9. Sensors as app-level components
+7. CH32 ADC `0x06`: compare raw value with multimeter at 2–3 battery voltages
+8. Runtime brightness via custom backlight
+9. SD mount via sdspi
+10. Sensors as app-level components
 ```
 
 ## 8. 相关文件
