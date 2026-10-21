@@ -1,0 +1,82 @@
+{
+  "schema": "esp32-c5-factory-firmware-layout/v1",
+  "binary": {
+    "name": "ESP32-C5-Touch-LCD-2.8-FactoryAppV1.1.bin",
+    "size": 13699516,
+    "sha256": "92d0f25d7b8c43900c8882e2ca9cee1ca7c8a9338504bd392567f3d1e8cdf174",
+    "source": "https://github.com/waveshareteam/ESP32-C5-Touch-LCD-2.8/releases/tag/v1.1.0",
+    "committed_to_git": false
+  },
+  "chip": {
+    "name": "ESP32-C5",
+    "image_chip_id": 23,
+    "flash_size": "16MB",
+    "flash_mode": "DIO",
+    "flash_frequency": "80MHz",
+    "idf_version": "v5.5.4"
+  },
+  "bootloader": {
+    "offset": "0x2000",
+    "size": "0x8000",
+    "entry": "0x4084bbaa",
+    "segments": 3
+  },
+  "partitions": [
+    {"label": "nvs", "type": "data", "subtype": "nvs", "offset": "0x9000", "size": "0x4000"},
+    {"label": "otadata", "type": "data", "subtype": "ota", "offset": "0xd000", "size": "0x2000"},
+    {"label": "phy_init", "type": "data", "subtype": "phy", "offset": "0xf000", "size": "0x1000"},
+    {"label": "factory", "type": "app", "subtype": "factory", "offset": "0x20000", "size": "0x4e2000"},
+    {"label": "storage", "type": "data", "subtype": "spiffs", "offset": "0x502000", "size": "0x400000"},
+    {"label": "ota_0", "type": "app", "subtype": "ota_0", "offset": "0x910000", "size": "0x300000"},
+    {"label": "assets", "type": "data", "subtype": "spiffs", "offset": "0xc10000", "size": "0x300000"}
+  ],
+  "otadata": {
+    "entry0": "all_ff",
+    "entry1": "all_ff",
+    "default_boot": "factory"
+  },
+  "apps": [
+    {
+      "label": "factory",
+      "offset": "0x20000",
+      "project": "01_factory",
+      "version": "1",
+      "idf": "v5.5.4",
+      "date": "Jul 10 2026",
+      "time": "15:06:55",
+      "entry": "0x408002b0",
+      "segments": 5,
+      "image_total": "0x4caed0",
+      "elf_sha256": "f3f904b5c103fe9fe67a10f7f401a10e0eb378181f11502cdb91f7f63b96b21a",
+      "role": "brookesia phone shell + AIChats launcher"
+    },
+    {
+      "label": "ota_0",
+      "offset": "0x910000",
+      "project": "xiaozhi",
+      "version": "2.2.6",
+      "idf": "v5.5.4",
+      "date": "Jul 10 2026",
+      "time": "14:24:47",
+      "entry": "0x408003a6",
+      "segments": 5,
+      "image_total": "0x262060",
+      "elf_sha256": "52664f27cfc4b2ebbd1750c9137e761072a49fdf91ec8e72fbbcac038481f8cc",
+      "role": "xiaozhi voice application"
+    }
+  ],
+  "assets": {
+    "partition": "assets",
+    "format": "custom mmap pack (not SPIFFS filesystem)",
+    "length": "0x1009bc",
+    "stored_files": 24,
+    "index_version": 1,
+    "srmodels": "srmodels.bin",
+    "font": "font_puhui_common_16_4.bin"
+  },
+  "storage": {
+    "partition": "storage",
+    "filesystem": "SPIFFS",
+    "files": ["/music/BGM_2.mp3"]
+  }
+}

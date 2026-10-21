@@ -1,0 +1,62 @@
+{
+  "schema": "esp32-c5-audio-pin-evidence/v1",
+  "board": "Waveshare ESP32-C5-Touch-LCD-2.8",
+  "status": "high-confidence static evidence plus one working V5 observation; re-verify on hardware",
+  "factory_bsp_config": {
+    "virtual_address": "0x423c1a54",
+    "file_offset": "0x1a1a54",
+    "segment": "factory_seg0",
+    "segment_base": "0x42240020",
+    "sample_rate_hz": 22050,
+    "sample_rate_address": "0x423c1a24",
+    "raw_bytes": "ff ff ff ff 18 00 00 00 19 00 00 00 1a 00 00 00 1b 00 00 00",
+    "mapping": {
+      "mclk": "GPIO_NUM_NC",
+      "bclk": 24,
+      "ws": 25,
+      "dout_tx": 26,
+      "din_rx": 27
+    }
+  },
+  "public_bsp_current_source": {
+    "header_macros": {
+      "BSP_I2S_SCLK": 24,
+      "BSP_I2S_LCLK": 25,
+      "BSP_I2S_DOUT": 26,
+      "BSP_I2S_DSIN": 27
+    },
+    "source_gpio_cfg": {
+      "dout": "BSP_I2S_DSIN (27)",
+      "din": "BSP_I2S_DOUT (26)"
+    },
+    "assessment": "likely reversed for this board; conflicts with factory BIN and V5 observation"
+  },
+  "recommendation": {
+    "mclk": "GPIO_NUM_NC",
+    "bclk": 24,
+    "ws": 25,
+    "dout_tx": 26,
+    "din_rx": 27,
+    "note": "Use RX27/TX26 for microphone bring-up; do not blindly merge the public BSP source swap."
+  },
+  "observations": [
+    {
+      "name": "V4",
+      "configuration": "RX26",
+      "result": "PCM all zero; PCNT 0 edges",
+      "status": "failed"
+    },
+    {
+      "name": "V5",
+      "configuration": "RX27 (.din=27)",
+      "result": "recording works",
+      "status": "working"
+    }
+  ],
+  "caveats": [
+    "Factory app AIChats is a launcher; the actual voice stack is in ota_0 Xiaozhi.",
+    "Factory BSP sample rate 22050 is not necessarily the Xiaozhi voice sample rate.",
+    "Public BSP declares bsp_audio_codec_microphone_init() but does not implement it.",
+    "Re-verify pin mapping on the exact board revision before production."
+  ]
+}

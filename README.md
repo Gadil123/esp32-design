@@ -48,6 +48,7 @@
 - [06 · 微雪官方完整资料、规格、原理图、STEP、接口与疑点索引](docs/06_official_board_reference.md)
 - [07 · 官方 STEP **实际解析**：侧键、USB-C、MIC 的尺寸与坐标](docs/07_cad_measurements.md)
 - [08 · Pocket OS 软件选型、语音服务端、APP 场景和验证路线](docs/08_software_architecture_and_app_roadmap.md)
+- [Factory 固件逆向：双 APP、音频引脚与可复用设计](factory-reverse/README.md)
 - [**29 · G-V1 当前候选冻结及到货后实测交接（最新硬件CAD入口）**](docs/29_g_v1_design_freeze_and_hardware_handoff.md)
 - [**27 · BOOT 圆角矩形修改、原生CAD验证**](docs/27_t0_g_v1_boot_rectangular_key_revision.md)
 - [**28 · 完整装配 STEP 下载和 FreeCAD 分解查看**](docs/28_g_v1_private_download_freecad.md)
