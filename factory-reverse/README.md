@@ -1,5 +1,11 @@
 # Factory 固件逆向：双 APP、音频引脚与可复用设计
 
+> **新开发 Agent 请先看**：
+> - [FINAL_BOARD_ADAPTATION_GUIDE.md](FINAL_BOARD_ADAPTATION_GUIDE.md)：ESP32-C5 的引脚、时序、CH32、I2S 争议、Brookesia 0.7 的开发与验收步骤。
+> - [REVERSE_ENGINEERING_EXIT_REPORT.md](REVERSE_ENGINEERING_EXIT_REPORT.md)：静态逆向结项、已确认与未验证的边界。
+> - [board-draft](board-draft/esp32_c5_touch_lcd_2_8/README.md)：Board Manager 0.5.15 parser 通过、**未编译且未实机验证**的初始草案。
+
+
 > 状态：**官方 FactoryApp V1.1 的静态逆向笔记；未恢复完整源码，未刷写验证，不批准直接照搬。**  
 > 分析对象：Waveshare `ESP32-C5-Touch-LCD-2.8` 官方 FactoryApp V1.1 BIN。  
 > 本文把逆向结果整理成**可复用设计、板级常量、排查经验和验证清单**；原始证据见 [完整静态分析](reference/full-static-analysis.md)。
