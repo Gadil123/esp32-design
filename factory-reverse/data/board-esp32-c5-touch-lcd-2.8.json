@@ -1,0 +1,341 @@
+{
+  "schema": "esp32-c5-touch-lcd-2-8-board/v2",
+  "board": "Waveshare ESP32-C5-Touch-LCD-2.8",
+  "status": "static evidence high-confidence; board YAML parser-validated with Board Manager 0.5.15; not built or flashed",
+  "chip": {
+    "name": "ESP32-C5",
+    "module": "ESP32-C5-WROOM-1-N32R8",
+    "flash_size": "32MB physical; factory image header 16MB; ota_0 header 32MB; factory partition table ends at 0xf10000",
+    "psram": "8MB physical; public C5 example uses quad, 80MHz, XIP from PSRAM"
+  },
+  "sources": {
+    "factory_image": {
+      "name": "ESP32-C5-Touch-LCD-2.8-FactoryAppV1.1.bin",
+      "sha256": "92d0f25d7b8c43900c8882e2ca9cee1ca7c8a9338504bd392567f3d1e8cdf174"
+    },
+    "ota_image": {
+      "project": "xiaozhi",
+      "version": "2.2.6",
+      "sha256": "52664f27cfc4b2ebbd1750c9137e761072a49fdf91ec8e72fbbcac038481f8cc"
+    },
+    "public_bsp": "https://github.com/waveshareteam/ESP32-C5-Touch-LCD-2.8",
+    "brookesia": "release/v0.7, brookesia_hal_boards v0.7.5, commit c5742af3594ef0b4ba257ae6b8c9af5a92822620"
+  },
+  "buses": {
+    "i2c": {
+      "port": 0,
+      "sda": 0,
+      "scl": 1,
+      "glitch_ignore_cnt": 7,
+      "internal_pullup": true,
+      "frequency_hz": 400000,
+      "variants": {
+        "factory_and_public_bsp": {
+          "glitch_ignore_cnt": 7,
+          "internal_pullup": true
+        },
+        "ota_custom_board": {
+          "glitch_ignore_cnt": 0,
+          "internal_pullup": false,
+          "confidence": "inferred from zeroed i2c_master_bus_config_t; verify field offsets"
+        }
+      }
+    },
+    "spi": {
+      "host": "SPI2_HOST",
+      "sclk": 6,
+      "mosi": 7,
+      "miso": 8,
+      "lcd_cs": 10,
+      "lcd_dc": 9,
+      "sd_cs": 23,
+      "variants": {
+        "factory": {
+          "miso": 8,
+          "max_transfer_sz": 0
+        },
+        "public_bsp": {
+          "miso": 8,
+          "max_transfer_sz": 0
+        },
+        "ota_custom_board": {
+          "miso": -1,
+          "max_transfer_sz": "0x25800"
+        }
+      }
+    },
+    "i2s": {
+      "port": 0,
+      "role": "master",
+      "mclk": -1,
+      "bclk": 24,
+      "ws": 25,
+      "dout_tx": 26,
+      "din_rx": 27,
+      "factory_sample_rate_hz": 22050,
+      "ota_sample_rate_hz": 24000,
+      "factory_slot_mode": "mono",
+      "ota_slot_mode": "duplex"
+    }
+  },
+  "io_expander": {
+    "chip": "CH32V003",
+    "i2c_address": "0x24 (7-bit)",
+    "pins": {
+      "touch_lcd_reset": 0,
+      "lcd_reset": 1,
+      "power_amp_enable": 3
+    },
+    "output_mask": "0xb",
+    "pwm_register": "0x05",
+    "pwm_range": [
+      0,
+      255
+    ],
+    "i2c_address_yaml": "0x48 (8-bit, left-shifted)"
+  },
+  "battery": {
+    "adc_path": "VBAT -> R7 200K -> BAT_ADC -> R52 10K -> CH32V003 PC4/EXIO_ADC (pin 11)",
+    "divider": {
+      "top_ohm": 200000,
+      "bottom_ohm": 100000,
+      "series_ohm": 10000,
+      "filters": [
+        "C9 100nF to GND",
+        "C10 100nF to GND"
+      ],
+      "nominal_ratio": "BAT_ADC = VBAT / 3"
+    },
+    "ch32_register": "0x06",
+    "ch32_adc_bits": 10,
+    "factory_uses_adc": false,
+    "factory_evidence": [
+      "no CH32 command byte 0x06 in scanned i2c_master_transmit_receive call sites",
+      "no 'Read adc reg failed' string (weak: unused function may be linker-GC'd)",
+      "set_pwm at 0x42046b2c has only caller 0x42024368 (display brightness)",
+      "StatusBar setBatteryPercent 0x4206cc28 is called only from beginBattery 0x4206ea62"
+    ],
+    "brookesia_0_7": "stock battery_adc_impl only supports ESP32 ADC; CH32 needs a custom PowerBatteryIface",
+    "status": "hardware path confirmed by schematic; factory software use not found; voltage/percentage mapping unverified"
+  },
+  "display": {
+    "controller": "ST7789",
+    "width": 240,
+    "height": 320,
+    "color_depth": 16,
+    "invert_color": true,
+    "spi_mode": 0,
+    "lcd_cmd_bits": 8,
+    "lcd_param_bits": 8,
+    "trans_queue_depth": 10,
+    "reset_gpio": -1,
+    "reset_via_expander_pin": 1,
+    "reset_delay_ms": [
+      200,
+      200
+    ],
+    "pixel_clock_hz_by_image": {
+      "factory": 80000000,
+      "ota_custom_board": 40000000,
+      "public_bsp": 80000000
+    },
+    "spi_bus_max_transfer_sz_by_image": {
+      "factory": 0,
+      "ota_custom_board": "0x25800",
+      "public_bsp": 0
+    },
+    "swap_xy_by_image": {
+      "factory": "handled by upper display config; panel-level not observed",
+      "ota_custom_board": 0
+    },
+    "mirror_by_image": {
+      "factory": "handled by upper display config; panel-level not observed",
+      "ota_custom_board": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "ota_custom_board": {
+      "controller": "ST7789",
+      "width": 240,
+      "height": 320,
+      "pclk_hz": 40000000,
+      "invert_color": true,
+      "disp_on": true
+    }
+  },
+  "touch": {
+    "controller": "CST3530",
+    "i2c_address": "0x58 (7-bit)",
+    "frequency_hz": 400000,
+    "x_max": 240,
+    "y_max": 320,
+    "int_gpio": 5,
+    "rst_gpio": -1,
+    "reset_via_expander_pin": 0,
+    "reset_delay_ms": [
+      10,
+      10
+    ],
+    "disable_control_phase": true,
+    "ota_custom_board": {
+      "present": false,
+      "evidence": [
+        "no CST3530 or esp_lcd_touch strings/symbols in ota_0",
+        "CustomBoard ctor and InitializeSt7789Display contain no touch call",
+        "no I2C 0x58 touch init chain found"
+      ],
+      "conclusion": "use factory 0x420245b2 and public BSP bsp_touch_new; ota_0 has no reusable touch implementation"
+    },
+    "i2c_address_yaml": "0xB0 (8-bit, left-shifted)",
+    "lcd_cmd_bits": 32,
+    "lcd_param_bits": 8
+  },
+  "audio": {
+    "codec": "ES8311",
+    "i2c_address": "0x30 (7-bit)",
+    "frequency_hz": 400000,
+    "pa_pin": -1,
+    "pa_via_expander_pin": 3,
+    "duplex": true,
+    "frame_rate_hz": 16000,
+    "note": "16000 Hz is the Brookesia draft choice; factory BSP used 22050 mono, OTA used 24000 duplex."
+  },
+  "other_i2c_devices": {
+    "qmi8658": {
+      "address_candidates": [
+        "0x6a",
+        "0x6b"
+      ],
+      "public_bsp_selection": "QMI8658_ADDRESS_HIGH"
+    },
+    "pcf85063a": {
+      "address": "0x51"
+    },
+    "shtc3": {
+      "address": "0x70"
+    }
+  },
+  "brookesia_0_7_mapping": {
+    "package_path": "hal/brookesia_hal_boards/boards/waveshare/esp32_c5_touch_lcd_2_8",
+    "draft_path": "factory-reverse/board-draft/esp32_c5_touch_lcd_2_8",
+    "supported": [
+      "i2c",
+      "i2s_std_out",
+      "i2s_std_in",
+      "spi",
+      "gpio_expander_custom",
+      "display_st7789",
+      "touch_cst3530_custom",
+      "audio_codec_es8311_duplex"
+    ],
+    "not_supported_by_stock_board_manager": [
+      "CH32V003 PWM backlight (needs custom DisplayBacklightIface)",
+      "microSD on shared SPI (needs custom sdspi fs device)",
+      "QMI8658 / PCF85063A / SHTC3 (no HAL interface)",
+      "battery ADC on CH32 (needs custom PowerBatteryIface)"
+    ]
+  },
+  "conflicts": [
+    {
+      "item": "I2S dout/din",
+      "factory_and_ota": "dout=26, din=27",
+      "public_bsp_source": "dout=BSP_I2S_DSIN(27), din=BSP_I2S_DOUT(26)",
+      "schematic_net_names": "GPIO26=I2S_ASDOUT (codec out), GPIO27=I2S_DSDIN (codec in)",
+      "empirical": "V5: RX26 all zero; RX27 recording works",
+      "resolution": "working baseline dout=26/din=27 (TX26/RX27); three-way conflict is not statically resolved; needs speaker A/B or logic analyzer"
+    },
+    {
+      "item": "flash capacity",
+      "module": "32MB flash / 8MB PSRAM",
+      "factory_header": "16MB",
+      "ota_header": "32MB",
+      "partition_table_end": "0xf10000 (16MB)",
+      "resolution": "keep 16MB board draft partition layout; 32MB needs a new partition CSV and OTA validation"
+    }
+  ],
+  "evidence": {
+    "factory_bsp": {
+      "i2s_config": "0x423c1a54",
+      "i2s_sample_rate": "0x423c1a24",
+      "i2c_init": "0x420237ec",
+      "io_expander_init": "0x42023858",
+      "spi_init": "0x420238fc",
+      "audio_init": "0x42023e06",
+      "display_new": "0x420243f2",
+      "touch_new": "0x420245b2",
+      "display_indev_init": "0x42024718",
+      "brightness_set": "0x42024368",
+      "ch32_set_pwm": "0x42046b2c",
+      "ch32_read_input": "0x420468ce",
+      "statusbar_set_battery_percent": "0x4206cc28",
+      "statusbar_begin_battery": "0x4206ea62",
+      "statusbar_update_battery": "0x4206c53e",
+      "schematic": "schematic/ESP32-C5-Touch-LCD-2.8.pdf"
+    },
+    "ota": {
+      "get_audio_codec": "0x42021876",
+      "es8311_ctor": "0x4200c072",
+      "es8311_duplex_channels": "0x4200bee0",
+      "custom_board_ctor": "0x42021c2c",
+      "custom_board_alloc": "0x42021df6",
+      "initialize_st7789_display": "0x42021a4e",
+      "get_display": "0x42021820",
+      "custom_backlight_set": "0x4202186c",
+      "wifi_board_base_ctor": "0x42020d7a",
+      "custom_board_source_path": "./main/boards/waveshare/esp32-c5-touch-lcd-2.8/esp32-c5-touch-lcd-2.8.cc"
+    }
+  },
+  "caveats": [
+    "Function names are semantic labels, not recovered symbols.",
+    "The only recorded hardware observation is the V5 microphone test; display/touch/battery/PSRAM are not hardware-validated in this dossier.",
+    "I2S TX26/RX27 is a working baseline, not a closed static fact: schematic net names and public BSP point the other way.",
+    "Board draft I2S is stereo while the Brookesia recorder default is mono; esp_codec_dev slot-mode reconfiguration needs loopback verification.",
+    "CST3530 user_data workaround creates a second I2C device at fixed 0x58, and the driver's del does not call i2c_master_bus_rm_device; plan cleanup if touch is reinitialized.",
+    "Battery ADC path is from the schematic; factory did not appear to read it, and voltage/percentage mapping is unverified.",
+    "Board Manager YAML parsed successfully, but the local components, C hooks, sdkconfig, full build, and hardware remain unverified.",
+    "Do not flash the official factory image or modify the device as part of this work.",
+    "ota_0 CustomBoard uses 40 MHz SPI and has no CST3530 touch init; fan-out factory/public touch evidence is required.",
+    "ota_0 I2C glitch filter/internal pull-up settings are inferred from a zeroed config struct and have not been checked against OTA IDF headers."
+  ],
+  "differences": [
+    {
+      "item": "display spi clock",
+      "factory": "80 MHz",
+      "ota_custom_board": "40 MHz",
+      "public_bsp": "80 MHz",
+      "resolution": "start bring-up at 40 MHz; validate 80 MHz on hardware"
+    },
+    {
+      "item": "touch in ota_0",
+      "factory": "CST3530 at 0x58",
+      "ota_custom_board": "not found",
+      "public_bsp": "CST3530 at 0x58",
+      "resolution": "do not use ota_0 as touch reference"
+    },
+    {
+      "item": "backlight",
+      "factory": "CH32 PWM register 0x05, 0-255",
+      "ota_custom_board": "fixed {0x05,0xff}",
+      "public_bsp": "CH32 PWM register 0x05, 0-255",
+      "resolution": "Brookesia needs custom DisplayBacklightIface for dimming"
+    }
+  ],
+  "board_draft_validation": {
+    "generator": "ESP Board Manager 0.5.15 gen_bmgr_config_codes.py",
+    "result": "4 peripherals and 5 devices parsed; gen_bmgr_codes and idf_component.yml generated; no unknown-key warnings",
+    "not_validated": [
+      "local CH32/CST3530 components",
+      "setup_device.c compile",
+      "sdkconfig.defaults.board",
+      "full ESP-IDF build",
+      "hardware"
+    ],
+    "notes": [
+      "Board Manager gpio_expander/lcd_touch i2c_addr uses 8-bit/left-shifted values; dev_audio_codec keeps 7-bit 0x30",
+      "io_i2c_config.dev_addr omitted; address comes from i2c_addr",
+      "esp_lcd_st7789 is built into IDF esp_lcd; no external dependency declared",
+      "CST3530 hook passes the i2c_master bus via touch_config.user_data, matching the public BSP workaround"
+    ]
+  }
+}

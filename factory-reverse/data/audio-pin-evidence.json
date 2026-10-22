@@ -1,0 +1,92 @@
+{
+  "schema": "esp32-c5-audio-pin-evidence/v1",
+  "board": "Waveshare ESP32-C5-Touch-LCD-2.8",
+  "status": "TX26/RX27 is a working baseline from OTA Xiaozhi and V5; schematic net names and public BSP point the opposite way and the conflict is not statically resolved",
+  "factory_bsp_config": {
+    "virtual_address": "0x423c1a54",
+    "file_offset": "0x1a1a54",
+    "segment": "factory_seg0",
+    "segment_base": "0x42240020",
+    "sample_rate_hz": 22050,
+    "sample_rate_address": "0x423c1a24",
+    "raw_bytes": "ff ff ff ff 18 00 00 00 19 00 00 00 1a 00 00 00 1b 00 00 00",
+    "mapping": {
+      "mclk": "GPIO_NUM_NC",
+      "bclk": 24,
+      "ws": 25,
+      "dout_tx": 26,
+      "din_rx": 27
+    },
+    "mapping_assumption": "interprets the four words in public-BSP order mclk,bclk,ws,dout,din; the factory BSP struct field order was not recovered from type information"
+  },
+  "public_bsp_current_source": {
+    "header_macros": {
+      "BSP_I2S_SCLK": 24,
+      "BSP_I2S_LCLK": 25,
+      "BSP_I2S_DOUT": 26,
+      "BSP_I2S_DSIN": 27
+    },
+    "source_gpio_cfg": {
+      "dout": "BSP_I2S_DSIN (27)",
+      "din": "BSP_I2S_DOUT (26)"
+    },
+    "assessment": "conflicts with the OTA Xiaozhi ctor and the V5 observation; it is self-consistent with the schematic net names"
+  },
+  "schematic_net_names": {
+    "GPIO26": "I2S_ASDOUT (ES8311 ADC output, codec -> MCU)",
+    "GPIO27": "I2S_DSDIN (ES8311 DAC input, MCU -> codec)",
+    "literal_direction": "RX26 / TX27",
+    "conflict": "literal net names and public BSP imply RX26/TX27; OTA ctor and V5 imply TX26/RX27"
+  },
+  "recommendation": {
+    "mclk": "GPIO_NUM_NC",
+    "bclk": 24,
+    "ws": 25,
+    "dout_tx": 26,
+    "din_rx": 27,
+    "note": "Use RX27/TX26 as the working baseline for microphone bring-up; do not blindly merge the public BSP source swap or flip either direction without a speaker A/B or logic-analyzer test."
+  },
+  "observations": [
+    {
+      "name": "V4",
+      "configuration": "RX26",
+      "result": "PCM all zero; PCNT 0 edges",
+      "status": "failed"
+    },
+    {
+      "name": "V5",
+      "configuration": "RX27 (.din=27)",
+      "result": "recording works",
+      "status": "working"
+    }
+  ],
+  "caveats": [
+    "Factory app AIChats is a launcher; the actual voice stack is in ota_0 Xiaozhi.",
+    "Factory BSP sample rate 22050 is not necessarily the Xiaozhi voice sample rate.",
+    "Public BSP declares bsp_audio_codec_microphone_init() but does not implement it.",
+    "The schematic labels GPIO26 as ASDOUT and GPIO27 as DSDIN, which is the opposite of the working baseline; this is an unresolved schematic/firmware/board conflict.",
+    "Factory I2S struct field order is assumed from the public BSP, not recovered from type information.",
+    "Re-verify pin mapping on the exact board revision before production.",
+    "OTA Xiaozhi uses a duplex 24 kHz codec; cross-check the desired Brookesia sample rate before copying it."
+  ],
+  "ota_xiaozhi_codec": {
+    "get_audio_codec_address": "0x42021876",
+    "ctor_address": "0x4200c072",
+    "duplex_channels_address": "0x4200bee0",
+    "ctor_arguments": {
+      "i2c_port": 0,
+      "in_sample_rate_hz": 24000,
+      "out_sample_rate_hz": 24000,
+      "mclk": -1,
+      "bclk": 24,
+      "ws": 25,
+      "dout_tx": 26,
+      "din_rx": 27,
+      "pa_pin": -1,
+      "es8311_address": "0x30",
+      "use_mclk": false,
+      "pa_inverted": false
+    },
+    "source_reference": "xiaozhi-v2.2.6/main/audio/codecs/es8311_audio_codec.cc"
+  }
+}
