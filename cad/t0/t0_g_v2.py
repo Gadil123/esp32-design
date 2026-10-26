@@ -89,15 +89,18 @@ def build(parts, mounts, base, kp, p, q, v):
     lip_inner_h = gh - 2 * v['screen_lip_overlap_mm']
     lip_inner_r = max(gr - v['screen_lip_overlap_mm'], .5)
     lip_inner = RectangleRounded(lip_inner_w, lip_inner_h, lip_inner_r)
-    over = (extrude(Plane.XY.offset(.8) * RectangleRounded(ww, wh, wr),
-                    amount=v['screen_lip_overhang_height_mm']).translate((gx, gy, 0))
-            - extrude(Plane.XY.offset(.8) * lip_inner,
-                      amount=v['screen_lip_overhang_height_mm'] + .1).translate((gx, gy, 0)))
+    zg = gb[5]
+    lip_bottom = zg + v['screen_lip_bottom_gap_mm']
+    lip_top = zg + v['screen_lip_base_height_mm']
+    over = (extrude(Plane.XY.offset(lip_bottom) * RectangleRounded(ww, wh, wr),
+                    amount=lip_top - lip_bottom).translate((gx, gy, 0))
+            - extrude(Plane.XY.offset(lip_bottom) * lip_inner,
+                      amount=lip_top - lip_bottom + .1).translate((gx, gy, 0)))
     base_w = ww + 2 * v['screen_lip_base_mm']
     base_h = wh + 2 * v['screen_lip_base_mm']
     base_r = wr + v['screen_lip_base_mm']
-    lip_base = (extrude(Plane.XY.offset(.7) * RectangleRounded(base_w, base_h, base_r),
-                        amount=v['screen_lip_base_height_mm']).translate((gx, gy, 0))
+    lip_base = (extrude(Plane.XY.offset(zg) * RectangleRounded(base_w, base_h, base_r),
+                        amount=lip_top - zg).translate((gx, gy, 0))
                 - window)
     front = front + over + lip_base
     rib = v['screen_guide_rib_mm']; z0, z1 = v['screen_guide_rib_z_mm']
@@ -109,9 +112,10 @@ def build(parts, mounts, base, kp, p, q, v):
 
     # 3b. Preserve the V1 printed front hole that records correctly; the V1 CAD
     # had only a probe. Location is the V1 candidate; confirm against the photo.
-    mp = v['mic_port']
-    front = front - cyl(mp['diameter_mm'] / 2, mp['z_mm'][0], mp['z_mm'][1],
-                        mp['xy_mm'][0], mp['xy_mm'][1])
+    mp = v.get('mic_port')
+    if mp:
+        front = front - cyl(mp['diameter_mm'] / 2, mp['z_mm'][0], mp['z_mm'][1],
+                            mp['xy_mm'][0], mp['xy_mm'][1])
 
     # 4. Cut the front tub at the seam, keep the USB mouth bridge, add screw posts.
     # Remove the old G shoulder pads; the clamped seam replaces them.
@@ -131,6 +135,15 @@ def build(parts, mounts, base, kp, p, q, v):
     for x, y in screw_axes:
         ea, eb = ear_span(x)
         front = front + rr(eb - ea, 2 * eh, er, seam, .7, (ea + eb) / 2, y)
+    boss = v['shell_screw'].get('boss_diameter_mm')
+    if boss:
+        for x, y in screw_axes:
+            front = front + cyl(boss / 2, seam, .7, x, y)
+    lf = v.get('left_flange')
+    if lf:
+        for y in lf['y_mm']:
+            front = front + box([ix, y - lf['half_y_mm'], seam,
+                                 ix + lf['width_mm'], y + lf['half_y_mm'], seam + lf['height_mm']])
     for x, y in screw_axes:
         front = front - cyl(v['shell_screw']['pilot_diameter_mm'] / 2,
                             seam - .05, B + 1.0 + v['shell_screw']['shaft_length_mm'], x, y)
@@ -181,6 +194,14 @@ def build(parts, mounts, base, kp, p, q, v):
         rear = rear + rr(eb - ea, 2 * eh, er, B, seam, (ea + eb) / 2, y)
         rear = rear - cyl(sc['thread_diameter_mm'] / 2 + .15, B - .1, seam + .1, x, y)
         rear = rear - cyl(sc['head_pocket_diameter_mm'] / 2, B - .1, B + sc['head_height_mm'], x, y)
+        if sc.get('boss_diameter_mm'):
+            rear = rear + cyl(sc['boss_diameter_mm'] / 2, B, seam, x, y)
+            rear = rear - cyl(sc['boss_diameter_mm'] / 2 + .2, seam - .05, seam + 1.2, x, y)
+    if lf:
+        for y in lf['y_mm']:
+            rear = rear - box([ix - .2, y - lf['half_y_mm'] - .2, seam - .1,
+                               ix + lf['width_mm'] + .2, y + lf['half_y_mm'] + .2,
+                               seam + lf['height_mm'] + .2])
     # USB mouth: panel notch gives the plug its lower clearance and keeps the bridge.
     rear = rear - box([ub[0] - 1.2, ey - wall - .3, B - .5, ub[3] + 1.2, ey + .2, -8.15])
     # No TF cut: the card is entirely inside.
@@ -200,7 +221,7 @@ def build(parts, mounts, base, kp, p, q, v):
     front.label = 'FRONT_V2_SCREEN_LIP_AND_POSTS'
     rear.label = 'REAR_V2_2MM_RIBBED_CLAMP'
     m.update(front=front, rear=rear, screws=screws, screw_rows=screw_rows,
-             v2_parameters=v, mic_port=v['mic_port'], screen_geometry=dict(glass_bounds_mm=gb, glass_radius_mm=gr,
+             v2_parameters=v, mic_port=v.get('mic_port'), screen_geometry=dict(glass_bounds_mm=gb, glass_radius_mm=gr,
              window_whr_mm=[ww, wh, wr], lip_inner_whr_mm=[lip_inner_w, lip_inner_h, lip_inner_r],
              lip_base_whr_mm=[base_w, base_h, base_r], glass_front_z_mm=gb[5],
              lip_top_z_mm=v['screen_lip_top_z_mm']),
