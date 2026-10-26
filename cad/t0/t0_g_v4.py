@@ -121,9 +121,11 @@ def build(parts, mounts, base, kp, p, q, v):
     base_w = ww + 2 * v['screen_lip_base_mm']
     base_h = wh + 2 * v['screen_lip_base_mm']
     base_r = wr + v['screen_lip_base_mm']
+    lip_full = extrude(Plane.XY.offset(zg - .05) * RectangleRounded(ww, wh, wr),
+                       amount=lip_top - zg + .2).translate((gx, gy, 0))
     lip_base = (extrude(Plane.XY.offset(zg) * RectangleRounded(base_w, base_h, base_r),
                         amount=lip_top - zg).translate((gx, gy, 0))
-                - window)
+                - lip_full)
     front = front + over + lip_base
     rib = v['screen_guide_rib_mm']; z0, z1 = v['screen_guide_rib_z_mm']
     rib_outer = RectangleRounded(ww + 2 * rib, wh + 2 * rib, wr + rib)

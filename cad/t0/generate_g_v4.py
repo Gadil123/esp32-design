@@ -285,6 +285,11 @@ def main():
     }
     assert report['right_boss']['side_wall_mm'] >= 1.5
 
+    # --- S1: central screen air column must be open through the lip -----------
+    screen_air = volume_overlap(front, box([-20, -25, 0.8, 20, 30, 1.95]))
+    report['screen_air_column_mm3'] = round(screen_air, 6)
+    assert screen_air < 1e-6
+
     # --- V4-RECT: left slab, 0127 pockets, RESET pinhole, corner bosses ---------
     ls = v.get('left_slab')
     sk = v.get('silicone_keys')
@@ -363,7 +368,7 @@ def render(out, parts, m, base, wire_shapes, mounts):
     for name, a, b, c, ext, title in views:
         fig, ax = plt.subplots(figsize=(11, 8) if name != 'SIDE' else (4, 9))
         panel(ax, scene, a, b, c, ext)
-        ax.set_title(f'G-V2 {title}\n100.94 x 77.86 x 13.55mm nominal; NOT print approved', fontsize=9)
+        ax.set_title(f'G-V4-RECT {title}\n99.7 x 77.86 x 14.35mm nominal; NOT print approved', fontsize=9)
         ax.set_xlabel('mm'); ax.set_ylabel('mm')
         fig.tight_layout(); fig.savefig(out / f'{name}.png', dpi=150); plt.close(fig)
 

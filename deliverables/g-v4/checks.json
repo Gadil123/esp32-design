@@ -127,7 +127,7 @@
       ]
     },
     "silicone_keys": {
-      "cap": "0127 silicone, rotated: 9.2 along Y, 7.2 along X (wall depth)",
+      "cap": "0127 silicone: 9.2 along Y, 7.2 along Z (side-wall plane); X is the 7.6mm wall depth",
       "y_mm": [
         -3.62,
         -19.26
@@ -427,6 +427,7 @@
     "ear_count": 4,
     "status": "JLC recommends >1.5mm wall for fasteners; 5.0 boss / 1.7 pilot = 1.65mm"
   },
+  "screen_air_column_mm3": 0,
   "v4_keys": {
     "left_slab_mm": {
       "x_mm": [
@@ -443,7 +444,7 @@
       ]
     },
     "silicone_key": {
-      "cap": "0127 silicone, rotated: 9.2 along Y, 7.2 along X (wall depth)",
+      "cap": "0127 silicone: 9.2 along Y, 7.2 along Z (side-wall plane); X is the 7.6mm wall depth",
       "y_mm": [
         -3.62,
         -19.26
@@ -491,10 +492,10 @@
     "front_shell": {
       "step_valid": true,
       "step_solid_count": 1,
-      "stl_triangles": 7756,
+      "stl_triangles": 7760,
       "stl_nonmanifold_edges": 0,
       "step_stl_bounds_error_mm": 2.7465820267025265e-06,
-      "step_stl_relative_volume_error": 4.284221775581027e-05
+      "step_stl_relative_volume_error": 4.817288274132835e-05
     },
     "rear_shell": {
       "step_valid": true,

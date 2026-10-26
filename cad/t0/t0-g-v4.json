@@ -120,7 +120,7 @@
     ]
   },
   "silicone_keys": {
-    "cap": "0127 silicone, rotated: 9.2 along Y, 7.2 along X (wall depth)",
+    "cap": "0127 silicone: 9.2 along Y, 7.2 along Z (side-wall plane); X is the 7.6mm wall depth",
     "y_mm": [
       -3.62,
       -19.26
