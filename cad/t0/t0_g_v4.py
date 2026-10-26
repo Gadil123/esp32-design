@@ -219,7 +219,8 @@ def build(parts, mounts, base, kp, p, q, v):
         rear = rear - cyl(sc['thread_diameter_mm'] / 2 + .15, B - .1, seam + .1, x, y)
         rear = rear - cyl(sc['head_pocket_diameter_mm'] / 2, B - .1, B + sc['head_height_mm'], x, y)
         if sc.get('boss_diameter_mm'):
-            rear = rear + cyl(sc['boss_diameter_mm'] / 2, B, seam, x, y)
+            if not v.get('v4'):
+                rear = rear + cyl(sc['boss_diameter_mm'] / 2, B, seam, x, y)
             rear = rear - cyl(sc['boss_diameter_mm'] / 2 + .2, seam - .05, seam + 1.2, x, y)
     if lf:
         for y in lf['y_mm']:

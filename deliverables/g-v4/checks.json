@@ -1,5 +1,5 @@
 {
-  "status": "BLOCKED",
+  "status": "CONDITIONAL_NOMINAL_GEOMETRY_PASS_PHYSICAL_PENDING",
   "print_approved": false,
   "manufacturing_status": "manufacturing_unverified",
   "functional_actuation_status": "UNVERIFIED",
@@ -85,7 +85,18 @@
     "functional_actuation_status": "UNVERIFIED",
     "overall_width_with_ears_mm": 99.7,
     "total_thickness_mm": 14.35,
-    "mic_port": null,
+    "mic_port": {
+      "xy_mm": [
+        27.3,
+        1.395
+      ],
+      "diameter_mm": 1.5,
+      "z_mm": [
+        -0.6,
+        0.71
+      ],
+      "status": "V1 candidate MIC position; V1 print records correctly. Confirm against the V1 printed hole."
+    },
     "mic_note": "V1 CAD front has no mic hole; V4 front is solid. Drill at the V1 printed hole or mark its coordinates.",
     "left_flange": null,
     "jlc_rules": {
@@ -296,15 +307,24 @@
   },
   "rear_panel_measured_mm": 2.01,
   "mic_port": {
-    "modelled": false,
-    "status": "V1 CAD front has no mic hole; V4 front is solid. Drill at the V1 printed hole or mark its coordinates."
+    "xy_mm": [
+      27.3,
+      1.395
+    ],
+    "diameter_mm": 1.5,
+    "z_mm": [
+      -0.6,
+      0.71
+    ],
+    "status": "V1 candidate MIC position; V1 print records correctly. Confirm against the V1 printed hole.",
+    "probe_volume_mm3": 0
   },
   "collision_checks": {
     "front": {
       "official_assembly_723": 0,
       "battery_complete": 0,
       "speaker_body": 0,
-      "candidate_wiring": 4.719855
+      "candidate_wiring": 0
     },
     "rear": {
       "official_assembly_723": 0,
@@ -313,6 +333,7 @@
       "candidate_wiring": 0
     }
   },
+  "battery_wire_note": "User: battery lead faces the screen/mainboard. Old MX0 top-right candidate loop is not applicable; actual lead route to be verified.",
   "screw_checks": {
     "shell_screws_vs_board_max_mm3": 0,
     "pcb_thread_envelopes_in_metal_inserts_mm3": [
@@ -470,18 +491,18 @@
     "front_shell": {
       "step_valid": true,
       "step_solid_count": 1,
-      "stl_triangles": 7402,
+      "stl_triangles": 7756,
       "stl_nonmanifold_edges": 0,
       "step_stl_bounds_error_mm": 2.7465820267025265e-06,
-      "step_stl_relative_volume_error": 4.294057592582123e-05
+      "step_stl_relative_volume_error": 4.284221775581027e-05
     },
     "rear_shell": {
       "step_valid": true,
       "step_solid_count": 1,
-      "stl_triangles": 6972,
+      "stl_triangles": 9676,
       "stl_nonmanifold_edges": 0,
       "step_stl_bounds_error_mm": 2.7465820267025265e-06,
-      "step_stl_relative_volume_error": 2.2155729761955687e-06
+      "step_stl_relative_volume_error": 1.8919670505518229e-06
     }
   }
 }

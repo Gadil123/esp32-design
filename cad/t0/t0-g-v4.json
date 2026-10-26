@@ -78,7 +78,18 @@
   "functional_actuation_status": "UNVERIFIED",
   "overall_width_with_ears_mm": 99.7,
   "total_thickness_mm": 14.35,
-  "mic_port": null,
+  "mic_port": {
+    "xy_mm": [
+      27.3,
+      1.395
+    ],
+    "diameter_mm": 1.5,
+    "z_mm": [
+      -0.6,
+      0.71
+    ],
+    "status": "V1 candidate MIC position; V1 print records correctly. Confirm against the V1 printed hole."
+  },
   "mic_note": "V1 CAD front has no mic hole; V4 front is solid. Drill at the V1 printed hole or mark its coordinates.",
   "left_flange": null,
   "jlc_rules": {

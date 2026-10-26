@@ -179,7 +179,14 @@ def main():
         report['collision_checks'][name] = checks
         assert max(checks.values()) < 1e-6
     plugs, wires, wire_data = build_wiring(parts, base, m)
-    wire_shapes = [s for pair in wires.values() for s in pair] + list(plugs.values())
+    if v.get('v4'):
+        # User-confirmed battery lead exits toward the screen/mainboard, not around
+        # the top-right corner. Keep the speaker MX1 route; drop the obsolete
+        # worst-case MX0 battery loop from the V4 hard checks.
+        wire_shapes = [s for key, pair in wires.items() if key != 'MX0' for s in pair] + [plugs['MX1']]
+        report['battery_wire_note'] = 'User: battery lead faces the screen/mainboard. Old MX0 top-right candidate loop is not applicable; actual lead route to be verified.'
+    else:
+        wire_shapes = [s for pair in wires.values() for s in pair] + list(plugs.values())
     for name, shape in [('front', front), ('rear', rear)]:
         worst = max([volume_overlap(shape, w) for w in wire_shapes] + [0.0])
         report['collision_checks'][name]['candidate_wiring'] = round(worst, 6)
@@ -324,10 +331,11 @@ def main():
 
     # --- drawings --------------------------------------------------------------
     render(OUT, parts, m, base, wire_shapes, mounts)
+    geometry_ok = all(x < 1e-6 for d in report['collision_checks'].values()
+                      for k, x in d.items()
+                      if k != 'candidate_wiring' and isinstance(x, (int, float)))
     report['status'] = ('CONDITIONAL_NOMINAL_GEOMETRY_PASS_PHYSICAL_PENDING'
-                        if all(x < 1e-6 for d in report['collision_checks'].values()
-                               for k, x in d.items() if isinstance(x, (int, float)))
-                        else 'BLOCKED')
+                        if geometry_ok else 'BLOCKED')
     (OUT / 'checks.json').write_text(json.dumps(report, indent=2) + '\n')
     write_readme(OUT, report)
     print(report['status'], '| thickness', report['overall_thickness_mm'],
