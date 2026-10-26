@@ -2,23 +2,23 @@
   "stage": "G-V1 V4-RECT: rectangular shell, internal corner bosses, two 0127 silicone keys, RESET pinhole",
   "source_feedback_date": "2026-10-26 printed first article",
   "seam_z_mm": -10.35,
-  "rear_panel_mm": 2.0,
-  "rear_outer_z_mm": -12.35,
-  "rear_panel_status": "uniform 2.0mm plate, internal ribs, no snap latches",
-  "screen_clearance_mm": 0.3,
+  "rear_panel_mm": 3.5,
+  "rear_outer_z_mm": -13.85,
+  "rear_panel_status": "3.5mm rear plate, local key-tongue relief leaves 1.55mm floor; ribbed, independent seam stop",
+  "screen_clearance_mm": 1.0,
   "screen_lip_overlap_mm": 1.0,
-  "screen_lip_radial_mm": 1.2,
-  "screen_lip_base_mm": 1.2,
-  "screen_lip_base_height_mm": 1.3,
-  "screen_lip_overhang_height_mm": 1.0,
-  "screen_lip_bottom_gap_mm": 0.3,
-  "screen_lip_top_z_mm": 2.0,
+  "screen_lip_radial_mm": 1.6,
+  "screen_lip_base_mm": 1.6,
+  "screen_lip_base_height_mm": 2.4,
+  "screen_lip_overhang_height_mm": 1.5,
+  "screen_lip_bottom_gap_mm": 0.9,
+  "screen_lip_top_z_mm": 3.1,
   "screen_guide_rib_mm": 1.5,
   "screen_guide_rib_z_mm": [
     -2.5,
     -0.5
   ],
-  "assembly_order": "rear panel + PCB/display/battery/speaker + four PCB screws first; FRONT shell lowered from +Z (four ears stay outside the body and do not sweep the PCB); four M2 shell screws from REAR",
+  "assembly_order": "Rear + PCB first; lower EMPTY front straight along -Z; insert 0127 from -X only AFTER seam closure; fasten removable outer retaining bezels. Remove bezels and caps before lifting front.",
   "pcb_screw": {
     "kind": "M2.5x5 machine screw into original metal insert",
     "thread_diameter_mm": 2.5,
@@ -26,14 +26,15 @@
     "head_diameter_mm": 5.0,
     "head_height_mm": 0.85,
     "head_pocket_diameter_mm": 5.8,
-    "shaft_bore_diameter_mm": 2.8
+    "shaft_bore_diameter_mm": 2.8,
+    "head_pocket_depth_mm": 2.35
   },
   "shell_screw": {
-    "kind": "M2x6 self-tapping into PA12, four internal corner bosses \u00d85.0",
+    "kind": "2.0x6 plastic thread-forming screw; low cylindrical/pan head envelope; supplier SKU/PA12 pilot/torque UNVERIFIED, no DIN7981 claim",
     "thread_diameter_mm": 2.0,
     "shaft_length_mm": 6.0,
-    "head_diameter_mm": 3.8,
-    "head_height_mm": 1.0,
+    "head_diameter_mm": 3.6,
+    "head_height_mm": 1.2,
     "head_pocket_diameter_mm": 4.2,
     "pilot_diameter_mm": 1.7,
     "axes_xy_mm": [
@@ -46,16 +47,20 @@
         -28.0
       ],
       [
-        63.3,
-        38.3
+        63.2,
+        39.1
       ],
       [
         63.3,
         -28.0
       ]
     ],
-    "boss_diameter_mm": 5.0,
-    "status": "nominal geometry only; JLC PA12 boss 1.65mm wall; no outer ears"
+    "boss_diameter_mm": 5.4,
+    "status": "UNVERIFIED supplier selection: head <=3.6x1.2; length <=6.2; pocket 4.2x1.9; pilot1.7 candidate. No DIN7981/ISO7049 claim.",
+    "head_pocket_depth_mm": 1.9,
+    "pilot_end_z_mm": -4.95,
+    "shaft_length_max_mm": 6.2,
+    "tool_diameter_mm": 3.4
   },
   "rear_ribs": {
     "height_mm": 1.2,
@@ -70,36 +75,37 @@
     "status": "internal stiffeners, clear of PCB seats, battery, speaker and wire lanes"
   },
   "tf_opening": "removed; TF card stays inside and is reached by opening the clamped rear cover",
-  "bat_pwr_leaf": "straight rounded-rectangle leaf replaces the TF-clearing L shape",
   "speaker_wire_entry": "+Y edge (toward the battery; the photo's speaker bottom), not -Y",
   "usb_opening": "unchanged 13.2 x 7.3mm after user insertion test; no reduction",
   "print_approved": false,
   "manufacturing_status": "manufacturing_unverified",
   "functional_actuation_status": "UNVERIFIED",
-  "overall_width_with_ears_mm": 99.7,
-  "total_thickness_mm": 14.35,
+  "total_thickness_mm": 16.95,
   "mic_port": {
     "xy_mm": [
-      27.3,
+      29.8,
       1.395
     ],
     "diameter_mm": 1.5,
     "z_mm": [
       -0.6,
-      0.71
+      3.2
     ],
-    "status": "V1 candidate MIC position; V1 print records correctly. Confirm against the V1 printed hole."
+    "status": "UNVERIFIED V4 channel-entry candidate moved outside strengthened lip base. V1 CAD candidate 27.3,1.395 is NOT a V1 printed-hole measurement; measure V1 actual hole and MEMS inlet before accepting either location.",
+    "v1_cad_candidate_xy_mm": [
+      27.3,
+      1.395
+    ]
   },
-  "mic_note": "V1 CAD front has no mic hole; V4 front is solid. Drill at the V1 printed hole or mark its coordinates.",
+  "mic_note": "(27.3,1.395) is a V1 CAD candidate only; measure V1 printed/drilled hole relative to glass edges and inlet before accepting; acoustics UNVERIFIED.",
   "left_flange": null,
   "jlc_rules": {
-    "source": "\u5609\u7acb\u521b3D\u6253\u5370\u8bbe\u8ba1\u89c4\u8303 (jlc-3dp.cn/technicalColumnsDetails/27832.html) and JLC3DP design guideline",
+    "source": "嘉立创3D打印设计规范 (jlc-3dp.cn/technicalColumnsDetails/27832.html) and JLC3DP design guideline",
     "wall_min_nylon_mjf_sls": "1.0mm (SLS/MJF); recommended 2.0mm",
-    "fastener_positioning_wall": ">1.5mm",
-    "nylon_accuracy_100mm": "\u00b10.3mm; hole tolerance MJF/SLS \u00b10.3mm (holes shrink)",
+    "fastener_positioning_wall": ">1.5mm design target; lip 1.5 with 1.6 radial base; actual strength UNVERIFIED",
+    "nylon_accuracy_100mm": "±0.3mm; hole tolerance MJF/SLS ±0.3mm (holes shrink)",
     "min_clearance": "0.6mm between moving/connecting parts",
-    "printed_threads": "min M6; self-tapping plastic screws use boss \u22651.5x pilot diameter",
-    "v2b_response": "lip 1.0mm + 0.3mm gap; right ear boss 5.0mm (pilot 1.7 -> 1.65mm wall); left flange 1.5mm; window 0.3/side; no 0.2mm window"
+    "printed_threads": "Printed thread min M6 separate from self tapping; boss >=1.5x screw OD; PA12 tapping pilot/torque must be validated."
   },
   "v4": true,
   "integrated_keys": false,
@@ -111,8 +117,8 @@
       -25.87
     ],
     "y_mm": [
-      -24.0,
-      0.0
+      -29.5,
+      6.5
     ],
     "z_mm": [
       -11.7,
@@ -120,20 +126,70 @@
     ]
   },
   "silicone_keys": {
-    "cap": "0127 silicone: 9.2 along Y, 7.2 along Z (side-wall plane); X is the 7.6mm wall depth",
+    "axis_definition": "Side-wall plane Y/Z: base 9.2 Y x 7.2 Z; cap axis +X inward; total reported height 5.5 along X incl high inner post; X wall depth 7.6. Closed top, reported silicone wall 1.3. None of these defines flange thickness, body length or post projection.",
+    "reported_part_mm": {
+      "base_y": 9.2,
+      "base_z": 7.2,
+      "total_axis_x_including_post": 5.5,
+      "silicone_wall": 1.3,
+      "closed_top": true
+    },
+    "measured_part_mm": {
+      "base_axial_thickness": null,
+      "top_y": null,
+      "top_z": null,
+      "body_axis_x": null,
+      "seat_to_post_tip_x": null,
+      "post_diameter": null,
+      "usable_stroke": null,
+      "switch_stroke": null
+    },
     "y_mm": [
       -3.62,
       -19.26
     ],
-    "z_center": -6.2,
-    "counterbore_x_mm": 7.4,
-    "counterbore_y_mm": 9.4,
-    "counterbore_z_mm": 7.4,
-    "depth_mm": 1.3,
-    "through_x_mm": 6.0,
-    "through_y_mm": 9.2,
-    "through_z_mm": 6.0,
-    "status": "0127 base 9.2x7.2; counterbore 9.4Y x 7.4Z; through 9.2Y x 6.0Z; post to TS24CA"
+    "z_center": -6.4,
+    "wall_inner_x_mm": -25.87,
+    "pocket": {
+      "clearance_per_side_mm": 0.3,
+      "depth_x_mm": 3.6,
+      "tunnel_y_mm": 8.0,
+      "tunnel_z_mm": 5.6
+    },
+    "coupon_clearances_per_side_mm": [
+      0.15,
+      0.3,
+      0.45
+    ],
+    "retainer": {
+      "thickness_x_mm": 1.8,
+      "aperture_y_mm": 8.0,
+      "aperture_z_mm": 5.6,
+      "screw_diameter_mm": 1.6,
+      "pilot_mm": 1.3,
+      "screw_length_mm": 5.0,
+      "head_max_diameter_mm": 3.0,
+      "head_max_height_mm": 1.2,
+      "pilot_depth_mm": 4.2,
+      "kind": "one removable two-aperture outer plate",
+      "outer_y_bounds_mm": [
+        -29.5,
+        6.5
+      ],
+      "fastener_yz_mm": [
+        [
+          -27.0,
+          -2.0
+        ],
+        [
+          3.5,
+          -6.4
+        ]
+      ]
+    },
+    "local_seam_z_mm": -12.15,
+    "bridge_required_mm": 1.6,
+    "status": "UNVERIFIED default B (.30/side). Outer screw-on bezel captures a measured flange only if top/body clear aperture. Do not infer trigger fit from reported 5.5 total height; no unknown cap solid modeled."
   },
   "reset_pinhole": {
     "x_mm": [
@@ -141,8 +197,10 @@
       -24.8
     ],
     "y_mm": -11.44,
-    "z_mm": -6.2,
-    "diameter_mm": 2.2
+    "z_mm": -6.4,
+    "diameter_mm": 2.2,
+    "tool_diameter_mm": 0.8,
+    "tool_free_length_mm": 10.0
   },
   "corner_bosses": {
     "axes_xy_mm": [
@@ -155,16 +213,32 @@
         -28.0
       ],
       [
-        63.3,
-        38.3
+        63.2,
+        39.1
       ],
       [
         63.3,
         -28.0
       ]
     ],
-    "diameter_mm": 5.0,
+    "diameter_mm": 5.4,
     "pilot_mm": 1.7,
-    "status": "internal rectangular shell posts; rear head pockets only"
-  }
+    "status": "RT moved away from battery; actual tray rails terminate before RT; no obsolete MX0 loop"
+  },
+  "battery_stack": {
+    "adhesive_mm": 0.2,
+    "adhesive_thickness_tolerance_mm": 0.1,
+    "z_dimension_tolerance_mm": 0.3,
+    "swelling_allowance_mm": 1.0,
+    "xy_component_and_position_budget_mm": 0.5,
+    "shell_surface_budget_mm": 0.3,
+    "tray_clearance_mm": 1.1,
+    "tray_wall_mm": 1.6,
+    "status": "Budgets are design candidates, not measured battery swelling or vendor guarantees; lead faces screen/mainboard and is UNMODELED."
+  },
+  "overall_body_width_mm": 99.6,
+  "outer_y_mm": [
+    -36.13,
+    42.13
+  ]
 }
