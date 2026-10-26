@@ -13,8 +13,8 @@ def build(parts, p, m):
     q['narrow_wiring'] = deepcopy(p['narrow_wiring'])
     sx, sy = p['speaker']['center_xy_mm']
     sh = p['speaker']['xyz_mm'][1]
-    entry = sy - sh / 2
-    q['narrow_wiring']['speaker_loop_y_mm'] = entry + 8.0
+    entry = sy + sh / 2
+    q['narrow_wiring']['speaker_loop_y_mm'] = entry - 4.0
     q['speaker'] = deepcopy(p['speaker'])
     q['speaker']['center_xy_mm'] = [sx, entry]
     return _old(parts, q, m)

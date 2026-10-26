@@ -79,11 +79,23 @@
   },
   "tf_opening": "removed; TF card stays inside and is reached by opening the clamped rear cover",
   "bat_pwr_leaf": "straight rounded-rectangle leaf replaces the TF-clearing L shape",
-  "speaker_wire_entry": "moved from speaker mid-Y to the -Y edge; actual lead exit still requires photo/measurement",
+  "speaker_wire_entry": "+Y edge (toward the battery; the photo's speaker bottom), not -Y",
   "usb_opening": "unchanged 13.2 x 7.3mm after user insertion test; no reduction",
   "print_approved": false,
   "manufacturing_status": "manufacturing_unverified",
   "functional_actuation_status": "UNVERIFIED",
   "overall_width_with_ears_mm": 100.94,
-  "total_thickness_mm": 13.55
+  "total_thickness_mm": 13.55,
+  "mic_port": {
+    "xy_mm": [
+      27.3,
+      1.395
+    ],
+    "diameter_mm": 1.5,
+    "z_mm": [
+      -0.6,
+      0.71
+    ],
+    "status": "preserves the V1 printed front hole / V1 CAD candidate; actual photo location to confirm"
+  }
 }

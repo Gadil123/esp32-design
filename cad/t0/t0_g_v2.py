@@ -63,10 +63,15 @@ def build(parts, mounts, base, kp, p, q, v):
     sp = base['speaker']; sx, sy = sp['center_xy_mm']; sw, sh, st = sp['xyz_mm']
     sf = m['dimensions']['glass_z_mm'] - base['bay_front_panel_mm'] - sp['foam_mm']
     wall_half = sp['tray_wall_mm'] / 2
-    front = front + box([sx - sw / 2 - sp['tray_wall_mm'], sy - 1.3, sf - st - .25,
-                         sx - sw / 2, sy + 1.3, m['dimensions']['front_z_mm'] - .25])
-    front = front - box([sx - sw / 2 - 2, sy - sh / 2 - 1.3, sf - st - 1,
-                         sx - sw / 2 + .1, sy - sh / 2 + 1.3, m['dimensions']['front_z_mm'] + 1])
+    # Fill the old mid notch through BOTH the fence wall and the front face.
+    front = front + box([sx - sw / 2 - 2, sy - 1.3, -.6,
+                         sx - sw / 2 + .1, sy + 1.3,
+                         m['dimensions']['front_z_mm']])
+    front = front + box([sx - sw / 2 - 1, sy - 1.3, sf - st - 1,
+                         sx - sw / 2, sy + 1.3, -.6])
+    # New +Y notch is a slot in the fence wall only; the front face stays closed.
+    front = front - box([sx - sw / 2 - 2, sy + sh / 2 - 1.3, sf - st - 1,
+                         sx - sw / 2 + .1, sy + sh / 2 + 1.3, -.6])
 
     # 3. Tight rounded window, screen-capturing lip and inner guide rib.
     glass, gr = front_glass_face(parts['DISPLAY'])
@@ -101,6 +106,12 @@ def build(parts, mounts, base, kp, p, q, v):
              - extrude(Plane.XY.offset(z0) * RectangleRounded(ww, wh, wr),
                        amount=z1 - z0 + .1).translate((gx, gy, 0)))
     front = front + guide
+
+    # 3b. Preserve the V1 printed front hole that records correctly; the V1 CAD
+    # had only a probe. Location is the V1 candidate; confirm against the photo.
+    mp = v['mic_port']
+    front = front - cyl(mp['diameter_mm'] / 2, mp['z_mm'][0], mp['z_mm'][1],
+                        mp['xy_mm'][0], mp['xy_mm'][1])
 
     # 4. Cut the front tub at the seam, keep the USB mouth bridge, add screw posts.
     # Remove the old G shoulder pads; the clamped seam replaces them.
@@ -189,7 +200,7 @@ def build(parts, mounts, base, kp, p, q, v):
     front.label = 'FRONT_V2_SCREEN_LIP_AND_POSTS'
     rear.label = 'REAR_V2_2MM_RIBBED_CLAMP'
     m.update(front=front, rear=rear, screws=screws, screw_rows=screw_rows,
-             v2_parameters=v, screen_geometry=dict(glass_bounds_mm=gb, glass_radius_mm=gr,
+             v2_parameters=v, mic_port=v['mic_port'], screen_geometry=dict(glass_bounds_mm=gb, glass_radius_mm=gr,
              window_whr_mm=[ww, wh, wr], lip_inner_whr_mm=[lip_inner_w, lip_inner_h, lip_inner_r],
              lip_base_whr_mm=[base_w, base_h, base_r], glass_front_z_mm=gb[5],
              lip_top_z_mm=v['screen_lip_top_z_mm']),

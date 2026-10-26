@@ -154,6 +154,15 @@ def main():
     report['rear_panel_measured_mm'] = bounds(panel)[5] - bounds(panel)[2]
     assert abs(report['rear_panel_measured_mm'] - 2.0) < .01
 
+    # --- V1 printed front hole / microphone ------------------------------------
+    mic = m['mic_port']
+    probe = box([mic['xy_mm'][0] - .3, mic['xy_mm'][1] - .3, -.4,
+                 mic['xy_mm'][0] + .3, mic['xy_mm'][1] + .3, .6])
+    mic_open = volume_overlap(front, probe)
+    report['mic_port'] = {**mic, 'probe_volume_mm3': round(mic_open, 6),
+                          'note': 'V1 recording works; V2 keeps the V1 candidate hole. Confirm the actual photo location.'}
+    assert mic_open < 1e-6
+
     # --- no unintended collisions with real board/accessories ------------------
     report['collision_checks'] = {}
     for name, shape in [('front', front), ('rear', rear)]:
@@ -215,13 +224,13 @@ def main():
     # --- speaker notch moved to -Y edge; old mid opening closed ----------------
     sx, sy = base['speaker']['center_xy_mm']; sw, sh, _ = base['speaker']['xyz_mm']
     old_mid = volume_overlap(front, box([28.2, sy - .4, -6.0, 28.8, sy + .4, -5.0]))
-    new_bottom = volume_overlap(front, box([28.2, sy - sh / 2 - .4, -6.0, 28.8, sy - sh / 2 + .4, -5.0]))
+    new_bottom = volume_overlap(front, box([28.2, sy + sh / 2 - .4, -6.0, 28.8, sy + sh / 2 + .4, -5.0]))
     report['speaker_wire_notch'] = {
         'old_mid_fence_material_mm3': round(old_mid, 4),
         'new_bottom_fence_material_mm3': round(new_bottom, 4),
         'candidate_wire_route_length_mm': round(wire_data['MX1']['filleted_centerline_length_mm'], 2),
-        'entry_y_mm': sy - sh / 2,
-        'status': 'shell notch moved to -Y bottom edge; actual lead exit and 40mm lead still physical',
+        'entry_y_mm': sy + sh / 2,
+        'status': 'shell notch moved to +Y bottom edge (toward battery, as photo); 40mm lead still physical',
     }
     assert old_mid > .01 and new_bottom < 1e-6
     assert wire_data['MX1']['filleted_centerline_length_mm'] < 40.0, wire_data['MX1']['filleted_centerline_length_mm']
@@ -318,7 +327,7 @@ def render(out, parts, m, base, wire_shapes, mounts):
            (section(m['speaker'], 28.25, -36, -13.5, 28.55, 42, 2), '#a05a4f')]
     fig, ax = plt.subplots(figsize=(7, 8))
     panel(ax, spk, [0, 0, 1], [0, 1, 0], [-1, 0, 0], (-13.5, 2, -36, 42))
-    ax.set_title('SPEAKER FENCE YZ at X=28.4 / wire notch now at -Y edge;\nactual lead exit still to photograph')
+    ax.set_title('SPEAKER FENCE YZ at X=28.4 / wire notch now at +Y edge (toward battery);\nV1 speaker/recording already works')
     ax.set_xlabel('Z (REAR left)'); ax.set_ylabel('Y')
     fig.tight_layout(); fig.savefig(out / 'speaker_notch_section.png', dpi=150); plt.close(fig)
 
@@ -346,8 +355,14 @@ def write_readme(out, r):
         '- 两颗卡扣、接收座、撬槽全部删除；改为四角 **M2×6 自攻** 螺钉（M2 螺距，PA12 预钻 Ø1.7）。',
         '- 原厂 PCB 四颗 **M2.5×5 机螺丝**（背板由 1.2 改 2.0、螺钉头座后移 1.0mm，原 M2.5×4 只有 2.0mm 牙合；M2.5×5 名义 3.0mm）。',
         '- TF 外露槽取消，卡留在机内；BAT_PWR 改为直条形圆角弹片（不再为 TF 开槽绕 L 形）。',
-        '- 扬声器围框出线缺口从 Y 中部移到 -Y 底边；实际出线方向仍需照片/测量确认。',
+        '- 扬声器围框出线缺口从 Y 中部移到 +Y 底边（靠电池/照片底部）；V1 装壳出声正常，V2 只改出线口。',
         '- USB 开口保持 13.2 × 7.3mm（插线实测后用户已撤回“太大”判断）。',
+        '- 厚度增量：前唇 +0.50 + 后盖净外移 +0.68 = **+1.18**；V1 最大点是 USB 下框 −11.67，V2 后盖外表面 −12.35。',
+        '- V1 屏窗总游隙 1.20、实测 1.29，误差 **+0.09 总**（0.045/side，约 0.09%）；PA12 尺寸精度高，翘曲是平面度问题。V2 窗隙 0.2/side + 1.0 屏唇；最不利 0.4，先对中，紧则 0.3。',
+        '- 后盖：V1 1.2mm 无筋/无边缘压紧；V2 2.0mm + 1.2mm 筋 + 四角耳 + 4 PCB 螺丝（8 点）+ 前壳夹具。后板背面朝下打印，要求平面度 ≤0.2；不要用螺丝硬压翘 >0.3 的件。',
+        '- 只做右侧两耳：4 颗 PCB 螺丝只把 PCB 压到后盖，不压前壳；左缝无压紧。当前四角耳；2 耳 + 左舌片是未验证备选；左侧 PCB 螺丝位于屏下，不能加长顶前壳。',
+        '- 四角耳 M2×6 自攻直接进 PA12（预钻 1.7）；4 颗 PCB M2.5×5 进原厂金属嵌件。',
+        '- V1 装壳出声/录音正常；V2 扬声器腔/格栅不变，出线口移到 +Y；前面小孔 Ø1.5 @ (27.3,1.395) 按 V1 候选保留。',
         '',
         '## 紧固件/耗材',
         '- **4× M2.5×5 机螺丝**（头 Ø5.0×0.85，原厂金属嵌件；原 M2.5×4 不再够）。',
@@ -366,14 +381,14 @@ def write_readme(out, r):
         f"- 前壳 +2…+40mm 离散直提无碰撞；这是离散检查，不是任意姿态证明。",
         f"- 4 颗壳螺钉对原板无碰撞；4 颗 PCB 螺钉只在金属嵌件内出现预期螺纹包络。",
         f"- STEP 回读与 STL 闭合：见 `checks.json/export_checks`。",
-        '- **未验证**：PA12 螺纹/扭矩、屏唇实际压力与玻璃强度、按键弹片前装手感、扬声器真实出线、MIC 声路、打印公差与翘曲、USB 插拔、TF 维护、音质。',
+        '- **未验证**：PA12 螺纹/扭矩、屏唇实际压力与玻璃强度、按键弹片前装手感、扬声器真实出线、MIC 孔位/声路复测、打印公差与翘曲、USB 插拔、TF 维护、音质。',
         '',
         '## 仍待用户确认',
-        '- 第一版打印是什么工艺/材料（MJF PA12？FDM？），以及这次是否仍用同一家。',
-        '- 扬声器出线在哪个边/面；请给装入前的照片或实测。',
-        '- 第一版前面小孔是否是你自己钻的；MIC 实际端口在哪；装壳录音是否正常。',
-        '- 13.55mm 厚 / 100.94mm 宽（含四角耳）是否接受；若坚持 95.6 宽，只能改成两耳 + 左缝舌片，机械可靠性未证明，我不建议。',
-        '- 1.29mm 是“推到对角后另一侧的总间隙”而不是单边间隙？',
+        '- 第一版 = **PA12**（已确认）；这次是否仍同一家/同一工艺（MJF/SLS）。',
+        '- 扬声器出线：V1 出声正常；照片里靠电池的底边 = +Y，V2 已按 +Y；若你指另一条边，告诉我镜像。',
+        '- V1 前面小孔/MIC：V1 录音正常；V2 已按 V1 候选 x27.3,y1.395,Ø1.5 保留前孔；实际孔位请以照片确认。',
+        '- 13.55mm 厚 / 100.94mm 宽（含四角耳）是否接受。只做右侧两耳时左侧 PCB 螺丝不压前壳；2 耳 + 左舌片是未验证备选；当前四角耳稳妥。',
+        '- 1.29mm 已确认是“推到对角后另一侧的总间隙”；V1 名义 1.20，误差 +0.09 总。',
         '',
         '**复现：** `./scripts/generate-g-v2.sh`。`checks.json` 的 `print_approved` 永远为 false；CONDITIONAL 不等于可打印或功能通过。',
     ]
