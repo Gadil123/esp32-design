@@ -1,0 +1,89 @@
+{
+  "stage": "G-V1 V2 physical-feedback revision: screen lip + clamped rear cover + hidden TF",
+  "source_feedback_date": "2026-10-26 printed first article",
+  "seam_z_mm": -10.35,
+  "rear_panel_mm": 2.0,
+  "rear_outer_z_mm": -12.35,
+  "rear_panel_status": "uniform 2.0mm plate, internal ribs, no snap latches",
+  "screen_clearance_mm": 0.2,
+  "screen_lip_overlap_mm": 1.0,
+  "screen_lip_radial_mm": 1.2,
+  "screen_lip_base_mm": 1.2,
+  "screen_lip_base_height_mm": 0.5,
+  "screen_lip_overhang_height_mm": 0.4,
+  "screen_lip_bottom_gap_mm": 0.1,
+  "screen_lip_top_z_mm": 1.2,
+  "screen_guide_rib_mm": 1.5,
+  "screen_guide_rib_z_mm": [
+    -2.5,
+    -0.5
+  ],
+  "assembly_order": "rear panel + PCB/display/battery/speaker + four PCB screws first; FRONT shell lowered from +Z (four ears stay outside the body and do not sweep the PCB); four M2 shell screws from REAR",
+  "pcb_screw": {
+    "kind": "M2.5x5 machine screw into original metal insert",
+    "thread_diameter_mm": 2.5,
+    "shaft_length_mm": 5.0,
+    "head_diameter_mm": 5.0,
+    "head_height_mm": 0.85,
+    "head_pocket_diameter_mm": 5.8,
+    "shaft_bore_diameter_mm": 2.8
+  },
+  "shell_screw": {
+    "kind": "M2x6 self-tapping (DIN 7981 / ISO 7049) into PA12 pilot; four corner ears",
+    "thread_diameter_mm": 2.0,
+    "shaft_length_mm": 6.0,
+    "head_diameter_mm": 3.8,
+    "head_height_mm": 1.0,
+    "head_pocket_diameter_mm": 4.2,
+    "pilot_diameter_mm": 1.7,
+    "axes_xy_mm": [
+      [
+        -29.74,
+        38.3
+      ],
+      [
+        -29.74,
+        -28.0
+      ],
+      [
+        66.4,
+        38.3
+      ],
+      [
+        66.4,
+        -28.0
+      ]
+    ],
+    "status": "nominal geometry only; PA12 thread strength, torque and repeated service unverified",
+    "ears": {
+      "inset_mm": 0.5,
+      "overhang_mm": 2.67,
+      "half_width_mm": 3.0,
+      "corner_radius_mm": 1.4,
+      "left_outer_x_mm": -32.14,
+      "right_outer_x_mm": 68.8,
+      "status": "four local corner ears replace both snap latches and clamp the whole seam; overall width 100.94mm"
+    }
+  },
+  "rear_ribs": {
+    "height_mm": 1.2,
+    "width_mm": 1.2,
+    "x_mm": [
+      -14.0,
+      8.0
+    ],
+    "y_mm": [
+      0.0
+    ],
+    "status": "internal stiffeners, clear of PCB seats, battery, speaker and wire lanes"
+  },
+  "tf_opening": "removed; TF card stays inside and is reached by opening the clamped rear cover",
+  "bat_pwr_leaf": "straight rounded-rectangle leaf replaces the TF-clearing L shape",
+  "speaker_wire_entry": "moved from speaker mid-Y to the -Y edge; actual lead exit still requires photo/measurement",
+  "usb_opening": "unchanged 13.2 x 7.3mm after user insertion test; no reduction",
+  "print_approved": false,
+  "manufacturing_status": "manufacturing_unverified",
+  "functional_actuation_status": "UNVERIFIED",
+  "overall_width_with_ears_mm": 100.94,
+  "total_thickness_mm": 13.55
+}

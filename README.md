@@ -1,7 +1,7 @@
 # Pocket Pi / Pocket OS — ESP32 便携多 APP 终端
 
-> 状态：**G-V1 首版 CAD 候选已冻结 / 待实物测量与 MIC1 声路确认 / 尚未批准下单打印**  
-> 更新：2026-10-17。当前基线为 PR #3 的 `ee8ec9d`；[冻结记录及下阶段交接](docs/29_g_v1_design_freeze_and_hardware_handoff.md) · [到货后实测清单 Issue #4](https://github.com/Gadil123/esp32-design/issues/4)。仓库区分设计决定、名义CAD检查和实物验证；旧 A～G 记录保留为历史证据。
+> 状态：**G-V1 首版已实物试装；V2 屏唇/压紧后盖修订候选已建立 / 待第二件实物 / 尚未批准下单打印**  
+> 更新：2026-10-26。当前基线为 PR #3 的 `ee8ec9d`；[冻结记录及下阶段交接](docs/29_g_v1_design_freeze_and_hardware_handoff.md) · [到货后实测清单 Issue #4](https://github.com/Gadil123/esp32-design/issues/4)。仓库区分设计决定、名义CAD检查和实物验证；旧 A～G 记录保留为历史证据。
 
 ## 项目目标
 
@@ -48,7 +48,8 @@
 - [06 · 微雪官方完整资料、规格、原理图、STEP、接口与疑点索引](docs/06_official_board_reference.md)
 - [07 · 官方 STEP **实际解析**：侧键、USB-C、MIC 的尺寸与坐标](docs/07_cad_measurements.md)
 - [08 · Pocket OS 软件选型、语音服务端、APP 场景和验证路线](docs/08_software_architecture_and_app_roadmap.md)
-- [**29 · G-V1 当前候选冻结及到货后实测交接（最新硬件CAD入口）**](docs/29_g_v1_design_freeze_and_hardware_handoff.md)
+- [**32 · G-V1 V2 实物反馈修订：屏唇、压紧后盖与隐藏 TF（2026-10-26）**](docs/32_g_v1_v2_physical_feedback_and_screen_clamp.md)
+- [**29 · G-V1 当前候选冻结及到货后实测交接**](docs/29_g_v1_design_freeze_and_hardware_handoff.md)
 - [**27 · BOOT 圆角矩形修改、原生CAD验证**](docs/27_t0_g_v1_boot_rectangular_key_revision.md)
 - [**28 · 完整装配 STEP 下载和 FreeCAD 分解查看**](docs/28_g_v1_private_download_freecad.md)
 - [STEP 元件外包络机读数据 CSV](data/step_component_bounds.csv)
@@ -100,3 +101,11 @@ T0 G 与 E 并列保留：深前壳、屏幕下沉0.5、四颗原厂位 M2.5 锁
 ## G-V1 95.60mm布局候选（2026-10-20）
 
 [缩宽4mm的布局、承力对照与完整装配报告](docs/31_g_v1_95mm_layout_optimization.md) · [新模型、剖面和下载](deliverables/g-v1-95mm/README.md)。完整名义包络95.60×77.86×12.369521mm；结论CONDITIONAL，保留原按键/制造/实物风险，不批准打印。冻结机械基线仍为ee8ec9d，旧模型与[PR #5评估](https://github.com/Gadil123/esp32-design/pull/5)保留。
+
+## G-V1 V2 实物反馈修订候选（2026-10-26，未合并）
+
+第一件打印壳已实物试装。反馈确认了：屏窗 0.6mm/side 过大、前壳无压紧导致屏突出、1.2mm 后板翘曲、两处浅卡扣断裂、TF 槽无实用价值、扬声器出线口在围框中部。V2 改为 **0.2mm/side + R2.2 圆角窗 + 1.0mm 屏唇（0.1mm 间隙）**、**2.0mm 带筋后板 + 四角耳 4×M2×6 压紧**、**前壳最后盖的前装拆**、**取消 TF 外槽/直条 BAT_PWR**、**出线口移到扬声器 −Y 底边**；USB 口按用户插线结论保持 13.2×7.3mm。
+
+名义 **100.94 × 77.86 × 13.55mm**（含四角耳；主体仍 95.60 × 77.86）。`checks.json` 为 `CONDITIONAL_NOMINAL_GEOMETRY_PASS_PHYSICAL_PENDING`，`print_approved=false`；PA12 螺纹、屏唇实际压力、扬声器真实出线、MIC、音质和打印公差仍未验证。
+
+[修订说明、逐条反馈与 V2 决定](docs/32_g_v1_v2_physical_feedback_and_screen_clamp.md) · [模型/图/检查](deliverables/g-v2/README.md) · 生成：`./scripts/generate-g-v2.sh`。分支 `codex/gv1-v2-fit-clamp`，不合并、不打印。
