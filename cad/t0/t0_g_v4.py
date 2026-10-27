@@ -246,6 +246,11 @@ def build(parts, mounts, base, kp, p, q, v):
     for x,y in screw_axes:
         key_relief=key_relief-cyl(sc['boss_diameter_mm']/2+.3,B-.1,seam,x,y)
     rear=rear-key_relief
+    # The rebuilt rear/register must retain the native USB cable corridor too.
+    # Cutting only the outer wall (above) leaves the register across the plug
+    # body between the official socket mouth and the wall. Preserve the same
+    # 13.2 x 7.3 opening/cutter used by the front and the tested V1 baseline.
+    rear=rear-m['usbcut']
     # No TF cut: the card is entirely inside.
 
     # 6. Screw envelopes. Threads are envelopes, not cut metal.

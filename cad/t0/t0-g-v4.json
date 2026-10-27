@@ -200,7 +200,7 @@
     "z_mm": -6.4,
     "diameter_mm": 2.2,
     "tool_diameter_mm": 0.8,
-    "tool_free_length_mm": 10.0
+    "tool_free_length_mm": 12.0
   },
   "corner_bosses": {
     "axes_xy_mm": [

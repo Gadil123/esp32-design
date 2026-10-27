@@ -1,7 +1,7 @@
 {
-  "status": "GEOMETRY_GATES_PASS_S2_UNVERIFIED_NOT_PRINT_APPROVED",
+  "status": "GEOMETRY_GATES_PASS_FUNCTIONAL_LAYOUT_BLOCKED_NOT_PRINT_APPROVED",
   "print_approved": false,
-  "functional_actuation_status": "UNVERIFIED",
+  "functional_actuation_status": "BLOCKED_P1_DIRECT_CAP_LAYOUT",
   "manufacturing_status": "UNVERIFIED",
   "coordinates": "USB +Y / FRONT +Z / cap axis +X, side-wall plane YZ",
   "design_change": {
@@ -206,7 +206,7 @@
       "z_mm": -6.4,
       "diameter_mm": 2.2,
       "tool_diameter_mm": 0.8,
-      "tool_free_length_mm": 10.0
+      "tool_free_length_mm": 12.0
     },
     "corner_bosses": {
       "axes_xy_mm": [
@@ -257,12 +257,12 @@
     "Front loading checked at discrete straight poses; cap and real lead must be removed/controlled; arbitrary tilted assembly unverified"
   ],
   "generator_inputs_sha256": {
-    "cad/t0/t0-g-v4.json": "8ad7974f0fb45f2df6fb3ec422514217a87659471f1ad2d42f5351ae82030b9e",
-    "cad/t0/t0_g_v4.py": "5db9f3d5d911feeeaecee9ccf1041cee024ff3bec95ea2ffb936fd7b1c2680f4",
-    "cad/t0/generate_g_v4.py": "ea16c3d8adf0d4103f82a9a52541584d2ee2bcc9daa7007eda4268cc8016741a",
-    "cad/t0/g_v4_interfaces.py": "97f1710ef54e94e0197763fed241c5b153b951242abbe7ba0c37fae499e2034f",
-    "cad/t0/g_v4_checks.py": "57ee6ea38dcbc3884c995d02e1e43eb1ced72ecef085ef21a41b64e02b064d66",
-    "cad/t0/g_v4_documentation.py": "fee3b4e80891d26f126e5fc61579a74e94484a6acb4d1bc7e0b6a799f1478de5",
+    "cad/t0/t0-g-v4.json": "af9b46e2df9bb64e0f3bf21d9900fd44ef92be0527773da01178f9bac5d65d46",
+    "cad/t0/t0_g_v4.py": "8259bfe2b0cfb8c16f9e3f7a8116a115aea1224f9d380bd5119bc624cf0c2ae8",
+    "cad/t0/generate_g_v4.py": "ba7cf0f184cd2b8f3e022921108b9a8d74c5d753ea6402e922de80c566fe6577",
+    "cad/t0/g_v4_interfaces.py": "3f4a58875ec7f4747a7a87da578e0adad678c1681f86b8d50c252e5a83a8e464",
+    "cad/t0/g_v4_checks.py": "db76dc9da0a22270f85a26ceb94ea49b22ef51f81879d7e36413c07f2248df03",
+    "cad/t0/g_v4_documentation.py": "14cf78404f80110a526684c9ae83fb01d88fa8b5b10203c159393b4327623f3d",
     "scripts/generate-g-v4.sh": "e84c033e4878b09f93d88b4a39d79d96515f79fc9a70091e3ef23e7669f06321"
   },
   "dimensions": {
@@ -545,6 +545,18 @@
         "cap_fit": "UNVERIFIED: actual top must clear bezel aperture and actual flange must be captured"
       }
     ],
+    "retainer_windows": [
+      {
+        "y_mm": -3.62,
+        "full_window_overlap_mm3": 0,
+        "full_capture_projection_material_mm3": 37.157824
+      },
+      {
+        "y_mm": -19.26,
+        "full_window_overlap_mm3": 0,
+        "full_capture_projection_material_mm3": 37.157824
+      }
+    ],
     "retainer_screws": [
       {
         "yz_mm": [
@@ -578,10 +590,15 @@
     "service": "Install/remove caps along X with bezel removed AFTER front seam closure; remove caps before front lift. Actual cap insertion path UNVERIFIED pending top/body/post.",
     "reset": {
       "full_tool_path_mm3": 0,
-      "switch_contact_mm3": 0.00999458309627309,
-      "reach_from_outer_wall_mm": 8.574632326403542,
+      "switch_contact_mm3": 0.0099945830960049,
+      "reach_from_outer_wall_mm": 10.374632326403539,
+      "reach_from_retainer_exterior_mm": 10.374632326403539,
+      "reach_from_front_wall_mm": 8.574632326403542,
+      "entry_retainer_exterior_x_mm": -35.269999999999996,
+      "full_retainer_hole_mm3": 0,
+      "full_tool_vs_retainer_mm3": 0,
       "tool_diameter_mm": 0.8,
-      "required_free_length_mm": 10.0,
+      "required_free_length_mm": 12.0,
       "other_parts": {
         "DISPLAY": 0,
         "PCB_BOARD": 0.0,
@@ -589,9 +606,63 @@
         "TF": 0.0,
         "KEY1": 0.0
       },
-      "status": "Nominal reach only; real TS24CA travel/force, tip and safe overtravel UNVERIFIED; do not insert beyond contact"
+      "status": "Nominal reach from installed retainer exterior only; real TS24CA travel/force, tip and safe overtravel UNVERIFIED; do not insert beyond contact"
     }
   },
+  "direct_key_readiness": {
+    "status": "BLOCKED_P1_DIRECT_CAP_LAYOUT",
+    "keys": [
+      {
+        "key": "KEY1",
+        "external_retainer_plane_x_mm": -35.269999999999996,
+        "switch_contact_x_mm": -24.894360806339975,
+        "required_face_to_contact_span_mm": 10.375639193660021,
+        "supplier_nominal_total_x_mm": 5.5,
+        "missing_span_at_flush_face_mm": 4.875639193660021,
+        "status": "BLOCKED_DIRECT_EXTERNAL_CAP_AXIAL_SPAN"
+      },
+      {
+        "key": "KEY2",
+        "external_retainer_plane_x_mm": -35.269999999999996,
+        "switch_contact_x_mm": -24.896374539870415,
+        "required_face_to_contact_span_mm": 10.373625460129581,
+        "supplier_nominal_total_x_mm": 5.5,
+        "missing_span_at_flush_face_mm": 4.873625460129581,
+        "status": "BLOCKED_DIRECT_EXTERNAL_CAP_AXIAL_SPAN"
+      }
+    ],
+    "assumption": "Direct silicone actuation; finger face at or outside the retainer exterior. No pusher or deep finger well is modeled.",
+    "limits": "Necessary static span only, not a silicone deformation model. A multi-mm stroke or deeply recessed face is not validated by an empty tunnel.",
+    "resolution": "Define measured flange/seat-to-tip and safe travel, then relocate the mounting/access geometry and recheck it. Do not extend the reported post or add an unapproved pusher by assumption."
+  },
+  "preprint_blockers_P1": [
+    {
+      "status": "BLOCKED_P1_DIRECT_CAP_LAYOUT",
+      "keys": [
+        {
+          "key": "KEY1",
+          "external_retainer_plane_x_mm": -35.269999999999996,
+          "switch_contact_x_mm": -24.894360806339975,
+          "required_face_to_contact_span_mm": 10.375639193660021,
+          "supplier_nominal_total_x_mm": 5.5,
+          "missing_span_at_flush_face_mm": 4.875639193660021,
+          "status": "BLOCKED_DIRECT_EXTERNAL_CAP_AXIAL_SPAN"
+        },
+        {
+          "key": "KEY2",
+          "external_retainer_plane_x_mm": -35.269999999999996,
+          "switch_contact_x_mm": -24.896374539870415,
+          "required_face_to_contact_span_mm": 10.373625460129581,
+          "supplier_nominal_total_x_mm": 5.5,
+          "missing_span_at_flush_face_mm": 4.873625460129581,
+          "status": "BLOCKED_DIRECT_EXTERNAL_CAP_AXIAL_SPAN"
+        }
+      ],
+      "assumption": "Direct silicone actuation; finger face at or outside the retainer exterior. No pusher or deep finger well is modeled.",
+      "limits": "Necessary static span only, not a silicone deformation model. A multi-mm stroke or deeply recessed face is not validated by an empty tunnel.",
+      "resolution": "Define measured flange/seat-to-tip and safe travel, then relocate the mounting/access geometry and recheck it. Do not extend the reported post or add an unapproved pusher by assumption."
+    }
+  ],
   "battery_stack": {
     "actual_battery_bounds_mm": [
       31.655,
@@ -795,6 +866,26 @@
     ],
     "sku_pilot_torque": "UNVERIFIED supplier low-head plastic screws; head/length envelopes enforced, not DIN7981/ISO7049"
   },
+  "USB_access": {
+    "probe_bounds_mm": [
+      -6.099793535910903,
+      38.27583090701148,
+      -10.319520835024438,
+      6.100206464089096,
+      72.13,
+      -4.019520835024437
+    ],
+    "hits_mm3": {
+      "front": 0,
+      "rear": 0,
+      "key_bezel": 0.0
+    },
+    "scope": "12.2 x 6.3 nominal body from the official mouth; no credit for a narrow metal nose. Real cable/side-load and print fit remain UNVERIFIED."
+  },
+  "USB_negative_control": {
+    "rejected": true,
+    "reason": "('USB independent cable body rear', 7.659261674919229, [-6.099793535910904, 38.67583090701147, -10.319520835024438, 6.100206464089097, 39.07583090701147, -8.75])"
+  },
   "MIC": {
     "xy_mm": [
       29.8,
@@ -874,6 +965,145 @@
     "exit": "+Y toward battery",
     "real_lead": "UNVERIFIED"
   },
+  "coupon_interfaces": {
+    "0127_coupon_A": {
+      "clearance_per_side_mm": 0.15,
+      "full_counter_overlap_mm3": 0,
+      "full_tunnel_overlap_mm3": 0,
+      "full_shoulder_material_mm3": 0.844496,
+      "bridge_mm": 2.0,
+      "bridge_material_mm3": 65.142,
+      "retainer": [
+        {
+          "y_mm": 0,
+          "full_window_overlap_mm3": 0,
+          "full_capture_projection_material_mm3": 37.157824
+        }
+      ],
+      "pair_overlap_mm3": 0.0,
+      "fasteners": [
+        {
+          "y_mm": -7.4,
+          "pilot_overlap_mm3": 0,
+          "passage_overlap_mm3": 0,
+          "pilot_bottom_material_mm3": 0.38603891
+        },
+        {
+          "y_mm": 7.4,
+          "pilot_overlap_mm3": 0,
+          "passage_overlap_mm3": 0,
+          "pilot_bottom_material_mm3": 0.38603891
+        }
+      ]
+    },
+    "0127_coupon_B": {
+      "clearance_per_side_mm": 0.3,
+      "full_counter_overlap_mm3": 0,
+      "full_tunnel_overlap_mm3": 0,
+      "full_shoulder_material_mm3": 0.844496,
+      "bridge_mm": 1.8499999999999996,
+      "bridge_material_mm3": 62.1285,
+      "retainer": [
+        {
+          "y_mm": 0,
+          "full_window_overlap_mm3": 0,
+          "full_capture_projection_material_mm3": 37.157824
+        }
+      ],
+      "pair_overlap_mm3": 0.0,
+      "fasteners": [
+        {
+          "y_mm": -7.4,
+          "pilot_overlap_mm3": 0,
+          "passage_overlap_mm3": 0,
+          "pilot_bottom_material_mm3": 0.38603891
+        },
+        {
+          "y_mm": 7.4,
+          "pilot_overlap_mm3": 0,
+          "passage_overlap_mm3": 0,
+          "pilot_bottom_material_mm3": 0.38603891
+        }
+      ]
+    },
+    "0127_coupon_C": {
+      "clearance_per_side_mm": 0.45,
+      "full_counter_overlap_mm3": 0,
+      "full_tunnel_overlap_mm3": 0,
+      "full_shoulder_material_mm3": 0.844496,
+      "bridge_mm": 1.700000000000001,
+      "bridge_material_mm3": 58.8,
+      "retainer": [
+        {
+          "y_mm": 0,
+          "full_window_overlap_mm3": 0,
+          "full_capture_projection_material_mm3": 37.157824
+        }
+      ],
+      "pair_overlap_mm3": 0.0,
+      "fasteners": [
+        {
+          "y_mm": -7.4,
+          "pilot_overlap_mm3": 0,
+          "passage_overlap_mm3": 0,
+          "pilot_bottom_material_mm3": 0.38603891
+        },
+        {
+          "y_mm": 7.4,
+          "pilot_overlap_mm3": 0,
+          "passage_overlap_mm3": 0,
+          "pilot_bottom_material_mm3": 0.38603891
+        }
+      ]
+    }
+  },
+  "interface_negative_controls": [
+    {
+      "mutation": "production retainer window sealed at Y=-3.62",
+      "rejected": true,
+      "reason": "('retainer full window', 80.63999999999986, [-35.269999999999996, -7.620000000000001, -9.2, -33.47, 0.3799999999999999, -3.6])"
+    },
+    {
+      "mutation": "production retainer window sealed at Y=-19.26",
+      "rejected": true,
+      "reason": "('retainer full window', 80.63999999999986, [-35.269999999999996, -23.26, -9.2, -33.47, -15.260000000000002, -3.6])"
+    },
+    {
+      "mutation": "production retainer RESET hole sealed",
+      "rejected": true,
+      "reason": "('retainer RESET full hole', 6.8299537474771235, [-35.269999999999996, -12.539, -7.4990000000000006, -33.47, -10.341, -5.301])"
+    },
+    {
+      "mutation": "0127_coupon_A tunnel sealed",
+      "rejected": true,
+      "reason": "('coupon full tunnel', 179.15519999999975, [-29.868999999999996, -4.0, -9.2, -25.87, 4.0, -3.6])"
+    },
+    {
+      "mutation": "0127_coupon_A shoulder removed",
+      "rejected": true,
+      "reason": "('coupon full shoulder', 0, 0.8444959999999821)"
+    },
+    {
+      "mutation": "0127_coupon_B tunnel sealed",
+      "rejected": true,
+      "reason": "('coupon full tunnel', 179.15519999999975, [-29.868999999999996, -4.0, -9.2, -25.87, 4.0, -3.6])"
+    },
+    {
+      "mutation": "0127_coupon_B shoulder removed",
+      "rejected": true,
+      "reason": "('coupon full shoulder', 0, 0.8444959999999821)"
+    },
+    {
+      "mutation": "0127_coupon_C tunnel sealed",
+      "rejected": true,
+      "reason": "('coupon full tunnel', 179.15519999999975, [-29.868999999999996, -4.0, -9.2, -25.87, 4.0, -3.6])"
+    },
+    {
+      "mutation": "0127_coupon_C shoulder removed",
+      "rejected": true,
+      "reason": "('coupon full shoulder', 0, 0.8444959999999821)"
+    }
+  ],
   "export_checks": {
     "front_shell": {
       "step_valid": true,
@@ -886,18 +1116,18 @@
     "rear_shell": {
       "step_valid": true,
       "step_solid_count": 1,
-      "stl_triangles": 8620,
+      "stl_triangles": 8644,
       "stl_nonmanifold_edges": 0,
       "step_stl_bounds_error_mm": 2.7465820267025265e-06,
-      "step_stl_relative_volume_error": 6.141075683304353e-06
+      "step_stl_relative_volume_error": 6.153190036895378e-06
     },
     "0127_retainer": {
       "step_valid": true,
       "step_solid_count": 1,
-      "stl_triangles": 732,
+      "stl_triangles": 1072,
       "stl_nonmanifold_edges": 0,
       "step_stl_bounds_error_mm": 1.2207031261368684e-06,
-      "step_stl_relative_volume_error": 1.3931478356867036e-05
+      "step_stl_relative_volume_error": 2.3830597217303755e-05
     },
     "0127_coupon_A": {
       "step_valid": true,
@@ -1012,6 +1242,127 @@
     0,
     0
   ],
+  "retainer_windows_STEP_roundtrip": [
+    {
+      "y_mm": -3.62,
+      "full_window_overlap_mm3": 0,
+      "full_capture_projection_material_mm3": 37.157824
+    },
+    {
+      "y_mm": -19.26,
+      "full_window_overlap_mm3": 0,
+      "full_capture_projection_material_mm3": 37.157824
+    }
+  ],
+  "retainer_RESET_STEP_roundtrip": 0,
+  "USB_access_STEP_roundtrip": {
+    "probe_bounds_mm": [
+      -6.099793535910903,
+      38.27583090701148,
+      -10.319520835024438,
+      6.100206464089096,
+      72.13,
+      -4.019520835024437
+    ],
+    "hits_mm3": {
+      "front": 0,
+      "rear": 0,
+      "key_bezel": 0.0
+    },
+    "scope": "12.2 x 6.3 nominal body from the official mouth; no credit for a narrow metal nose. Real cable/side-load and print fit remain UNVERIFIED."
+  },
+  "coupon_interfaces_STEP_roundtrip": {
+    "0127_coupon_A": {
+      "clearance_per_side_mm": 0.15,
+      "full_counter_overlap_mm3": 0,
+      "full_tunnel_overlap_mm3": 0,
+      "full_shoulder_material_mm3": 0.844496,
+      "bridge_mm": 2.0,
+      "bridge_material_mm3": 65.142,
+      "retainer": [
+        {
+          "y_mm": 0,
+          "full_window_overlap_mm3": 0,
+          "full_capture_projection_material_mm3": 37.157824
+        }
+      ],
+      "pair_overlap_mm3": 0.0,
+      "fasteners": [
+        {
+          "y_mm": -7.4,
+          "pilot_overlap_mm3": 0,
+          "passage_overlap_mm3": 0,
+          "pilot_bottom_material_mm3": 0.38603891
+        },
+        {
+          "y_mm": 7.4,
+          "pilot_overlap_mm3": 0,
+          "passage_overlap_mm3": 0,
+          "pilot_bottom_material_mm3": 0.38603891
+        }
+      ]
+    },
+    "0127_coupon_B": {
+      "clearance_per_side_mm": 0.3,
+      "full_counter_overlap_mm3": 0,
+      "full_tunnel_overlap_mm3": 0,
+      "full_shoulder_material_mm3": 0.844496,
+      "bridge_mm": 1.8499999999999996,
+      "bridge_material_mm3": 62.1285,
+      "retainer": [
+        {
+          "y_mm": 0,
+          "full_window_overlap_mm3": 0,
+          "full_capture_projection_material_mm3": 37.157824
+        }
+      ],
+      "pair_overlap_mm3": 0.0,
+      "fasteners": [
+        {
+          "y_mm": -7.4,
+          "pilot_overlap_mm3": 0,
+          "passage_overlap_mm3": 0,
+          "pilot_bottom_material_mm3": 0.38603891
+        },
+        {
+          "y_mm": 7.4,
+          "pilot_overlap_mm3": 0,
+          "passage_overlap_mm3": 0,
+          "pilot_bottom_material_mm3": 0.38603891
+        }
+      ]
+    },
+    "0127_coupon_C": {
+      "clearance_per_side_mm": 0.45,
+      "full_counter_overlap_mm3": 0,
+      "full_tunnel_overlap_mm3": 0,
+      "full_shoulder_material_mm3": 0.844496,
+      "bridge_mm": 1.700000000000001,
+      "bridge_material_mm3": 58.8,
+      "retainer": [
+        {
+          "y_mm": 0,
+          "full_window_overlap_mm3": 0,
+          "full_capture_projection_material_mm3": 37.157824
+        }
+      ],
+      "pair_overlap_mm3": 0.0,
+      "fasteners": [
+        {
+          "y_mm": -7.4,
+          "pilot_overlap_mm3": 0,
+          "passage_overlap_mm3": 0,
+          "pilot_bottom_material_mm3": 0.38603891
+        },
+        {
+          "y_mm": 7.4,
+          "pilot_overlap_mm3": 0,
+          "passage_overlap_mm3": 0,
+          "pilot_bottom_material_mm3": 0.38603891
+        }
+      ]
+    }
+  },
   "coupon_table": {
     "0127_coupon_A": {
       "outer_x": -33.47,

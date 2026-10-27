@@ -1,0 +1,425 @@
+{
+  "parts": {
+    "front": {
+      "bounds": [
+        -33.47,
+        -36.13,
+        -12.15,
+        66.13,
+        42.13,
+        3.1000000000000005
+      ],
+      "volume": 15266.216893285045,
+      "valid": true,
+      "solids": 1
+    },
+    "rear": {
+      "bounds": [
+        -33.47,
+        -36.13,
+        -13.85,
+        66.13,
+        42.13,
+        -7.8
+      ],
+      "volume": 27586.771287373183,
+      "valid": true,
+      "solids": 1
+    },
+    "bezel": {
+      "bounds": [
+        -35.27,
+        -29.5,
+        -12.15,
+        -33.47,
+        6.5,
+        0.7
+      ],
+      "volume": 661.1929654684889,
+      "valid": true,
+      "solids": 1
+    }
+  },
+  "official": {
+    "sha256": "73c84092e7d6b55574125d2bf0885a61688514762b796ca43c98dfed1bc18c5c",
+    "solids": 723,
+    "part_bounds": {
+      "DISPLAY": [
+        -25.270000000000003,
+        -33.53,
+        -6.319154744317,
+        25.270000000000003,
+        39.53,
+        0.7
+      ],
+      "PCB_BOARD": [
+        -24.973581336326994,
+        -31.608627067759066,
+        -5.49999944,
+        24.940000099996794,
+        37.40245983060614,
+        -3.8999998999999996
+      ],
+      "KEY3": [
+        -24.895367673596457,
+        -13.717246130179943,
+        -7.299999439999998,
+        -21.245006542009506,
+        -9.166975157164522,
+        -5.09999929410302
+      ],
+      "KEY2": [
+        -24.896374539870415,
+        -21.53563595792692,
+        -7.299999439999998,
+        -21.24601340828346,
+        -16.9853649849115,
+        -5.09999929410302
+      ],
+      "MIC1": [
+        21.53527135405787,
+        -0.30619433233446397,
+        -6.5999996389449995,
+        24.135714149720407,
+        3.0941489091755456,
+        -5.601998078945
+      ],
+      "TF": [
+        -22.67640269497442,
+        1.5611313567739558,
+        -6.819962086592,
+        -11.425318875846072,
+        12.912260677436258,
+        -5.49999934
+      ],
+      "J2_USB_SIDE": [
+        -4.790705459449855,
+        30.566636225424425,
+        -8.749521244501214,
+        4.789468536352972,
+        38.27583100701149,
+        -4.589520943804656
+      ],
+      "KEY1": [
+        -24.894360806339975,
+        -5.898848673043017,
+        -7.299999439999998,
+        -21.24399967475302,
+        -1.3485777000275978,
+        -5.09999929410302
+      ],
+      "ASSEMBLY": [
+        -25.270000000000003,
+        -33.53,
+        -9.499999439999998,
+        25.270000000000003,
+        39.53,
+        0.7
+      ]
+    },
+    "mount_bounds": [
+      [
+        17.681821233414617,
+        -29.85571791647091,
+        -9.499999439999998,
+        23.181821233414617,
+        -24.35571791647091,
+        -3.9999993399999987
+      ],
+      [
+        17.689548140954813,
+        30.14428096598659,
+        -9.499999439999998,
+        23.189548140954813,
+        35.64428096598659,
+        -3.9999993399999987
+      ],
+      [
+        -23.31045079905781,
+        30.14956101943423,
+        -9.499999439999998,
+        -17.81045079905781,
+        35.64956101943423,
+        -3.9999993399999987
+      ],
+      [
+        -23.318177706598007,
+        -29.850437863023274,
+        -9.499999439999998,
+        -17.818177706598007,
+        -24.350437863023274,
+        -3.9999993399999987
+      ]
+    ]
+  },
+  "csv_comparison": {
+    "DISPLAY": 0.0,
+    "PCB_BOARD": 0.0,
+    "TF": 0.0,
+    "MIC1": 0.0,
+    "J2_USB_SIDE": 0.0,
+    "KEY1": 0.0,
+    "KEY2": 0.0,
+    "KEY3": 0.0
+  },
+  "collision": {
+    "front": 0,
+    "rear": 0,
+    "bezel": 0.0
+  },
+  "front_rear_overlap": 0,
+  "lip_section": [
+    24.27,
+    -0.10000000000000071,
+    1.6,
+    24.5,
+    0.10000000000000071,
+    3.1
+  ],
+  "screen_negative_rejected": "('full rounded screen air column, INCLUDING corners', 1078.0, [-20.0, -25.0, 1.5099999999999998, 20.0, 30.0, 1.9999999999999998])",
+  "broken_coupon_added_volume": 179.64799999999968,
+  "broken_coupon_old_gate": {
+    "broken_coupon": {
+      "step_valid": true,
+      "step_solid_count": 1,
+      "stl_triangles": 716,
+      "stl_nonmanifold_edges": 0,
+      "step_stl_bounds_error_mm": 1.2207031261368684e-06,
+      "step_stl_relative_volume_error": 6.186288845887001e-06
+    }
+  },
+  "register_slices": {
+    "right": {
+      "front": [
+        [
+          64.33,
+          -0.05000000000000071,
+          -9.5,
+          66.13,
+          0.05000000000000071,
+          -9.4
+        ]
+      ],
+      "rear": [
+        [
+          63.0,
+          -0.05000000000000071,
+          -9.5,
+          64.18,
+          0.05000000000000071,
+          -9.4
+        ]
+      ]
+    },
+    "left": {
+      "front": [
+        [
+          -33.47,
+          19.949999999999996,
+          -9.5,
+          -31.67,
+          20.050000000000004,
+          -9.4
+        ]
+      ],
+      "rear": [
+        [
+          -31.52,
+          19.949999999999996,
+          -9.5,
+          -29.92,
+          20.050000000000004,
+          -9.4
+        ]
+      ]
+    },
+    "top": {
+      "front": [
+        [
+          44.95,
+          40.33,
+          -9.5,
+          45.05,
+          42.13,
+          -9.4
+        ]
+      ],
+      "rear": [
+        [
+          44.95,
+          38.58,
+          -9.5,
+          45.05,
+          40.18,
+          -9.4
+        ],
+        [
+          44.95,
+          38.0,
+          -9.5,
+          45.05,
+          38.33,
+          -9.4
+        ]
+      ]
+    },
+    "bottom": {
+      "front": [
+        [
+          9.95,
+          -36.13,
+          -9.5,
+          10.050000000000002,
+          -34.33,
+          -9.4
+        ]
+      ],
+      "rear": [
+        [
+          9.95,
+          -34.18,
+          -9.5,
+          10.050000000000002,
+          -32.58,
+          -9.4
+        ]
+      ]
+    }
+  },
+  "export": {
+    "0127_coupon_A": {
+      "step_valid": true,
+      "step_solid_count": 1,
+      "stl_triangles": 720,
+      "stl_nonmanifold_edges": 0,
+      "step_stl_bounds_error_mm": 1.2207031261368684e-06,
+      "step_stl_relative_volume_error": 6.9194496391880756e-06
+    },
+    "0127_coupon_A_bezel": {
+      "step_valid": true,
+      "step_solid_count": 1,
+      "stl_triangles": 712,
+      "stl_nonmanifold_edges": 0,
+      "step_stl_bounds_error_mm": 1.2207031261368684e-06,
+      "step_stl_relative_volume_error": 2.5136891299050713e-05
+    },
+    "0127_coupon_B": {
+      "step_valid": true,
+      "step_solid_count": 1,
+      "stl_triangles": 720,
+      "stl_nonmanifold_edges": 0,
+      "step_stl_bounds_error_mm": 1.2207031261368684e-06,
+      "step_stl_relative_volume_error": 6.985936566729572e-06
+    },
+    "0127_coupon_B_bezel": {
+      "step_valid": true,
+      "step_solid_count": 1,
+      "stl_triangles": 712,
+      "stl_nonmanifold_edges": 0,
+      "step_stl_bounds_error_mm": 1.2207031261368684e-06,
+      "step_stl_relative_volume_error": 2.5136891299050713e-05
+    },
+    "0127_coupon_C": {
+      "step_valid": true,
+      "step_solid_count": 1,
+      "stl_triangles": 720,
+      "stl_nonmanifold_edges": 0,
+      "step_stl_bounds_error_mm": 1.2207031261368684e-06,
+      "step_stl_relative_volume_error": 7.079534107812226e-06
+    },
+    "0127_coupon_C_bezel": {
+      "step_valid": true,
+      "step_solid_count": 1,
+      "stl_triangles": 712,
+      "stl_nonmanifold_edges": 0,
+      "step_stl_bounds_error_mm": 1.2207031261368684e-06,
+      "step_stl_relative_volume_error": 2.5136891299050713e-05
+    },
+    "0127_retainer": {
+      "step_valid": true,
+      "step_solid_count": 1,
+      "stl_triangles": 732,
+      "stl_nonmanifold_edges": 0,
+      "step_stl_bounds_error_mm": 1.2207031261368684e-06,
+      "step_stl_relative_volume_error": 1.3931478356867036e-05
+    },
+    "front_shell": {
+      "step_valid": true,
+      "step_solid_count": 1,
+      "stl_triangles": 8422,
+      "stl_nonmanifold_edges": 0,
+      "step_stl_bounds_error_mm": 2.7465820267025265e-06,
+      "step_stl_relative_volume_error": 4.055444136049168e-05
+    },
+    "rear_shell": {
+      "step_valid": true,
+      "step_solid_count": 1,
+      "stl_triangles": 8620,
+      "stl_nonmanifold_edges": 0,
+      "step_stl_bounds_error_mm": 2.7465820267025265e-06,
+      "step_stl_relative_volume_error": 6.141075683304353e-06
+    }
+  },
+  "review_base_commit": "d20ac78",
+  "units": "mm, mm^3; all CAD/file queries, no physical measurements",
+  "manifest_all_pass": true,
+  "initial_manifest_sha256": "b6574930c2b6282fe32abedea01907b34b360af26fdcf69bf5392ffdfa2d4c60",
+  "initial_file_sha256": {
+    "front_shell.step": "5b3d135ec11bf3c2b4d931a8175bc1c3571e1a12bd6cbb5c59ac32fc3914230a",
+    "rear_shell.step": "f5bc5b3da717ee173f5e668d46a62e339279655d3e95b8845f4329f24d7b4e85",
+    "0127_retainer.step": "48961be0671ed56c1d2f06912a20e154e378048f8e787e08dc7cd14176101e40",
+    "0127_coupon_B.step": "386581c4090d83436178d30e64abe7072c94723180a109b8a12e380224ed826f"
+  },
+  "old_production_bezel_gate": {
+    "sealed_key": "KEY1",
+    "added_material_mm3": 80.63999999999976,
+    "old_interfaces_passed": true
+  },
+  "reset": {
+    "retainer_blocking_reset_needle_mm3": 0.9047786842338625,
+    "front_blocking_reset_needle_mm3": 0,
+    "minimum_reach_from_retainer_exterior_mm": 10.374632326403539,
+    "configured_free_length_mm": 10.0
+  },
+  "usb": {
+    "mouth_face_bounds_mm": [
+      -4.46979349883881,
+      38.27467946492183,
+      -8.749520835024438,
+      4.470206427017002,
+      38.27583090701149,
+      -5.589520835024438
+    ],
+    "probe_bounds_mm": [
+      -6.099793535910903,
+      38.27583090701148,
+      -10.319520835024438,
+      6.100206464089096,
+      68.27583090701148,
+      -4.019520835024437
+    ],
+    "collisions": {
+      "front_shell": {
+        "volume_mm3": 0,
+        "hit_bounds_mm": null
+      },
+      "rear_shell": {
+        "volume_mm3": 27.764823571586717,
+        "hit_bounds_mm": [
+          -6.099793535910904,
+          38.57999999999954,
+          -10.319520835024438,
+          6.100206464089098,
+          40.03,
+          -8.75
+        ]
+      }
+    }
+  },
+  "supplier_drawing": {
+    "source": "User attachment 2026-10-27; codex-clipboard-690d379b-9dfb-4bb9-949d-b8eff3bfe8b6.png",
+    "sha256": "fc81a9680f3f7b190e348f48527b1f78a3e6d120d8451bf00e86b0566d6af4ac",
+    "reported_total_axis_x_including_post_mm": 5.5,
+    "measurement_status": "Supplier nominal/manual drawing, not independent physical measurement"
+  }
+}

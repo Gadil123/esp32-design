@@ -36,7 +36,11 @@ def bezel(v,t,ys,ymin,ymax,fastener_ys):
 
 def production_bezel(v):
     k=v['silicone_keys'];t=key_table(v)
-    return bezel(v,t,k['y_mm'],*k['retainer']['outer_y_bounds_mm'],k['retainer']['fastener_yz_mm'])
+    plate=bezel(v,t,k['y_mm'],*k['retainer']['outer_y_bounds_mm'],k['retainer']['fastener_yz_mm'])
+    # RESET must remain serviceable with the production retainer installed.
+    # Single-key coupons do not contain a RESET interface.
+    p=v['reset_pinhole'];ox=t['outer_x'];th=k['retainer']['thickness_x_mm']
+    return plate-xcyl(p['diameter_mm']/2,ox-th-.01,ox+.01,p['y_mm'],p['z_mm'])
 
 
 def coupons(v):

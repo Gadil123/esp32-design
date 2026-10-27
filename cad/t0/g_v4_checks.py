@@ -32,6 +32,143 @@ def material(a,b,label):
     return round(n,8)
 
 
+def retainer_windows(plate,v,ys):
+    """Check every complete nominal opening, not only flange-capture witnesses.
+
+    These are air volumes in PA12, not invented silicone dimensions. A closed
+    window must fail even while the actual top/body measurements remain unknown.
+    """
+    k=v['silicone_keys'];rk=k['retainer'];ox=v['outer_x_min_mm'];z=k['z_center']
+    rows=[]
+    for y in ys:
+        window=box([ox-rk['thickness_x_mm']-.01,y-rk['aperture_y_mm']/2,z-rk['aperture_z_mm']/2,
+                    ox+.01,y+rk['aperture_y_mm']/2,z+rk['aperture_z_mm']/2])
+        # Check the entire reported base projection outside the aperture. This
+        # proves nominal retaining material, not a measured flange or pull force.
+        by=k['reported_part_mm']['base_y']/2-.01
+        bz=k['reported_part_mm']['base_z']/2-.01
+        capture=box([ox-rk['thickness_x_mm']+.02,y-by,z-bz,ox-.02,y+by,z+bz])-window
+        rows.append(dict(y_mm=y,full_window_overlap_mm3=clear(plate,window,'retainer full window'),
+                         full_capture_projection_material_mm3=material(plate,capture,'retainer full capture projection')))
+    return rows
+
+
+def coupon_interface(block,plate,v,clearance):
+    """Functional checks on the actual coupon pair, including STEP rereads."""
+    k=v['silicone_keys'];rk=k['retainer'];t=key_table(v,clearance)
+    ox=t['outer_x'];seat=t['seat_x'];ix=t['inner_x'];z=t['center_z']
+    # Independent probes from interface dimensions; do not reuse the solids
+    # returned by the coupon constructor or accept its export validity as fit.
+    counter=box([ox-.01,-t['pocket_y']/2,z-t['pocket_z']/2,
+                 seat,t['pocket_y']/2,z+t['pocket_z']/2])
+    tunnel=box([seat,-t['tunnel_y']/2,z-t['tunnel_z']/2,
+                ix+.01,t['tunnel_y']/2,z+t['tunnel_z']/2])
+    by=k['reported_part_mm']['base_y']/2-.01;bz=k['reported_part_mm']['base_z']/2-.01
+    shoulder=box([seat+.02,-by,z-bz,seat+.06,by,z+bz])-tunnel
+    bridge=box([ox+.05,-t['pocket_y']/2+.05,k['local_seam_z_mm']+.01,
+                seat-.05,t['pocket_y']/2-.05,z-t['pocket_z']/2-.01])
+    bridge_thickness=z-t['pocket_z']/2-k['local_seam_z_mm']
+    assert bridge_thickness>=k['bridge_required_mm'],('coupon bridge thickness',bridge_thickness)
+    result=dict(clearance_per_side_mm=clearance,
+        full_counter_overlap_mm3=clear(block,counter,'coupon full counter'),
+        full_tunnel_overlap_mm3=clear(block,tunnel,'coupon full tunnel'),
+        full_shoulder_material_mm3=material(block,shoulder,'coupon full shoulder'),
+        bridge_mm=bridge_thickness,bridge_material_mm3=material(block,bridge,'coupon bridge'),
+        retainer=retainer_windows(plate,v,[0]),pair_overlap_mm3=clear(block,plate,'coupon block/bezel'),fasteners=[])
+    for y in [-7.4,7.4]:
+        pilot=xcyl(rk['pilot_mm']/2-.001,ox+.01,ox+rk['pilot_depth_mm']-.001,y,z)
+        passage=xcyl(rk['screw_diameter_mm']/2+.149,ox-rk['thickness_x_mm']-.01,ox+.001,y,z)
+        bottom=xcyl(rk['pilot_mm']/2-.01,ox+rk['pilot_depth_mm']+.01,ox+rk['pilot_depth_mm']+.31,y,z)
+        result['fasteners'].append(dict(y_mm=y,pilot_overlap_mm3=clear(block,pilot,'coupon pilot'),
+            passage_overlap_mm3=clear(plate,passage,'coupon bezel passage'),
+            pilot_bottom_material_mm3=material(block,bottom,'coupon pilot bottom')))
+    return result
+
+
+def retainer_reset_window(plate,v):
+    k=v['silicone_keys'];p=v['reset_pinhole'];ox=v['outer_x_min_mm']
+    opening=xcyl(p['diameter_mm']/2-.001,ox-k['retainer']['thickness_x_mm']-.01,ox+.01,p['y_mm'],p['z_mm'])
+    return clear(plate,opening,'retainer RESET full hole')
+
+
+def interface_negative_controls(plate,fixtures,v):
+    """Real Boolean mutations; require rejection by the named functional gate."""
+    k=v['silicone_keys'];rk=k['retainer'];ox=v['outer_x_min_mm'];z=k['z_center'];rows=[]
+    def rejected(label,gate,expected):
+        try: gate()
+        except AssertionError as exc:
+            assert expected in str(exc),('negative control failed for another reason',label,str(exc))
+            rows.append(dict(mutation=label,rejected=True,reason=str(exc)))
+        else: raise AssertionError(('functional gate missed negative control',label))
+    for y in k['y_mm']:
+        seal=box([ox-rk['thickness_x_mm'],y-rk['aperture_y_mm']/2,z-rk['aperture_z_mm']/2,
+                  ox,y+rk['aperture_y_mm']/2,z+rk['aperture_z_mm']/2])
+        bad=plate+seal
+        rejected(f'production retainer window sealed at Y={y}',lambda:retainer_windows(bad,v,k['y_mm']),'retainer full window')
+    p=v['reset_pinhole']
+    bad=plate+xcyl(p['diameter_mm']/2,ox-rk['thickness_x_mm'],ox,p['y_mm'],p['z_mm'])
+    rejected('production retainer RESET hole sealed',lambda:retainer_reset_window(bad,v),'retainer RESET full hole')
+    for name,(block,bezel,clearance) in fixtures.items():
+        t=key_table(v,clearance)
+        seal=box([t['seat_x']+.001,-t['tunnel_y']/2,z-t['tunnel_z']/2,
+                  t['inner_x'],t['tunnel_y']/2,z+t['tunnel_z']/2])
+        bad=block+seal
+        rejected(name+' tunnel sealed',lambda:coupon_interface(bad,bezel,v,clearance),'coupon full tunnel')
+        # An empty cavity is insufficient if the seat that stops inward travel
+        # has been removed. Exercise the material half of the gate as well.
+        cut=box([t['seat_x']-.01,-t['pocket_y']/2,z-t['pocket_z']/2,
+                 t['inner_x']+.01,t['pocket_y']/2,z+t['pocket_z']/2])
+        bad=block-cut
+        rejected(name+' shoulder removed',lambda:coupon_interface(bad,bezel,v,clearance),'coupon full shoulder')
+    return rows
+
+
+def direct_key_readiness(parts,v):
+    """Necessary axial span for a directly operated, externally exposed cap.
+
+    Total cap length is a supplier nominal, not a measurement of the post.
+    This lower bound needs neither a guessed flange thickness nor a guessed
+    post projection. Recessing the finger face or adding a pusher would change
+    the architecture and requires an explicit new model and accessibility test.
+    """
+    k=v['silicone_keys'];rk=k['retainer']
+    face=v['outer_x_min_mm']-rk['thickness_x_mm']
+    total=k['reported_part_mm']['total_axis_x_including_post']
+    rows=[]
+    for name in ['KEY1','KEY2']:
+        switch_x=bounds(parts[name])[0]
+        span=switch_x-face
+        rows.append(dict(key=name,external_retainer_plane_x_mm=face,switch_contact_x_mm=switch_x,
+            required_face_to_contact_span_mm=span,supplier_nominal_total_x_mm=total,
+            missing_span_at_flush_face_mm=max(0,span-total),
+            status='BLOCKED_DIRECT_EXTERNAL_CAP_AXIAL_SPAN' if total<span else 'UNVERIFIED'))
+    blocked=any(row['status'].startswith('BLOCKED') for row in rows)
+    return dict(status='BLOCKED_P1_DIRECT_CAP_LAYOUT' if blocked else 'UNVERIFIED',keys=rows,
+        assumption='Direct silicone actuation; finger face at or outside the retainer exterior. No pusher or deep finger well is modeled.',
+        limits='Necessary static span only, not a silicone deformation model. A multi-mm stroke or deeply recessed face is not validated by an empty tunnel.',
+        resolution='Define measured flange/seat-to-tip and safe travel, then relocate the mounting/access geometry and recheck it. Do not extend the reported post or add an unapproved pusher by assumption.')
+
+
+def usb_access(m):
+    """Independent cable-body probe from the official socket mouth, not usbcut."""
+    probe=m['usbprobe']
+    return dict(probe_bounds_mm=bounds(probe),
+        hits_mm3={name:clear(m[name],probe,'USB independent cable body '+name)
+                  for name in ['front','rear','key_bezel']},
+        scope='12.2 x 6.3 nominal body from the official mouth; no credit for a narrow metal nose. Real cable/side-load and print fit remain UNVERIFIED.')
+
+
+def usb_negative_control(m):
+    b=bounds(m['usbprobe']);seam=m['v4_parameters']['seam_z_mm']
+    blocker=box([b[0]-.6,b[1]+.4,seam-.1,b[3]+.6,b[1]+.8,seam+1.6])
+    broken={**m,'rear':m['rear']+blocker}
+    try: usb_access(broken)
+    except AssertionError as exc:
+        assert 'USB independent cable body rear' in str(exc),str(exc)
+        return dict(rejected=True,reason=str(exc))
+    raise AssertionError('USB gate missed restored register obstruction')
+
+
 def screen_column(front,sg):
     w,h,r=sg['lip_inner_whr_mm'];gb=sg['glass_bounds_mm']
     x=(gb[0]+gb[3])/2;y=(gb[1]+gb[4])/2;z=gb[5]-.01
@@ -62,6 +199,8 @@ def stl_screen_rays(path,sg,points):
 
 def interfaces(m,parts,v,base):
     f=m['front'];r=m['rear'];bezel=m['key_bezel'];k=v['silicone_keys'];t=key_table(v);rk=k['retainer'];ox=t['outer_x'];zc=t['center_z']
+    windows=retainer_windows(bezel,v,k['y_mm'])
+    reset_window=retainer_reset_window(bezel,v)
     keys=[]
     for i,y in enumerate(k['y_mm'],1):
         counter,tunnel=key_cutters(t,y)
@@ -102,13 +241,17 @@ def interfaces(m,parts,v,base):
         for screw in m['screws']: clear(rs,screw,'orthogonal retainer vs shell/PCB screw')
     clear(f,bezel,'bezel/front');clear(r,bezel,'bezel/rear');clear(bezel,parts['ASSEMBLY'],'bezel/board')
     rp=v['reset_pinhole'];sx=bounds(parts['KEY3'])[0]
-    needle=xcyl(rp['tool_diameter_mm']/2,ox-.01,sx+.02,rp['y_mm'],rp['z_mm'])
-    reach=sx-ox;assert rp['tool_free_length_mm']>reach+.5
+    entry=ox-rk['thickness_x_mm']
+    needle=xcyl(rp['tool_diameter_mm']/2,entry-.01,sx+.02,rp['y_mm'],rp['z_mm'])
+    reach=sx-entry;assert rp['tool_free_length_mm']>reach+.5
     hit=overlap(needle,parts['KEY3']);assert hit>0
     other_hits={name:clear(shape,needle,'RESET needle vs '+name) for name,shape in parts.items() if name not in ['ASSEMBLY','KEY3'] and name in ['KEY1','KEY2','DISPLAY','PCB_BOARD','TF']}
     reset=dict(full_tool_path_mm3=clear(f,needle,'RESET full reach'),switch_contact_mm3=hit,reach_from_outer_wall_mm=reach,
-        tool_diameter_mm=rp['tool_diameter_mm'],required_free_length_mm=rp['tool_free_length_mm'],other_parts=other_hits,status='Nominal reach only; real TS24CA travel/force, tip and safe overtravel UNVERIFIED; do not insert beyond contact')
-    return dict(parameter_table=t,keys=keys,retainer_screws=retainer_screws,service='Install/remove caps along X with bezel removed AFTER front seam closure; remove caps before front lift. Actual cap insertion path UNVERIFIED pending top/body/post.',reset=reset)
+        reach_from_retainer_exterior_mm=reach,
+        reach_from_front_wall_mm=sx-ox,entry_retainer_exterior_x_mm=entry,
+        full_retainer_hole_mm3=reset_window,full_tool_vs_retainer_mm3=clear(bezel,needle,'RESET needle vs installed retainer'),
+        tool_diameter_mm=rp['tool_diameter_mm'],required_free_length_mm=rp['tool_free_length_mm'],other_parts=other_hits,status='Nominal reach from installed retainer exterior only; real TS24CA travel/force, tip and safe overtravel UNVERIFIED; do not insert beyond contact')
+    return dict(parameter_table=t,keys=keys,retainer_windows=windows,retainer_screws=retainer_screws,service='Install/remove caps along X with bezel removed AFTER front seam closure; remove caps before front lift. Actual cap insertion path UNVERIFIED pending top/body/post.',reset=reset)
 
 
 def battery(m,v,base):

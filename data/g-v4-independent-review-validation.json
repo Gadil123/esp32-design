@@ -1,0 +1,399 @@
+{
+  "date": "2026-10-27T10:19:54.679438+08:00",
+  "review_base_commit": "d20ac78",
+  "full_generation": {
+    "command": "./scripts/generate-g-v4.sh",
+    "exit_code": 0,
+    "status": "GEOMETRY_GATES_PASS_FUNCTIONAL_LAYOUT_BLOCKED_NOT_PRINT_APPROVED",
+    "print_approved": false,
+    "functional_actuation_status": "BLOCKED_P1_DIRECT_CAP_LAYOUT",
+    "attempt_note": "First run interrupted after finding RESET/USB defects; final full run completed after both geometry repairs."
+  },
+  "evidence_scope": "CAD/files only; no printing, procurement, physical testing, publication or push",
+  "functional_P1_mechanical_status": {
+    "R36-01": "FIXED: complete production/coupon gates and negative controls",
+    "R36-02": "FIXED: installed RESET opening and >=12mm tool requirement",
+    "R36-03": "FIXED: rear USB register corridor",
+    "R36-04": "UNRESOLVED: direct 0127 axial layout; reporting/hold gate fixed, not the mechanism"
+  },
+  "export_checks": {
+    "front_shell": {
+      "step_valid": true,
+      "step_solid_count": 1,
+      "stl_triangles": 8422,
+      "stl_nonmanifold_edges": 0,
+      "step_stl_bounds_error_mm": 2.7465820267025265e-06,
+      "step_stl_relative_volume_error": 4.055444136049168e-05
+    },
+    "rear_shell": {
+      "step_valid": true,
+      "step_solid_count": 1,
+      "stl_triangles": 8644,
+      "stl_nonmanifold_edges": 0,
+      "step_stl_bounds_error_mm": 2.7465820267025265e-06,
+      "step_stl_relative_volume_error": 6.153190036895378e-06
+    },
+    "0127_retainer": {
+      "step_valid": true,
+      "step_solid_count": 1,
+      "stl_triangles": 1072,
+      "stl_nonmanifold_edges": 0,
+      "step_stl_bounds_error_mm": 1.2207031261368684e-06,
+      "step_stl_relative_volume_error": 2.3830597217303755e-05
+    },
+    "0127_coupon_A": {
+      "step_valid": true,
+      "step_solid_count": 1,
+      "stl_triangles": 720,
+      "stl_nonmanifold_edges": 0,
+      "step_stl_bounds_error_mm": 1.2207031261368684e-06,
+      "step_stl_relative_volume_error": 6.9194496391880756e-06
+    },
+    "0127_coupon_A_bezel": {
+      "step_valid": true,
+      "step_solid_count": 1,
+      "stl_triangles": 712,
+      "stl_nonmanifold_edges": 0,
+      "step_stl_bounds_error_mm": 1.2207031261368684e-06,
+      "step_stl_relative_volume_error": 2.5136891299050713e-05
+    },
+    "0127_coupon_B": {
+      "step_valid": true,
+      "step_solid_count": 1,
+      "stl_triangles": 720,
+      "stl_nonmanifold_edges": 0,
+      "step_stl_bounds_error_mm": 1.2207031261368684e-06,
+      "step_stl_relative_volume_error": 6.985936566729572e-06
+    },
+    "0127_coupon_B_bezel": {
+      "step_valid": true,
+      "step_solid_count": 1,
+      "stl_triangles": 712,
+      "stl_nonmanifold_edges": 0,
+      "step_stl_bounds_error_mm": 1.2207031261368684e-06,
+      "step_stl_relative_volume_error": 2.5136891299050713e-05
+    },
+    "0127_coupon_C": {
+      "step_valid": true,
+      "step_solid_count": 1,
+      "stl_triangles": 720,
+      "stl_nonmanifold_edges": 0,
+      "step_stl_bounds_error_mm": 1.2207031261368684e-06,
+      "step_stl_relative_volume_error": 7.079534107812226e-06
+    },
+    "0127_coupon_C_bezel": {
+      "step_valid": true,
+      "step_solid_count": 1,
+      "stl_triangles": 712,
+      "stl_nonmanifold_edges": 0,
+      "step_stl_bounds_error_mm": 1.2207031261368684e-06,
+      "step_stl_relative_volume_error": 2.5136891299050713e-05
+    }
+  },
+  "negative_controls": {
+    "interfaces": [
+      {
+        "mutation": "production retainer window sealed at Y=-3.62",
+        "rejected": true,
+        "reason": "('retainer full window', 80.63999999999986, [-35.269999999999996, -7.620000000000001, -9.2, -33.47, 0.3799999999999999, -3.6])"
+      },
+      {
+        "mutation": "production retainer window sealed at Y=-19.26",
+        "rejected": true,
+        "reason": "('retainer full window', 80.63999999999986, [-35.269999999999996, -23.26, -9.2, -33.47, -15.260000000000002, -3.6])"
+      },
+      {
+        "mutation": "production retainer RESET hole sealed",
+        "rejected": true,
+        "reason": "('retainer RESET full hole', 6.8299537474771235, [-35.269999999999996, -12.539, -7.4990000000000006, -33.47, -10.341, -5.301])"
+      },
+      {
+        "mutation": "0127_coupon_A tunnel sealed",
+        "rejected": true,
+        "reason": "('coupon full tunnel', 179.15519999999975, [-29.868999999999996, -4.0, -9.2, -25.87, 4.0, -3.6])"
+      },
+      {
+        "mutation": "0127_coupon_A shoulder removed",
+        "rejected": true,
+        "reason": "('coupon full shoulder', 0, 0.8444959999999821)"
+      },
+      {
+        "mutation": "0127_coupon_B tunnel sealed",
+        "rejected": true,
+        "reason": "('coupon full tunnel', 179.15519999999975, [-29.868999999999996, -4.0, -9.2, -25.87, 4.0, -3.6])"
+      },
+      {
+        "mutation": "0127_coupon_B shoulder removed",
+        "rejected": true,
+        "reason": "('coupon full shoulder', 0, 0.8444959999999821)"
+      },
+      {
+        "mutation": "0127_coupon_C tunnel sealed",
+        "rejected": true,
+        "reason": "('coupon full tunnel', 179.15519999999975, [-29.868999999999996, -4.0, -9.2, -25.87, 4.0, -3.6])"
+      },
+      {
+        "mutation": "0127_coupon_C shoulder removed",
+        "rejected": true,
+        "reason": "('coupon full shoulder', 0, 0.8444959999999821)"
+      }
+    ],
+    "USB": {
+      "rejected": true,
+      "reason": "('USB independent cable body rear', 7.659261674919229, [-6.099793535910904, 38.67583090701147, -10.319520835024438, 6.100206464089097, 39.07583090701147, -8.75])"
+    },
+    "screen_sealed_plate_rejected": true,
+    "screen_four_corners_rejected": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "total_rejected": 15
+  },
+  "straight_front_pose_count": 14,
+  "straight_front_all_clear": true,
+  "independent_final_audit": {
+    "independent_final_USB": {
+      "probe_bounds_mm": [
+        -6.099793535910903,
+        38.2758309070115,
+        -10.31952083502444,
+        6.100206464089096,
+        68.27583090701151,
+        -4.019520835024439
+      ],
+      "hits_mm3": {
+        "front": 0,
+        "rear": 0,
+        "key_bezel": 0.0
+      },
+      "scope": "12.2 x 6.3 nominal body from the official mouth; no credit for a narrow metal nose. Real cable/side-load and print fit remain UNVERIFIED."
+    },
+    "independent_direct_key_readiness": {
+      "status": "BLOCKED_P1_DIRECT_CAP_LAYOUT",
+      "keys": [
+        {
+          "key": "KEY1",
+          "external_retainer_plane_x_mm": -35.269999999999996,
+          "switch_contact_x_mm": -24.894360806339986,
+          "required_face_to_contact_span_mm": 10.37563919366001,
+          "supplier_nominal_total_x_mm": 5.5,
+          "missing_span_at_flush_face_mm": 4.87563919366001,
+          "status": "BLOCKED_DIRECT_EXTERNAL_CAP_AXIAL_SPAN"
+        },
+        {
+          "key": "KEY2",
+          "external_retainer_plane_x_mm": -35.269999999999996,
+          "switch_contact_x_mm": -24.89637453987043,
+          "required_face_to_contact_span_mm": 10.373625460129567,
+          "supplier_nominal_total_x_mm": 5.5,
+          "missing_span_at_flush_face_mm": 4.873625460129567,
+          "status": "BLOCKED_DIRECT_EXTERNAL_CAP_AXIAL_SPAN"
+        }
+      ],
+      "assumption": "Direct silicone actuation; finger face at or outside the retainer exterior. No pusher or deep finger well is modeled.",
+      "limits": "Necessary static span only, not a silicone deformation model. A multi-mm stroke or deeply recessed face is not validated by an empty tunnel.",
+      "resolution": "Define measured flange/seat-to-tip and safe travel, then relocate the mounting/access geometry and recheck it. Do not extend the reported post or add an unapproved pusher by assumption."
+    },
+    "retainer_RESET": 0,
+    "independent_RESET": {
+      "front": 0,
+      "retainer": 0,
+      "switch_contact_mm3": 0.009994583096442501,
+      "reach_mm": 10.374632326403528,
+      "required_free_length_mm": 12.0
+    },
+    "rear_expected_USB_subtraction_symmetric_difference_mm3": 1.382431946694851e-10,
+    "rear_removed_volume_mm3": 43.35507247911664,
+    "retainer_expected_RESET_subtraction_symmetric_difference_mm3": -4.547473508864641e-13,
+    "retainer_removed_volume_mm3": 6.842388799518972,
+    "rear_head_cylinders": [
+      {
+        "radius_mm": 2.1,
+        "axis": [
+          -30.0,
+          -28.0,
+          -13.95
+        ],
+        "bounds_mm": [
+          -32.1,
+          -30.1,
+          -13.85,
+          -27.9,
+          -25.9,
+          -11.95
+        ]
+      },
+      {
+        "radius_mm": 2.9,
+        "axis": [
+          -20.56817770659,
+          -27.10043786302,
+          -13.95
+        ],
+        "bounds_mm": [
+          -23.468177706589998,
+          -30.00043786302,
+          -13.85,
+          -17.66817770659,
+          -24.200437863020003,
+          -11.5
+        ]
+      },
+      {
+        "radius_mm": 2.9,
+        "axis": [
+          20.431821233415,
+          -27.10571791647,
+          -13.95
+        ],
+        "bounds_mm": [
+          17.531821233415002,
+          -30.005717916469997,
+          -13.85,
+          23.331821233415,
+          -24.20571791647,
+          -11.5
+        ]
+      },
+      {
+        "radius_mm": 2.1,
+        "axis": [
+          63.3,
+          -28.0,
+          -13.95
+        ],
+        "bounds_mm": [
+          61.199999999999996,
+          -30.1,
+          -13.85,
+          65.4,
+          -25.9,
+          -11.95
+        ]
+      },
+      {
+        "radius_mm": 2.9,
+        "axis": [
+          -20.56045079905,
+          32.899561019434,
+          -13.95
+        ],
+        "bounds_mm": [
+          -23.460450799049998,
+          29.999561019434005,
+          -13.85,
+          -17.66045079905,
+          35.799561019434,
+          -11.5
+        ]
+      },
+      {
+        "radius_mm": 2.1,
+        "axis": [
+          -30.0,
+          38.3,
+          -13.95
+        ],
+        "bounds_mm": [
+          -32.1,
+          36.199999999999996,
+          -13.85,
+          -27.9,
+          40.4,
+          -11.95
+        ]
+      },
+      {
+        "radius_mm": 2.9,
+        "axis": [
+          20.439548140955,
+          32.894280965987,
+          -13.95
+        ],
+        "bounds_mm": [
+          17.539548140955002,
+          29.994280965987002,
+          -13.85,
+          23.339548140955,
+          35.794280965987,
+          -11.5
+        ]
+      },
+      {
+        "radius_mm": 2.1,
+        "axis": [
+          63.2,
+          39.1,
+          -13.95
+        ],
+        "bounds_mm": [
+          61.1,
+          37.0,
+          -13.85,
+          65.3,
+          41.2,
+          -11.95
+        ]
+      }
+    ],
+    "screen_top_face_wires": 2,
+    "front_STL_unchanged": true,
+    "manifest_all_pass": true,
+    "build_delivery_bytes_identical": true
+  },
+  "interface_script": {
+    "command": ".venv/bin/python scripts/check-g-v4-interfaces.py",
+    "exit_code": 0,
+    "negative_controls_rejected": 9
+  },
+  "generator_inputs_hash_match": {
+    "cad/t0/t0-g-v4.json": true,
+    "cad/t0/t0_g_v4.py": true,
+    "cad/t0/generate_g_v4.py": true,
+    "cad/t0/g_v4_interfaces.py": true,
+    "cad/t0/g_v4_checks.py": true,
+    "cad/t0/g_v4_documentation.py": true,
+    "scripts/generate-g-v4.sh": true
+  },
+  "manifest_sha256": "a6481f50a1ad5fa64df7cad1ae38f14aa76a09a38880aa29d9568e0df1ae22da",
+  "delivery_hashes": {
+    "0127_coupon_A.step": "bccedae57949182684dda0e65a323f66f2361589b65efbd052cde75d3ceddbd1",
+    "0127_coupon_A.stl": "e953c2d2256b80e8a49a07d1071218e69194d0894837700f76a57584621c0617",
+    "0127_coupon_A_bezel.step": "325a2b40f86eb0fe199790b6a0d16d973fd61b895890b7d6a223754db2e772ed",
+    "0127_coupon_A_bezel.stl": "4d652c50d542b2fc10daf98683540d62ecc16b1551c2661a0efa8d825035aa2f",
+    "0127_coupon_B.step": "36b862a69f5ab9b0f5e1478d93ad505748a6fd824c6dd4f85188044ddef24214",
+    "0127_coupon_B.stl": "3c9e0f43d72e0f255c13e1fad50663e8a1f38957f0f1a19085c15d51d935db71",
+    "0127_coupon_B_bezel.step": "325a2b40f86eb0fe199790b6a0d16d973fd61b895890b7d6a223754db2e772ed",
+    "0127_coupon_B_bezel.stl": "4d652c50d542b2fc10daf98683540d62ecc16b1551c2661a0efa8d825035aa2f",
+    "0127_coupon_C.step": "a72db643b7235bacf054a37dd747a941d5a73505021fa2c4b41ac24059bef6d3",
+    "0127_coupon_C.stl": "dd0e57975976ee7f1452df1b8ce4ef8cf61b0396266d2ad72927c3251b17ef3d",
+    "0127_coupon_C_bezel.step": "325a2b40f86eb0fe199790b6a0d16d973fd61b895890b7d6a223754db2e772ed",
+    "0127_coupon_C_bezel.stl": "4d652c50d542b2fc10daf98683540d62ecc16b1551c2661a0efa8d825035aa2f",
+    "0127_coupons.png": "3230c196fd4e7fd790c8d5c79352401027ffeb2ce185a05ff6056c2463a73dc7",
+    "0127_measurement_sheet.md": "e81d53adfdccb6ca8cc19bdba33d423f935888f2b27d13f06971e4e71573a6f5",
+    "0127_retainer.step": "7c71947cdb8354c63d40cc1a4a7582d0fb6d0cc5e1b5d6bee516efe018731427",
+    "0127_retainer.stl": "e2a32a79d50bf4acde2090cfa3f647b6a6921994a8a6e1d5b1cdc3d00062dbc4",
+    "FRONT.png": "0dd4a7f4afba2650881fc195c284fed73985dbc395e08025647dec5db34f1fbc",
+    "FRONT_shell_only.png": "811acc970adba87204e9d889e5a62385fc92466755ac7325dbef8b4d5c12ce8c",
+    "ISO.png": "f87502e016f0498eebe26fe90ef8f8010b79eb11e88ba4666fd609ef1ff891b1",
+    "README.md": "424b4e54f4edf4c5cac3e2c6079362177c038d5693d4f9b77740a9730dfb9a7c",
+    "REAR.png": "1221b47a8384653e9325322d248d0fdd00995858fe6f7b53f99e641966640b3c",
+    "SIDE.png": "1146288551eeb1d63a4dace27f7e65f93d6f29f8944434855899551a76d1e94d",
+    "assembly_light.step": "d4599f7dd3679216ae9843eb9803efb61b14eb11bac895233214b3c88e18c76d",
+    "checks.json": "f7518693641829c1886428b162d056619c3e6c1284a5f5c29e70f6a964a2c788",
+    "ear_screw_section.png": "cabf8bae85e4d619f30c744a5e76eab7f873bdef35a164755882604413ec71d2",
+    "front_shell.step": "55142af6b58cf1ae5f74c69a99cf5f3a6f95c7729893014d5e03cfc391ce6d5d",
+    "front_shell.stl": "be989c4fe65433ab09c305fa612cf81fef84807e589511bf19a007426c7fef6e",
+    "rear_shell.step": "85081fd1ec1aa82b7348b914918d05ef3880131b866bb4de6d720dd45054c420",
+    "rear_shell.stl": "1f3c2c47963a37d6d8f3145d4a0efc08752bf60af08aa77cc326eb5feb944ede",
+    "screen_lip_section.png": "30763dc4edde93f38b926b23739dd378421787e46c7601d6fc2a0c6c58d3b2d6",
+    "screen_lip_zoom.png": "359954fc5daf5c7cf5307dd708890e0b34410feab4aca61b32a27b2d60261789",
+    "speaker_notch_section.png": "62c4be525bb55e15097068c5d7d0fe2d949bc3023f973c7064697411bd03a47d"
+  },
+  "protected_V1_files_compared_count": 104,
+  "protected_V1_all_bytes_unchanged": true,
+  "official_dimensions_schematic_tracked_files_unchanged": true,
+  "official_STEP_sha256_unchanged": true
+}

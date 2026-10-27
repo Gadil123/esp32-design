@@ -147,10 +147,14 @@ def main():
             residual_Z_mm=v['screen_lip_bottom_gap_mm']-.6,warp_and_tilt='UNVERIFIED; do not use glass or screw preload to flatten shell; no foam under lip')
         print('Check keys / positive retainer / RESET reach',flush=True)
         report['v4_interfaces']=C.interfaces(m,parts,v,base)
+        report['direct_key_readiness']=C.direct_key_readiness(parts,v)
+        report['preprint_blockers_P1']=[report['direct_key_readiness']] if report['direct_key_readiness']['status'].startswith('BLOCKED') else []
         print('Check battery adhesive, tolerance reserve and actual tray',flush=True)
         report['battery_stack']=C.battery(m,v,base)
         print('Check fasteners, bottoms, rear 4+4 holes and seam stops',flush=True)
         report['fasteners']=C.fasteners(m,v,mounts)
+        report['USB_access']=C.usb_access(m)
+        report['USB_negative_control']=C.usb_negative_control(m)
         mic=v['mic_port'];mp=V4.cyl(mic['diameter_mm']/2-.001,*mic['z_mm'],*mic['xy_mm'])
         report['MIC']=dict(**mic,full_thickness_path_overlap_mm3=C.clear(f,mp,'MIC full hole'),
                            measurement_required='Measure V1 printed/drilled hole diameter and XY from glass edges; locate PCB/MEMS inlet; candidate is not a measured V1 hole; acoustics UNVERIFIED')
@@ -184,6 +188,11 @@ def main():
         coupon_table={}
         for name,(shape,table) in coupons(v).items():
             exports[name]=shape;coupon_table[name]=table
+        fixtures={f'0127_coupon_{name}':(exports[f'0127_coupon_{name}'],exports[f'0127_coupon_{name}_bezel'],clearance)
+                  for name,clearance in zip('ABC',v['silicone_keys']['coupon_clearances_per_side_mm'])}
+        report['coupon_interfaces']={name:C.coupon_interface(block,plate,v,clearance)
+                                     for name,(block,plate,clearance) in fixtures.items()}
+        report['interface_negative_controls']=C.interface_negative_controls(m['key_bezel'],fixtures,v)
         for name,shape in exports.items():
             assert shape.is_valid and len(shape.solids())==1,name
             export_step(Compound(shape.wrapped),BUILD/f'{name}.step')
@@ -192,12 +201,23 @@ def main():
         exported_front=import_step(BUILD/'front_shell.step')
         report['screen_air_STEP_roundtrip']=C.screen_column(exported_front,sg)
         report['screen_air_STL_ray_hits']=C.stl_screen_rays(BUILD/'front_shell.stl',sg,report['screen_air']['ray_xy_mm'])
+        report['retainer_windows_STEP_roundtrip']=C.retainer_windows(import_step(BUILD/'0127_retainer.step'),v,v['silicone_keys']['y_mm'])
+        report['retainer_RESET_STEP_roundtrip']=C.retainer_reset_window(import_step(BUILD/'0127_retainer.step'),v)
+        report['USB_access_STEP_roundtrip']=C.usb_access({**m,
+            'front':exported_front,'rear':import_step(BUILD/'rear_shell.step'),
+            'key_bezel':import_step(BUILD/'0127_retainer.step')})
+        report['coupon_interfaces_STEP_roundtrip']={name:C.coupon_interface(
+            import_step(BUILD/f'{name}.step'),import_step(BUILD/f'{name}_bezel.step'),v,clearance)
+            for name,(_,_,clearance) in fixtures.items()}
         report['coupon_table']=coupon_table
         light=[f,r,m['key_bezel'],*m['screws'],*m['retainer_screws'],parts['PCB_BOARD'],parts['DISPLAY'],m['battery'],m['adhesive'],m['speaker'],*mounts]
         export_step(Compound(children=[Compound(s.wrapped,label=s.label or f'part_{i}') for i,s in enumerate(light)]),BUILD/'assembly_light.step')
         print('Render V4 drawings and write measurement/BOM notes',flush=True)
         render(BUILD,parts,m,base,wire_shapes,mounts)
-        report['status']='GEOMETRY_GATES_PASS_S2_UNVERIFIED_NOT_PRINT_APPROVED'
+        report['status']=('GEOMETRY_GATES_PASS_FUNCTIONAL_LAYOUT_BLOCKED_NOT_PRINT_APPROVED'
+                          if report['preprint_blockers_P1'] else 'GEOMETRY_GATES_PASS_S2_UNVERIFIED_NOT_PRINT_APPROVED')
+        if report['preprint_blockers_P1']:
+            report['functional_actuation_status']='BLOCKED_P1_DIRECT_CAP_LAYOUT'
         (BUILD/'checks.json').write_text(json.dumps(report,indent=2)+'\n')
         write_readme(BUILD,report)
         write_measurement_sheet(BUILD,v,report)
