@@ -198,6 +198,9 @@ def stl_screen_rays(path,sg,points):
 
 
 def interfaces(m,parts,v,base):
+    if 'printed_keys' in v:
+        from g_v4_slider_checks import check
+        return check(m,parts,v)
     f=m['front'];r=m['rear'];bezel=m['key_bezel'];k=v['silicone_keys'];t=key_table(v);rk=k['retainer'];ox=t['outer_x'];zc=t['center_z']
     windows=retainer_windows(bezel,v,k['y_mm'])
     reset_window=retainer_reset_window(bezel,v)

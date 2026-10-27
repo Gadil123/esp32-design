@@ -1,30 +1,30 @@
 {
-  "status": "GEOMETRY_GATES_PASS_FUNCTIONAL_LAYOUT_BLOCKED_NOT_PRINT_APPROVED",
+  "status": "GEOMETRY_GATES_PASS_FUNCTIONAL_VERIFICATION_PENDING_NOT_PRINT_APPROVED",
   "print_approved": false,
-  "functional_actuation_status": "BLOCKED_P1_DIRECT_CAP_LAYOUT",
+  "functional_actuation_status": "PRINTED_SLIDER_PHYSICAL_TRAVEL_RETURN_UNVERIFIED",
   "manufacturing_status": "UNVERIFIED",
   "coordinates": "USB +Y / FRONT +Z / cap axis +X, side-wall plane YZ",
   "design_change": {
-    "stage": "G-V1 V4-RECT: rectangular shell, internal corner bosses, two 0127 silicone keys, RESET pinhole",
+    "stage": "G-V1 V4-RECT: captive printed sliding buttons, tighter non-clamping screen lip",
     "source_feedback_date": "2026-10-26 printed first article",
     "seam_z_mm": -10.35,
     "rear_panel_mm": 3.5,
     "rear_outer_z_mm": -13.85,
     "rear_panel_status": "3.5mm rear plate, local key-tongue relief leaves 1.55mm floor; ribbed, independent seam stop",
-    "screen_clearance_mm": 1.0,
+    "screen_clearance_mm": 0.75,
     "screen_lip_overlap_mm": 1.0,
     "screen_lip_radial_mm": 1.6,
     "screen_lip_base_mm": 1.6,
-    "screen_lip_base_height_mm": 2.4,
+    "screen_lip_base_height_mm": 1.9,
     "screen_lip_overhang_height_mm": 1.5,
-    "screen_lip_bottom_gap_mm": 0.9,
-    "screen_lip_top_z_mm": 3.1,
+    "screen_lip_bottom_gap_mm": 0.4,
+    "screen_lip_top_z_mm": 2.6,
     "screen_guide_rib_mm": 1.5,
     "screen_guide_rib_z_mm": [
       -2.5,
       -0.5
     ],
-    "assembly_order": "Rear + PCB first; lower EMPTY front straight along -Z; insert 0127 from -X only AFTER seam closure; fasten removable outer retaining bezels. Remove bezels and caps before lifting front.",
+    "assembly_order": "Rear + PCB first; lower EMPTY front along -Z; close four shell screws; insert printed buttons from -X, then fasten removable common retainer. Remove retainer/buttons before lifting front.",
     "pcb_screw": {
       "kind": "M2.5x5 machine screw into original metal insert",
       "thread_diameter_mm": 2.5,
@@ -85,8 +85,8 @@
     "usb_opening": "unchanged 13.2 x 7.3mm after user insertion test; no reduction",
     "print_approved": false,
     "manufacturing_status": "manufacturing_unverified",
-    "functional_actuation_status": "UNVERIFIED",
-    "total_thickness_mm": 16.95,
+    "functional_actuation_status": "UNVERIFIED_PRINTED_SLIDERS",
+    "total_thickness_mm": 16.45,
     "mic_port": {
       "xy_mm": [
         29.8,
@@ -130,72 +130,6 @@
         -11.7,
         0.7
       ]
-    },
-    "silicone_keys": {
-      "axis_definition": "Side-wall plane Y/Z: base 9.2 Y x 7.2 Z; cap axis +X inward; total reported height 5.5 along X incl high inner post; X wall depth 7.6. Closed top, reported silicone wall 1.3. None of these defines flange thickness, body length or post projection.",
-      "reported_part_mm": {
-        "base_y": 9.2,
-        "base_z": 7.2,
-        "total_axis_x_including_post": 5.5,
-        "silicone_wall": 1.3,
-        "closed_top": true
-      },
-      "measured_part_mm": {
-        "base_axial_thickness": null,
-        "top_y": null,
-        "top_z": null,
-        "body_axis_x": null,
-        "seat_to_post_tip_x": null,
-        "post_diameter": null,
-        "usable_stroke": null,
-        "switch_stroke": null
-      },
-      "y_mm": [
-        -3.62,
-        -19.26
-      ],
-      "z_center": -6.4,
-      "wall_inner_x_mm": -25.87,
-      "pocket": {
-        "clearance_per_side_mm": 0.3,
-        "depth_x_mm": 3.6,
-        "tunnel_y_mm": 8.0,
-        "tunnel_z_mm": 5.6
-      },
-      "coupon_clearances_per_side_mm": [
-        0.15,
-        0.3,
-        0.45
-      ],
-      "retainer": {
-        "thickness_x_mm": 1.8,
-        "aperture_y_mm": 8.0,
-        "aperture_z_mm": 5.6,
-        "screw_diameter_mm": 1.6,
-        "pilot_mm": 1.3,
-        "screw_length_mm": 5.0,
-        "head_max_diameter_mm": 3.0,
-        "head_max_height_mm": 1.2,
-        "pilot_depth_mm": 4.2,
-        "kind": "one removable two-aperture outer plate",
-        "outer_y_bounds_mm": [
-          -29.5,
-          6.5
-        ],
-        "fastener_yz_mm": [
-          [
-            -27.0,
-            -2.0
-          ],
-          [
-            3.5,
-            -6.4
-          ]
-        ]
-      },
-      "local_seam_z_mm": -12.15,
-      "bridge_required_mm": 1.6,
-      "status": "UNVERIFIED default B (.30/side). Outer screw-on bezel captures a measured flange only if top/body clear aperture. Do not infer trigger fit from reported 5.5 total height; no unknown cap solid modeled."
     },
     "reset_pinhole": {
       "x_mm": [
@@ -246,31 +180,181 @@
     "outer_y_mm": [
       -36.13,
       42.13
-    ]
+    ],
+    "screen_fit_scenarios": {
+      "status": "UNVERIFIED_DESIGN_SCENARIOS_NOT_MEASURED_TOLERANCES",
+      "selected_xy_per_axis_mm": 0.5,
+      "selected_z_mm": 0.3,
+      "previous_xy_per_axis_mm": 0.6,
+      "previous_z_mm": 0.6,
+      "first_print_evidence": {
+        "cad_total_xy_gap_mm": 1.2,
+        "user_reported_total_xy_gap_mm": 1.3,
+        "interpretation": "One lateral total-gap observation, NOT proof of plus/minus0.1 in all axes or flatness. User confirmed inference only."
+      },
+      "warp_and_tilt": "UNVERIFIED and separate from size error; prior larger sensitivity retained, no hard glass contact or foam preload"
+    },
+    "retired_0127": {
+      "status": "REPLACED_BY_USER_AUTHORIZED_PRINTED_SLIDERS",
+      "supplier_reported_total_axis_mm": 5.5,
+      "reason": "Insufficient direct exposed-face reach; no silicone dimensions invented. Historical files remain in git; not current print parts."
+    },
+    "printed_keys": {
+      "kind": "ONE_PIECE_HEAD_FLANGE_STEM_SLIDER",
+      "y_mm": [
+        -3.62,
+        -19.26
+      ],
+      "z_center": -6.5,
+      "wall_inner_x_mm": -25.87,
+      "local_seam_z_mm": -12.15,
+      "bridge_required_mm": 1.6,
+      "head_diameter_mm": 5.2,
+      "head_projection_mm": 1.5,
+      "flange_diameter_mm": 7.4,
+      "flange_thickness_mm": 1.8,
+      "stem_diameter_mm": 3.6,
+      "stem_end_x_mm": -26.5,
+      "tip_diameter_mm": 1.2,
+      "radial_clearance_mm": 0.3,
+      "stroke_mm": 0.55,
+      "rest_gap_mm": 0.25,
+      "variants_mm": {
+        "short": -0.15,
+        "nominal": 0,
+        "long": 0.15
+      },
+      "switch_actuation_travel_mm": null,
+      "switch_max_safe_displacement_mm": null,
+      "switch_return_force_n": null,
+      "actual_print_slide_force_n": null,
+      "status": "UNVERIFIED physical travel/force, shrink and free play; nominal geometric travel is not switch rating. No preload or glue. Variants are optional same-batch spares, maximum tip plane unchanged.",
+      "retainer": {
+        "thickness_x_mm": 1.8,
+        "screw_diameter_mm": 1.6,
+        "pilot_mm": 1.3,
+        "screw_length_mm": 5.0,
+        "head_max_diameter_mm": 3.0,
+        "head_max_height_mm": 1.2,
+        "pilot_depth_mm": 4.2,
+        "kind": "one removable two-aperture outer plate",
+        "outer_y_bounds_mm": [
+          -29.5,
+          6.5
+        ],
+        "fastener_yz_mm": [
+          [
+            -27.0,
+            -2.0
+          ],
+          [
+            3.5,
+            -6.4
+          ]
+        ],
+        "aperture_diameter_mm": 5.8
+      }
+    }
   },
   "remaining_S2": [
-    "0127 actual base flange/top/body/post, travel/force and insertion path unmeasured; coupon required",
+    "Printed slider friction/return/free play and actual switch actuation/max travel remain UNVERIFIED; optional spare lengths can be printed in the same batch",
     "Supplier screw SKU, length/head tolerances, PA12 pilot/torque and service life unverified",
     "Screen active-area/edge touch coverage, lip deflection, glass load, seam flatness and actual tolerance chain unverified",
     "Actual battery screen/mainboard-side lead is UNMODELED; adhesive, battery tolerance/swelling and tray retention need measurement",
     "MIC V1 drilled hole and acoustic inlet unmeasured; RESET operating stroke/force and real tools unverified",
-    "Front loading checked at discrete straight poses; cap and real lead must be removed/controlled; arbitrary tilted assembly unverified"
+    "Empty-front loading is discrete; printed button axial motion/extraction are continuous; tilted insertion and actual lead remain unverified"
   ],
   "generator_inputs_sha256": {
-    "cad/t0/t0-g-v4.json": "af9b46e2df9bb64e0f3bf21d9900fd44ef92be0527773da01178f9bac5d65d46",
-    "cad/t0/t0_g_v4.py": "8259bfe2b0cfb8c16f9e3f7a8116a115aea1224f9d380bd5119bc624cf0c2ae8",
-    "cad/t0/generate_g_v4.py": "ba7cf0f184cd2b8f3e022921108b9a8d74c5d753ea6402e922de80c566fe6577",
+    "cad/t0/check_exports.py": "bfde24ba5cafa75043afcfe8092323cc70938b4f016a6ece37c7bd1feb6b0c7d",
+    "cad/t0/g-v1-95mm-layout.json": "a80c698c1371f6c1be0b7686b1e8055a3968ce3aa75eb962e99098723c981114",
+    "cad/t0/g_v1_95mm_checks.py": "66f07ad7a22c1ed37d2a595b01b1a79db415fae4a7df6983c33533504d0d5b50",
+    "cad/t0/g_v1_95mm_drawings.py": "d22720f1f66233550a4618feb41d57fcb765964a14225312b7633cfbeebc9d7e",
+    "cad/t0/g_v1_95mm_wiring.py": "215384952cf9e38e89433dae89e762d6e3b16afbb8700900de15bc2678f06117",
+    "cad/t0/g_v4_checks.py": "afd9d9a30362139fad022ae03a165c10809f31ca388b361181be94b6161fd299",
+    "cad/t0/g_v4_documentation.py": "e753fb4a69cb7a244099ef48fd5985fe01387d3c4c52e15c8d377bc05d678988",
     "cad/t0/g_v4_interfaces.py": "3f4a58875ec7f4747a7a87da578e0adad678c1681f86b8d50c252e5a83a8e464",
-    "cad/t0/g_v4_checks.py": "db76dc9da0a22270f85a26ceb94ea49b22ef51f81879d7e36413c07f2248df03",
-    "cad/t0/g_v4_documentation.py": "14cf78404f80110a526684c9ae83fb01d88fa8b5b10203c159393b4327623f3d",
+    "cad/t0/g_v4_printed_keys.py": "155ea09216cc486581c5936f4e8dd1d297a16c476aa2a0f06269839f23f9808f",
+    "cad/t0/g_v4_slider_checks.py": "7a424bdfa8cf1bb88308be956d2ddd2c2fd584fb7416dd5146a96b1251f76ffd",
+    "cad/t0/generate_g_v1_95mm.py": "e7f91f41a0ff2f37e232aff3a06cab03640745fbfb70df827cc68468ba5bf3d2",
+    "cad/t0/generate_g_v2.py": "d7fedc3b33e061d2a3fa002fe0ea6f2c2cdd838bd7ada620db0895e106a8b0b8",
+    "cad/t0/generate_g_v2b.py": "2fecca878ee7b5af9c4a399747eb7b8cd7d8ceb6fb244638acabde7021b0c40c",
+    "cad/t0/generate_g_v4.py": "47493d5c74d1c68c8ef69d60595ce9a8e3a1088a477e3fafea62a7e36f3cc2fe",
+    "cad/t0/generate_t0.py": "efcdfcd69452a0ef376a94e1d39b842aa6f1dd37384eb1dd5602057f64418978",
+    "cad/t0/generate_t0_c.py": "399f316f74572a0d8c3767c86c08c257e250b961d50f180712398e7542151d8b",
+    "cad/t0/generate_t0_d.py": "7e1aba34c3728f006f3596ef74b1af7a7e00869ce66096950ffe3f90a8c73a36",
+    "cad/t0/generate_t0_e.py": "a7c5c28f96cc40843f9510ebec3776a797d3a1f0de7131ea07a2f644da52765e",
+    "cad/t0/generate_t0_g.py": "8cdaadbf137f11a19b6ed6d432904acbac4a30d394ee387322f3d2919d0ecf5c",
+    "cad/t0/generate_t0_g_v1.py": "72d88f352ec4c5c6ee10f07b7b1bb43c80300387a45ff46f84aafeedfe30838d",
+    "cad/t0/generate_t0_g_v1_boot_rect.py": "7feda7fdf885ce1d378f28e8999b49d367c35568c2cf35f271deac99aeacc9a7",
+    "cad/t0/generate_t0_g_v1_gate.py": "0e72fffd8a42630e0a341f6ecdd524a276c15d163f41fb19b441898cd8a4b951",
+    "cad/t0/generate_t0_g_v1_integrated.py": "eadfaf381e2c11e79c800a1ef8acca8b8f714336137ee424ea7a918f4f254c4f",
+    "cad/t0/model.py": "b03815eb85e9765d0f7e77c98714aa195a73ed000f4ce4406f11cd4312881620",
+    "cad/t0/official-reference.json": "ec578a70e976d07b7ef53512d481d66768e526d964490a37051f67504f91e887",
+    "cad/t0/p1-manufacturing.json": "34230e4170d73c3f354c4da4459dc274c580c871623f8a0f57ba501a7d7b3351",
+    "cad/t0/p1-parameters.json": "97d12d3c735303b20bc23606e6e64adf4ed3acbd1aca997e40251f16825fb735",
+    "cad/t0/p1_checks.py": "6894219bdcebc628db11ccbb3659709bc374e8f4ed92c14c8c9de5800c58392e",
+    "cad/t0/p1_manufacturing.py": "964a6338aa578578dcfb44eb2b870065c5b102b70f13cf9078fb4812816932c2",
+    "cad/t0/p1_model.py": "54886c41e758f27db500d03f55b46ea4009102abab01d97a7ac9acd4ab989bd9",
+    "cad/t0/p1_preview.py": "7103ed857ca492ed5315b4f2c454c04a32b6971aa393ee99c037a94ef4c10272",
+    "cad/t0/package_t0_a.py": "0443e048fd748b389d9256640adea6edd79c20109901e043b9b903681d69bbb1",
+    "cad/t0/preview.py": "945bc9492a77fe2273bc4acab3b24601d340c8c82263432d4e5e7bd38d354feb",
+    "cad/t0/reference.py": "84230db391336d96ec8fcba752d0a68815b8b1881b63132175aa2272141dc456",
+    "cad/t0/study_g_v1_95mm.py": "6a91f789312983a27a089a8bbd53ea31e4a2041aec6881c800420ee669fadb99",
+    "cad/t0/t0-a-parameters.json": "97038111cbb91143ebb273b8adcb3a8c2b286b0ac1bfb2cc00a2797658b0b365",
+    "cad/t0/t0-c-parameters.json": "971db273a932ad388e128b0180c81a2951905fd5a2692427642f57f15798612f",
+    "cad/t0/t0-d-parameters.json": "d531c17fcdac45ed9b80493a473618b5eb40a2a97ac729566aff64e93fbd44eb",
+    "cad/t0/t0-e-parameters.json": "528e734df0321796e3b015eb753531740104e9a7bdce54921d89cf147442c28c",
+    "cad/t0/t0-evidence.json": "b1c07f329e2cf1c67ffcf1f2bd9e8abf22188589b4cbb87b2751101ec01d8f14",
+    "cad/t0/t0-g-parameters.json": "f58ac3f0d9e77334843066f28d9e7bc540f28782319ab8cd121d7cd404f8b5df",
+    "cad/t0/t0-g-v1-boot-rect.json": "a743015182c4eb1e12c62da04a48f3251dbcfc3cf1c9705b8ff93bfd51ddc7e5",
+    "cad/t0/t0-g-v1-closure.json": "4f513357bd622b95ff2d59ccc6bfbca8a5a900af71e81b2bb0ee1c8435caea0d",
+    "cad/t0/t0-g-v1-gate-parameters.json": "6ca74eef78bbda3156beb374615efcf67b78ee72c2fc53dca7ab814541d985cc",
+    "cad/t0/t0-g-v1-integrated-keys.json": "8e37dc57cf35b57f90ca085cdd8fbb6425a094b11b630b35af0af8f55e16075e",
+    "cad/t0/t0-g-v2.json": "43b5d5aad7a0061d289e45f49a5fc5b3d93c6cf81ad5e1fdc41dc265feb40271",
+    "cad/t0/t0-g-v2b.json": "c5bd78bded99fe924135fca7ae61b27cea82effb253c9fe298a574020fee5409",
+    "cad/t0/t0-g-v4.json": "d05b48a0842de2650e0334cb958e28ea85985707f72ee5b36d33f1b5a5ab989b",
+    "cad/t0/t0-parameters.json": "1c87d059f9fa4c7febb034ff49eb734038f33ce37b122b092c1e330241779c55",
+    "cad/t0/t0_c_drawings.py": "5750bbd247ceaabe15f0bad2e0c07f2938e049016aafff81d1fa593cc8bac7bc",
+    "cad/t0/t0_c_mount_study.py": "e31c800792ff93e4d94ea62ec0e416ef34870bce23b588b81e6e75ed0ca8dd0a",
+    "cad/t0/t0_c_samples.py": "8e3ac6790e3f300f2a1658883db82a3eeb0c6c6c5306c86ede07cc64960df731",
+    "cad/t0/t0_checks.py": "a911f5c36ab327595c6fe32b51e74639a6c23703aea238762945fe5e66176bb5",
+    "cad/t0/t0_d_study.py": "1874c8dda172582ee6d52ddd8cff74ab84f37a19908d806f7bc5b4a36e1ef8e0",
+    "cad/t0/t0_e_drawings.py": "33129ff0f96eb128f8f25e938dacac60247f39842a6c0b2086d14ada05295110",
+    "cad/t0/t0_e_gate.py": "f33d1e8302cd5e42768168590151d6ad139b2c416b78ab4aed18ab3b04bbc1cf",
+    "cad/t0/t0_e_model.py": "5b2cdab46098401f945bbe07b6e8c447b501e3d4c389ac79f2703826c7f44237",
+    "cad/t0/t0_g_drawings.py": "02a9d62dda364603b142bb9511be7e2c3f7ce8fc9b506de68e59d781b7ad891f",
+    "cad/t0/t0_g_gate.py": "051e3e4e4a144ac2b5d7007f12529f1a97dc958e89bf76cbcf4022449a880084",
+    "cad/t0/t0_g_model.py": "ecde380bec6a57fabc87efe2f7b2b1933f034945208449ec9c899b47a167ac41",
+    "cad/t0/t0_g_v1_boot_rect_drawings.py": "6265418ebdbe6bd08e0513b1919fdc0139be3de0d0bc282ae23973963e2cd59d",
+    "cad/t0/t0_g_v1_closure.py": "67cb43cb5daa31321a9884a44d091906f7c34cd4da63a7c899d008ead03d44bb",
+    "cad/t0/t0_g_v1_full_drawings.py": "84f700ae5cc5d7911391c54e75a485b0189d0d650874589f8963da4d5c9c849a",
+    "cad/t0/t0_g_v1_full_gate.py": "bd281c3f4b0759b9a063e704d10589f17d0446f49e35c59faabcb3e7b6c1cf3b",
+    "cad/t0/t0_g_v1_gate_drawings.py": "0d6afc8ec96c6cf93bb672d9286f5f2f5f3f1bac2f6fde605578b1a13e9a9725",
+    "cad/t0/t0_g_v1_integrated_drawings.py": "9ced693ab234ea2860f7ce66d558234f780914ebfee23716fd738d5ecacd3ed0",
+    "cad/t0/t0_g_v1_integrated_keys.py": "4f4df1635e7aea6567e897fb9502d8acdc1df61c8da85ba7cb939bca3c086db7",
+    "cad/t0/t0_g_v1_preview.py": "6cf6675e15e704635492e0c382a23258230b69784a9dbc44297b4cb46f5a6453",
+    "cad/t0/t0_g_v1_retained_bounds.py": "b273ca7bdd5bbc82b962982367f9e28c234414bc3379236a6a41d19c309168eb",
+    "cad/t0/t0_g_v2.py": "ca39d2540223758e914d03bc30d8937b34adfb64806678f1191702d81b23dc90",
+    "cad/t0/t0_g_v2_keys.py": "d0f7b48a507041fc6754c000a482626de0f1e463138e12e5712e339a1b8daf1a",
+    "cad/t0/t0_g_v4.py": "67a26afd8d4d21a8f347f440d5700e2a0a4a6f61eaf114af8fa897b19c02796c",
+    "cad/t0/t0_key_contact.py": "dc303f68da356ba92e9664b008f0204ff913b6ff05ca88e67264cdfd6897bb73",
+    "cad/t0/t0_key_study.py": "40b987529256a91328684c1e1313ccdd961098ac4fb6902f5fbfc095f5feca23",
+    "cad/t0/t0_model.py": "70ef2693289647df75f0557c8cef361a97a1f5f01e2bc9ab2611f5979169944d",
+    "cad/t0/t0_preview.py": "a19dd1ba0ced9ee6a6b9e9c78902b2583fafe28ad26b7308d227f260239a7223",
+    "cad/t0/t0_reference.py": "4da8430416bd0b2eb8099635615be25426759a75ce33c69ce9fabc4ad0be6b33",
+    "cad/t0/t0_revision_drawings.py": "34cbbca36c6d5832ae7906e5d3294b02fb1d7f72a76834206b10f68424c167ff",
+    "cad/t0/t0_wiring.py": "e936a0715c3337292255a35cbe6fa31436aa54f608238ad77f0b8a72f4f16abf",
+    "cad/t0/v2_wiring.py": "2ab06144be2bedc621faf03e8887a89e546343b84dbef57b84a667d346159e88",
+    "cad/t0/view_g_v1_95mm_freecad.py": "8ab4453ee0de49db04f3b83e74524cf8b4501dfa3a8be5d79c6e306fa94aee8c",
+    "cad/t0/view_g_v1_freecad.py": "607b3353e86c80fe78c66628df25f64546136b3981ac9929340c351e05074c13",
     "scripts/generate-g-v4.sh": "e84c033e4878b09f93d88b4a39d79d96515f79fc9a70091e3ef23e7669f06321"
   },
   "dimensions": {
-    "front_top_z_mm": 3.0999999999999996,
+    "front_top_z_mm": 2.5999999999999996,
     "front_face_z_mm": 0.7,
     "seam_z_mm": -10.35,
     "rear_outer_z_mm": -13.85,
-    "total_thickness_mm": 16.95,
+    "total_thickness_mm": 16.45,
     "body_xy_mm": [
       99.6,
       78.26
@@ -287,9 +371,9 @@
     ],
     "glass_radius_mm": 2.0,
     "window_whr_mm": [
-      52.540000000000006,
-      75.06,
-      3.0
+      52.040000000000006,
+      74.56,
+      2.75
     ],
     "lip_inner_whr_mm": [
       48.540000000000006,
@@ -297,13 +381,13 @@
       1.0
     ],
     "lip_base_whr_mm": [
-      55.74000000000001,
-      78.26,
-      4.6
+      55.24000000000001,
+      77.76,
+      4.35
     ],
     "glass_front_z_mm": 0.7,
-    "lip_top_z_mm": 3.0999999999999996,
-    "lip_bottom_z_mm": 1.6
+    "lip_top_z_mm": 2.5999999999999996,
+    "lip_bottom_z_mm": 1.1
   },
   "screw_rows": [
     {
@@ -350,11 +434,11 @@
   "bounds_mm": {
     "front": [
       -33.47,
-      -36.13000000000001,
+      -36.13,
       -12.149999999999999,
       66.13,
       42.13,
-      3.0999999999999996
+      2.5999999999999996
     ],
     "rear": [
       -33.47,
@@ -373,10 +457,10 @@
       0.6999999999999993
     ]
   },
-  "overall_thickness_mm": 16.95,
+  "overall_thickness_mm": 16.45,
   "overall_bezel_width_mm": 101.39999999999999,
-  "overall_width_mm": 102.6,
-  "overall_height_mm": 78.26000000000002,
+  "overall_width_mm": 102.89999999999999,
+  "overall_height_mm": 78.26,
   "screen_air": {
     "full_inner_column_overlap_mm3": 0,
     "center_four_corners_four_edges_overlap_mm3": [
@@ -438,11 +522,11 @@
     ]
   },
   "screen_measured": {
-    "lip_underside_z_mm": 1.6,
-    "lip_to_glass_gap_mm": 0.9000000000000001,
+    "lip_underside_z_mm": 1.1,
+    "lip_to_glass_gap_mm": 0.40000000000000013,
     "lip_thickness_mm": 1.4999999999999996,
-    "window_to_glass_gap_mm": 1.0,
-    "screen_recess_mm": 2.3999999999999995
+    "window_to_glass_gap_mm": 0.75,
+    "screen_recess_mm": 1.8999999999999997
   },
   "screen_budget": {
     "cases": [
@@ -450,218 +534,1086 @@
         "offset_xyz_mm": [
           0,
           0,
-          0.6
+          0.3
         ],
         "overlap_mm3": 0
       },
       {
         "offset_xyz_mm": [
-          0.6,
-          0.6,
-          0.6
+          0.5,
+          0.5,
+          0.3
         ],
         "overlap_mm3": 0
       },
       {
         "offset_xyz_mm": [
-          0.6,
-          -0.6,
-          0.6
+          0.5,
+          -0.5,
+          0.3
         ],
         "overlap_mm3": 0
       },
       {
         "offset_xyz_mm": [
-          -0.6,
-          0.6,
-          0.6
+          -0.5,
+          0.5,
+          0.3
         ],
         "overlap_mm3": 0
       },
       {
         "offset_xyz_mm": [
-          -0.6,
-          -0.6,
-          0.6
+          -0.5,
+          -0.5,
+          0.3
         ],
         "overlap_mm3": 0
       }
     ],
-    "XY_print_plus_register_plus_PCB_play_mm": 0.6,
-    "corner_normal_budget_mm": 0.848528137423857,
-    "Z_budget_mm": 0.6,
-    "residual_Z_mm": 0.30000000000000004,
-    "warp_and_tilt": "UNVERIFIED; do not use glass or screw preload to flatten shell; no foam under lip"
+    "selected_scenario": {
+      "status": "UNVERIFIED_DESIGN_SCENARIOS_NOT_MEASURED_TOLERANCES",
+      "selected_xy_per_axis_mm": 0.5,
+      "selected_z_mm": 0.3,
+      "previous_xy_per_axis_mm": 0.6,
+      "previous_z_mm": 0.6,
+      "first_print_evidence": {
+        "cad_total_xy_gap_mm": 1.2,
+        "user_reported_total_xy_gap_mm": 1.3,
+        "interpretation": "One lateral total-gap observation, NOT proof of plus/minus0.1 in all axes or flatness. User confirmed inference only."
+      },
+      "warp_and_tilt": "UNVERIFIED and separate from size error; prior larger sensitivity retained, no hard glass contact or foam preload"
+    },
+    "previous_budget_sensitivity": [
+      {
+        "offset_xyz_mm": [
+          0,
+          0,
+          0.6
+        ],
+        "overlap_mm3": 48.124955592154045
+      },
+      {
+        "offset_xyz_mm": [
+          0.6,
+          0.6,
+          0
+        ],
+        "overlap_mm3": 0.10432634759583496
+      },
+      {
+        "offset_xyz_mm": [
+          -0.6,
+          -0.6,
+          0.6
+        ],
+        "overlap_mm3": 48.19947441186531
+      }
+    ],
+    "residual_selected_Z_mm": 0.10000000000000003,
+    "previous_budget_covered": false,
+    "warp_and_tilt": "UNVERIFIED, separate from dimensional error; no glass preload/foam; first-print XY observation does not prove Z accuracy"
   },
   "v4_interfaces": {
-    "parameter_table": {
-      "outer_x": -33.47,
-      "seat_x": -29.869999999999997,
-      "inner_x": -25.87,
-      "pocket_y": 9.799999999999999,
-      "pocket_z": 7.8,
-      "tunnel_y": 8.0,
-      "tunnel_z": 5.6,
-      "center_z": -6.4,
-      "clearance": 0.3
+    "retainer": {
+      "keys": [
+        {
+          "y_mm": -3.62,
+          "full_window_mm3": 0,
+          "capture_ring_mm3": 28.46433741
+        },
+        {
+          "y_mm": -19.26,
+          "full_window_mm3": 0,
+          "capture_ring_mm3": 28.46433741
+        }
+      ],
+      "reset_mm3": 0
     },
-    "keys": [
-      {
-        "key": "KEY1",
-        "pocket_clear_mm3": 0,
-        "tunnel_clear_mm3": 0,
-        "diagnostic_axis_clear_mm3": 0,
-        "axis_switch_contact_mm3": 0.007481205095780141,
-        "seat_to_switch_x_mm": 4.975639193660022,
-        "seat_to_post_tip_x_mm": null,
-        "rest_gap_mm": null,
-        "effective_stroke_mm": null,
-        "trigger_status": "UNVERIFIED: measured seat-to-post and switch travel required; diagnostic axis is NOT a cap/post model",
-        "pocket_to_local_seam_bridge_mm": 1.8499999999999996,
-        "bridge_material_mm3": 62.1285,
-        "seat_shoulder_material_mm3": 0.09,
-        "outer_bezel_capture_material_mm3": 7.92,
-        "reported_base_overlap_y_mm": 0.5999999999999996,
-        "reported_base_overlap_z_mm": 0.8000000000000003,
-        "cap_fit": "UNVERIFIED: actual top must clear bezel aperture and actual flange must be captured"
-      },
-      {
-        "key": "KEY2",
-        "pocket_clear_mm3": 0,
-        "tunnel_clear_mm3": 0,
-        "diagnostic_axis_clear_mm3": 0,
-        "axis_switch_contact_mm3": 0.0074814133460548654,
-        "seat_to_switch_x_mm": 4.973625460129583,
-        "seat_to_post_tip_x_mm": null,
-        "rest_gap_mm": null,
-        "effective_stroke_mm": null,
-        "trigger_status": "UNVERIFIED: measured seat-to-post and switch travel required; diagnostic axis is NOT a cap/post model",
-        "pocket_to_local_seam_bridge_mm": 1.8499999999999996,
-        "bridge_material_mm3": 62.1285,
-        "seat_shoulder_material_mm3": 0.09,
-        "outer_bezel_capture_material_mm3": 7.92,
-        "reported_base_overlap_y_mm": 0.5999999999999996,
-        "reported_base_overlap_z_mm": 0.8000000000000003,
-        "cap_fit": "UNVERIFIED: actual top must clear bezel aperture and actual flange must be captured"
-      }
-    ],
-    "retainer_windows": [
+    "pockets": [
       {
         "y_mm": -3.62,
-        "full_window_overlap_mm3": 0,
-        "full_capture_projection_material_mm3": 37.157824
+        "counter_mm3": 0,
+        "guide_mm3": 0,
+        "stop_ring_mm3": 1.13700521,
+        "bridge_mm": 1.6500000000000004,
+        "bridge_material_mm3": 1.83375
       },
       {
         "y_mm": -19.26,
-        "full_window_overlap_mm3": 0,
-        "full_capture_projection_material_mm3": 37.157824
+        "counter_mm3": 0,
+        "guide_mm3": 0,
+        "stop_ring_mm3": 1.13700521,
+        "bridge_mm": 1.6500000000000004,
+        "bridge_material_mm3": 1.83375
       }
     ],
+    "keys": {
+      "KEY1": {
+        "flange_x_mm": [
+          -33.47,
+          -31.669999999999998
+        ],
+        "actual_tip_x_mm": -25.144360806339975,
+        "switch_tip_x_mm": -24.894360806339975,
+        "rest_gap_mm": 0.25,
+        "geometric_stroke_mm": 0.5500000000000007,
+        "switch_displacement_at_stop_mm": 0.3000000000000007,
+        "static_switch_overlap_at_stop_mm3": 0.29953328611856617,
+        "exposed_head_mm": 1.5,
+        "actual_switch_travel_mm": null,
+        "max_safe_switch_displacement_mm": null,
+        "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
+        "continuous_axial_sweep": {
+          "front": 0,
+          "rear": 0,
+          "key_bezel": 0
+        },
+        "non_actuator_board_sweep_mm3": 0,
+        "rest_board_mm3": 0,
+        "screw_sweep_mm3": 0.0,
+        "continuous_extraction": {
+          "front": 0,
+          "rear": 0
+        },
+        "extraction_board_mm3": 0,
+        "outward_and_inward_stop_blocked": true,
+        "radial_translation_poses": [
+          {
+            "offset_yz_mm": [
+              0.297,
+              0.0
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              0.21001071401240462,
+              0.2100107140124046
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              1.8186004967338195e-17,
+              0.297
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.2100107140124046,
+              0.21001071401240462
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.297,
+              3.637200993467639e-17
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.21001071401240468,
+              -0.2100107140124046
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -5.455801490201458e-17,
+              -0.297
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              0.21001071401240456,
+              -0.21001071401240468
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          }
+        ]
+      },
+      "KEY2": {
+        "flange_x_mm": [
+          -33.47,
+          -31.669999999999998
+        ],
+        "actual_tip_x_mm": -25.146374539870415,
+        "switch_tip_x_mm": -24.896374539870415,
+        "rest_gap_mm": 0.25,
+        "geometric_stroke_mm": 0.5500000000000007,
+        "switch_displacement_at_stop_mm": 0.3000000000000007,
+        "static_switch_overlap_at_stop_mm3": 0.2995336806981024,
+        "exposed_head_mm": 1.5,
+        "actual_switch_travel_mm": null,
+        "max_safe_switch_displacement_mm": null,
+        "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
+        "continuous_axial_sweep": {
+          "front": 0,
+          "rear": 0,
+          "key_bezel": 0
+        },
+        "non_actuator_board_sweep_mm3": 0,
+        "rest_board_mm3": 0,
+        "screw_sweep_mm3": 0.0,
+        "continuous_extraction": {
+          "front": 0,
+          "rear": 0
+        },
+        "extraction_board_mm3": 0,
+        "outward_and_inward_stop_blocked": true,
+        "radial_translation_poses": [
+          {
+            "offset_yz_mm": [
+              0.297,
+              0.0
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              0.21001071401240462,
+              0.2100107140124046
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              1.8186004967338195e-17,
+              0.297
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.2100107140124046,
+              0.21001071401240462
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.297,
+              3.637200993467639e-17
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.21001071401240468,
+              -0.2100107140124046
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -5.455801490201458e-17,
+              -0.297
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              0.21001071401240456,
+              -0.21001071401240468
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          }
+        ]
+      }
+    },
+    "variant_parts": {
+      "button_power_short": {
+        "flange_x_mm": [
+          -33.47,
+          -31.819999999999997
+        ],
+        "actual_tip_x_mm": -25.294360806339974,
+        "switch_tip_x_mm": -24.894360806339975,
+        "rest_gap_mm": 0.3999999999999986,
+        "geometric_stroke_mm": 0.6999999999999993,
+        "switch_displacement_at_stop_mm": 0.3000000000000007,
+        "static_switch_overlap_at_stop_mm3": 0.29953328611856617,
+        "exposed_head_mm": 1.5,
+        "actual_switch_travel_mm": null,
+        "max_safe_switch_displacement_mm": null,
+        "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
+        "continuous_axial_sweep": {
+          "front": 0,
+          "rear": 0,
+          "key_bezel": 0
+        },
+        "non_actuator_board_sweep_mm3": 0,
+        "rest_board_mm3": 0.0,
+        "screw_sweep_mm3": 0.0,
+        "continuous_extraction": {
+          "front": 0,
+          "rear": 0
+        },
+        "extraction_board_mm3": 0.0,
+        "outward_and_inward_stop_blocked": true
+      },
+      "button_power_nominal": {
+        "flange_x_mm": [
+          -33.47,
+          -31.669999999999998
+        ],
+        "actual_tip_x_mm": -25.144360806339975,
+        "switch_tip_x_mm": -24.894360806339975,
+        "rest_gap_mm": 0.25,
+        "geometric_stroke_mm": 0.5500000000000007,
+        "switch_displacement_at_stop_mm": 0.3000000000000007,
+        "static_switch_overlap_at_stop_mm3": 0.29953328611856617,
+        "exposed_head_mm": 1.5,
+        "actual_switch_travel_mm": null,
+        "max_safe_switch_displacement_mm": null,
+        "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
+        "continuous_axial_sweep": {
+          "front": 0,
+          "rear": 0,
+          "key_bezel": 0
+        },
+        "non_actuator_board_sweep_mm3": 0,
+        "rest_board_mm3": 0,
+        "screw_sweep_mm3": 0.0,
+        "continuous_extraction": {
+          "front": 0,
+          "rear": 0
+        },
+        "extraction_board_mm3": 0,
+        "outward_and_inward_stop_blocked": true,
+        "radial_translation_poses": [
+          {
+            "offset_yz_mm": [
+              0.297,
+              0.0
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              0.21001071401240462,
+              0.2100107140124046
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              1.8186004967338195e-17,
+              0.297
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.2100107140124046,
+              0.21001071401240462
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.297,
+              3.637200993467639e-17
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.21001071401240468,
+              -0.2100107140124046
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -5.455801490201458e-17,
+              -0.297
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              0.21001071401240456,
+              -0.21001071401240468
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          }
+        ]
+      },
+      "button_power_long": {
+        "flange_x_mm": [
+          -33.47,
+          -31.52
+        ],
+        "actual_tip_x_mm": -24.994360806339976,
+        "switch_tip_x_mm": -24.894360806339975,
+        "rest_gap_mm": 0.10000000000000142,
+        "geometric_stroke_mm": 0.40000000000000213,
+        "switch_displacement_at_stop_mm": 0.3000000000000007,
+        "static_switch_overlap_at_stop_mm3": 0.29953328611856617,
+        "exposed_head_mm": 1.5,
+        "actual_switch_travel_mm": null,
+        "max_safe_switch_displacement_mm": null,
+        "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
+        "continuous_axial_sweep": {
+          "front": 0,
+          "rear": 0,
+          "key_bezel": 0
+        },
+        "non_actuator_board_sweep_mm3": 0,
+        "rest_board_mm3": 0,
+        "screw_sweep_mm3": 0.0,
+        "continuous_extraction": {
+          "front": 0,
+          "rear": 0
+        },
+        "extraction_board_mm3": 0,
+        "outward_and_inward_stop_blocked": true
+      },
+      "button_boot_short": {
+        "flange_x_mm": [
+          -33.47,
+          -31.819999999999997
+        ],
+        "actual_tip_x_mm": -25.296374539870413,
+        "switch_tip_x_mm": -24.896374539870415,
+        "rest_gap_mm": 0.3999999999999986,
+        "geometric_stroke_mm": 0.6999999999999993,
+        "switch_displacement_at_stop_mm": 0.3000000000000007,
+        "static_switch_overlap_at_stop_mm3": 0.2995336806981024,
+        "exposed_head_mm": 1.5,
+        "actual_switch_travel_mm": null,
+        "max_safe_switch_displacement_mm": null,
+        "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
+        "continuous_axial_sweep": {
+          "front": 0,
+          "rear": 0,
+          "key_bezel": 0
+        },
+        "non_actuator_board_sweep_mm3": 0,
+        "rest_board_mm3": 0.0,
+        "screw_sweep_mm3": 0.0,
+        "continuous_extraction": {
+          "front": 0,
+          "rear": 0
+        },
+        "extraction_board_mm3": 0.0,
+        "outward_and_inward_stop_blocked": true
+      },
+      "button_boot_nominal": {
+        "flange_x_mm": [
+          -33.47,
+          -31.669999999999998
+        ],
+        "actual_tip_x_mm": -25.146374539870415,
+        "switch_tip_x_mm": -24.896374539870415,
+        "rest_gap_mm": 0.25,
+        "geometric_stroke_mm": 0.5500000000000007,
+        "switch_displacement_at_stop_mm": 0.3000000000000007,
+        "static_switch_overlap_at_stop_mm3": 0.2995336806981024,
+        "exposed_head_mm": 1.5,
+        "actual_switch_travel_mm": null,
+        "max_safe_switch_displacement_mm": null,
+        "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
+        "continuous_axial_sweep": {
+          "front": 0,
+          "rear": 0,
+          "key_bezel": 0
+        },
+        "non_actuator_board_sweep_mm3": 0,
+        "rest_board_mm3": 0,
+        "screw_sweep_mm3": 0.0,
+        "continuous_extraction": {
+          "front": 0,
+          "rear": 0
+        },
+        "extraction_board_mm3": 0,
+        "outward_and_inward_stop_blocked": true,
+        "radial_translation_poses": [
+          {
+            "offset_yz_mm": [
+              0.297,
+              0.0
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              0.21001071401240462,
+              0.2100107140124046
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              1.8186004967338195e-17,
+              0.297
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.2100107140124046,
+              0.21001071401240462
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.297,
+              3.637200993467639e-17
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.21001071401240468,
+              -0.2100107140124046
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -5.455801490201458e-17,
+              -0.297
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              0.21001071401240456,
+              -0.21001071401240468
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          }
+        ]
+      },
+      "button_boot_long": {
+        "flange_x_mm": [
+          -33.47,
+          -31.52
+        ],
+        "actual_tip_x_mm": -24.996374539870416,
+        "switch_tip_x_mm": -24.896374539870415,
+        "rest_gap_mm": 0.10000000000000142,
+        "geometric_stroke_mm": 0.40000000000000213,
+        "switch_displacement_at_stop_mm": 0.3000000000000007,
+        "static_switch_overlap_at_stop_mm3": 0.2995336806981024,
+        "exposed_head_mm": 1.5,
+        "actual_switch_travel_mm": null,
+        "max_safe_switch_displacement_mm": null,
+        "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
+        "continuous_axial_sweep": {
+          "front": 0,
+          "rear": 0,
+          "key_bezel": 0
+        },
+        "non_actuator_board_sweep_mm3": 0,
+        "rest_board_mm3": 0,
+        "screw_sweep_mm3": 0.0,
+        "continuous_extraction": {
+          "front": 0,
+          "rear": 0
+        },
+        "extraction_board_mm3": 0,
+        "outward_and_inward_stop_blocked": true
+      }
+    },
     "retainer_screws": [
       {
         "yz_mm": [
           -27.0,
           -2.0
         ],
-        "bezel_shaft_clear_mm3": 0,
-        "head_vs_shell_mm3": 0.0,
-        "tool_vs_shell_mm3": 0.0,
-        "tool_vs_rear_mm3": 0.0,
-        "tool_vs_bezel_mm3": 0.0,
-        "pilot_clear_mm3": 0,
-        "bottom_clearance_mm": 0.9999999999999964,
-        "sku_and_torque": "UNVERIFIED"
+        "pilot_mm3": 0,
+        "passage_mm3": 0,
+        "bottom_material_mm3": 0.25735927,
+        "head_vs_shells_mm3": {
+          "front": 0.0,
+          "rear": 0.0,
+          "key_bezel": 0.0
+        },
+        "tool_vs_shells_mm3": {
+          "front": 0.0,
+          "rear": 0.0,
+          "key_bezel": 0.0
+        },
+        "bottom_clearance_mm": 0.9999999999999964
       },
       {
         "yz_mm": [
           3.5,
           -6.4
         ],
-        "bezel_shaft_clear_mm3": 0,
-        "head_vs_shell_mm3": 0.0,
-        "tool_vs_shell_mm3": 0.0,
-        "tool_vs_rear_mm3": 0.0,
-        "tool_vs_bezel_mm3": 0.0,
-        "pilot_clear_mm3": 0,
-        "bottom_clearance_mm": 0.9999999999999964,
-        "sku_and_torque": "UNVERIFIED"
+        "pilot_mm3": 0,
+        "passage_mm3": 0,
+        "bottom_material_mm3": 0.25735927,
+        "head_vs_shells_mm3": {
+          "front": 0.0,
+          "rear": 0.0,
+          "key_bezel": 0.0
+        },
+        "tool_vs_shells_mm3": {
+          "front": 0.0,
+          "rear": 0.0,
+          "key_bezel": 0.0
+        },
+        "bottom_clearance_mm": 0.9999999999999964
       }
     ],
-    "service": "Install/remove caps along X with bezel removed AFTER front seam closure; remove caps before front lift. Actual cap insertion path UNVERIFIED pending top/body/post.",
     "reset": {
-      "full_tool_path_mm3": 0,
-      "switch_contact_mm3": 0.0099945830960049,
-      "reach_from_outer_wall_mm": 10.374632326403539,
-      "reach_from_retainer_exterior_mm": 10.374632326403539,
-      "reach_from_front_wall_mm": 8.574632326403542,
-      "entry_retainer_exterior_x_mm": -35.269999999999996,
-      "full_retainer_hole_mm3": 0,
-      "full_tool_vs_retainer_mm3": 0,
-      "tool_diameter_mm": 0.8,
-      "required_free_length_mm": 12.0,
-      "other_parts": {
+      "front": 0,
+      "rear": 0.0,
+      "key_bezel": 0,
+      "KEY1": 0.0,
+      "KEY2": 0.0,
+      "other_parts_mm3": {
+        "KEY1": 0.0,
+        "KEY2": 0.0,
         "DISPLAY": 0,
         "PCB_BOARD": 0.0,
-        "KEY2": 0.0,
-        "TF": 0.0,
-        "KEY1": 0.0
+        "TF": 0.0
       },
-      "status": "Nominal reach from installed retainer exterior only; real TS24CA travel/force, tip and safe overtravel UNVERIFIED; do not insert beyond contact"
-    }
+      "reach_from_retainer_exterior_mm": 10.374632326403539,
+      "tool_free_length_mm": 12.0,
+      "contact_mm3": 0.0099945830960049
+    },
+    "functional_status": "NOMINAL_GEOMETRIC_REACH_PASS_PHYSICAL_RETURN_AND_SWITCH_TRAVEL_UNVERIFIED",
+    "release_behavior": "0..rest_gap is unforced free play; switch return alone does not force the cap against its outer stop. Friction, rattle and actual electrical activation require physical verification.",
+    "limits": "Axis translation is continuous; radial samples are discrete, not a tilt/fatigue/friction proof. Unknown switch ratings remain null."
   },
   "direct_key_readiness": {
-    "status": "BLOCKED_P1_DIRECT_CAP_LAYOUT",
-    "keys": [
-      {
-        "key": "KEY1",
-        "external_retainer_plane_x_mm": -35.269999999999996,
-        "switch_contact_x_mm": -24.894360806339975,
-        "required_face_to_contact_span_mm": 10.375639193660021,
-        "supplier_nominal_total_x_mm": 5.5,
-        "missing_span_at_flush_face_mm": 4.875639193660021,
-        "status": "BLOCKED_DIRECT_EXTERNAL_CAP_AXIAL_SPAN"
-      },
-      {
-        "key": "KEY2",
-        "external_retainer_plane_x_mm": -35.269999999999996,
-        "switch_contact_x_mm": -24.896374539870415,
-        "required_face_to_contact_span_mm": 10.373625460129581,
-        "supplier_nominal_total_x_mm": 5.5,
-        "missing_span_at_flush_face_mm": 4.873625460129581,
-        "status": "BLOCKED_DIRECT_EXTERNAL_CAP_AXIAL_SPAN"
-      }
-    ],
-    "assumption": "Direct silicone actuation; finger face at or outside the retainer exterior. No pusher or deep finger well is modeled.",
-    "limits": "Necessary static span only, not a silicone deformation model. A multi-mm stroke or deeply recessed face is not validated by an empty tunnel.",
-    "resolution": "Define measured flange/seat-to-tip and safe travel, then relocate the mounting/access geometry and recheck it. Do not extend the reported post or add an unapproved pusher by assumption."
-  },
-  "preprint_blockers_P1": [
-    {
-      "status": "BLOCKED_P1_DIRECT_CAP_LAYOUT",
-      "keys": [
-        {
-          "key": "KEY1",
-          "external_retainer_plane_x_mm": -35.269999999999996,
-          "switch_contact_x_mm": -24.894360806339975,
-          "required_face_to_contact_span_mm": 10.375639193660021,
-          "supplier_nominal_total_x_mm": 5.5,
-          "missing_span_at_flush_face_mm": 4.875639193660021,
-          "status": "BLOCKED_DIRECT_EXTERNAL_CAP_AXIAL_SPAN"
+    "status": "PRINTED_SLIDER_GEOMETRIC_REACH_PASS_PHYSICAL_UNVERIFIED",
+    "keys": {
+      "KEY1": {
+        "flange_x_mm": [
+          -33.47,
+          -31.669999999999998
+        ],
+        "actual_tip_x_mm": -25.144360806339975,
+        "switch_tip_x_mm": -24.894360806339975,
+        "rest_gap_mm": 0.25,
+        "geometric_stroke_mm": 0.5500000000000007,
+        "switch_displacement_at_stop_mm": 0.3000000000000007,
+        "static_switch_overlap_at_stop_mm3": 0.29953328611856617,
+        "exposed_head_mm": 1.5,
+        "actual_switch_travel_mm": null,
+        "max_safe_switch_displacement_mm": null,
+        "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
+        "continuous_axial_sweep": {
+          "front": 0,
+          "rear": 0,
+          "key_bezel": 0
         },
-        {
-          "key": "KEY2",
-          "external_retainer_plane_x_mm": -35.269999999999996,
-          "switch_contact_x_mm": -24.896374539870415,
-          "required_face_to_contact_span_mm": 10.373625460129581,
-          "supplier_nominal_total_x_mm": 5.5,
-          "missing_span_at_flush_face_mm": 4.873625460129581,
-          "status": "BLOCKED_DIRECT_EXTERNAL_CAP_AXIAL_SPAN"
-        }
-      ],
-      "assumption": "Direct silicone actuation; finger face at or outside the retainer exterior. No pusher or deep finger well is modeled.",
-      "limits": "Necessary static span only, not a silicone deformation model. A multi-mm stroke or deeply recessed face is not validated by an empty tunnel.",
-      "resolution": "Define measured flange/seat-to-tip and safe travel, then relocate the mounting/access geometry and recheck it. Do not extend the reported post or add an unapproved pusher by assumption."
-    }
+        "non_actuator_board_sweep_mm3": 0,
+        "rest_board_mm3": 0,
+        "screw_sweep_mm3": 0.0,
+        "continuous_extraction": {
+          "front": 0,
+          "rear": 0
+        },
+        "extraction_board_mm3": 0,
+        "outward_and_inward_stop_blocked": true,
+        "radial_translation_poses": [
+          {
+            "offset_yz_mm": [
+              0.297,
+              0.0
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              0.21001071401240462,
+              0.2100107140124046
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              1.8186004967338195e-17,
+              0.297
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.2100107140124046,
+              0.21001071401240462
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.297,
+              3.637200993467639e-17
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.21001071401240468,
+              -0.2100107140124046
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -5.455801490201458e-17,
+              -0.297
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              0.21001071401240456,
+              -0.21001071401240468
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          }
+        ]
+      },
+      "KEY2": {
+        "flange_x_mm": [
+          -33.47,
+          -31.669999999999998
+        ],
+        "actual_tip_x_mm": -25.146374539870415,
+        "switch_tip_x_mm": -24.896374539870415,
+        "rest_gap_mm": 0.25,
+        "geometric_stroke_mm": 0.5500000000000007,
+        "switch_displacement_at_stop_mm": 0.3000000000000007,
+        "static_switch_overlap_at_stop_mm3": 0.2995336806981024,
+        "exposed_head_mm": 1.5,
+        "actual_switch_travel_mm": null,
+        "max_safe_switch_displacement_mm": null,
+        "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
+        "continuous_axial_sweep": {
+          "front": 0,
+          "rear": 0,
+          "key_bezel": 0
+        },
+        "non_actuator_board_sweep_mm3": 0,
+        "rest_board_mm3": 0,
+        "screw_sweep_mm3": 0.0,
+        "continuous_extraction": {
+          "front": 0,
+          "rear": 0
+        },
+        "extraction_board_mm3": 0,
+        "outward_and_inward_stop_blocked": true,
+        "radial_translation_poses": [
+          {
+            "offset_yz_mm": [
+              0.297,
+              0.0
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              0.21001071401240462,
+              0.2100107140124046
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              1.8186004967338195e-17,
+              0.297
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.2100107140124046,
+              0.21001071401240462
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.297,
+              3.637200993467639e-17
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.21001071401240468,
+              -0.2100107140124046
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -5.455801490201458e-17,
+              -0.297
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              0.21001071401240456,
+              -0.21001071401240468
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          }
+        ]
+      }
+    },
+    "supersedes": "0127 direct cap span blocker; user authorized printed one-piece sliders"
+  },
+  "preprint_blockers_P1": [],
+  "functional_verification_required": [
+    "Actual switch actuation and maximum safe displacement are null; geometric stop displacement is a design candidate only",
+    "PA12 slide friction and switch return force are null; free play is not forced back against outer stop",
+    "Reduced screen fit scenario is unverified in Z/flatness; previous larger budget is explicitly NOT covered"
   ],
   "battery_stack": {
     "actual_battery_bounds_mm": [
@@ -957,7 +1909,7 @@
       "20": {},
       "40": {}
     },
-    "cap_status": "Caps/retainer removed during front loading; physical cap installation after closure UNVERIFIED",
+    "cap_status": "Printed buttons/retainer removed during front loading; continuous axial button installation/extraction checked separately",
     "continuous_or_tilted_path": "UNVERIFIED; 14 discrete straight poses, not continuous proof"
   },
   "speaker_candidate": {
@@ -965,153 +1917,81 @@
     "exit": "+Y toward battery",
     "real_lead": "UNVERIFIED"
   },
-  "coupon_interfaces": {
-    "0127_coupon_A": {
-      "clearance_per_side_mm": 0.15,
-      "full_counter_overlap_mm3": 0,
-      "full_tunnel_overlap_mm3": 0,
-      "full_shoulder_material_mm3": 0.844496,
-      "bridge_mm": 2.0,
-      "bridge_material_mm3": 65.142,
-      "retainer": [
-        {
-          "y_mm": 0,
-          "full_window_overlap_mm3": 0,
-          "full_capture_projection_material_mm3": 37.157824
-        }
-      ],
-      "pair_overlap_mm3": 0.0,
-      "fasteners": [
-        {
-          "y_mm": -7.4,
-          "pilot_overlap_mm3": 0,
-          "passage_overlap_mm3": 0,
-          "pilot_bottom_material_mm3": 0.38603891
-        },
-        {
-          "y_mm": 7.4,
-          "pilot_overlap_mm3": 0,
-          "passage_overlap_mm3": 0,
-          "pilot_bottom_material_mm3": 0.38603891
-        }
-      ]
-    },
-    "0127_coupon_B": {
-      "clearance_per_side_mm": 0.3,
-      "full_counter_overlap_mm3": 0,
-      "full_tunnel_overlap_mm3": 0,
-      "full_shoulder_material_mm3": 0.844496,
-      "bridge_mm": 1.8499999999999996,
-      "bridge_material_mm3": 62.1285,
-      "retainer": [
-        {
-          "y_mm": 0,
-          "full_window_overlap_mm3": 0,
-          "full_capture_projection_material_mm3": 37.157824
-        }
-      ],
-      "pair_overlap_mm3": 0.0,
-      "fasteners": [
-        {
-          "y_mm": -7.4,
-          "pilot_overlap_mm3": 0,
-          "passage_overlap_mm3": 0,
-          "pilot_bottom_material_mm3": 0.38603891
-        },
-        {
-          "y_mm": 7.4,
-          "pilot_overlap_mm3": 0,
-          "passage_overlap_mm3": 0,
-          "pilot_bottom_material_mm3": 0.38603891
-        }
-      ]
-    },
-    "0127_coupon_C": {
-      "clearance_per_side_mm": 0.45,
-      "full_counter_overlap_mm3": 0,
-      "full_tunnel_overlap_mm3": 0,
-      "full_shoulder_material_mm3": 0.844496,
-      "bridge_mm": 1.700000000000001,
-      "bridge_material_mm3": 58.8,
-      "retainer": [
-        {
-          "y_mm": 0,
-          "full_window_overlap_mm3": 0,
-          "full_capture_projection_material_mm3": 37.157824
-        }
-      ],
-      "pair_overlap_mm3": 0.0,
-      "fasteners": [
-        {
-          "y_mm": -7.4,
-          "pilot_overlap_mm3": 0,
-          "passage_overlap_mm3": 0,
-          "pilot_bottom_material_mm3": 0.38603891
-        },
-        {
-          "y_mm": 7.4,
-          "pilot_overlap_mm3": 0,
-          "passage_overlap_mm3": 0,
-          "pilot_bottom_material_mm3": 0.38603891
-        }
-      ]
-    }
-  },
   "interface_negative_controls": [
     {
-      "mutation": "production retainer window sealed at Y=-3.62",
+      "mutation": "KEY1 retainer window sealed",
       "rejected": true,
-      "reason": "('retainer full window', 80.63999999999986, [-35.269999999999996, -7.620000000000001, -9.2, -33.47, 0.3799999999999999, -3.6])"
+      "reason": "('slider retainer window', 47.52463701760552, [-35.269999999999996, -6.519, -9.399000000000001, -33.47, -0.7210000000000001, -3.601])"
     },
     {
-      "mutation": "production retainer window sealed at Y=-19.26",
+      "mutation": "KEY1 guide sealed",
       "rejected": true,
-      "reason": "('retainer full window', 80.63999999999986, [-35.269999999999996, -23.26, -9.2, -33.47, -15.260000000000002, -3.6])"
+      "reason": "('slider full guide', 72.66646828758738, [-31.119999999999997, -5.719, -8.599, -25.870000000000005, -1.521, -4.400999999999999])"
     },
     {
-      "mutation": "production retainer RESET hole sealed",
+      "mutation": "KEY1 inner stop removed",
       "rejected": true,
-      "reason": "('retainer RESET full hole', 6.8299537474771235, [-35.269999999999996, -12.539, -7.4990000000000006, -33.47, -10.341, -5.301])"
+      "reason": "('slider inner stop', 0, 1.1370052131871935)"
     },
     {
-      "mutation": "0127_coupon_A tunnel sealed",
+      "mutation": "KEY1 outer capture removed",
       "rejected": true,
-      "reason": "('coupon full tunnel', 179.15519999999975, [-29.868999999999996, -4.0, -9.2, -25.87, 4.0, -3.6])"
+      "reason": "('slider outer capture', 0, 28.464337405997128)"
     },
     {
-      "mutation": "0127_coupon_A shoulder removed",
+      "mutation": "KEY1 tip shortened",
       "rejected": true,
-      "reason": "('coupon full shoulder', 0, 0.8444959999999821)"
+      "reason": "('slider reaches switch', 0.7999999999999972, 0.5500000000000007, 0.0)"
     },
     {
-      "mutation": "0127_coupon_B tunnel sealed",
+      "mutation": "KEY1 tip preloads switch",
       "rejected": true,
-      "reason": "('coupon full tunnel', 179.15519999999975, [-29.868999999999996, -4.0, -9.2, -25.87, 4.0, -3.6])"
+      "reason": "('slider resting preload', -0.10000000000000142)"
     },
     {
-      "mutation": "0127_coupon_B shoulder removed",
+      "mutation": "KEY2 retainer window sealed",
       "rejected": true,
-      "reason": "('coupon full shoulder', 0, 0.8444959999999821)"
+      "reason": "('slider retainer window', 47.52463701760552, [-35.269999999999996, -22.159000000000002, -9.399000000000001, -33.47, -16.361, -3.601])"
     },
     {
-      "mutation": "0127_coupon_C tunnel sealed",
+      "mutation": "KEY2 guide sealed",
       "rejected": true,
-      "reason": "('coupon full tunnel', 179.15519999999975, [-29.868999999999996, -4.0, -9.2, -25.87, 4.0, -3.6])"
+      "reason": "('slider full guide', 72.66646828758738, [-31.119999999999997, -21.359, -8.599, -25.870000000000005, -17.161, -4.400999999999999])"
     },
     {
-      "mutation": "0127_coupon_C shoulder removed",
+      "mutation": "KEY2 inner stop removed",
       "rejected": true,
-      "reason": "('coupon full shoulder', 0, 0.8444959999999821)"
+      "reason": "('slider inner stop', 0, 1.1370052131871937)"
+    },
+    {
+      "mutation": "KEY2 outer capture removed",
+      "rejected": true,
+      "reason": "('slider outer capture', 0, 28.464337405997114)"
+    },
+    {
+      "mutation": "KEY2 tip shortened",
+      "rejected": true,
+      "reason": "('slider reaches switch', 0.7999999999999972, 0.5500000000000007, 0.0)"
+    },
+    {
+      "mutation": "KEY2 tip preloads switch",
+      "rejected": true,
+      "reason": "('slider resting preload', -0.10000000000000142)"
+    },
+    {
+      "mutation": "RESET sealed in retainer",
+      "rejected": true,
+      "reason": "('slider retainer RESET', 6.8299537474771235, [-35.269999999999996, -12.539, -7.4990000000000006, -33.47, -10.341, -5.301])"
     }
   ],
   "export_checks": {
     "front_shell": {
       "step_valid": true,
       "step_solid_count": 1,
-      "stl_triangles": 8422,
+      "stl_triangles": 9702,
       "stl_nonmanifold_edges": 0,
       "step_stl_bounds_error_mm": 2.7465820267025265e-06,
-      "step_stl_relative_volume_error": 4.055444136049168e-05
+      "step_stl_relative_volume_error": 1.4428810406355007e-05
     },
     "rear_shell": {
       "step_valid": true,
@@ -1121,61 +2001,61 @@
       "step_stl_bounds_error_mm": 2.7465820267025265e-06,
       "step_stl_relative_volume_error": 6.153190036895378e-06
     },
-    "0127_retainer": {
+    "button_retainer": {
       "step_valid": true,
       "step_solid_count": 1,
-      "stl_triangles": 1072,
+      "stl_triangles": 1712,
       "stl_nonmanifold_edges": 0,
       "step_stl_bounds_error_mm": 1.2207031261368684e-06,
-      "step_stl_relative_volume_error": 2.3830597217303755e-05
+      "step_stl_relative_volume_error": 0.00014466444210231046
     },
-    "0127_coupon_A": {
+    "button_power_short": {
       "step_valid": true,
       "step_solid_count": 1,
-      "stl_triangles": 720,
+      "stl_triangles": 1340,
       "stl_nonmanifold_edges": 0,
-      "step_stl_bounds_error_mm": 1.2207031261368684e-06,
-      "step_stl_relative_volume_error": 6.9194496391880756e-06
+      "step_stl_bounds_error_mm": 4.5776366874861196e-07,
+      "step_stl_relative_volume_error": 0.0009319765791452144
     },
-    "0127_coupon_A_bezel": {
+    "button_power_nominal": {
       "step_valid": true,
       "step_solid_count": 1,
-      "stl_triangles": 712,
+      "stl_triangles": 1340,
       "stl_nonmanifold_edges": 0,
-      "step_stl_bounds_error_mm": 1.2207031261368684e-06,
-      "step_stl_relative_volume_error": 2.5136891299050713e-05
+      "step_stl_bounds_error_mm": 6.896316797622148e-07,
+      "step_stl_relative_volume_error": 0.0009320660709697275
     },
-    "0127_coupon_B": {
+    "button_power_long": {
       "step_valid": true,
       "step_solid_count": 1,
-      "stl_triangles": 720,
+      "stl_triangles": 1340,
       "stl_nonmanifold_edges": 0,
-      "step_stl_bounds_error_mm": 1.2207031261368684e-06,
-      "step_stl_relative_volume_error": 6.985936566729572e-06
+      "step_stl_bounds_error_mm": 8.362472279088706e-07,
+      "step_stl_relative_volume_error": 0.0009321396583376778
     },
-    "0127_coupon_B_bezel": {
+    "button_boot_short": {
       "step_valid": true,
       "step_solid_count": 1,
-      "stl_triangles": 712,
+      "stl_triangles": 1340,
       "stl_nonmanifold_edges": 0,
-      "step_stl_bounds_error_mm": 1.2207031261368684e-06,
-      "step_stl_relative_volume_error": 2.5136891299050713e-05
+      "step_stl_bounds_error_mm": 9.155273446026513e-07,
+      "step_stl_relative_volume_error": 0.0009319297415758357
     },
-    "0127_coupon_C": {
+    "button_boot_nominal": {
       "step_valid": true,
       "step_solid_count": 1,
-      "stl_triangles": 720,
+      "stl_triangles": 1340,
       "stl_nonmanifold_edges": 0,
-      "step_stl_bounds_error_mm": 1.2207031261368684e-06,
-      "step_stl_relative_volume_error": 7.079534107812226e-06
+      "step_stl_bounds_error_mm": 9.155273446026513e-07,
+      "step_stl_relative_volume_error": 0.0009320103885570538
     },
-    "0127_coupon_C_bezel": {
+    "button_boot_long": {
       "step_valid": true,
       "step_solid_count": 1,
-      "stl_triangles": 712,
+      "stl_triangles": 1340,
       "stl_nonmanifold_edges": 0,
-      "step_stl_bounds_error_mm": 1.2207031261368684e-06,
-      "step_stl_relative_volume_error": 2.5136891299050713e-05
+      "step_stl_bounds_error_mm": 9.155273446026513e-07,
+      "step_stl_relative_volume_error": 0.0009320963915096511
     }
   },
   "screen_air_STEP_roundtrip": {
@@ -1242,19 +2122,739 @@
     0,
     0
   ],
-  "retainer_windows_STEP_roundtrip": [
-    {
-      "y_mm": -3.62,
-      "full_window_overlap_mm3": 0,
-      "full_capture_projection_material_mm3": 37.157824
+  "printed_slider_STEP_roundtrip": {
+    "retainer": {
+      "keys": [
+        {
+          "y_mm": -3.62,
+          "full_window_mm3": 0,
+          "capture_ring_mm3": 28.46433741
+        },
+        {
+          "y_mm": -19.26,
+          "full_window_mm3": 0,
+          "capture_ring_mm3": 28.46433741
+        }
+      ],
+      "reset_mm3": 0
     },
-    {
-      "y_mm": -19.26,
-      "full_window_overlap_mm3": 0,
-      "full_capture_projection_material_mm3": 37.157824
-    }
-  ],
-  "retainer_RESET_STEP_roundtrip": 0,
+    "pockets": [
+      {
+        "y_mm": -3.62,
+        "counter_mm3": 0,
+        "guide_mm3": 0,
+        "stop_ring_mm3": 1.13700521,
+        "bridge_mm": 1.6500000000000004,
+        "bridge_material_mm3": 1.83375
+      },
+      {
+        "y_mm": -19.26,
+        "counter_mm3": 0,
+        "guide_mm3": 0,
+        "stop_ring_mm3": 1.13700521,
+        "bridge_mm": 1.6500000000000004,
+        "bridge_material_mm3": 1.83375
+      }
+    ],
+    "keys": {
+      "KEY1": {
+        "flange_x_mm": [
+          -33.47,
+          -31.67
+        ],
+        "actual_tip_x_mm": -25.14436080634,
+        "switch_tip_x_mm": -24.894360806339975,
+        "rest_gap_mm": 0.25000000000002487,
+        "geometric_stroke_mm": 0.5500000000000043,
+        "switch_displacement_at_stop_mm": 0.2999999999999794,
+        "static_switch_overlap_at_stop_mm3": 0.2995332603773187,
+        "exposed_head_mm": 1.500000000000007,
+        "actual_switch_travel_mm": null,
+        "max_safe_switch_displacement_mm": null,
+        "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
+        "continuous_axial_sweep": {
+          "front": 0,
+          "rear": 0,
+          "key_bezel": 0
+        },
+        "non_actuator_board_sweep_mm3": 0,
+        "rest_board_mm3": 0,
+        "screw_sweep_mm3": 0.0,
+        "continuous_extraction": {
+          "front": 0,
+          "rear": 0
+        },
+        "extraction_board_mm3": 0,
+        "outward_and_inward_stop_blocked": true,
+        "radial_translation_poses": [
+          {
+            "offset_yz_mm": [
+              0.297,
+              0.0
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              0.21001071401240462,
+              0.2100107140124046
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              1.8186004967338195e-17,
+              0.297
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.2100107140124046,
+              0.21001071401240462
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.297,
+              3.637200993467639e-17
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.21001071401240468,
+              -0.2100107140124046
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -5.455801490201458e-17,
+              -0.297
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              0.21001071401240456,
+              -0.21001071401240468
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          }
+        ]
+      },
+      "KEY2": {
+        "flange_x_mm": [
+          -33.47,
+          -31.67
+        ],
+        "actual_tip_x_mm": -25.14637453987,
+        "switch_tip_x_mm": -24.896374539870415,
+        "rest_gap_mm": 0.24999999999958433,
+        "geometric_stroke_mm": 0.5500000000000043,
+        "switch_displacement_at_stop_mm": 0.30000000000041993,
+        "static_switch_overlap_at_stop_mm3": 0.2995336956065722,
+        "exposed_head_mm": 1.500000000000007,
+        "actual_switch_travel_mm": null,
+        "max_safe_switch_displacement_mm": null,
+        "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
+        "continuous_axial_sweep": {
+          "front": 0,
+          "rear": 0,
+          "key_bezel": 0
+        },
+        "non_actuator_board_sweep_mm3": 0,
+        "rest_board_mm3": 0,
+        "screw_sweep_mm3": 0.0,
+        "continuous_extraction": {
+          "front": 0,
+          "rear": 0
+        },
+        "extraction_board_mm3": 0,
+        "outward_and_inward_stop_blocked": true,
+        "radial_translation_poses": [
+          {
+            "offset_yz_mm": [
+              0.297,
+              0.0
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              0.21001071401240462,
+              0.2100107140124046
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              1.8186004967338195e-17,
+              0.297
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.2100107140124046,
+              0.21001071401240462
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.297,
+              3.637200993467639e-17
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.21001071401240468,
+              -0.2100107140124046
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -5.455801490201458e-17,
+              -0.297
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              0.21001071401240456,
+              -0.21001071401240468
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          }
+        ]
+      }
+    },
+    "variant_parts": {
+      "button_power_short": {
+        "flange_x_mm": [
+          -33.47,
+          -31.82
+        ],
+        "actual_tip_x_mm": -25.29436080634,
+        "switch_tip_x_mm": -24.894360806339975,
+        "rest_gap_mm": 0.40000000000002345,
+        "geometric_stroke_mm": 0.7000000000000028,
+        "switch_displacement_at_stop_mm": 0.2999999999999794,
+        "static_switch_overlap_at_stop_mm3": 0.2995332603773187,
+        "exposed_head_mm": 1.500000000000007,
+        "actual_switch_travel_mm": null,
+        "max_safe_switch_displacement_mm": null,
+        "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
+        "continuous_axial_sweep": {
+          "front": 0,
+          "rear": 0,
+          "key_bezel": 0
+        },
+        "non_actuator_board_sweep_mm3": 0,
+        "rest_board_mm3": 0.0,
+        "screw_sweep_mm3": 0.0,
+        "continuous_extraction": {
+          "front": 0,
+          "rear": 0
+        },
+        "extraction_board_mm3": 0.0,
+        "outward_and_inward_stop_blocked": true
+      },
+      "button_power_nominal": {
+        "flange_x_mm": [
+          -33.47,
+          -31.67
+        ],
+        "actual_tip_x_mm": -25.14436080634,
+        "switch_tip_x_mm": -24.894360806339975,
+        "rest_gap_mm": 0.25000000000002487,
+        "geometric_stroke_mm": 0.5500000000000043,
+        "switch_displacement_at_stop_mm": 0.2999999999999794,
+        "static_switch_overlap_at_stop_mm3": 0.2995332603773187,
+        "exposed_head_mm": 1.500000000000007,
+        "actual_switch_travel_mm": null,
+        "max_safe_switch_displacement_mm": null,
+        "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
+        "continuous_axial_sweep": {
+          "front": 0,
+          "rear": 0,
+          "key_bezel": 0
+        },
+        "non_actuator_board_sweep_mm3": 0,
+        "rest_board_mm3": 0,
+        "screw_sweep_mm3": 0.0,
+        "continuous_extraction": {
+          "front": 0,
+          "rear": 0
+        },
+        "extraction_board_mm3": 0,
+        "outward_and_inward_stop_blocked": true,
+        "radial_translation_poses": [
+          {
+            "offset_yz_mm": [
+              0.297,
+              0.0
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              0.21001071401240462,
+              0.2100107140124046
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              1.8186004967338195e-17,
+              0.297
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.2100107140124046,
+              0.21001071401240462
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.297,
+              3.637200993467639e-17
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.21001071401240468,
+              -0.2100107140124046
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -5.455801490201458e-17,
+              -0.297
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              0.21001071401240456,
+              -0.21001071401240468
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          }
+        ]
+      },
+      "button_power_long": {
+        "flange_x_mm": [
+          -33.47,
+          -31.52
+        ],
+        "actual_tip_x_mm": -24.99436080634,
+        "switch_tip_x_mm": -24.894360806339975,
+        "rest_gap_mm": 0.10000000000002629,
+        "geometric_stroke_mm": 0.40000000000000213,
+        "switch_displacement_at_stop_mm": 0.29999999999997584,
+        "static_switch_overlap_at_stop_mm3": 0.29953326037731515,
+        "exposed_head_mm": 1.500000000000007,
+        "actual_switch_travel_mm": null,
+        "max_safe_switch_displacement_mm": null,
+        "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
+        "continuous_axial_sweep": {
+          "front": 0,
+          "rear": 0,
+          "key_bezel": 0
+        },
+        "non_actuator_board_sweep_mm3": 0,
+        "rest_board_mm3": 0,
+        "screw_sweep_mm3": 0.0,
+        "continuous_extraction": {
+          "front": 0,
+          "rear": 0
+        },
+        "extraction_board_mm3": 0,
+        "outward_and_inward_stop_blocked": true
+      },
+      "button_boot_short": {
+        "flange_x_mm": [
+          -33.47,
+          -31.82
+        ],
+        "actual_tip_x_mm": -25.29637453987,
+        "switch_tip_x_mm": -24.896374539870415,
+        "rest_gap_mm": 0.39999999999958646,
+        "geometric_stroke_mm": 0.7000000000000028,
+        "switch_displacement_at_stop_mm": 0.3000000000004164,
+        "static_switch_overlap_at_stop_mm3": 0.29953369560656934,
+        "exposed_head_mm": 1.500000000000007,
+        "actual_switch_travel_mm": null,
+        "max_safe_switch_displacement_mm": null,
+        "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
+        "continuous_axial_sweep": {
+          "front": 0,
+          "rear": 0,
+          "key_bezel": 0
+        },
+        "non_actuator_board_sweep_mm3": 0,
+        "rest_board_mm3": 0.0,
+        "screw_sweep_mm3": 0.0,
+        "continuous_extraction": {
+          "front": 0,
+          "rear": 0
+        },
+        "extraction_board_mm3": 0.0,
+        "outward_and_inward_stop_blocked": true
+      },
+      "button_boot_nominal": {
+        "flange_x_mm": [
+          -33.47,
+          -31.67
+        ],
+        "actual_tip_x_mm": -25.14637453987,
+        "switch_tip_x_mm": -24.896374539870415,
+        "rest_gap_mm": 0.24999999999958433,
+        "geometric_stroke_mm": 0.5500000000000043,
+        "switch_displacement_at_stop_mm": 0.30000000000041993,
+        "static_switch_overlap_at_stop_mm3": 0.2995336956065722,
+        "exposed_head_mm": 1.500000000000007,
+        "actual_switch_travel_mm": null,
+        "max_safe_switch_displacement_mm": null,
+        "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
+        "continuous_axial_sweep": {
+          "front": 0,
+          "rear": 0,
+          "key_bezel": 0
+        },
+        "non_actuator_board_sweep_mm3": 0,
+        "rest_board_mm3": 0,
+        "screw_sweep_mm3": 0.0,
+        "continuous_extraction": {
+          "front": 0,
+          "rear": 0
+        },
+        "extraction_board_mm3": 0,
+        "outward_and_inward_stop_blocked": true,
+        "radial_translation_poses": [
+          {
+            "offset_yz_mm": [
+              0.297,
+              0.0
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              0.21001071401240462,
+              0.2100107140124046
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              1.8186004967338195e-17,
+              0.297
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.2100107140124046,
+              0.21001071401240462
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.297,
+              3.637200993467639e-17
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.21001071401240468,
+              -0.2100107140124046
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -5.455801490201458e-17,
+              -0.297
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              0.21001071401240456,
+              -0.21001071401240468
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          }
+        ]
+      },
+      "button_boot_long": {
+        "flange_x_mm": [
+          -33.47,
+          -31.52
+        ],
+        "actual_tip_x_mm": -24.99637453987,
+        "switch_tip_x_mm": -24.896374539870415,
+        "rest_gap_mm": 0.09999999999958575,
+        "geometric_stroke_mm": 0.40000000000000213,
+        "switch_displacement_at_stop_mm": 0.3000000000004164,
+        "static_switch_overlap_at_stop_mm3": 0.29953369560656934,
+        "exposed_head_mm": 1.500000000000007,
+        "actual_switch_travel_mm": null,
+        "max_safe_switch_displacement_mm": null,
+        "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
+        "continuous_axial_sweep": {
+          "front": 0,
+          "rear": 0,
+          "key_bezel": 0
+        },
+        "non_actuator_board_sweep_mm3": 0,
+        "rest_board_mm3": 0,
+        "screw_sweep_mm3": 0.0,
+        "continuous_extraction": {
+          "front": 0,
+          "rear": 0
+        },
+        "extraction_board_mm3": 0,
+        "outward_and_inward_stop_blocked": true
+      }
+    },
+    "retainer_screws": [
+      {
+        "yz_mm": [
+          -27.0,
+          -2.0
+        ],
+        "pilot_mm3": 0,
+        "passage_mm3": 0,
+        "bottom_material_mm3": 0.25735927,
+        "head_vs_shells_mm3": {
+          "front": 0.0,
+          "rear": 0.0,
+          "key_bezel": 0.0
+        },
+        "tool_vs_shells_mm3": {
+          "front": 0.0,
+          "rear": 0.0,
+          "key_bezel": 0.0
+        },
+        "bottom_clearance_mm": 0.9999999999999964
+      },
+      {
+        "yz_mm": [
+          3.5,
+          -6.4
+        ],
+        "pilot_mm3": 0,
+        "passage_mm3": 0,
+        "bottom_material_mm3": 0.25735927,
+        "head_vs_shells_mm3": {
+          "front": 0.0,
+          "rear": 0.0,
+          "key_bezel": 0.0
+        },
+        "tool_vs_shells_mm3": {
+          "front": 0.0,
+          "rear": 0.0,
+          "key_bezel": 0.0
+        },
+        "bottom_clearance_mm": 0.9999999999999964
+      }
+    ],
+    "reset": {
+      "front": 0,
+      "rear": 0.0,
+      "key_bezel": 0,
+      "KEY1": 0.0,
+      "KEY2": 0.0,
+      "other_parts_mm3": {
+        "KEY1": 0.0,
+        "KEY2": 0.0,
+        "DISPLAY": 0,
+        "PCB_BOARD": 0.0,
+        "TF": 0.0
+      },
+      "reach_from_retainer_exterior_mm": 10.374632326403539,
+      "tool_free_length_mm": 12.0,
+      "contact_mm3": 0.0099945830960049
+    },
+    "functional_status": "NOMINAL_GEOMETRIC_REACH_PASS_PHYSICAL_RETURN_AND_SWITCH_TRAVEL_UNVERIFIED",
+    "release_behavior": "0..rest_gap is unforced free play; switch return alone does not force the cap against its outer stop. Friction, rattle and actual electrical activation require physical verification.",
+    "limits": "Axis translation is continuous; radial samples are discrete, not a tilt/fatigue/friction proof. Unknown switch ratings remain null."
+  },
   "USB_access_STEP_roundtrip": {
     "probe_bounds_mm": [
       -6.099793535910903,
@@ -1270,165 +2870,5 @@
       "key_bezel": 0.0
     },
     "scope": "12.2 x 6.3 nominal body from the official mouth; no credit for a narrow metal nose. Real cable/side-load and print fit remain UNVERIFIED."
-  },
-  "coupon_interfaces_STEP_roundtrip": {
-    "0127_coupon_A": {
-      "clearance_per_side_mm": 0.15,
-      "full_counter_overlap_mm3": 0,
-      "full_tunnel_overlap_mm3": 0,
-      "full_shoulder_material_mm3": 0.844496,
-      "bridge_mm": 2.0,
-      "bridge_material_mm3": 65.142,
-      "retainer": [
-        {
-          "y_mm": 0,
-          "full_window_overlap_mm3": 0,
-          "full_capture_projection_material_mm3": 37.157824
-        }
-      ],
-      "pair_overlap_mm3": 0.0,
-      "fasteners": [
-        {
-          "y_mm": -7.4,
-          "pilot_overlap_mm3": 0,
-          "passage_overlap_mm3": 0,
-          "pilot_bottom_material_mm3": 0.38603891
-        },
-        {
-          "y_mm": 7.4,
-          "pilot_overlap_mm3": 0,
-          "passage_overlap_mm3": 0,
-          "pilot_bottom_material_mm3": 0.38603891
-        }
-      ]
-    },
-    "0127_coupon_B": {
-      "clearance_per_side_mm": 0.3,
-      "full_counter_overlap_mm3": 0,
-      "full_tunnel_overlap_mm3": 0,
-      "full_shoulder_material_mm3": 0.844496,
-      "bridge_mm": 1.8499999999999996,
-      "bridge_material_mm3": 62.1285,
-      "retainer": [
-        {
-          "y_mm": 0,
-          "full_window_overlap_mm3": 0,
-          "full_capture_projection_material_mm3": 37.157824
-        }
-      ],
-      "pair_overlap_mm3": 0.0,
-      "fasteners": [
-        {
-          "y_mm": -7.4,
-          "pilot_overlap_mm3": 0,
-          "passage_overlap_mm3": 0,
-          "pilot_bottom_material_mm3": 0.38603891
-        },
-        {
-          "y_mm": 7.4,
-          "pilot_overlap_mm3": 0,
-          "passage_overlap_mm3": 0,
-          "pilot_bottom_material_mm3": 0.38603891
-        }
-      ]
-    },
-    "0127_coupon_C": {
-      "clearance_per_side_mm": 0.45,
-      "full_counter_overlap_mm3": 0,
-      "full_tunnel_overlap_mm3": 0,
-      "full_shoulder_material_mm3": 0.844496,
-      "bridge_mm": 1.700000000000001,
-      "bridge_material_mm3": 58.8,
-      "retainer": [
-        {
-          "y_mm": 0,
-          "full_window_overlap_mm3": 0,
-          "full_capture_projection_material_mm3": 37.157824
-        }
-      ],
-      "pair_overlap_mm3": 0.0,
-      "fasteners": [
-        {
-          "y_mm": -7.4,
-          "pilot_overlap_mm3": 0,
-          "passage_overlap_mm3": 0,
-          "pilot_bottom_material_mm3": 0.38603891
-        },
-        {
-          "y_mm": 7.4,
-          "pilot_overlap_mm3": 0,
-          "passage_overlap_mm3": 0,
-          "pilot_bottom_material_mm3": 0.38603891
-        }
-      ]
-    }
-  },
-  "coupon_table": {
-    "0127_coupon_A": {
-      "outer_x": -33.47,
-      "seat_x": -29.869999999999997,
-      "inner_x": -25.87,
-      "pocket_y": 9.5,
-      "pocket_z": 7.5,
-      "tunnel_y": 8.0,
-      "tunnel_z": 5.6,
-      "center_z": -6.4,
-      "clearance": 0.15
-    },
-    "0127_coupon_A_bezel": {
-      "outer_x": -33.47,
-      "seat_x": -29.869999999999997,
-      "inner_x": -25.87,
-      "pocket_y": 9.5,
-      "pocket_z": 7.5,
-      "tunnel_y": 8.0,
-      "tunnel_z": 5.6,
-      "center_z": -6.4,
-      "clearance": 0.15
-    },
-    "0127_coupon_B": {
-      "outer_x": -33.47,
-      "seat_x": -29.869999999999997,
-      "inner_x": -25.87,
-      "pocket_y": 9.799999999999999,
-      "pocket_z": 7.8,
-      "tunnel_y": 8.0,
-      "tunnel_z": 5.6,
-      "center_z": -6.4,
-      "clearance": 0.3
-    },
-    "0127_coupon_B_bezel": {
-      "outer_x": -33.47,
-      "seat_x": -29.869999999999997,
-      "inner_x": -25.87,
-      "pocket_y": 9.799999999999999,
-      "pocket_z": 7.8,
-      "tunnel_y": 8.0,
-      "tunnel_z": 5.6,
-      "center_z": -6.4,
-      "clearance": 0.3
-    },
-    "0127_coupon_C": {
-      "outer_x": -33.47,
-      "seat_x": -29.869999999999997,
-      "inner_x": -25.87,
-      "pocket_y": 10.1,
-      "pocket_z": 8.1,
-      "tunnel_y": 8.0,
-      "tunnel_z": 5.6,
-      "center_z": -6.4,
-      "clearance": 0.45
-    },
-    "0127_coupon_C_bezel": {
-      "outer_x": -33.47,
-      "seat_x": -29.869999999999997,
-      "inner_x": -25.87,
-      "pocket_y": 10.1,
-      "pocket_z": 8.1,
-      "tunnel_y": 8.0,
-      "tunnel_z": 5.6,
-      "center_z": -6.4,
-      "clearance": 0.45
-    }
   }
 }

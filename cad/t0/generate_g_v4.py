@@ -23,7 +23,7 @@ from check_exports import verify_exports
 from v2_wiring import build as build_wiring
 import t0_g_v4 as V4
 import g_v4_checks as C
-from g_v4_interfaces import coupons
+import g_v4_slider_checks as S
 from g_v4_documentation import write_readme, write_measurement_sheet
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -86,20 +86,19 @@ def main():
     report = dict(status='CHECKING', print_approved=False, functional_actuation_status='UNVERIFIED',
                   manufacturing_status='UNVERIFIED', coordinates='USB +Y / FRONT +Z / cap axis +X, side-wall plane YZ',
                   design_change=v, remaining_S2=[
-                      '0127 actual base flange/top/body/post, travel/force and insertion path unmeasured; coupon required',
+                      'Printed slider friction/return/free play and actual switch actuation/max travel remain UNVERIFIED; optional spare lengths can be printed in the same batch',
                       'Supplier screw SKU, length/head tolerances, PA12 pilot/torque and service life unverified',
                       'Screen active-area/edge touch coverage, lip deflection, glass load, seam flatness and actual tolerance chain unverified',
                       'Actual battery screen/mainboard-side lead is UNMODELED; adhesive, battery tolerance/swelling and tray retention need measurement',
                       'MIC V1 drilled hole and acoustic inlet unmeasured; RESET operating stroke/force and real tools unverified',
-                      'Front loading checked at discrete straight poses; cap and real lead must be removed/controlled; arbitrary tilted assembly unverified'])
-    report['generator_inputs_sha256']={name:hashlib.sha256((ROOT/name).read_bytes()).hexdigest() for name in [
-        'cad/t0/t0-g-v4.json','cad/t0/t0_g_v4.py','cad/t0/generate_g_v4.py',
-        'cad/t0/g_v4_interfaces.py','cad/t0/g_v4_checks.py','cad/t0/g_v4_documentation.py','scripts/generate-g-v4.sh']}
+                      'Empty-front loading is discrete; printed button axial motion/extraction are continuous; tilted insertion and actual lead remain unverified'])
+    inputs=sorted([*CFG.glob('*.py'),*CFG.glob('*.json'),ROOT/'scripts/generate-g-v4.sh'])
+    report['generator_inputs_sha256']={str(path.relative_to(ROOT)):hashlib.sha256(path.read_bytes()).hexdigest() for path in inputs}
     (BUILD/'checks.json').write_text(json.dumps(report,indent=2)+'\n')
     try:
         print('Import RAW official STEP / 723 real solids', flush=True)
         parts, mounts, _ = load(ROOT.parent / 'ESP32-C5-Touch-LCD-2.8/dimensions/ESP32-C5-Touch-LCD-2.8.stp')
-        print('Build V4 shells, removable retainer and 0127 coupons',flush=True)
+        print('Build V4 shells, removable retainer and captive printed sliders',flush=True)
         m=V4.build(parts,mounts,base,kp,p,kq,v)
         f,r=m['front'],m['rear']
         # Native snapshots keep failed geometry inspectable in build, never publish it.
@@ -112,7 +111,7 @@ def main():
                       bounds_mm={n:bounds(m[n]) for n in ['front','rear','key_bezel']})
         bb=report['bounds_mm'];report['overall_thickness_mm']=bb['front'][5]-bb['rear'][2]
         report['overall_bezel_width_mm']=bb['front'][3]-bb['key_bezel'][0]
-        report['overall_width_mm']=max(bounds(s)[3] for s in [f,r,m['key_bezel'],*m['retainer_screws']])-min(bounds(s)[0] for s in [f,r,m['key_bezel'],*m['retainer_screws']])
+        report['overall_width_mm']=max(bounds(s)[3] for s in [f,r,m['key_bezel'],*m['retainer_screws'],*m['buttons'].values()])-min(bounds(s)[0] for s in [f,r,m['key_bezel'],*m['retainer_screws'],*m['buttons'].values()])
         report['overall_height_mm']=bb['front'][4]-bb['front'][1]
         assert abs(report['overall_thickness_mm']-v['total_thickness_mm'])<1e-6
         report['screen_air']=C.screen_column(f,m['screen_geometry'])
@@ -137,18 +136,28 @@ def main():
         report['screen_measured']=dict(lip_underside_z_mm=actual_lb,lip_to_glass_gap_mm=actual_lb-gb[5],
             lip_thickness_mm=lt-actual_lb,window_to_glass_gap_mm=bounds(window)[0]-gb[3],screen_recess_mm=lt-gb[5])
         assert abs(report['screen_measured']['window_to_glass_gap_mm']-v['screen_clearance_mm'])<1e-6
-        # Candidate worst-case budget, not a guarantee of warp or assembly tilt.
+        # The reduced prototype scenario is explicit, not an asserted process capability.
+        scenario=v['screen_fit_scenarios'];xy=scenario['selected_xy_per_axis_mm'];zz=scenario['selected_z_mm']
         screen_budget=[]
-        for dx,dy in [(0,0),(.6,.6),(.6,-.6),(-.6,.6),(-.6,-.6)]:
-            display=parts['DISPLAY'].translate((dx,dy,.6))
-            screen_budget.append(dict(offset_xyz_mm=[dx,dy,.6],overlap_mm3=C.clear(f,display,'display budget')))
-        report['screen_budget']=dict(cases=screen_budget,XY_print_plus_register_plus_PCB_play_mm=.3+.15+.15,
-            corner_normal_budget_mm=(.6**2+.6**2)**.5,Z_budget_mm=.3+.3,
-            residual_Z_mm=v['screen_lip_bottom_gap_mm']-.6,warp_and_tilt='UNVERIFIED; do not use glass or screw preload to flatten shell; no foam under lip')
-        print('Check keys / positive retainer / RESET reach',flush=True)
+        for dx,dy in [(0,0),(xy,xy),(xy,-xy),(-xy,xy),(-xy,-xy)]:
+            display=parts['DISPLAY'].translate((dx,dy,zz))
+            screen_budget.append(dict(offset_xyz_mm=[dx,dy,zz],overlap_mm3=C.clear(f,display,'selected display fit scenario')))
+        old_xy=scenario['previous_xy_per_axis_mm'];old_z=scenario['previous_z_mm']
+        sensitivity=[]
+        for dx,dy,dz in [(0,0,old_z),(old_xy,old_xy,0),(-old_xy,-old_xy,old_z)]:
+            sensitivity.append(dict(offset_xyz_mm=[dx,dy,dz],overlap_mm3=C.overlap(f,parts['DISPLAY'].translate((dx,dy,dz)))))
+        assert sensitivity[0]['overlap_mm3']>1e-6,'screen reduced-clearance sensitivity must detect old +0.6Z interference'
+        report['screen_budget']=dict(cases=screen_budget,selected_scenario=scenario,previous_budget_sensitivity=sensitivity,
+            residual_selected_Z_mm=v['screen_lip_bottom_gap_mm']-zz,
+            previous_budget_covered=False,warp_and_tilt='UNVERIFIED, separate from dimensional error; no glass preload/foam; first-print XY observation does not prove Z accuracy')
+        print('Check complete printed buttons, continuous sliding/extraction, capture and RESET',flush=True)
         report['v4_interfaces']=C.interfaces(m,parts,v,base)
-        report['direct_key_readiness']=C.direct_key_readiness(parts,v)
-        report['preprint_blockers_P1']=[report['direct_key_readiness']] if report['direct_key_readiness']['status'].startswith('BLOCKED') else []
+        report['direct_key_readiness']=dict(status='PRINTED_SLIDER_GEOMETRIC_REACH_PASS_PHYSICAL_UNVERIFIED',
+            keys=report['v4_interfaces']['keys'],supersedes='0127 direct cap span blocker; user authorized printed one-piece sliders')
+        report['preprint_blockers_P1']=[]
+        report['functional_verification_required']=['Actual switch actuation and maximum safe displacement are null; geometric stop displacement is a design candidate only',
+            'PA12 slide friction and switch return force are null; free play is not forced back against outer stop',
+            'Reduced screen fit scenario is unverified in Z/flatness; previous larger budget is explicitly NOT covered']
         print('Check battery adhesive, tolerance reserve and actual tray',flush=True)
         report['battery_stack']=C.battery(m,v,base)
         print('Check fasteners, bottoms, rear 4+4 holes and seam stops',flush=True)
@@ -179,20 +188,13 @@ def main():
             print(f'  front +Z={dz:g}: {len(hits)} collisions',flush=True)
             sweep[dz]=hits
             assert not hits,(dz,hits)
-        report['front_loading']=dict(discrete_straight_pose_hits=sweep,cap_status='Caps/retainer removed during front loading; physical cap installation after closure UNVERIFIED',
+        report['front_loading']=dict(discrete_straight_pose_hits=sweep,cap_status='Printed buttons/retainer removed during front loading; continuous axial button installation/extraction checked separately',
             continuous_or_tilted_path='UNVERIFIED; 14 discrete straight poses, not continuous proof')
         report['speaker_candidate']=dict(route_length_mm=wire_data['MX1']['filleted_centerline_length_mm'],exit='+Y toward battery',real_lead='UNVERIFIED')
         assert report['speaker_candidate']['route_length_mm']<40
         # All exported parts round-trip independently, including coupon/retainer.
-        exports={'front_shell':f,'rear_shell':r,'0127_retainer':m['key_bezel']}
-        coupon_table={}
-        for name,(shape,table) in coupons(v).items():
-            exports[name]=shape;coupon_table[name]=table
-        fixtures={f'0127_coupon_{name}':(exports[f'0127_coupon_{name}'],exports[f'0127_coupon_{name}_bezel'],clearance)
-                  for name,clearance in zip('ABC',v['silicone_keys']['coupon_clearances_per_side_mm'])}
-        report['coupon_interfaces']={name:C.coupon_interface(block,plate,v,clearance)
-                                     for name,(block,plate,clearance) in fixtures.items()}
-        report['interface_negative_controls']=C.interface_negative_controls(m['key_bezel'],fixtures,v)
+        exports={'front_shell':f,'rear_shell':r,'button_retainer':m['key_bezel'],**m['button_exports']}
+        report['interface_negative_controls']=S.negative_controls(m,parts,v)
         for name,shape in exports.items():
             assert shape.is_valid and len(shape.solids())==1,name
             export_step(Compound(shape.wrapped),BUILD/f'{name}.step')
@@ -201,29 +203,31 @@ def main():
         exported_front=import_step(BUILD/'front_shell.step')
         report['screen_air_STEP_roundtrip']=C.screen_column(exported_front,sg)
         report['screen_air_STL_ray_hits']=C.stl_screen_rays(BUILD/'front_shell.stl',sg,report['screen_air']['ray_xy_mm'])
-        report['retainer_windows_STEP_roundtrip']=C.retainer_windows(import_step(BUILD/'0127_retainer.step'),v,v['silicone_keys']['y_mm'])
-        report['retainer_RESET_STEP_roundtrip']=C.retainer_reset_window(import_step(BUILD/'0127_retainer.step'),v)
-        report['USB_access_STEP_roundtrip']=C.usb_access({**m,
-            'front':exported_front,'rear':import_step(BUILD/'rear_shell.step'),
-            'key_bezel':import_step(BUILD/'0127_retainer.step')})
-        report['coupon_interfaces_STEP_roundtrip']={name:C.coupon_interface(
-            import_step(BUILD/f'{name}.step'),import_step(BUILD/f'{name}_bezel.step'),v,clearance)
-            for name,(_,_,clearance) in fixtures.items()}
-        report['coupon_table']=coupon_table
-        light=[f,r,m['key_bezel'],*m['screws'],*m['retainer_screws'],parts['PCB_BOARD'],parts['DISPLAY'],m['battery'],m['adhesive'],m['speaker'],*mounts]
+        reread={**m,'front':exported_front,'rear':import_step(BUILD/'rear_shell.step'),
+                'key_bezel':import_step(BUILD/'button_retainer.step'),
+                'button_exports':{name:import_step(BUILD/f'{name}.step') for name in m['button_exports']}}
+        reread['buttons']={f'KEY{i}':reread['button_exports'][f'button_{label}_nominal'] for i,label in [(1,'power'),(2,'boot')]}
+        report['printed_slider_STEP_roundtrip']=S.check(reread,parts,v)
+        report['USB_access_STEP_roundtrip']=C.usb_access(reread)
+        light=[f,r,m['key_bezel'],*m['buttons'].values(),*m['screws'],*m['retainer_screws'],parts['PCB_BOARD'],parts['DISPLAY'],m['battery'],m['adhesive'],m['speaker'],*mounts]
         export_step(Compound(children=[Compound(s.wrapped,label=s.label or f'part_{i}') for i,s in enumerate(light)]),BUILD/'assembly_light.step')
         print('Render V4 drawings and write measurement/BOM notes',flush=True)
         render(BUILD,parts,m,base,wire_shapes,mounts)
-        report['status']=('GEOMETRY_GATES_PASS_FUNCTIONAL_LAYOUT_BLOCKED_NOT_PRINT_APPROVED'
-                          if report['preprint_blockers_P1'] else 'GEOMETRY_GATES_PASS_S2_UNVERIFIED_NOT_PRINT_APPROVED')
-        if report['preprint_blockers_P1']:
-            report['functional_actuation_status']='BLOCKED_P1_DIRECT_CAP_LAYOUT'
+        report['status']='GEOMETRY_GATES_PASS_FUNCTIONAL_VERIFICATION_PENDING_NOT_PRINT_APPROVED'
+        report['functional_actuation_status']='PRINTED_SLIDER_PHYSICAL_TRAVEL_RETURN_UNVERIFIED'
         (BUILD/'checks.json').write_text(json.dumps(report,indent=2)+'\n')
         write_readme(BUILD,report)
         write_measurement_sheet(BUILD,v,report)
         OUT.mkdir(parents=True,exist_ok=True)
-        names=[f'{n}.{ext}' for n in exports for ext in ['step','stl']]+['assembly_light.step','checks.json','README.md','0127_measurement_sheet.md']
-        names += [x.name for x in BUILD.glob('*.png')]
+        names=[f'{n}.{ext}' for n in exports for ext in ['step','stl']]+['assembly_light.step','checks.json','README.md','printed_button_fit_sheet.md']
+        names += ['FRONT.png','REAR.png','SIDE.png','ISO.png','FRONT_shell_only.png','printed_buttons_section.png','printed_button_variants.png','screen_lip_section.png','screen_lip_zoom.png','ear_screw_section.png','speaker_notch_section.png']
+        previous=set()
+        if (OUT/'MANIFEST.sha256').exists():
+            previous={line.split(maxsplit=1)[1].strip() for line in (OUT/'MANIFEST.sha256').read_text().splitlines()}
+        for obsolete in previous-set(names):
+            candidate=OUT/obsolete
+            assert candidate.parent==OUT,('unsafe stale output name',obsolete)
+            if candidate.is_file():candidate.unlink()
         for name in names: shutil.copy2(BUILD/name,OUT/name)
         (BUILD/'MANIFEST.sha256').write_text(''.join(f'{hashlib.sha256((BUILD/n).read_bytes()).hexdigest()}  {n}\n' for n in sorted(names)))
         shutil.copy2(BUILD/'MANIFEST.sha256',OUT/'MANIFEST.sha256')
@@ -239,7 +243,7 @@ def render(out, parts, m, base, wire_shapes, mounts):
     scene = [(m['front'], fc), (m['rear'], rc),
              (parts['DISPLAY'], glass), (parts['PCB_BOARD'], '#b4bec2'),
              (m['battery'], '#b28661'), (m['speaker'], '#a05a4f')]
-    scene += [(m['key_bezel'], '#718896')]
+    scene += [(m['key_bezel'], '#718896')]+[(shape,'#c9974e') for shape in m['buttons'].values()]
     scene += [(s, metal) for s in [*m['screws'],*m['retainer_screws']]] + [(s, metal) for s in mounts]
     u = np.array([1., 0, -1]); u /= np.linalg.norm(u)
     w = np.array([1., .8, 1]); w /= np.linalg.norm(w)
@@ -265,16 +269,25 @@ def render(out, parts, m, base, wire_shapes, mounts):
     ax.set_title('V4 FRONT SHELL ONLY / screen aperture open through FULL lip height / NOT print approved')
     fig.tight_layout();fig.savefig(out/'FRONT_shell_only.png',dpi=160);plt.close(fig)
 
-    fig, axes=plt.subplots(2,3,figsize=(12,8))
-    cp=coupons(m['v4_parameters'])
-    for j,name in enumerate('ABC'):
-        for i,suffix in enumerate(['','_bezel']):
-            key=f'0127_coupon_{name}{suffix}';shape,t=cp[key]
-            panel(axes[i,j],[(shape,fc)],[0,1,0],[0,0,1],[-1,0,0],(-11,11,-13,.95))
-            axes[i,j].set_title(f"V4 {key} / pocket clearance {t['clearance']:.2f}",fontsize=8)
-            axes[i,j].set_xlabel('Y mm');axes[i,j].set_ylabel('Z mm')
-    fig.suptitle('V4 0127 interfaces / view along +X / UNVERIFIED / see measurement sheet')
-    fig.tight_layout();fig.savefig(out/'0127_coupons.png',dpi=150);plt.close(fig)
+    k=m['v4_parameters']['printed_keys'];y=k['y_mm'][0]
+    fig,axes=plt.subplots(1,2,figsize=(13,5))
+    for ax,pressed in zip(axes,[False,True]):
+        delta=k['stroke_mm'] if pressed else 0
+        scene2=[(section(m[n],-38,y-.1,-12.3,-23.5,y+.1,.8),color) for n,color in [('front',fc),('key_bezel','#718896')]]
+        scene2 += [(m['buttons']['KEY1'].translate((delta,0,0)),'#c9974e'),(parts['KEY1'],metal)]
+        panel(ax,scene2,[1,0,0],[0,0,1],[0,1,0],(-38,-23.5,-11.5,-1.5))
+        ax.set_title('KEY1 '+('GEOMETRIC STOP / static switch witness' if pressed else 'REST / no nominal preload'),fontsize=9)
+        ax.set_xlabel('X mm');ax.set_ylabel('Z mm')
+    fig.suptitle('One-piece captured PA12 sliders / no flexure / actual force and switch travel UNVERIFIED',fontsize=10)
+    fig.tight_layout();fig.savefig(out/'printed_buttons_section.png',dpi=160);plt.close(fig)
+    fig,axes=plt.subplots(1,3,figsize=(13,4))
+    for ax,(label,delta) in zip(axes,k['variants_mm'].items()):
+        shape=m['button_exports'][f'button_power_{label}']
+        panel(ax,[(shape,'#c9974e')],[1,0,0],[0,0,1],[0,1,0],(-38,-23.5,-11,-2))
+        ax.set_title(f'{label}: flange + tip {delta:+.2f}mm / optional fit spare',fontsize=8)
+        ax.set_xlabel('X mm');ax.set_ylabel('Z mm')
+    fig.suptitle('Optional SAME-BATCH spare lengths; identical maximum inward tip plane / not measured switch ratings',fontsize=10)
+    fig.tight_layout();fig.savefig(out/'printed_button_variants.png',dpi=160);plt.close(fig)
 
     # XZ through screen centre: lip and independent seam
     sec = [(section(m['front'], -33, -.12, -14.5, 70, .12, 3.3), fc),

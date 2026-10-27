@@ -11,7 +11,8 @@ from p1_checks import intersection
 from t0_model import cyl, rr
 from t0_g_v1_integrated_keys import foundation
 from t0_g_v2_keys import build_keys
-from g_v4_interfaces import key_table, key_cutters, production_bezel, xcyl
+from g_v4_interfaces import xcyl
+from g_v4_printed_keys import table as key_table, cutters as key_cutters, retainer as production_bezel, build_buttons
 
 
 def read(root, name):
@@ -50,12 +51,12 @@ def build(parts, mounts, base, kp, p, q, v):
     front = m['front'] + box([ox, ty - 6.2, tz - .8, ix, ty + 6.2, tz + .8])
 
     # 2. V4-RECT: no integrated PA12 leaves. Add the left key slab and the
-    # two 0127 silicone pockets; RESET remains a Ø2.2 pinhole.
+    # two captive-slider guide pockets; RESET remains a Ø2.2 pinhole.
     if v.get('v4'):
         ls = v['left_slab']
         front = front + box([ls['x_mm'][0], ls['y_mm'][0], ls['z_mm'][0],
                              ls['x_mm'][1], ls['y_mm'][1], ls['z_mm'][1]])
-        sk = v['silicone_keys']; kt = key_table(v)
+        sk = v['printed_keys']; kt = key_table(v)
         for yc in sk['y_mm']:
             for cutter in key_cutters(kt, yc):
                 front = front - cutter
@@ -138,14 +139,14 @@ def build(parts, mounts, base, kp, p, q, v):
                                        ub[3] + 1.2, ey + .2, -3.5]))
     front = front + bridge
     # Locally move the seam behind both key pockets, giving a real bottom bridge.
-    sk=v['silicone_keys']; kt=key_table(v); ox=base['outer_x_min_mm']
+    sk=v['printed_keys']; kt=key_table(v); ox=base['outer_x_min_mm']
     tongue=box([ox,-29.5,sk['local_seam_z_mm'],kt['inner_x'],6.5,seam+.6])
     for x,y in v['shell_screw']['axes_xy_mm']:
         tongue=tongue-cyl(v['shell_screw']['boss_diameter_mm']/2+.45,sk['local_seam_z_mm']-.1,seam+.01,x,y)
     front=front+tongue
     for yc in sk['y_mm']:
         for cutter in key_cutters(kt,yc): front=front-cutter
-    # Removable outer retaining bezel: two accessible screws, never silicone friction.
+    # Removable outer retaining bezel: two accessible screws, never actuator friction.
     rk=sk['retainer']
     key_bezel=production_bezel(v)
     screw_axes = v['shell_screw']['axes_xy_mm']
@@ -275,8 +276,9 @@ def build(parts, mounts, base, kp, p, q, v):
     assert abs(seam-B-v['rear_panel_mm'])<1e-6
     front.label = 'FRONT_V4_SCREEN_LIP_AND_POSTS'
     rear.label = 'REAR_V4_3_5MM_RIBBED_CLAMP'
-    key_bezel.label='V4_0127_REMOVABLE_RETAINER'
-    m.update(front=front, rear=rear, key_bezel=key_bezel, retainer_screws=retainer_screws, screws=screws, screw_rows=screw_rows,
+    key_bezel.label='V4_PRINTED_BUTTON_RETAINER'
+    buttons,button_exports=build_buttons(v,parts)
+    m.update(buttons=buttons,button_exports=button_exports,front=front, rear=rear, key_bezel=key_bezel, retainer_screws=retainer_screws, screws=screws, screw_rows=screw_rows,
              v4_parameters=v, mic_port=v.get('mic_port'), screen_geometry=dict(glass_bounds_mm=gb, glass_radius_mm=gr,
              window_whr_mm=[ww, wh, wr], lip_inner_whr_mm=[lip_inner_w, lip_inner_h, lip_inner_r],
              lip_base_whr_mm=[base_w, base_h, base_r], glass_front_z_mm=gb[5],

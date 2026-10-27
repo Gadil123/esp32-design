@@ -1,24 +1,24 @@
 {
-  "stage": "G-V1 V4-RECT: rectangular shell, internal corner bosses, two 0127 silicone keys, RESET pinhole",
+  "stage": "G-V1 V4-RECT: captive printed sliding buttons, tighter non-clamping screen lip",
   "source_feedback_date": "2026-10-26 printed first article",
   "seam_z_mm": -10.35,
   "rear_panel_mm": 3.5,
   "rear_outer_z_mm": -13.85,
   "rear_panel_status": "3.5mm rear plate, local key-tongue relief leaves 1.55mm floor; ribbed, independent seam stop",
-  "screen_clearance_mm": 1.0,
+  "screen_clearance_mm": 0.75,
   "screen_lip_overlap_mm": 1.0,
   "screen_lip_radial_mm": 1.6,
   "screen_lip_base_mm": 1.6,
-  "screen_lip_base_height_mm": 2.4,
+  "screen_lip_base_height_mm": 1.9,
   "screen_lip_overhang_height_mm": 1.5,
-  "screen_lip_bottom_gap_mm": 0.9,
-  "screen_lip_top_z_mm": 3.1,
+  "screen_lip_bottom_gap_mm": 0.4,
+  "screen_lip_top_z_mm": 2.6,
   "screen_guide_rib_mm": 1.5,
   "screen_guide_rib_z_mm": [
     -2.5,
     -0.5
   ],
-  "assembly_order": "Rear + PCB first; lower EMPTY front straight along -Z; insert 0127 from -X only AFTER seam closure; fasten removable outer retaining bezels. Remove bezels and caps before lifting front.",
+  "assembly_order": "Rear + PCB first; lower EMPTY front along -Z; close four shell screws; insert printed buttons from -X, then fasten removable common retainer. Remove retainer/buttons before lifting front.",
   "pcb_screw": {
     "kind": "M2.5x5 machine screw into original metal insert",
     "thread_diameter_mm": 2.5,
@@ -79,8 +79,8 @@
   "usb_opening": "unchanged 13.2 x 7.3mm after user insertion test; no reduction",
   "print_approved": false,
   "manufacturing_status": "manufacturing_unverified",
-  "functional_actuation_status": "UNVERIFIED",
-  "total_thickness_mm": 16.95,
+  "functional_actuation_status": "UNVERIFIED_PRINTED_SLIDERS",
+  "total_thickness_mm": 16.45,
   "mic_port": {
     "xy_mm": [
       29.8,
@@ -124,72 +124,6 @@
       -11.7,
       0.7
     ]
-  },
-  "silicone_keys": {
-    "axis_definition": "Side-wall plane Y/Z: base 9.2 Y x 7.2 Z; cap axis +X inward; total reported height 5.5 along X incl high inner post; X wall depth 7.6. Closed top, reported silicone wall 1.3. None of these defines flange thickness, body length or post projection.",
-    "reported_part_mm": {
-      "base_y": 9.2,
-      "base_z": 7.2,
-      "total_axis_x_including_post": 5.5,
-      "silicone_wall": 1.3,
-      "closed_top": true
-    },
-    "measured_part_mm": {
-      "base_axial_thickness": null,
-      "top_y": null,
-      "top_z": null,
-      "body_axis_x": null,
-      "seat_to_post_tip_x": null,
-      "post_diameter": null,
-      "usable_stroke": null,
-      "switch_stroke": null
-    },
-    "y_mm": [
-      -3.62,
-      -19.26
-    ],
-    "z_center": -6.4,
-    "wall_inner_x_mm": -25.87,
-    "pocket": {
-      "clearance_per_side_mm": 0.3,
-      "depth_x_mm": 3.6,
-      "tunnel_y_mm": 8.0,
-      "tunnel_z_mm": 5.6
-    },
-    "coupon_clearances_per_side_mm": [
-      0.15,
-      0.3,
-      0.45
-    ],
-    "retainer": {
-      "thickness_x_mm": 1.8,
-      "aperture_y_mm": 8.0,
-      "aperture_z_mm": 5.6,
-      "screw_diameter_mm": 1.6,
-      "pilot_mm": 1.3,
-      "screw_length_mm": 5.0,
-      "head_max_diameter_mm": 3.0,
-      "head_max_height_mm": 1.2,
-      "pilot_depth_mm": 4.2,
-      "kind": "one removable two-aperture outer plate",
-      "outer_y_bounds_mm": [
-        -29.5,
-        6.5
-      ],
-      "fastener_yz_mm": [
-        [
-          -27.0,
-          -2.0
-        ],
-        [
-          3.5,
-          -6.4
-        ]
-      ]
-    },
-    "local_seam_z_mm": -12.15,
-    "bridge_required_mm": 1.6,
-    "status": "UNVERIFIED default B (.30/side). Outer screw-on bezel captures a measured flange only if top/body clear aperture. Do not infer trigger fit from reported 5.5 total height; no unknown cap solid modeled."
   },
   "reset_pinhole": {
     "x_mm": [
@@ -240,5 +174,79 @@
   "outer_y_mm": [
     -36.13,
     42.13
-  ]
+  ],
+  "screen_fit_scenarios": {
+    "status": "UNVERIFIED_DESIGN_SCENARIOS_NOT_MEASURED_TOLERANCES",
+    "selected_xy_per_axis_mm": 0.5,
+    "selected_z_mm": 0.3,
+    "previous_xy_per_axis_mm": 0.6,
+    "previous_z_mm": 0.6,
+    "first_print_evidence": {
+      "cad_total_xy_gap_mm": 1.2,
+      "user_reported_total_xy_gap_mm": 1.3,
+      "interpretation": "One lateral total-gap observation, NOT proof of plus/minus0.1 in all axes or flatness. User confirmed inference only."
+    },
+    "warp_and_tilt": "UNVERIFIED and separate from size error; prior larger sensitivity retained, no hard glass contact or foam preload"
+  },
+  "retired_0127": {
+    "status": "REPLACED_BY_USER_AUTHORIZED_PRINTED_SLIDERS",
+    "supplier_reported_total_axis_mm": 5.5,
+    "reason": "Insufficient direct exposed-face reach; no silicone dimensions invented. Historical files remain in git; not current print parts."
+  },
+  "printed_keys": {
+    "kind": "ONE_PIECE_HEAD_FLANGE_STEM_SLIDER",
+    "y_mm": [
+      -3.62,
+      -19.26
+    ],
+    "z_center": -6.5,
+    "wall_inner_x_mm": -25.87,
+    "local_seam_z_mm": -12.15,
+    "bridge_required_mm": 1.6,
+    "head_diameter_mm": 5.2,
+    "head_projection_mm": 1.5,
+    "flange_diameter_mm": 7.4,
+    "flange_thickness_mm": 1.8,
+    "stem_diameter_mm": 3.6,
+    "stem_end_x_mm": -26.5,
+    "tip_diameter_mm": 1.2,
+    "radial_clearance_mm": 0.3,
+    "stroke_mm": 0.55,
+    "rest_gap_mm": 0.25,
+    "variants_mm": {
+      "short": -0.15,
+      "nominal": 0,
+      "long": 0.15
+    },
+    "switch_actuation_travel_mm": null,
+    "switch_max_safe_displacement_mm": null,
+    "switch_return_force_n": null,
+    "actual_print_slide_force_n": null,
+    "status": "UNVERIFIED physical travel/force, shrink and free play; nominal geometric travel is not switch rating. No preload or glue. Variants are optional same-batch spares, maximum tip plane unchanged.",
+    "retainer": {
+      "thickness_x_mm": 1.8,
+      "screw_diameter_mm": 1.6,
+      "pilot_mm": 1.3,
+      "screw_length_mm": 5.0,
+      "head_max_diameter_mm": 3.0,
+      "head_max_height_mm": 1.2,
+      "pilot_depth_mm": 4.2,
+      "kind": "one removable two-aperture outer plate",
+      "outer_y_bounds_mm": [
+        -29.5,
+        6.5
+      ],
+      "fastener_yz_mm": [
+        [
+          -27.0,
+          -2.0
+        ],
+        [
+          3.5,
+          -6.4
+        ]
+      ],
+      "aperture_diameter_mm": 5.8
+    }
+  }
 }

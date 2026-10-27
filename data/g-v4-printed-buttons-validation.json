@@ -1,0 +1,138 @@
+{
+  "baseline_commit": "ebe414f",
+  "status": "GEOMETRY_GATES_PASS_FUNCTIONAL_VERIFICATION_PENDING_NOT_PRINT_APPROVED",
+  "print_approved": false,
+  "manifest_files": 33,
+  "manifest_and_build_delivery_identity": true,
+  "source_hashes_match": 83,
+  "protected_V1_files_unchanged": 122,
+  "official_STEP_sha256": "73c84092e7d6b55574125d2bf0885a61688514762b796ca43c98dfed1bc18c5c",
+  "independent_screen": {
+    "glass_front_z_mm": 0.7,
+    "lip_underside_z_mm": 1.1,
+    "lip_top_z_mm": 2.6,
+    "gap_mm": 0.40000000000000013,
+    "lip_thickness_mm": 1.5,
+    "window_clearance_mm": 0.7499999999999964,
+    "screen_recess_mm": 1.9000000000000001,
+    "whole_thickness_mm": 16.45
+  },
+  "independent_buttons": {
+    "power": {
+      "native_cylinder_flange_bounds_mm": [
+        [
+          -33.47,
+          -7.32,
+          -10.2,
+          -31.67,
+          0.08000000000000007,
+          -2.8
+        ]
+      ],
+      "native_cylinder_pocket_bounds_mm": [
+        [
+          -33.47,
+          -7.62,
+          -10.5,
+          -31.12,
+          0.3799999999999999,
+          -2.5
+        ]
+      ],
+      "gap_mm": 0.2500000000000142,
+      "travel_mm": 0.5500000000000007,
+      "static_switch_penetration_at_stop_mm": 0.2999999999999865,
+      "rest_switch_overlap_mm3": 0.0,
+      "stop_switch_overlap_mm3": 0.29953330349981866,
+      "rest_front_overlap_mm3": 0,
+      "rest_retainer_overlap_mm3": 0,
+      "inward_stop_overlap_mm3": 2.9153979825313323,
+      "outward_capture_overlap_mm3": 1.6587609210954688
+    },
+    "boot": {
+      "native_cylinder_flange_bounds_mm": [
+        [
+          -33.47,
+          -22.96,
+          -10.2,
+          -31.67,
+          -15.560000000000002,
+          -2.8
+        ]
+      ],
+      "native_cylinder_pocket_bounds_mm": [
+        [
+          -33.47,
+          -23.26,
+          -10.5,
+          -31.12,
+          -15.260000000000002,
+          -2.5
+        ]
+      ],
+      "gap_mm": 0.24999999999957012,
+      "travel_mm": 0.5500000000000007,
+      "static_switch_penetration_at_stop_mm": 0.3000000000004306,
+      "rest_switch_overlap_mm3": 0.0,
+      "stop_switch_overlap_mm3": 0.2995336584590147,
+      "rest_front_overlap_mm3": 0,
+      "rest_retainer_overlap_mm3": 0,
+      "inward_stop_overlap_mm3": 2.9153979825313323,
+      "outward_capture_overlap_mm3": 1.6587609210954688
+    }
+  },
+  "obsolete_0127_delivery_files_absent": true,
+  "rear_STL_unchanged": true,
+  "negative_controls": {
+    "slider": 13,
+    "screen": 5,
+    "USB": 1
+  },
+  "STEP_STL_parts": 9,
+  "empty_front_poses": 14,
+  "previous_screen_budget_sensitivity": [
+    {
+      "offset_xyz_mm": [
+        0,
+        0,
+        0.6
+      ],
+      "overlap_mm3": 48.124955592154045
+    },
+    {
+      "offset_xyz_mm": [
+        0.6,
+        0.6,
+        0
+      ],
+      "overlap_mm3": 0.10432634759583496
+    },
+    {
+      "offset_xyz_mm": [
+        -0.6,
+        -0.6,
+        0.6
+      ],
+      "overlap_mm3": 48.19947441186531
+    }
+  ],
+  "overall_xyz_mm": [
+    102.89999999999999,
+    78.26,
+    16.45
+  ],
+  "physical_unknowns_retained": {
+    "switch_actuation_travel_mm": null,
+    "switch_max_safe_displacement_mm": null,
+    "switch_return_force_n": null,
+    "actual_print_slide_force_n": null
+  },
+  "standalone_delivery_reread": {
+    "command": ".venv/bin/python scripts/check-g-v4-interfaces.py",
+    "exit_code": 0,
+    "STEP_STL_parts": 9,
+    "slider_negative_controls_rejected": 13,
+    "USB_negative_rejected": true,
+    "continuous_motion_and_extraction_all_clear": true
+  }
+}
