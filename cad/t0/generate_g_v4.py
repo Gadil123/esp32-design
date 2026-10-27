@@ -280,7 +280,7 @@ def render(out, parts, m, base, wire_shapes, mounts):
         ax.set_xlabel('X mm');ax.set_ylabel('Z mm')
     fig.suptitle('One-piece captured PA12 sliders / no flexure / actual force and switch travel UNVERIFIED',fontsize=10)
     fig.tight_layout();fig.savefig(out/'printed_buttons_section.png',dpi=160);plt.close(fig)
-    fig,axes=plt.subplots(1,3,figsize=(13,4))
+    fig,axes=plt.subplots(1,len(k['variants_mm']),figsize=(4*len(k['variants_mm']),4))
     for ax,(label,delta) in zip(axes,k['variants_mm'].items()):
         shape=m['button_exports'][f'button_power_{label}']
         panel(ax,[(shape,'#c9974e')],[1,0,0],[0,0,1],[0,1,0],(-38,-23.5,-11,-2))

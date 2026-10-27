@@ -222,7 +222,8 @@
       "variants_mm": {
         "short": -0.15,
         "nominal": 0,
-        "long": 0.15
+        "long": 0.15,
+        "zero_fit": 0.25
       },
       "switch_actuation_travel_mm": null,
       "switch_max_safe_displacement_mm": null,
@@ -253,7 +254,8 @@
           ]
         ],
         "aperture_diameter_mm": 5.8
-      }
+      },
+      "zero_fit_status": "User-requested optional nominal axial zero gap; flange and tip +0.25mm preserve maximum inward tip. Sliding radial clearance remains0.30. Actual print may preload the switch; fit must be checked, not guaranteed."
     }
   },
   "remaining_S2": [
@@ -271,14 +273,14 @@
     "cad/t0/g_v1_95mm_drawings.py": "d22720f1f66233550a4618feb41d57fcb765964a14225312b7633cfbeebc9d7e",
     "cad/t0/g_v1_95mm_wiring.py": "215384952cf9e38e89433dae89e762d6e3b16afbb8700900de15bc2678f06117",
     "cad/t0/g_v4_checks.py": "afd9d9a30362139fad022ae03a165c10809f31ca388b361181be94b6161fd299",
-    "cad/t0/g_v4_documentation.py": "e753fb4a69cb7a244099ef48fd5985fe01387d3c4c52e15c8d377bc05d678988",
+    "cad/t0/g_v4_documentation.py": "f8ab38b33c7bf00fd2b837c6f6f061d0d9f8dd3f4c7f382945f42943987fc0f9",
     "cad/t0/g_v4_interfaces.py": "3f4a58875ec7f4747a7a87da578e0adad678c1681f86b8d50c252e5a83a8e464",
     "cad/t0/g_v4_printed_keys.py": "155ea09216cc486581c5936f4e8dd1d297a16c476aa2a0f06269839f23f9808f",
-    "cad/t0/g_v4_slider_checks.py": "7a424bdfa8cf1bb88308be956d2ddd2c2fd584fb7416dd5146a96b1251f76ffd",
+    "cad/t0/g_v4_slider_checks.py": "974750ff0fa2950a8f42f271b55f1d747d1fd1eb81ebdb3ea3b593e56101e4c5",
     "cad/t0/generate_g_v1_95mm.py": "e7f91f41a0ff2f37e232aff3a06cab03640745fbfb70df827cc68468ba5bf3d2",
     "cad/t0/generate_g_v2.py": "d7fedc3b33e061d2a3fa002fe0ea6f2c2cdd838bd7ada620db0895e106a8b0b8",
     "cad/t0/generate_g_v2b.py": "2fecca878ee7b5af9c4a399747eb7b8cd7d8ceb6fb244638acabde7021b0c40c",
-    "cad/t0/generate_g_v4.py": "47493d5c74d1c68c8ef69d60595ce9a8e3a1088a477e3fafea62a7e36f3cc2fe",
+    "cad/t0/generate_g_v4.py": "ae9691acb0740c9510e7cb9c8533473a461d75d5b9187e0cd2a64c8397013222",
     "cad/t0/generate_t0.py": "efcdfcd69452a0ef376a94e1d39b842aa6f1dd37384eb1dd5602057f64418978",
     "cad/t0/generate_t0_c.py": "399f316f74572a0d8c3767c86c08c257e250b961d50f180712398e7542151d8b",
     "cad/t0/generate_t0_d.py": "7e1aba34c3728f006f3596ef74b1af7a7e00869ce66096950ffe3f90a8c73a36",
@@ -312,7 +314,7 @@
     "cad/t0/t0-g-v1-integrated-keys.json": "8e37dc57cf35b57f90ca085cdd8fbb6425a094b11b630b35af0af8f55e16075e",
     "cad/t0/t0-g-v2.json": "43b5d5aad7a0061d289e45f49a5fc5b3d93c6cf81ad5e1fdc41dc265feb40271",
     "cad/t0/t0-g-v2b.json": "c5bd78bded99fe924135fca7ae61b27cea82effb253c9fe298a574020fee5409",
-    "cad/t0/t0-g-v4.json": "d05b48a0842de2650e0334cb958e28ea85985707f72ee5b36d33f1b5a5ab989b",
+    "cad/t0/t0-g-v4.json": "3212a8b06e259f0f90ccce17cb66156471e2b7bd3ed9322142938c2e518f1f86",
     "cad/t0/t0-parameters.json": "1c87d059f9fa4c7febb034ff49eb734038f33ce37b122b092c1e330241779c55",
     "cad/t0/t0_c_drawings.py": "5750bbd247ceaabe15f0bad2e0c07f2938e049016aafff81d1fa593cc8bac7bc",
     "cad/t0/t0_c_mount_study.py": "e31c800792ff93e4d94ea62ec0e416ef34870bce23b588b81e6e75ed0ca8dd0a",
@@ -663,6 +665,7 @@
         "exposed_head_mm": 1.5,
         "actual_switch_travel_mm": null,
         "max_safe_switch_displacement_mm": null,
+        "zero_fit_target": false,
         "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
         "continuous_axial_sweep": {
           "front": 0,
@@ -791,6 +794,7 @@
         "exposed_head_mm": 1.5,
         "actual_switch_travel_mm": null,
         "max_safe_switch_displacement_mm": null,
+        "zero_fit_target": false,
         "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
         "continuous_axial_sweep": {
           "front": 0,
@@ -921,6 +925,7 @@
         "exposed_head_mm": 1.5,
         "actual_switch_travel_mm": null,
         "max_safe_switch_displacement_mm": null,
+        "zero_fit_target": false,
         "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
         "continuous_axial_sweep": {
           "front": 0,
@@ -951,6 +956,7 @@
         "exposed_head_mm": 1.5,
         "actual_switch_travel_mm": null,
         "max_safe_switch_displacement_mm": null,
+        "zero_fit_target": false,
         "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
         "continuous_axial_sweep": {
           "front": 0,
@@ -1079,6 +1085,7 @@
         "exposed_head_mm": 1.5,
         "actual_switch_travel_mm": null,
         "max_safe_switch_displacement_mm": null,
+        "zero_fit_target": false,
         "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
         "continuous_axial_sweep": {
           "front": 0,
@@ -1095,6 +1102,135 @@
         "extraction_board_mm3": 0,
         "outward_and_inward_stop_blocked": true
       },
+      "button_power_zero_fit": {
+        "flange_x_mm": [
+          -33.47,
+          -31.419999999999998
+        ],
+        "actual_tip_x_mm": -24.894360806339975,
+        "switch_tip_x_mm": -24.894360806339975,
+        "rest_gap_mm": 0.0,
+        "geometric_stroke_mm": 0.3000000000000007,
+        "switch_displacement_at_stop_mm": 0.3000000000000007,
+        "static_switch_overlap_at_stop_mm3": 0.29953328611856617,
+        "exposed_head_mm": 1.5,
+        "actual_switch_travel_mm": null,
+        "max_safe_switch_displacement_mm": null,
+        "zero_fit_target": true,
+        "status": "ZERO_FIT_GEOMETRIC_TOUCH_PRINT_PRELOAD_UNVERIFIED",
+        "continuous_axial_sweep": {
+          "front": 0,
+          "rear": 0,
+          "key_bezel": 0
+        },
+        "non_actuator_board_sweep_mm3": 0,
+        "rest_board_mm3": 0,
+        "screw_sweep_mm3": 0.0,
+        "continuous_extraction": {
+          "front": 0,
+          "rear": 0
+        },
+        "extraction_board_mm3": 0,
+        "outward_and_inward_stop_blocked": true,
+        "radial_translation_poses": [
+          {
+            "offset_yz_mm": [
+              0.297,
+              0.0
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              0.21001071401240462,
+              0.2100107140124046
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              1.8186004967338195e-17,
+              0.297
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.2100107140124046,
+              0.21001071401240462
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.297,
+              3.637200993467639e-17
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.21001071401240468,
+              -0.2100107140124046
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -5.455801490201458e-17,
+              -0.297
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              0.21001071401240456,
+              -0.21001071401240468
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          }
+        ]
+      },
       "button_boot_short": {
         "flange_x_mm": [
           -33.47,
@@ -1109,6 +1245,7 @@
         "exposed_head_mm": 1.5,
         "actual_switch_travel_mm": null,
         "max_safe_switch_displacement_mm": null,
+        "zero_fit_target": false,
         "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
         "continuous_axial_sweep": {
           "front": 0,
@@ -1139,6 +1276,7 @@
         "exposed_head_mm": 1.5,
         "actual_switch_travel_mm": null,
         "max_safe_switch_displacement_mm": null,
+        "zero_fit_target": false,
         "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
         "continuous_axial_sweep": {
           "front": 0,
@@ -1267,6 +1405,7 @@
         "exposed_head_mm": 1.5,
         "actual_switch_travel_mm": null,
         "max_safe_switch_displacement_mm": null,
+        "zero_fit_target": false,
         "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
         "continuous_axial_sweep": {
           "front": 0,
@@ -1282,6 +1421,135 @@
         },
         "extraction_board_mm3": 0,
         "outward_and_inward_stop_blocked": true
+      },
+      "button_boot_zero_fit": {
+        "flange_x_mm": [
+          -33.47,
+          -31.419999999999998
+        ],
+        "actual_tip_x_mm": -24.896374539870415,
+        "switch_tip_x_mm": -24.896374539870415,
+        "rest_gap_mm": 0.0,
+        "geometric_stroke_mm": 0.3000000000000007,
+        "switch_displacement_at_stop_mm": 0.3000000000000007,
+        "static_switch_overlap_at_stop_mm3": 0.2995336806981024,
+        "exposed_head_mm": 1.5,
+        "actual_switch_travel_mm": null,
+        "max_safe_switch_displacement_mm": null,
+        "zero_fit_target": true,
+        "status": "ZERO_FIT_GEOMETRIC_TOUCH_PRINT_PRELOAD_UNVERIFIED",
+        "continuous_axial_sweep": {
+          "front": 0,
+          "rear": 0,
+          "key_bezel": 0
+        },
+        "non_actuator_board_sweep_mm3": 0,
+        "rest_board_mm3": 0,
+        "screw_sweep_mm3": 0.0,
+        "continuous_extraction": {
+          "front": 0,
+          "rear": 0
+        },
+        "extraction_board_mm3": 0,
+        "outward_and_inward_stop_blocked": true,
+        "radial_translation_poses": [
+          {
+            "offset_yz_mm": [
+              0.297,
+              0.0
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              0.21001071401240462,
+              0.2100107140124046
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              1.8186004967338195e-17,
+              0.297
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.2100107140124046,
+              0.21001071401240462
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.297,
+              3.637200993467639e-17
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.21001071401240468,
+              -0.2100107140124046
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -5.455801490201458e-17,
+              -0.297
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              0.21001071401240456,
+              -0.21001071401240468
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          }
+        ]
       }
     },
     "retainer_screws": [
@@ -1364,6 +1632,7 @@
         "exposed_head_mm": 1.5,
         "actual_switch_travel_mm": null,
         "max_safe_switch_displacement_mm": null,
+        "zero_fit_target": false,
         "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
         "continuous_axial_sweep": {
           "front": 0,
@@ -1492,6 +1761,7 @@
         "exposed_head_mm": 1.5,
         "actual_switch_travel_mm": null,
         "max_safe_switch_displacement_mm": null,
+        "zero_fit_target": false,
         "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
         "continuous_axial_sweep": {
           "front": 0,
@@ -1949,6 +2219,16 @@
       "reason": "('slider resting preload', -0.10000000000000142)"
     },
     {
+      "mutation": "KEY1 zero-fit tip preloads switch",
+      "rejected": true,
+      "reason": "('slider resting preload', -0.10000000000000142)"
+    },
+    {
+      "mutation": "KEY1 zero-fit tip recessed",
+      "rejected": true,
+      "reason": "('zero-fit contact plane', 0.10000000000000142)"
+    },
+    {
       "mutation": "KEY2 retainer window sealed",
       "rejected": true,
       "reason": "('slider retainer window', 47.52463701760552, [-35.269999999999996, -22.159000000000002, -9.399000000000001, -33.47, -16.361, -3.601])"
@@ -1977,6 +2257,16 @@
       "mutation": "KEY2 tip preloads switch",
       "rejected": true,
       "reason": "('slider resting preload', -0.10000000000000142)"
+    },
+    {
+      "mutation": "KEY2 zero-fit tip preloads switch",
+      "rejected": true,
+      "reason": "('slider resting preload', -0.10000000000000142)"
+    },
+    {
+      "mutation": "KEY2 zero-fit tip recessed",
+      "rejected": true,
+      "reason": "('zero-fit contact plane', 0.10000000000000142)"
     },
     {
       "mutation": "RESET sealed in retainer",
@@ -2033,6 +2323,14 @@
       "step_stl_bounds_error_mm": 8.362472279088706e-07,
       "step_stl_relative_volume_error": 0.0009321396583376778
     },
+    "button_power_zero_fit": {
+      "step_valid": true,
+      "step_solid_count": 1,
+      "stl_triangles": 1340,
+      "stl_nonmanifold_edges": 0,
+      "step_stl_bounds_error_mm": 6.896316797622148e-07,
+      "step_stl_relative_volume_error": 0.000932074529905032
+    },
     "button_boot_short": {
       "step_valid": true,
       "step_solid_count": 1,
@@ -2056,6 +2354,14 @@
       "stl_nonmanifold_edges": 0,
       "step_stl_bounds_error_mm": 9.155273446026513e-07,
       "step_stl_relative_volume_error": 0.0009320963915096511
+    },
+    "button_boot_zero_fit": {
+      "step_valid": true,
+      "step_solid_count": 1,
+      "stl_triangles": 1340,
+      "stl_nonmanifold_edges": 0,
+      "step_stl_bounds_error_mm": 9.155273446026513e-07,
+      "step_stl_relative_volume_error": 0.0009320222092235156
     }
   },
   "screen_air_STEP_roundtrip": {
@@ -2171,6 +2477,7 @@
         "exposed_head_mm": 1.500000000000007,
         "actual_switch_travel_mm": null,
         "max_safe_switch_displacement_mm": null,
+        "zero_fit_target": false,
         "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
         "continuous_axial_sweep": {
           "front": 0,
@@ -2299,6 +2606,7 @@
         "exposed_head_mm": 1.500000000000007,
         "actual_switch_travel_mm": null,
         "max_safe_switch_displacement_mm": null,
+        "zero_fit_target": false,
         "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
         "continuous_axial_sweep": {
           "front": 0,
@@ -2429,6 +2737,7 @@
         "exposed_head_mm": 1.500000000000007,
         "actual_switch_travel_mm": null,
         "max_safe_switch_displacement_mm": null,
+        "zero_fit_target": false,
         "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
         "continuous_axial_sweep": {
           "front": 0,
@@ -2459,6 +2768,7 @@
         "exposed_head_mm": 1.500000000000007,
         "actual_switch_travel_mm": null,
         "max_safe_switch_displacement_mm": null,
+        "zero_fit_target": false,
         "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
         "continuous_axial_sweep": {
           "front": 0,
@@ -2587,6 +2897,7 @@
         "exposed_head_mm": 1.500000000000007,
         "actual_switch_travel_mm": null,
         "max_safe_switch_displacement_mm": null,
+        "zero_fit_target": false,
         "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
         "continuous_axial_sweep": {
           "front": 0,
@@ -2603,6 +2914,135 @@
         "extraction_board_mm3": 0,
         "outward_and_inward_stop_blocked": true
       },
+      "button_power_zero_fit": {
+        "flange_x_mm": [
+          -33.47,
+          -31.42
+        ],
+        "actual_tip_x_mm": -24.89436080634,
+        "switch_tip_x_mm": -24.894360806339975,
+        "rest_gap_mm": 2.4868995751603507e-14,
+        "geometric_stroke_mm": 0.30000000000000426,
+        "switch_displacement_at_stop_mm": 0.2999999999999794,
+        "static_switch_overlap_at_stop_mm3": 0.2995332603773187,
+        "exposed_head_mm": 1.500000000000007,
+        "actual_switch_travel_mm": null,
+        "max_safe_switch_displacement_mm": null,
+        "zero_fit_target": true,
+        "status": "ZERO_FIT_GEOMETRIC_TOUCH_PRINT_PRELOAD_UNVERIFIED",
+        "continuous_axial_sweep": {
+          "front": 0,
+          "rear": 0,
+          "key_bezel": 0
+        },
+        "non_actuator_board_sweep_mm3": 0,
+        "rest_board_mm3": 0,
+        "screw_sweep_mm3": 0.0,
+        "continuous_extraction": {
+          "front": 0,
+          "rear": 0
+        },
+        "extraction_board_mm3": 0,
+        "outward_and_inward_stop_blocked": true,
+        "radial_translation_poses": [
+          {
+            "offset_yz_mm": [
+              0.297,
+              0.0
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              0.21001071401240462,
+              0.2100107140124046
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              1.8186004967338195e-17,
+              0.297
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.2100107140124046,
+              0.21001071401240462
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.297,
+              3.637200993467639e-17
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.21001071401240468,
+              -0.2100107140124046
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -5.455801490201458e-17,
+              -0.297
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              0.21001071401240456,
+              -0.21001071401240468
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          }
+        ]
+      },
       "button_boot_short": {
         "flange_x_mm": [
           -33.47,
@@ -2617,6 +3057,7 @@
         "exposed_head_mm": 1.500000000000007,
         "actual_switch_travel_mm": null,
         "max_safe_switch_displacement_mm": null,
+        "zero_fit_target": false,
         "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
         "continuous_axial_sweep": {
           "front": 0,
@@ -2647,6 +3088,7 @@
         "exposed_head_mm": 1.500000000000007,
         "actual_switch_travel_mm": null,
         "max_safe_switch_displacement_mm": null,
+        "zero_fit_target": false,
         "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
         "continuous_axial_sweep": {
           "front": 0,
@@ -2775,6 +3217,7 @@
         "exposed_head_mm": 1.500000000000007,
         "actual_switch_travel_mm": null,
         "max_safe_switch_displacement_mm": null,
+        "zero_fit_target": false,
         "status": "GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED",
         "continuous_axial_sweep": {
           "front": 0,
@@ -2790,6 +3233,135 @@
         },
         "extraction_board_mm3": 0,
         "outward_and_inward_stop_blocked": true
+      },
+      "button_boot_zero_fit": {
+        "flange_x_mm": [
+          -33.47,
+          -31.42
+        ],
+        "actual_tip_x_mm": -24.89637453987,
+        "switch_tip_x_mm": -24.896374539870415,
+        "rest_gap_mm": -4.156675004196586e-13,
+        "geometric_stroke_mm": 0.30000000000000426,
+        "switch_displacement_at_stop_mm": 0.30000000000041993,
+        "static_switch_overlap_at_stop_mm3": 0.2995336956065722,
+        "exposed_head_mm": 1.500000000000007,
+        "actual_switch_travel_mm": null,
+        "max_safe_switch_displacement_mm": null,
+        "zero_fit_target": true,
+        "status": "ZERO_FIT_GEOMETRIC_TOUCH_PRINT_PRELOAD_UNVERIFIED",
+        "continuous_axial_sweep": {
+          "front": 0,
+          "rear": 0,
+          "key_bezel": 0
+        },
+        "non_actuator_board_sweep_mm3": 0,
+        "rest_board_mm3": 0,
+        "screw_sweep_mm3": 0.0,
+        "continuous_extraction": {
+          "front": 0,
+          "rear": 0
+        },
+        "extraction_board_mm3": 0,
+        "outward_and_inward_stop_blocked": true,
+        "radial_translation_poses": [
+          {
+            "offset_yz_mm": [
+              0.297,
+              0.0
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              0.21001071401240462,
+              0.2100107140124046
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              1.8186004967338195e-17,
+              0.297
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.2100107140124046,
+              0.21001071401240462
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.297,
+              3.637200993467639e-17
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -0.21001071401240468,
+              -0.2100107140124046
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              -5.455801490201458e-17,
+              -0.297
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          },
+          {
+            "offset_yz_mm": [
+              0.21001071401240456,
+              -0.21001071401240468
+            ],
+            "non_actuator_board_mm3": 0,
+            "shells_mm3": {
+              "front": 0,
+              "rear": 0,
+              "key_bezel": 0
+            }
+          }
+        ]
       }
     },
     "retainer_screws": [

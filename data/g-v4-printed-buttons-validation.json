@@ -1,8 +1,8 @@
 {
-  "baseline_commit": "ebe414f",
+  "baseline_commit": "acd7de4",
   "status": "GEOMETRY_GATES_PASS_FUNCTIONAL_VERIFICATION_PENDING_NOT_PRINT_APPROVED",
   "print_approved": false,
-  "manifest_files": 33,
+  "manifest_files": 37,
   "manifest_and_build_delivery_identity": true,
   "source_hashes_match": 83,
   "protected_V1_files_unchanged": 122,
@@ -81,14 +81,45 @@
       "outward_capture_overlap_mm3": 1.6587609210954688
     }
   },
+  "zero_fit_variants": {
+    "power": {
+      "nominal_axial_gap_mm": 1.4210854715202004e-14,
+      "geometric_travel_mm": 0.3000000000000007,
+      "flange_thickness_mm": 2.049999999999997,
+      "rest_switch_overlap_mm3": 0.0,
+      "tip_at_stop_x_mm": -24.59436080634,
+      "nominal_tip_at_stop_x_mm": -24.59436080634,
+      "sliding_radial_clearance_mm": 0.3
+    },
+    "boot": {
+      "nominal_axial_gap_mm": -4.298783551348606e-13,
+      "geometric_travel_mm": 0.3000000000000007,
+      "flange_thickness_mm": 2.049999999999997,
+      "rest_switch_overlap_mm3": 0.0,
+      "tip_at_stop_x_mm": -24.59637453987,
+      "nominal_tip_at_stop_x_mm": -24.59637453987,
+      "sliding_radial_clearance_mm": 0.3
+    }
+  },
+  "preexisting_STLs_unchanged_vs_acd7de4": {
+    "front_shell": true,
+    "rear_shell": true,
+    "button_retainer": true,
+    "button_power_short": true,
+    "button_power_nominal": true,
+    "button_power_long": true,
+    "button_boot_short": true,
+    "button_boot_nominal": true,
+    "button_boot_long": true
+  },
   "obsolete_0127_delivery_files_absent": true,
   "rear_STL_unchanged": true,
   "negative_controls": {
-    "slider": 13,
+    "slider": 17,
     "screen": 5,
     "USB": 1
   },
-  "STEP_STL_parts": 9,
+  "STEP_STL_parts": 11,
   "empty_front_poses": 14,
   "previous_screen_budget_sensitivity": [
     {
@@ -130,9 +161,15 @@
   "standalone_delivery_reread": {
     "command": ".venv/bin/python scripts/check-g-v4-interfaces.py",
     "exit_code": 0,
-    "STEP_STL_parts": 9,
-    "slider_negative_controls_rejected": 13,
-    "USB_negative_rejected": true,
-    "continuous_motion_and_extraction_all_clear": true
+    "parts": 11,
+    "slider_negative_controls_rejected": 17,
+    "USB_negative_control_rejected": true,
+    "all_eight_button_motion_extraction_and_capture_gates_pass": true,
+    "radial_boundary_poses_checked": 32,
+    "zero_fit_gaps_mm": {
+      "button_power_zero_fit": 2.4868995751603507e-14,
+      "button_boot_zero_fit": -4.156675004196586e-13
+    },
+    "STL_nonmanifold_edges": 0
   }
 }

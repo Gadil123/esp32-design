@@ -46,7 +46,7 @@ def pockets(front,v):
     return rows
 
 
-def measured_motion(shape,v,y,switch):
+def measured_motion(shape,v,y,switch,*,zero_fit=False):
     """Derive flange faces and tip from the actual slider, including STEP rereads."""
     import g_v4_checks as C
     k=v['printed_keys'];t=table(v);z=k['z_center'];b=bounds(shape);sx=bounds(switch)[0]
@@ -57,7 +57,11 @@ def measured_motion(shape,v,y,switch):
     fb=bounds(rim);stroke=t['seat_x']-fb[3];gap=sx-b[3]
     assert abs(fb[0]-t['outer_x'])<1e-5,'slider outward stop plane'
     assert .2<stroke<.9,('slider travel',stroke)
-    assert gap>=.05-1e-6,('slider resting preload',gap)
+    # Only the explicitly requested zero-fit variant may have no axial gap.
+    # Negative gaps remain failures, including for zero-fit parts.
+    assert gap>=(0 if zero_fit else .05)-1e-6,('slider resting preload',gap)
+    if zero_fit:
+        assert abs(gap)<1e-6,('zero-fit contact plane',gap)
     hit=C.overlap(shape.translate((stroke,0,0)),switch)
     assert hit>1e-6,('slider reaches switch',gap,stroke,hit)
     assert b[0]<t['exterior_x']-.5,'slider finger access'
@@ -68,7 +72,9 @@ def measured_motion(shape,v,y,switch):
                 exposed_head_mm=t['exterior_x']-b[0],
                 actual_switch_travel_mm=k['switch_actuation_travel_mm'],
                 max_safe_switch_displacement_mm=k['switch_max_safe_displacement_mm'],
-                status='GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED')
+                zero_fit_target=zero_fit,
+                status=('ZERO_FIT_GEOMETRIC_TOUCH_PRINT_PRELOAD_UNVERIFIED' if zero_fit
+                        else 'GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED'))
 
 
 def axial_sweep(shape,travel):
@@ -109,7 +115,7 @@ def check(m,parts,v):
         local_obstacles=intersection(parts['ASSEMBLY'],scope)-actuator
         for label in k['variants_mm']:
             name=f'button_{"power" if i==1 else "boot"}_{label}';shape=m['button_exports'][name]
-            row=measured_motion(shape,v,y,switch);travel=row['geometric_stroke_mm']
+            row=measured_motion(shape,v,y,switch,zero_fit=label=='zero_fit');travel=row['geometric_stroke_mm']
             swept=axial_sweep(shape,travel)
             row['continuous_axial_sweep']={n:C.clear(m[n],swept,'slider sweep '+n) for n in ['front','rear','key_bezel']}
             row['non_actuator_board_sweep_mm3']=C.clear(swept,local_obstacles,'slider sweep non-actuator board')
@@ -125,6 +131,7 @@ def check(m,parts,v):
             result['variant_parts'][name]=row
             if label=='nominal':
                 result['keys'][key]=row
+            if label in ['nominal','zero_fit']:
                 radial=[]
                 # Bound the nominal translational play; no claim about tilt or
                 # supplier tolerances is made by these deliberately named poses.
@@ -187,6 +194,11 @@ def negative_controls(m,parts,v):
         reject(f'KEY{i} tip shortened',lambda:measured_motion(cap-cut,v,y,parts[f'KEY{i}']),'slider reaches switch')
         bad=cap+xcyl(k['tip_diameter_mm']/2,sx-.3,sx+.1,y,z)
         reject(f'KEY{i} tip preloads switch',lambda:measured_motion(bad,v,y,parts[f'KEY{i}']),'slider resting preload')
+        zero=m['button_exports'][f'button_{"power" if i==1 else "boot"}_zero_fit']
+        bad=zero+xcyl(k['tip_diameter_mm']/2,sx-.1,sx+.1,y,z)
+        reject(f'KEY{i} zero-fit tip preloads switch',lambda:measured_motion(bad,v,y,parts[f'KEY{i}'],zero_fit=True),'slider resting preload')
+        cut=box([sx-.1,y-5,z-5,sx+1,y+5,z+5])
+        reject(f'KEY{i} zero-fit tip recessed',lambda:measured_motion(zero-cut,v,y,parts[f'KEY{i}'],zero_fit=True),'zero-fit contact plane')
     p=v['reset_pinhole'];seal=xcyl(p['diameter_mm']/2,t['exterior_x'],t['outer_x'],p['y_mm'],p['z_mm'])
     reject('RESET sealed in retainer',lambda:windows(m['key_bezel']+seal,v),'slider retainer RESET')
     return rows

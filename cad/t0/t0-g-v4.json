@@ -216,7 +216,8 @@
     "variants_mm": {
       "short": -0.15,
       "nominal": 0,
-      "long": 0.15
+      "long": 0.15,
+      "zero_fit": 0.25
     },
     "switch_actuation_travel_mm": null,
     "switch_max_safe_displacement_mm": null,
@@ -247,6 +248,7 @@
         ]
       ],
       "aperture_diameter_mm": 5.8
-    }
+    },
+    "zero_fit_status": "User-requested optional nominal axial zero gap; flange and tip +0.25mm preserve maximum inward tip. Sliding radial clearance remains0.30. Actual print may preload the switch; fit must be checked, not guaranteed."
   }
 }
