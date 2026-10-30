@@ -1,0 +1,11 @@
+id,group,axis,x_mm,y_mm,z_mm,fastener,receiver,supplier_verified
+P1,board_to_rear,Z,-20.568177706598007,-27.100437863023274,-11.5,M2.5x5 machine screw,original board metal thread,False
+P2,board_to_rear,Z,-20.56045079905781,32.89956101943423,-11.5,M2.5x5 machine screw,original board metal thread,False
+P3,board_to_rear,Z,20.431821233414617,-27.10571791647091,-11.5,M2.5x5 machine screw,original board metal thread,False
+P4,board_to_rear,Z,20.439548140954813,32.89428096598659,-11.5,M2.5x5 machine screw,original board metal thread,False
+H1,front_to_rear,Z,-30.0,38.3,-11.95,2.0x6 plastic thread-forming candidate,"printed front boss, pilot diameter 1.7",False
+H2,front_to_rear,Z,-30.0,-28.0,-11.95,2.0x6 plastic thread-forming candidate,"printed front boss, pilot diameter 1.7",False
+H3,front_to_rear,Z,63.2,39.1,-11.95,2.0x6 plastic thread-forming candidate,"printed front boss, pilot diameter 1.7",False
+H4,front_to_rear,Z,63.3,-28.0,-11.95,2.0x6 plastic thread-forming candidate,"printed front boss, pilot diameter 1.7",False
+R1,side_retainer_to_front,X,-35.269999999999996,-27.0,-2.0,1.6x5 plastic thread-forming candidate,printed front blind pilot diameter 1.3,False
+R2,side_retainer_to_front,X,-35.269999999999996,3.5,-6.4,1.6x5 plastic thread-forming candidate,printed front blind pilot diameter 1.3,False
