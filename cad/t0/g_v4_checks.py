@@ -32,6 +32,74 @@ def material(a,b,label):
     return round(n,8)
 
 
+def speaker_notch_probes(base,dimensions):
+    """Witnesses across the actual fence wall, independent of its cutter."""
+    s=base['speaker'];sx,sy=s['center_xy_mm'];sw,sh,st=s['xyz_mm']
+    c=s['tray_clearance_mm'];w=s['tray_wall_mm']
+    x0=sx-sw/2-c-w+.02;x1=sx-sw/2-c-.02
+    sf=dimensions['front_face_z_mm']-base['bay_front_panel_mm']-s['foam_mm']
+    # Check the entire 2.6mm central passage behind the front panel, with
+    # a 0.01mm inset to avoid coincident Boolean boundaries.
+    opening=box([x0,sy-1.29,sf-st-.28,x1,sy+1.29,-.61])
+    edge=sy+sh/2
+    # V2/V4's former edge slot must have its fence wall restored, too.
+    closed=box([x0,edge-.8,base['speaker_wire_z_mm']-.2,
+                x1,edge-.2,base['speaker_wire_z_mm']+.2])
+    return opening,closed
+
+
+def speaker_notch(front,base,dimensions):
+    opening,closed=speaker_notch_probes(base,dimensions)
+    return dict(reference='V1 central speaker fence gap',
+        y_center_mm=base['speaker']['center_xy_mm'][1],nominal_width_y_mm=2.6,
+        central_passage_probe_bounds_mm=bounds(opening),
+        central_passage_overlap_mm3=clear(front,opening,'speaker central wire notch'),
+        former_edge_wall_material_mm3=material(front,closed,'speaker former edge wall'),
+        replacement_body_and_real_lead='Thickness 6.8mm user-reported; inherited XY and replacement lead length UNVERIFIED')
+
+
+def speaker_notch_negative_controls(front,base,dimensions):
+    opening,closed=speaker_notch_probes(base,dimensions);rows=[]
+    for label,bad,expected in [
+        ('Fill central speaker wire passage',front+opening,'speaker central wire notch'),
+        ('Reopen former edge wire slot',front-closed,'speaker former edge wall')]:
+        try:speaker_notch(bad,base,dimensions)
+        except AssertionError as exc:
+            assert expected in str(exc),str(exc)
+            rows.append(dict(mutation=label,rejected=True,reason=str(exc)))
+        else:raise AssertionError(('speaker notch gate missed mutation',label))
+    return rows
+
+
+def speaker_supports(m,base):
+    """Read rear pad tops and the speaker from the actual solids."""
+    s=base['speaker'];sx,sy=s['center_xy_mm'];sw,sh,_=s['xyz_mm']
+    sb=bounds(m['speaker']);db=bounds(m['damping']);rows=[]
+    assert abs(sb[5]-sb[2]-s['xyz_mm'][2])<TOL,'speaker body thickness'
+    for x in [sx-sw/2+2,sx+sw/2-2]:
+        for y in [sy-sh/2+2,sy+sh/2-2]:
+            section=intersection(m['rear'],box([x-.5,y-.5,-14,x+.5,y+.5,db[2]+.5]))
+            assert section.volume>0,'speaker rear support missing'
+            top=bounds(section)[5];gap=sb[2]-top
+            assert abs(gap-s['damping_mm'])<TOL,('speaker damping allowance',gap,s['damping_mm'])
+            rows.append(dict(xy_mm=[x,y],actual_top_z_mm=top,body_to_support_mm=gap))
+    return dict(actual_body_bounds_mm=sb,actual_thickness_mm=sb[5]-sb[2],
+        damping_bounds_mm=db,rear_supports=rows,
+        damping_vs_rear_mm3=clear(m['damping'],m['rear'],'speaker damping vs rear'),
+        physical_compression_and_closed_fit='UNVERIFIED')
+
+
+def speaker_support_negative_control(m,base):
+    s=base['speaker'];sx,sy=s['center_xy_mm'];sw,sh,_=s['xyz_mm']
+    x=sx-sw/2+2;y=sy-sh/2+2;z=bounds(m['damping'])[2]
+    bad={**m,'rear':m['rear']+box([x-.6,y-.6,z-.01,x+.6,y+.6,z+.1])}
+    try:speaker_supports(bad,base)
+    except AssertionError as exc:
+        assert 'speaker damping allowance' in str(exc),str(exc)
+        return dict(mutation='Raise one rear speaker pad by 0.1mm',rejected=True,reason=str(exc))
+    raise AssertionError('speaker support gate missed a raised pad')
+
+
 def retainer_windows(plate,v,ys):
     """Check every complete nominal opening, not only flange-capture witnesses.
 

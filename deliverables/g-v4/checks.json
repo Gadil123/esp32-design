@@ -81,7 +81,13 @@
       "status": "internal stiffeners, clear of PCB seats, battery, speaker and wire lanes"
     },
     "tf_opening": "removed; TF card stays inside and is reached by opening the clamped rear cover",
-    "speaker_wire_entry": "+Y edge (toward the battery; the photo's speaker bottom), not -Y",
+    "speaker_wire_entry": "V1 mid-Y fence notch; replacement speaker has a central lead exit, confirmed by user 2026-10-30",
+    "replacement_speaker": {
+      "body_thickness_mm": 6.8,
+      "body_xy_mm": null,
+      "lead_length_mm": null,
+      "status": "User reports 6.8mm thickness and fit in existing frame (2026-10-30). XY remains inherited 30x20mm; exact replacement XY, closed-shell physical fit and lead length UNVERIFIED. Preserve 0.3mm damping allowance by lowering rear support pads with the new thickness; 40mm route budget is not new lead-length evidence"
+    },
     "usb_opening": "unchanged 13.2 x 7.3mm after user insertion test; no reduction",
     "print_approved": false,
     "manufacturing_status": "manufacturing_unverified",
@@ -272,15 +278,15 @@
     "cad/t0/g_v1_95mm_checks.py": "66f07ad7a22c1ed37d2a595b01b1a79db415fae4a7df6983c33533504d0d5b50",
     "cad/t0/g_v1_95mm_drawings.py": "d22720f1f66233550a4618feb41d57fcb765964a14225312b7633cfbeebc9d7e",
     "cad/t0/g_v1_95mm_wiring.py": "215384952cf9e38e89433dae89e762d6e3b16afbb8700900de15bc2678f06117",
-    "cad/t0/g_v4_checks.py": "afd9d9a30362139fad022ae03a165c10809f31ca388b361181be94b6161fd299",
-    "cad/t0/g_v4_documentation.py": "f8ab38b33c7bf00fd2b837c6f6f061d0d9f8dd3f4c7f382945f42943987fc0f9",
+    "cad/t0/g_v4_checks.py": "e53d569e2fbe4cf69b1ffdb4c09b0b84f6f670feca2259d05c1947e0c0b01caf",
+    "cad/t0/g_v4_documentation.py": "7b2a64aa0fae644552d1d9228bd2b4ac559dbb9a17bcc7fa698fb6e6586b6e68",
     "cad/t0/g_v4_interfaces.py": "3f4a58875ec7f4747a7a87da578e0adad678c1681f86b8d50c252e5a83a8e464",
     "cad/t0/g_v4_printed_keys.py": "155ea09216cc486581c5936f4e8dd1d297a16c476aa2a0f06269839f23f9808f",
     "cad/t0/g_v4_slider_checks.py": "974750ff0fa2950a8f42f271b55f1d747d1fd1eb81ebdb3ea3b593e56101e4c5",
     "cad/t0/generate_g_v1_95mm.py": "e7f91f41a0ff2f37e232aff3a06cab03640745fbfb70df827cc68468ba5bf3d2",
     "cad/t0/generate_g_v2.py": "d7fedc3b33e061d2a3fa002fe0ea6f2c2cdd838bd7ada620db0895e106a8b0b8",
     "cad/t0/generate_g_v2b.py": "2fecca878ee7b5af9c4a399747eb7b8cd7d8ceb6fb244638acabde7021b0c40c",
-    "cad/t0/generate_g_v4.py": "ae9691acb0740c9510e7cb9c8533473a461d75d5b9187e0cd2a64c8397013222",
+    "cad/t0/generate_g_v4.py": "6f8b372a4e59573204c67553e587edf286fb967c896cd46f8832fdf2d4709688",
     "cad/t0/generate_t0.py": "efcdfcd69452a0ef376a94e1d39b842aa6f1dd37384eb1dd5602057f64418978",
     "cad/t0/generate_t0_c.py": "399f316f74572a0d8c3767c86c08c257e250b961d50f180712398e7542151d8b",
     "cad/t0/generate_t0_d.py": "7e1aba34c3728f006f3596ef74b1af7a7e00869ce66096950ffe3f90a8c73a36",
@@ -314,7 +320,7 @@
     "cad/t0/t0-g-v1-integrated-keys.json": "8e37dc57cf35b57f90ca085cdd8fbb6425a094b11b630b35af0af8f55e16075e",
     "cad/t0/t0-g-v2.json": "43b5d5aad7a0061d289e45f49a5fc5b3d93c6cf81ad5e1fdc41dc265feb40271",
     "cad/t0/t0-g-v2b.json": "c5bd78bded99fe924135fca7ae61b27cea82effb253c9fe298a574020fee5409",
-    "cad/t0/t0-g-v4.json": "3212a8b06e259f0f90ccce17cb66156471e2b7bd3ed9322142938c2e518f1f86",
+    "cad/t0/t0-g-v4.json": "d834debb34c3556e875e1011bdf1a47a3b697e96ee29b6b31f5cc97650fc60e4",
     "cad/t0/t0-parameters.json": "1c87d059f9fa4c7febb034ff49eb734038f33ce37b122b092c1e330241779c55",
     "cad/t0/t0_c_drawings.py": "5750bbd247ceaabe15f0bad2e0c07f2938e049016aafff81d1fa593cc8bac7bc",
     "cad/t0/t0_c_mount_study.py": "e31c800792ff93e4d94ea62ec0e416ef34870bce23b588b81e6e75ed0ca8dd0a",
@@ -338,7 +344,7 @@
     "cad/t0/t0_g_v1_retained_bounds.py": "b273ca7bdd5bbc82b962982367f9e28c234414bc3379236a6a41d19c309168eb",
     "cad/t0/t0_g_v2.py": "ca39d2540223758e914d03bc30d8937b34adfb64806678f1191702d81b23dc90",
     "cad/t0/t0_g_v2_keys.py": "d0f7b48a507041fc6754c000a482626de0f1e463138e12e5712e339a1b8daf1a",
-    "cad/t0/t0_g_v4.py": "67a26afd8d4d21a8f347f440d5700e2a0a4a6f61eaf114af8fa897b19c02796c",
+    "cad/t0/t0_g_v4.py": "ed13b6dbb8c6808ee68df96bec3b7422a0e49823216ab4e76ce65f33eed46a2b",
     "cad/t0/t0_key_contact.py": "dc303f68da356ba92e9664b008f0204ff913b6ff05ca88e67264cdfd6897bb73",
     "cad/t0/t0_key_study.py": "40b987529256a91328684c1e1313ccdd961098ac4fb6902f5fbfc095f5feca23",
     "cad/t0/t0_model.py": "70ef2693289647df75f0557c8cef361a97a1f5f01e2bc9ab2611f5979169944d",
@@ -448,7 +454,7 @@
       -13.85,
       66.13,
       42.13,
-      -7.800000000000001
+      -8.1
     ],
     "key_bezel": [
       -35.269999999999996,
@@ -2108,6 +2114,94 @@
     "rejected": true,
     "reason": "('USB independent cable body rear', 7.659261674919229, [-6.099793535910904, 38.67583090701147, -10.319520835024438, 6.100206464089097, 39.07583090701147, -8.75])"
   },
+  "speaker_notch": {
+    "reference": "V1 central speaker fence gap",
+    "y_center_mm": -22.4,
+    "nominal_width_y_mm": 2.6,
+    "central_passage_probe_bounds_mm": [
+      28.02,
+      -23.689999999999998,
+      -8.08,
+      28.98,
+      -21.11,
+      -0.6100000000000003
+    ],
+    "central_passage_overlap_mm3": 0,
+    "former_edge_wall_material_mm3": 0.2304,
+    "replacement_body_and_real_lead": "Thickness 6.8mm user-reported; inherited XY and replacement lead length UNVERIFIED"
+  },
+  "speaker_notch_negative_controls": [
+    {
+      "mutation": "Fill central speaker wire passage",
+      "rejected": true,
+      "reason": "('speaker central wire notch', 18.501696000000003, [28.02, -23.689999999999998, -8.08, 28.98, -21.11, -0.6100000000000003])"
+    },
+    {
+      "mutation": "Reopen former edge wire slot",
+      "rejected": true,
+      "reason": "('speaker former edge wall', 0, 0.23040000000000094)"
+    }
+  ],
+  "speaker_supports": {
+    "actual_body_bounds_mm": [
+      29.5,
+      -32.4,
+      -7.800000000000001,
+      59.5,
+      -12.399999999999999,
+      -1.0000000000000009
+    ],
+    "actual_thickness_mm": 6.8,
+    "damping_bounds_mm": [
+      29.5,
+      -32.4,
+      -8.1,
+      59.5,
+      -12.399999999999999,
+      -7.8
+    ],
+    "rear_supports": [
+      {
+        "xy_mm": [
+          31.5,
+          -30.4
+        ],
+        "actual_top_z_mm": -8.1,
+        "body_to_support_mm": 0.29999999999999893
+      },
+      {
+        "xy_mm": [
+          31.5,
+          -14.399999999999999
+        ],
+        "actual_top_z_mm": -8.1,
+        "body_to_support_mm": 0.29999999999999893
+      },
+      {
+        "xy_mm": [
+          57.5,
+          -30.4
+        ],
+        "actual_top_z_mm": -8.1,
+        "body_to_support_mm": 0.29999999999999893
+      },
+      {
+        "xy_mm": [
+          57.5,
+          -14.399999999999999
+        ],
+        "actual_top_z_mm": -8.1,
+        "body_to_support_mm": 0.29999999999999893
+      }
+    ],
+    "damping_vs_rear_mm3": 0.0,
+    "physical_compression_and_closed_fit": "UNVERIFIED"
+  },
+  "speaker_support_negative_control": {
+    "mutation": "Raise one rear speaker pad by 0.1mm",
+    "rejected": true,
+    "reason": "('speaker damping allowance', 0.1999999999999993, 0.3)"
+  },
   "MIC": {
     "xy_mm": [
       29.8,
@@ -2139,7 +2233,7 @@
       "battery": 0,
       "adhesive": 0,
       "speaker": 0.0,
-      "MX1_candidate_max_mm3": 0
+      "MX1_candidate_max_mm3": 0.0
     },
     "key_bezel": {
       "official_assembly_723": 0.0,
@@ -2183,9 +2277,78 @@
     "continuous_or_tilted_path": "UNVERIFIED; 14 discrete straight poses, not continuous proof"
   },
   "speaker_candidate": {
-    "route_length_mm": 28.22178337817349,
-    "exit": "+Y toward battery",
-    "real_lead": "UNVERIFIED"
+    "route_length_mm": 37.021783378173495,
+    "exit": "V1 mid-Y central fence notch",
+    "route": {
+      "socket_bounds_mm": [
+        17.439999999997006,
+        -23.30581092720877,
+        -8.899999339999999,
+        22.639999999997077,
+        -15.65581092720877,
+        -5.4999993399999285
+      ],
+      "opening_direction_inferred_from_cavity": [
+        -1,
+        0,
+        0
+      ],
+      "function_identity": "Lower MX1 = SPEAKER, explicitly confirmed by user2026-10-20; plug and terminal geometry pending",
+      "wire_centerline_polyline_before_fillets_mm": [
+        [
+          [
+            13.439999999997006,
+            -19.480810927208772,
+            -7.3
+          ],
+          [
+            10.439999999997006,
+            -19.480810927208772,
+            -7.3
+          ],
+          [
+            10.439999999997006,
+            -13,
+            -7.3
+          ],
+          [
+            26.635,
+            -13,
+            -7.3
+          ],
+          [
+            26.635,
+            -13,
+            -4.0
+          ],
+          [
+            26.635,
+            -22.4,
+            -4.0
+          ],
+          [
+            28.5,
+            -22.4,
+            -4.0
+          ]
+        ]
+      ],
+      "filleted_centerline_length_mm": 37.021783378173495,
+      "bundle_diameter_mm": 1.5,
+      "bend_radius_mm": 1.5,
+      "source": "V1 central-entry geometric candidate for the replacement speaker; new lead length, plug body, section and bend radius remain UNVERIFIED. Old 40mm fit feedback is not new physical evidence.",
+      "terminal_connection_verified": false,
+      "plug_body_status": "UNVERIFIED",
+      "wire_spec_and_bend_radius_status": "UNVERIFIED"
+    },
+    "route_budget_mm": 40,
+    "real_lead": "UNVERIFIED replacement speaker; old 40mm fit feedback is not a measurement of the new lead",
+    "replacement": {
+      "body_thickness_mm": 6.8,
+      "body_xy_mm": null,
+      "lead_length_mm": null,
+      "status": "User reports 6.8mm thickness and fit in existing frame (2026-10-30). XY remains inherited 30x20mm; exact replacement XY, closed-shell physical fit and lead length UNVERIFIED. Preserve 0.3mm damping allowance by lowering rear support pads with the new thickness; 40mm route budget is not new lead-length evidence"
+    }
   },
   "interface_negative_controls": [
     {
@@ -2278,10 +2441,10 @@
     "front_shell": {
       "step_valid": true,
       "step_solid_count": 1,
-      "stl_triangles": 9702,
+      "stl_triangles": 9644,
       "stl_nonmanifold_edges": 0,
       "step_stl_bounds_error_mm": 2.7465820267025265e-06,
-      "step_stl_relative_volume_error": 1.4428810406355007e-05
+      "step_stl_relative_volume_error": 1.4869033694066003e-05
     },
     "rear_shell": {
       "step_valid": true,
@@ -2289,7 +2452,7 @@
       "stl_triangles": 8644,
       "stl_nonmanifold_edges": 0,
       "step_stl_bounds_error_mm": 2.7465820267025265e-06,
-      "step_stl_relative_volume_error": 6.153190036895378e-06
+      "step_stl_relative_volume_error": 6.155354305819684e-06
     },
     "button_retainer": {
       "step_valid": true,
@@ -2416,6 +2579,22 @@
       ]
     ],
     "active_display_and_edge_touch_visibility": "UNVERIFIED actual active-area outline absent; check verifies geometric lip inner aperture only"
+  },
+  "speaker_notch_STEP_roundtrip": {
+    "reference": "V1 central speaker fence gap",
+    "y_center_mm": -22.4,
+    "nominal_width_y_mm": 2.6,
+    "central_passage_probe_bounds_mm": [
+      28.02,
+      -23.689999999999998,
+      -8.08,
+      28.98,
+      -21.11,
+      -0.6100000000000003
+    ],
+    "central_passage_overlap_mm3": 0,
+    "former_edge_wall_material_mm3": 0.2304,
+    "replacement_body_and_real_lead": "Thickness 6.8mm user-reported; inherited XY and replacement lead length UNVERIFIED"
   },
   "screen_air_STL_ray_hits": [
     0,
@@ -3442,5 +3621,60 @@
       "key_bezel": 0.0
     },
     "scope": "12.2 x 6.3 nominal body from the official mouth; no credit for a narrow metal nose. Real cable/side-load and print fit remain UNVERIFIED."
+  },
+  "speaker_supports_STEP_roundtrip": {
+    "actual_body_bounds_mm": [
+      29.5,
+      -32.4,
+      -7.800000000000001,
+      59.5,
+      -12.399999999999999,
+      -1.0000000000000009
+    ],
+    "actual_thickness_mm": 6.8,
+    "damping_bounds_mm": [
+      29.5,
+      -32.4,
+      -8.1,
+      59.5,
+      -12.399999999999999,
+      -7.8
+    ],
+    "rear_supports": [
+      {
+        "xy_mm": [
+          31.5,
+          -30.4
+        ],
+        "actual_top_z_mm": -8.1,
+        "body_to_support_mm": 0.29999999999999893
+      },
+      {
+        "xy_mm": [
+          31.5,
+          -14.399999999999999
+        ],
+        "actual_top_z_mm": -8.1,
+        "body_to_support_mm": 0.29999999999999893
+      },
+      {
+        "xy_mm": [
+          57.5,
+          -30.4
+        ],
+        "actual_top_z_mm": -8.1,
+        "body_to_support_mm": 0.29999999999999893
+      },
+      {
+        "xy_mm": [
+          57.5,
+          -14.399999999999999
+        ],
+        "actual_top_z_mm": -8.1,
+        "body_to_support_mm": 0.29999999999999893
+      }
+    ],
+    "damping_vs_rear_mm3": 0.0,
+    "physical_compression_and_closed_fit": "UNVERIFIED"
   }
 }

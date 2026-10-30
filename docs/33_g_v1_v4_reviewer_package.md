@@ -1,8 +1,8 @@
 # 33 · Pocket Pi G-V1 V4-RECT当前评审入口
 
-2026-10-27。当前为用户授权的**一体打印滑动按钮＋收紧屏幕挡边间隙**修订。`print_approved=false`；没有第二件实物，不保证首次打印成功，没有打印、下单、发布或推送。
+2026-10-30。当前保留**一体打印滑动按钮＋收紧屏幕挡边间隙**，并恢复新喇叭的V1中部出线，按用户提供的6.8毫米厚度调整支撑。`print_approved=false`；V4尚未实物验收，不保证首次打印成功，没有打印或下单。
 
-当前说明见[交付README](../deliverables/g-v4/README.md)、[本轮修订37](37_g_v1_v4_printed_buttons_and_screen_fit.md)及[实配记录表](../deliverables/g-v4/printed_button_fit_sheet.md)。[评审34](34_codex_v4_review.md)、[修复记录35](35_g_v1_v4_fix_log.md)、[独立评审36](36_g_v1_v4_independent_preprint_review.md)保留各自当时版本的证据，不能把历史0127结构的尺寸套到当前件。
+当前说明见[交付README](../deliverables/g-v4/README.md)、[喇叭修订38](38_g_v4_speaker_center_wire_revision.md)、[按钮/屏幕修订37](37_g_v1_v4_printed_buttons_and_screen_fit.md)及[实配记录表](../deliverables/g-v4/printed_button_fit_sheet.md)。[评审34](34_codex_v4_review.md)、[修复记录35](35_g_v1_v4_fix_log.md)、[独立评审36](36_g_v1_v4_independent_preprint_review.md)保留各自当时版本的证据，不能把历史0127结构的尺寸套到当前件。
 
 ## 范围与基线
 

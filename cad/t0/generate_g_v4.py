@@ -20,7 +20,7 @@ from t0_reference import load
 from p1_checks import intersection
 from t0_g_v1_preview import panel
 from check_exports import verify_exports
-from v2_wiring import build as build_wiring
+from g_v1_95mm_wiring import build as build_wiring
 import t0_g_v4 as V4
 import g_v4_checks as C
 import g_v4_slider_checks as S
@@ -54,9 +54,11 @@ def load_baseline():
     base['battery']['tray_clearance_mm'] = cfg['battery_tray_clearance_mm']
     base['speaker'].update(xyz_mm=cfg['speaker_xyz_mm'],
                            center_xy_mm=cfg['selected_speaker_center_xy_mm'],
-                           status='user_measured_body; lead exit still to confirm')
+                           status='Inherited XY; replacement thickness 6.8mm and central lead exit user-reported 2026-10-30; actual closed-shell fit UNVERIFIED')
     base['narrow_wiring'] = cfg['wiring']
     v = read('t0-g-v4.json')
+    thickness=v['replacement_speaker']['body_thickness_mm']
+    base['speaker']['xyz_mm']=[*base['speaker']['xyz_mm'][:2],thickness]
     base['outer_x_min_mm'] = v['outer_x_min_mm']
     base['width_mm'] = v['width_mm']
     base['outer_y_mm'] = v['outer_y_mm']
@@ -164,11 +166,16 @@ def main():
         report['fasteners']=C.fasteners(m,v,mounts)
         report['USB_access']=C.usb_access(m)
         report['USB_negative_control']=C.usb_negative_control(m)
+        report['speaker_notch']=C.speaker_notch(f,base,m['dimensions'])
+        report['speaker_notch_negative_controls']=C.speaker_notch_negative_controls(f,base,m['dimensions'])
+        report['speaker_supports']=C.speaker_supports(m,base)
+        report['speaker_support_negative_control']=C.speaker_support_negative_control(m,base)
         mic=v['mic_port'];mp=V4.cyl(mic['diameter_mm']/2-.001,*mic['z_mm'],*mic['xy_mm'])
         report['MIC']=dict(**mic,full_thickness_path_overlap_mm3=C.clear(f,mp,'MIC full hole'),
                            measurement_required='Measure V1 printed/drilled hole diameter and XY from glass edges; locate PCB/MEMS inlet; candidate is not a measured V1 hole; acoustics UNVERIFIED')
         report['collision_checks']={}
         plugs,wires,wire_data=build_wiring(parts,base,m)
+        wire_data['MX1']['source']='V1 central-entry geometric candidate for the replacement speaker; new lead length, plug body, section and bend radius remain UNVERIFIED. Old 40mm fit feedback is not new physical evidence.'
         wire_shapes=[*wires['MX1'],plugs['MX1']]
         targets=[('official_assembly_723',parts['ASSEMBLY']),('battery',m['battery']),('adhesive',m['adhesive']),('speaker',m['speaker'])]
         for name in ['front','rear','key_bezel']:
@@ -190,7 +197,10 @@ def main():
             assert not hits,(dz,hits)
         report['front_loading']=dict(discrete_straight_pose_hits=sweep,cap_status='Printed buttons/retainer removed during front loading; continuous axial button installation/extraction checked separately',
             continuous_or_tilted_path='UNVERIFIED; 14 discrete straight poses, not continuous proof')
-        report['speaker_candidate']=dict(route_length_mm=wire_data['MX1']['filleted_centerline_length_mm'],exit='+Y toward battery',real_lead='UNVERIFIED')
+        report['speaker_candidate']=dict(route_length_mm=wire_data['MX1']['filleted_centerline_length_mm'],
+            exit='V1 mid-Y central fence notch',route=wire_data['MX1'],
+            route_budget_mm=40,real_lead='UNVERIFIED replacement speaker; old 40mm fit feedback is not a measurement of the new lead',
+            replacement=v['replacement_speaker'])
         assert report['speaker_candidate']['route_length_mm']<40
         # All exported parts round-trip independently, including coupon/retainer.
         exports={'front_shell':f,'rear_shell':r,'button_retainer':m['key_bezel'],**m['button_exports']}
@@ -202,6 +212,7 @@ def main():
         report['export_checks']=verify_exports(BUILD,names=tuple(exports))
         exported_front=import_step(BUILD/'front_shell.step')
         report['screen_air_STEP_roundtrip']=C.screen_column(exported_front,sg)
+        report['speaker_notch_STEP_roundtrip']=C.speaker_notch(exported_front,base,m['dimensions'])
         report['screen_air_STL_ray_hits']=C.stl_screen_rays(BUILD/'front_shell.stl',sg,report['screen_air']['ray_xy_mm'])
         reread={**m,'front':exported_front,'rear':import_step(BUILD/'rear_shell.step'),
                 'key_bezel':import_step(BUILD/'button_retainer.step'),
@@ -209,6 +220,7 @@ def main():
         reread['buttons']={f'KEY{i}':reread['button_exports'][f'button_{label}_nominal'] for i,label in [(1,'power'),(2,'boot')]}
         report['printed_slider_STEP_roundtrip']=S.check(reread,parts,v)
         report['USB_access_STEP_roundtrip']=C.usb_access(reread)
+        report['speaker_supports_STEP_roundtrip']=C.speaker_supports(reread,base)
         light=[f,r,m['key_bezel'],*m['buttons'].values(),*m['screws'],*m['retainer_screws'],parts['PCB_BOARD'],parts['DISPLAY'],m['battery'],m['adhesive'],m['speaker'],*mounts]
         export_step(Compound(children=[Compound(s.wrapped,label=s.label or f'part_{i}') for i,s in enumerate(light)]),BUILD/'assembly_light.step')
         print('Render V4 drawings and write measurement/BOM notes',flush=True)
@@ -325,7 +337,7 @@ def render(out, parts, m, base, wire_shapes, mounts):
            (section(m['speaker'], 28.25, -36, -14.5, 28.55, 42, 2), '#a05a4f')]
     fig, ax = plt.subplots(figsize=(7, 8))
     panel(ax, spk, [0, 0, 1], [0, 1, 0], [-1, 0, 0], (-14.5, 2, -36, 42))
-    ax.set_title('V4 SPEAKER FENCE YZ at X=28.4 / wire notch now at +Y edge (toward battery);\nV1 speaker/recording already works')
+    ax.set_title('V4 SPEAKER FENCE YZ at X=28.4 / V1 central wire notch restored;\nspeaker thickness 6.8mm (user); XY/lead length UNVERIFIED')
     ax.set_xlabel('Z (REAR left)'); ax.set_ylabel('Y')
     fig.tight_layout(); fig.savefig(out / 'speaker_notch_section.png', dpi=150); plt.close(fig)
 

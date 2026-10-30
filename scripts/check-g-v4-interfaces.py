@@ -33,6 +33,10 @@ def main():
     m['buttons']={f'KEY{i}':m['button_exports'][f'button_{label}_nominal'] for i,label in [(1,'power'),(2,'boot')]}
     report=dict(sliders=S.check(m,parts,v),negative_controls=S.negative_controls(m,parts,v),
         USB=C.usb_access(m),USB_negative=C.usb_negative_control(m),
+        speaker_notch=C.speaker_notch(m['front'],base,m['dimensions']),
+        speaker_notch_negatives=C.speaker_notch_negative_controls(m['front'],base,m['dimensions']),
+        speaker_supports=C.speaker_supports(m,base),
+        speaker_support_negative=C.speaker_support_negative_control(m,base),
         screen=C.screen_column(m['front'],m['screen_geometry']),
         exports=verify_exports(d,names=('front_shell','rear_shell','button_retainer',*m['button_exports'])))
     print(json.dumps(report,indent=2))

@@ -75,7 +75,13 @@
     "status": "internal stiffeners, clear of PCB seats, battery, speaker and wire lanes"
   },
   "tf_opening": "removed; TF card stays inside and is reached by opening the clamped rear cover",
-  "speaker_wire_entry": "+Y edge (toward the battery; the photo's speaker bottom), not -Y",
+  "speaker_wire_entry": "V1 mid-Y fence notch; replacement speaker has a central lead exit, confirmed by user 2026-10-30",
+  "replacement_speaker": {
+    "body_thickness_mm": 6.8,
+    "body_xy_mm": null,
+    "lead_length_mm": null,
+    "status": "User reports 6.8mm thickness and fit in existing frame (2026-10-30). XY remains inherited 30x20mm; exact replacement XY, closed-shell physical fit and lead length UNVERIFIED. Preserve 0.3mm damping allowance by lowering rear support pads with the new thickness; 40mm route budget is not new lead-length evidence"
+  },
   "usb_opening": "unchanged 13.2 x 7.3mm after user insertion test; no reduction",
   "print_approved": false,
   "manufacturing_status": "manufacturing_unverified",

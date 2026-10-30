@@ -69,19 +69,9 @@ def build(parts, mounts, base, kp, p, q, v):
         m = build_keys(parts, m, base, q)
         front = m['front']
 
-    # 2b. Speaker lead now exits at the +Y edge; move the fence notch from mid-Y.
-    sp = base['speaker']; sx, sy = sp['center_xy_mm']; sw, sh, st = sp['xyz_mm']
-    sf = m['dimensions']['glass_z_mm'] - base['bay_front_panel_mm'] - sp['foam_mm']
-    wall_half = sp['tray_wall_mm'] / 2
-    # Fill the old mid notch through BOTH the fence wall and the front face.
-    front = front + box([sx - sw / 2 - 2, sy - 1.3, -.6,
-                         sx - sw / 2 + .1, sy + 1.3,
-                         m['dimensions']['front_z_mm']])
-    front = front + box([sx - sw / 2 - 1, sy - 1.3, sf - st - 1,
-                         sx - sw / 2, sy + 1.3, -.6])
-    # New +Y notch is a slot in the fence wall only; the front face stays closed.
-    front = front - box([sx - sw / 2 - 2, sy + sh / 2 - 1.3, sf - st - 1,
-                         sx - sw / 2 + .1, sy + sh / 2 + 1.3, -.6])
+    # 2b. Replacement speaker exits at mid-Y (user, 2026-10-30).
+    # Keep foundation's original V1 central fence notch. Do not fill its
+    # opening or cut the later +Y-edge slot; frozen V1 sources stay unchanged.
 
     # 3. Tight rounded window, screen-capturing lip and inner guide rib.
     glass, gr = front_glass_face(parts['DISPLAY'])
