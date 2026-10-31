@@ -1,0 +1,10 @@
+{
+  "iteration": "B speakerX-3 with rear-under-fence bundle",
+  "nominal_status": "CONDITIONAL_NOMINAL_GEOMETRY_PASS_PHYSICAL_PENDING",
+  "bundle_lane_z_mm": -8.8,
+  "nominal_floor_gap_mm": 0.6,
+  "nominal_fence_gap_mm": 0.25,
+  "full_gate": "NOMINAL_FULL_ASSEMBLY_GATE_PASS_PHYSICAL_PENDING",
+  "expanded_battery_pass": true,
+  "decision": "Nominal gates passed, but select balanced speakerX-1.5 to retain a simpler side wire corridor and more even margins. No weaker frame or key redesign."
+}

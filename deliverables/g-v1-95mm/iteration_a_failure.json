@@ -1,0 +1,18 @@
+{
+  "iteration": "A first full bay rebuild",
+  "nominal_status": "BLOCKED_FULL_ASSEMBLY_GATE",
+  "installed_pair_collisions": [
+    {
+      "a": "FRONT",
+      "b": "MX1_wire_0",
+      "volume_mm3": 15.43076813664659
+    }
+  ],
+  "expanded_battery_hits": [
+    {
+      "obstacle": "REAR",
+      "volume_mm3": 0.247221315766134
+    }
+  ],
+  "remedy": "Keep all mechanical sections. Route speaker bundle behind rear edge of speaker fence with same1.5mm bend radius; enlarge tray clearance from.5 to.75 for conservative battery corner budget."
+}

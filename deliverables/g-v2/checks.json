@@ -1,0 +1,371 @@
+{
+  "status": "CONDITIONAL_NOMINAL_GEOMETRY_PASS_PHYSICAL_PENDING",
+  "print_approved": false,
+  "manufacturing_status": "manufacturing_unverified",
+  "functional_actuation_status": "UNVERIFIED",
+  "mechanical_baseline": "ee8ec9d + 95.60mm bay",
+  "coordinates": "USB +Y / FRONT +Z / REAR -Z",
+  "design_change": {
+    "stage": "G-V1 V2 physical-feedback revision: screen lip + clamped rear cover + hidden TF",
+    "source_feedback_date": "2026-10-26 printed first article",
+    "seam_z_mm": -10.35,
+    "rear_panel_mm": 2.0,
+    "rear_outer_z_mm": -12.35,
+    "rear_panel_status": "uniform 2.0mm plate, internal ribs, no snap latches",
+    "screen_clearance_mm": 0.2,
+    "screen_lip_overlap_mm": 1.0,
+    "screen_lip_radial_mm": 1.2,
+    "screen_lip_base_mm": 1.2,
+    "screen_lip_base_height_mm": 0.5,
+    "screen_lip_overhang_height_mm": 0.4,
+    "screen_lip_bottom_gap_mm": 0.1,
+    "screen_lip_top_z_mm": 1.2,
+    "screen_guide_rib_mm": 1.5,
+    "screen_guide_rib_z_mm": [
+      -2.5,
+      -0.5
+    ],
+    "assembly_order": "rear panel + PCB/display/battery/speaker + four PCB screws first; FRONT shell lowered from +Z (four ears stay outside the body and do not sweep the PCB); four M2 shell screws from REAR",
+    "pcb_screw": {
+      "kind": "M2.5x5 machine screw into original metal insert",
+      "thread_diameter_mm": 2.5,
+      "shaft_length_mm": 5.0,
+      "head_diameter_mm": 5.0,
+      "head_height_mm": 0.85,
+      "head_pocket_diameter_mm": 5.8,
+      "shaft_bore_diameter_mm": 2.8
+    },
+    "shell_screw": {
+      "kind": "M2x6 self-tapping (DIN 7981 / ISO 7049) into PA12 pilot; four corner ears",
+      "thread_diameter_mm": 2.0,
+      "shaft_length_mm": 6.0,
+      "head_diameter_mm": 3.8,
+      "head_height_mm": 1.0,
+      "head_pocket_diameter_mm": 4.2,
+      "pilot_diameter_mm": 1.7,
+      "axes_xy_mm": [
+        [
+          -29.74,
+          38.3
+        ],
+        [
+          -29.74,
+          -28.0
+        ],
+        [
+          66.4,
+          38.3
+        ],
+        [
+          66.4,
+          -28.0
+        ]
+      ],
+      "status": "nominal geometry only; PA12 thread strength, torque and repeated service unverified",
+      "ears": {
+        "inset_mm": 0.5,
+        "overhang_mm": 2.67,
+        "half_width_mm": 3.0,
+        "corner_radius_mm": 1.4,
+        "left_outer_x_mm": -32.14,
+        "right_outer_x_mm": 68.8,
+        "status": "four local corner ears replace both snap latches and clamp the whole seam; overall width 100.94mm"
+      }
+    },
+    "rear_ribs": {
+      "height_mm": 1.2,
+      "width_mm": 1.2,
+      "x_mm": [
+        -14.0,
+        8.0
+      ],
+      "y_mm": [
+        0.0
+      ],
+      "status": "internal stiffeners, clear of PCB seats, battery, speaker and wire lanes"
+    },
+    "tf_opening": "removed; TF card stays inside and is reached by opening the clamped rear cover",
+    "bat_pwr_leaf": "straight rounded-rectangle leaf replaces the TF-clearing L shape",
+    "speaker_wire_entry": "+Y edge (toward the battery; the photo's speaker bottom), not -Y",
+    "usb_opening": "unchanged 13.2 x 7.3mm after user insertion test; no reduction",
+    "print_approved": false,
+    "manufacturing_status": "manufacturing_unverified",
+    "functional_actuation_status": "UNVERIFIED",
+    "overall_width_with_ears_mm": 100.94,
+    "total_thickness_mm": 13.55,
+    "mic_port": {
+      "xy_mm": [
+        27.3,
+        1.395
+      ],
+      "diameter_mm": 1.5,
+      "z_mm": [
+        -0.6,
+        0.71
+      ],
+      "status": "preserves the V1 printed front hole / V1 CAD candidate; actual photo location to confirm"
+    }
+  },
+  "assumptions_still_physical": [
+    "speaker lead exits at the -Y edge (user said bottom; photo/measurement pending)",
+    "MIC1 port direction and the small front hole in the first article are not resolved",
+    "PA12/MJF or FDM process and flatness not confirmed",
+    "M2 thread-forming strength in PA12 and M2.5x5 metal-insert engagement not tested",
+    "glass is not preloaded; 0.1mm lip gap plus optional 0.2mm foam tape"
+  ],
+  "dimensions": {
+    "front_top_z_mm": 1.2,
+    "front_face_z_mm": 0.7,
+    "seam_z_mm": -10.35,
+    "rear_outer_z_mm": -12.35,
+    "total_thickness_mm": 13.549999999999999,
+    "body_xy_mm": [
+      95.6,
+      77.86
+    ]
+  },
+  "screen": {
+    "glass_bounds_mm": [
+      -25.270000000000003,
+      -33.53,
+      0.7,
+      25.270000000000003,
+      39.53,
+      0.7
+    ],
+    "glass_radius_mm": 2.0,
+    "window_whr_mm": [
+      50.940000000000005,
+      73.46000000000001,
+      2.2
+    ],
+    "lip_inner_whr_mm": [
+      48.540000000000006,
+      71.06,
+      1.0
+    ],
+    "lip_base_whr_mm": [
+      53.34,
+      75.86000000000001,
+      3.4000000000000004
+    ],
+    "glass_front_z_mm": 0.7,
+    "lip_top_z_mm": 1.2
+  },
+  "screw_rows": [
+    {
+      "axis_xy_mm": [
+        -20.568177706598007,
+        -27.100437863023274
+      ],
+      "metalback_z_mm": -9.499999439999998,
+      "head_seat_z_mm": -11.5,
+      "tip_z_mm": -6.5,
+      "kind": "PCB_M2_5x5_machine"
+    },
+    {
+      "axis_xy_mm": [
+        -20.56045079905781,
+        32.89956101943423
+      ],
+      "metalback_z_mm": -9.499999439999998,
+      "head_seat_z_mm": -11.5,
+      "tip_z_mm": -6.5,
+      "kind": "PCB_M2_5x5_machine"
+    },
+    {
+      "axis_xy_mm": [
+        20.431821233414617,
+        -27.10571791647091
+      ],
+      "metalback_z_mm": -9.499999439999998,
+      "head_seat_z_mm": -11.5,
+      "tip_z_mm": -6.5,
+      "kind": "PCB_M2_5x5_machine"
+    },
+    {
+      "axis_xy_mm": [
+        20.439548140954813,
+        32.89428096598659
+      ],
+      "metalback_z_mm": -9.499999439999998,
+      "head_seat_z_mm": -11.5,
+      "tip_z_mm": -6.5,
+      "kind": "PCB_M2_5x5_machine"
+    }
+  ],
+  "bounds_mm": {
+    "front": [
+      -32.14,
+      -35.93,
+      -11.700000000000001,
+      68.80000000000001,
+      41.93,
+      1.2000000000000002
+    ],
+    "rear": [
+      -32.14,
+      -35.93,
+      -12.35,
+      68.80000000000001,
+      41.93000000000001,
+      -7.800000000000001
+    ]
+  },
+  "overall_width_with_ears_mm": 100.94000000000001,
+  "overall_height_mm": 77.86,
+  "overall_thickness_mm": 13.55,
+  "screen_measured": {
+    "glass_bounds_mm": [
+      -25.270000000000003,
+      -33.53,
+      0.7,
+      25.270000000000003,
+      39.53,
+      0.7
+    ],
+    "glass_corner_radius_mm": 2.0,
+    "window_inner_half_x_mm": 25.470000000000002,
+    "lip_inner_half_x_mm": 24.270000000000003,
+    "glass_half_x_mm": 25.270000000000003,
+    "window_to_glass_gap_mm": 0.1999999999999993,
+    "lip_overlap_on_glass_mm": 1.0,
+    "lip_top_z_mm": 1.2000000000000002,
+    "glass_front_z_mm": 0.7,
+    "screen_recess_below_lip_mm": 0.5000000000000002,
+    "lip_underside_z_mm": 0.8,
+    "lip_to_glass_gap_mm": 0.10000000000000009
+  },
+  "rear_panel_measured_mm": 2.01,
+  "mic_port": {
+    "xy_mm": [
+      27.3,
+      1.395
+    ],
+    "diameter_mm": 1.5,
+    "z_mm": [
+      -0.6,
+      0.71
+    ],
+    "status": "preserves the V1 printed front hole / V1 CAD candidate; actual photo location to confirm",
+    "probe_volume_mm3": 0,
+    "note": "V1 recording works; V2 keeps the V1 candidate hole. Confirm the actual photo location."
+  },
+  "collision_checks": {
+    "front": {
+      "official_assembly_723": 0,
+      "battery_complete": 0,
+      "speaker_body": 0,
+      "candidate_wiring": 0
+    },
+    "rear": {
+      "official_assembly_723": 0,
+      "battery_complete": 0,
+      "speaker_body": 0,
+      "candidate_wiring": 0
+    }
+  },
+  "screw_checks": {
+    "shell_screws_vs_board_max_mm3": 0,
+    "pcb_thread_envelopes_in_metal_inserts_mm3": [
+      1.035,
+      1.035,
+      1.035,
+      1.035
+    ],
+    "pcb_thread_overlap_expected": true,
+    "shell_screw_head": {
+      "kind": "M2x6 self-tapping (DIN 7981 / ISO 7049) into PA12 pilot; four corner ears",
+      "thread_diameter_mm": 2.0,
+      "shaft_length_mm": 6.0,
+      "head_diameter_mm": 3.8,
+      "head_height_mm": 1.0,
+      "head_pocket_diameter_mm": 4.2,
+      "pilot_diameter_mm": 1.7,
+      "axes_xy_mm": [
+        [
+          -29.74,
+          38.3
+        ],
+        [
+          -29.74,
+          -28.0
+        ],
+        [
+          66.4,
+          38.3
+        ],
+        [
+          66.4,
+          -28.0
+        ]
+      ],
+      "status": "nominal geometry only; PA12 thread strength, torque and repeated service unverified",
+      "ears": {
+        "inset_mm": 0.5,
+        "overhang_mm": 2.67,
+        "half_width_mm": 3.0,
+        "corner_radius_mm": 1.4,
+        "left_outer_x_mm": -32.14,
+        "right_outer_x_mm": 68.8,
+        "status": "four local corner ears replace both snap latches and clamp the whole seam; overall width 100.94mm"
+      }
+    },
+    "pcb_screw_head": {
+      "kind": "M2.5x5 machine screw into original metal insert",
+      "thread_diameter_mm": 2.5,
+      "shaft_length_mm": 5.0,
+      "head_diameter_mm": 5.0,
+      "head_height_mm": 0.85,
+      "head_pocket_diameter_mm": 5.8,
+      "shaft_bore_diameter_mm": 2.8
+    }
+  },
+  "front_loading_sweep": {
+    "2": {},
+    "4": {},
+    "6": {},
+    "10": {},
+    "20": {},
+    "40": {}
+  },
+  "hidden_tf": {
+    "restored_wall_material_in_old_tf_cut_mm3": 30.736,
+    "external_tf_opening_in_rear_shell": false,
+    "bat_pwr_profile": "rounded_rectangle"
+  },
+  "speaker_wire_notch": {
+    "old_mid_fence_material_mm3": 0.24,
+    "new_bottom_fence_material_mm3": 0,
+    "candidate_wire_route_length_mm": 28.22,
+    "entry_y_mm": -12.399999999999999,
+    "status": "shell notch moved to +Y bottom edge (toward battery, as photo); 40mm lead still physical"
+  },
+  "latches": {
+    "rear_clip_objects": 0,
+    "front_receiver_status": "not built in V2",
+    "replaced_by": "four M2x6 shell screws in four corner ears",
+    "ear_x_mm": [
+      -32.14,
+      68.8
+    ]
+  },
+  "export_checks": {
+    "front_shell": {
+      "step_valid": true,
+      "step_solid_count": 1,
+      "stl_triangles": 9870,
+      "stl_nonmanifold_edges": 0,
+      "step_stl_bounds_error_mm": 3.0517578011313162e-06,
+      "step_stl_relative_volume_error": 3.2986154333370837e-05
+    },
+    "rear_shell": {
+      "step_valid": true,
+      "step_solid_count": 1,
+      "stl_triangles": 9772,
+      "stl_nonmanifold_edges": 0,
+      "step_stl_bounds_error_mm": 3.0517578011313162e-06,
+      "step_stl_relative_volume_error": 6.820190314505745e-07
+    }
+  }
+}
