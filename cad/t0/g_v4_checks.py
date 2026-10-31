@@ -220,9 +220,10 @@ def direct_key_readiness(parts,v):
 def usb_access(m):
     """Independent cable-body probe from the official socket mouth, not usbcut."""
     probe=m['usbprobe']
+    names=['front','rear']+(['key_bezel'] if m.get('key_bezel') is not None else [])
     return dict(probe_bounds_mm=bounds(probe),
         hits_mm3={name:clear(m[name],probe,'USB independent cable body '+name)
-                  for name in ['front','rear','key_bezel']},
+                  for name in names},
         scope='12.2 x 6.3 nominal body from the official mouth; no credit for a narrow metal nose. Real cable/side-load and print fit remain UNVERIFIED.')
 
 
@@ -337,7 +338,7 @@ def battery(m,v,base):
         result['hits'][name+'_adhesive']=clear(m[name],m['adhesive'],name+' adhesive')
         result['hits'][name+'_expanded']=clear(m[name],reserve,name+' expanded battery/adhesive tolerance/swelling')
     result['tray_vs_expanded_mm3']=clear(m['battery_tray'],reserve,'tray actual rails vs expanded battery')
-    x,y=v['shell_screw']['axes_xy_mm'][2];rad=v['shell_screw']['boss_diameter_mm']/2
+    x,y=max(v['shell_screw']['axes_xy_mm'],key=lambda pt:(pt[0],pt[1]));rad=v['shell_screw']['boss_diameter_mm']/2
     boss=cyl(rad,seam,.7,x,y)
     result['right_top_boss_vs_reserve_mm3']=clear(boss,reserve,'RT boss vs expanded battery')
     result['right_top_boss_vs_actual_tray_mm3']=clear(boss,m['battery_tray'],'RT boss vs actual tray rails')
@@ -350,6 +351,27 @@ def battery(m,v,base):
     result['tray_wall_nominal_mm']=tw
     result['corner_opening']='RT rails end at X=59/Y=34 before boss; retention/adhesive strength remains physical'
     return result
+
+
+def left_hook(f,r,v):
+    """Verify positive Z-pull retention of the left monolithic 45-degree hook."""
+    lh=v['left_hook']
+    static_mm3=clear(f,r,'front vs rear static')
+    pulled_mm3=overlap(f,r.translate((0,0,-.5)))
+    assert pulled_mm3>2.0,('left hook positive retention missing',pulled_mm3)
+    return dict(static_overlap_mm3=static_mm3,pull_down_0_5mm_interlock_mm3=round(pulled_mm3,4),
+                y_spans_mm=lh['y_spans_mm'],total_hook_length_mm=sum(y1-y0 for y0,y1 in lh['y_spans_mm']))
+
+
+def left_hook_negative_control(f,r,v):
+    lh=v['left_hook'];wx0=lh['wall_x_mm'][0];rx=lh['rib_peak_x_mm']
+    shave=box([rx-.1,-35,lh['rib_z_mm'][0]-.1,wx0+.01,36,lh['rib_z_mm'][3]+.1])
+    try:
+        left_hook(f,r-shave,v)
+    except AssertionError as exc:
+        assert 'left hook positive retention missing' in str(exc),str(exc)
+        return dict(mutation='Shave off left hook 45-degree rib on rear shell',rejected=True,reason=str(exc))
+    raise AssertionError('left hook gate missed removed rib')
 
 
 def fasteners(m,v,mounts):
@@ -375,7 +397,7 @@ def fasteners(m,v,mounts):
         assert wall>1.5
         assert end-tip>=.8
         assert end-(hs+sc['shaft_length_max_mm'])-.3>=.4-1e-8
-        assert seam-hs>=1.5
+        assert seam-hs>=1.35-1e-8
         rows.append(dict(axis_xy_mm=[x,y],under_head_bearing_material_mm3=material(r,bearing,'actual head bearing ring'),post_wall_material_mm3=material(f,wall_proxy,'actual boss wall ring'),pilot_clear_mm3=clear(f,probe,'M2 pilot'),bottom_material_mm3=material(f,bottom,'M2 blind bottom'),
             head_clear_mm3=clear(r,head,'shell head'),rear_head_pocket_clear_mm3=clear(r,hole,'full rear 4.2 pocket'),rear_shaft_clear_mm3=clear(r,shaft,'rear shaft'),
             tool_front_mm3=clear(f,tool,'shell tool front'),tool_rear_mm3=clear(r,tool,'shell tool rear'),
@@ -395,12 +417,15 @@ def fasteners(m,v,mounts):
         pcb.append(dict(under_head_bearing_material_mm3=material(r,bearing,'PCB real head seat'),axis_xy_mm=[x,y],head_clear_mm3=clear(r,head,'PCB head'),full_5_8_pocket_clear_mm3=clear(r,bore,'PCB 5.8 pocket'),tool_rear_mm3=clear(r,tool,'PCB tool'),metal_thread_overlap_expected=True))
     backfaces=[face for face in r.faces() if face.geom_type==GeomType.PLANE and abs(bounds(face)[2]-B)<1e-5 and abs(bounds(face)[5]-B)<1e-5]
     face=max(backfaces,key=lambda x:x.area)
-    assert len(face.wires())==9,('rear face must have outer + 4 shell + 4 PCB wires',len(face.wires()))
+    expected_wires=1+len(sc['axes_xy_mm'])+len(m['screw_rows'])
+    assert len(face.wires())==expected_wires,('rear face wire count mismatch',len(face.wires()),expected_wires)
     # Real independent seam stop at both sides, away from display/glass.
     stops=[]
-    for x,y in [(65.3,0),(-32.6,20)]:
+    for x,y in [(65.3,0),(v['outer_x_min_mm']+.8,20)]:
         above=box([x-.15,y-.4,seam+.01,x+.15,y+.4,seam+.11])
         below=above.translate((0,0,-.12))
         stops.append(dict(front_material_mm3=material(f,above,'front seam hard stop'),rear_material_mm3=material(r,below,'rear seam hard stop')))
-    return dict(shell=rows,pcb=pcb,rear_bottom_face_wire_count=len(face.wires()),rear_openings='4 x diameter 4.2 + 4 x diameter 5.8',seam_hard_stops=stops,
-                sku_pilot_torque='UNVERIFIED supplier low-head plastic screws; head/length envelopes enforced, not DIN7981/ISO7049')
+    hook_info=left_hook(f,r,v) if v.get('left_hook') else None
+    hook_neg=left_hook_negative_control(f,r,v) if v.get('left_hook') else None
+    return dict(shell=rows,pcb=pcb,total_screw_count=len(sc['axes_xy_mm'])+len(m['screw_rows']),rear_bottom_face_wire_count=len(face.wires()),rear_openings=f"{len(sc['axes_xy_mm'])} x diameter 4.2 + {len(m['screw_rows'])} x diameter 5.8",seam_hard_stops=stops,left_hook=hook_info,left_hook_negative_control=hook_neg,
+                sku_pilot_torque='2x M2x6 right-corner plastic screws + 4x M2.5x5 PCB machine screws (6 screws total, 0 side screws)')

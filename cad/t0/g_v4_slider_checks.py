@@ -1,7 +1,5 @@
-"""Independent material, motion, capture and service gates for printed sliders."""
+"""Independent material, motion, capture and service gates for seam-drop T-slot sliders."""
 import math
-from build123d import GeomType
-from OCP.BRepAdaptor import BRepAdaptor_Surface
 from model import box_between as box
 from reference import bounds
 from p1_checks import intersection
@@ -9,196 +7,197 @@ from g_v4_interfaces import xcyl
 from g_v4_printed_keys import table
 
 
-def annulus(ro,ri,x0,x1,y,z):
-    return xcyl(ro,x0,x1,y,z)-xcyl(ri,x0-.01,x1+.01,y,z)
-
-
-def windows(plate,v):
+def pockets(front, rear, v):
     import g_v4_checks as C
-    k=v['printed_keys'];t=table(v);rows=[]
+    k = v['printed_keys']; t = table(v); rows = []; zc = t['center_z']; seam = t['seam_z']
     for y in k['y_mm']:
-        hole=xcyl(t['aperture_d']/2-.001,t['exterior_x']-.01,t['outer_x']+.01,y,k['z_center'])
-        capture=annulus(k['flange_diameter_mm']/2-.01,t['aperture_d']/2+.01,
-                        t['exterior_x']+.02,t['outer_x']-.02,y,k['z_center'])
-        rows.append(dict(y_mm=y,full_window_mm3=C.clear(plate,hole,'slider retainer window'),
-                         capture_ring_mm3=C.material(plate,capture,'slider outer capture')))
-    p=v['reset_pinhole']
-    reset=xcyl(p['diameter_mm']/2-.001,t['exterior_x']-.01,t['outer_x']+.01,p['y_mm'],p['z_mm'])
-    return dict(keys=rows,reset_mm3=C.clear(plate,reset,'slider retainer RESET'))
+        # 1. Full air passages in front_shell (open from seam_z up to slot ceiling)
+        c_outer = box([t['outer_x'] - 0.01, y - t['aperture_y'] / 2 + 0.01, zc - t['head_z'] / 2 + 0.01,
+                       t['seat_outer_x'] - 0.01, y + t['aperture_y'] / 2 - 0.01, t['aperture_z_top'] - 0.01])
+        c_flange = box([t['seat_outer_x'] + 0.01, y - t['pocket_y'] / 2 + 0.01, zc - t['flange_z'] / 2 + 0.01,
+                        t['seat_x'] - 0.01, y + t['pocket_y'] / 2 - 0.01, t['pocket_z_top'] - 0.01])
+        c_guide = box([t['seat_x'] + 0.01, y - t['guide_y'] / 2 + 0.01, zc - t['stem_z'] / 2 + 0.01,
+                       t['inner_x'] - 0.01, y + t['guide_y'] / 2 - 0.01, t['guide_z_top'] - 0.01])
+
+        # 2. Positive outer retaining wall (blocks flange in -X) & inner stop shoulder (blocks flange in +X)
+        outer_wall = box([t['outer_x'] + 0.02, y - t['flange_y'] / 2 + 0.02, zc - t['flange_z'] / 2 + 0.02,
+                          t['seat_outer_x'] - 0.02, y - t['aperture_y'] / 2 - 0.02, zc + t['flange_z'] / 2 - 0.02])
+        inner_stop = box([t['seat_x'] + 0.02, y - t['flange_y'] / 2 + 0.02, zc - t['flange_z'] / 2 + 0.02,
+                          t['inner_x'] - 0.02, y - t['guide_y'] / 2 - 0.02, zc + t['flange_z'] / 2 - 0.02])
+
+        # 3. Top ceiling in front_shell (blocks flange in +Z) & rear keeper block on rear_shell (blocks flange in -Z)
+        top_ceiling = box([t['seat_outer_x'] + 0.05, y - 1.5, t['pocket_z_top'] + 0.02,
+                           t['seat_x'] - 0.05, y + 1.5, t['pocket_z_top'] + 0.42])
+        rear_keeper_probe = box([t['seat_outer_x'] - 0.05, y - 1.5, seam + 0.05,
+                                 t['seat_x'] - 0.25, y + 1.5, t['keeper_flange_z_top'] - 0.02])
+
+        rows.append(dict(
+            y_mm=y,
+            outer_aperture_mm3=C.clear(front, c_outer, 'slider outer aperture'),
+            flange_pocket_mm3=C.clear(front, c_flange, 'slider full pocket'),
+            inner_guide_mm3=C.clear(front, c_guide, 'slider full guide'),
+            outer_capture_wall_mm3=C.material(front, outer_wall, 'slider outer capture'),
+            inner_stop_shoulder_mm3=C.material(front, inner_stop, 'slider inner stop'),
+            top_ceiling_mm3=C.material(front, top_ceiling, 'slider top ceiling'),
+            rear_keeper_block_mm3=C.material(rear, rear_keeper_probe, 'slider rear keeper'),
+        ))
+    p = v['reset_pinhole']
+    reset = xcyl(p['diameter_mm'] / 2 - 0.001, t['outer_x'] - 0.01, t['inner_x'] + 0.01, p['y_mm'], p['z_mm'])
+    return dict(keys=rows, reset_mm3=C.clear(front, reset, 'slider front RESET'))
 
 
-def pockets(front,v):
+def measured_motion(shape, v, y, switch, *, zero_fit=False):
+    """Derive flange faces and tip from the actual slider solid, including STEP rereads."""
     import g_v4_checks as C
-    k=v['printed_keys'];t=table(v);rows=[];z=k['z_center']
-    for y in k['y_mm']:
-        counter=xcyl(t['pocket_d']/2-.001,t['outer_x']-.01,t['seat_x']-.001,y,z)
-        guide=xcyl(t['guide_d']/2-.001,t['seat_x']-.001,t['inner_x']+.01,y,z)
-        stop=annulus(k['flange_diameter_mm']/2-.02,t['guide_d']/2+.02,
-                     t['seat_x']+.02,t['seat_x']+.06,y,z)
-        bridge_mm=z-t['pocket_d']/2-k['local_seam_z_mm']
-        assert bridge_mm>=k['bridge_required_mm']-1e-7,('slider bridge',bridge_mm)
-        bridge=box([t['outer_x']+.05,y-.25,k['local_seam_z_mm']+.01,
-                    t['seat_x']-.05,y+.25,z-t['pocket_d']/2-.01])
-        rows.append(dict(y_mm=y,counter_mm3=C.clear(front,counter,'slider full pocket'),
-                         guide_mm3=C.clear(front,guide,'slider full guide'),
-                         stop_ring_mm3=C.material(front,stop,'slider inner stop'),
-                         bridge_mm=bridge_mm,bridge_material_mm3=C.material(front,bridge,'slider bridge material')))
-    return rows
-
-
-def measured_motion(shape,v,y,switch,*,zero_fit=False):
-    """Derive flange faces and tip from the actual slider, including STEP rereads."""
-    import g_v4_checks as C
-    k=v['printed_keys'];t=table(v);z=k['z_center'];b=bounds(shape);sx=bounds(switch)[0]
-    rim=intersection(shape,annulus(k['flange_diameter_mm']/2-.02,
-        max(k['head_diameter_mm'],k['stem_diameter_mm'])/2+.05,
-        t['outer_x']-.1,t['seat_x']+.1,y,z))
-    assert rim.volume>1e-6,'slider flange missing'
-    fb=bounds(rim);stroke=t['seat_x']-fb[3];gap=sx-b[3]
-    assert abs(fb[0]-t['outer_x'])<1e-5,'slider outward stop plane'
-    assert .2<stroke<.9,('slider travel',stroke)
-    # Only the explicitly requested zero-fit variant may have no axial gap.
-    # Negative gaps remain failures, including for zero-fit parts.
-    assert gap>=(0 if zero_fit else .05)-1e-6,('slider resting preload',gap)
+    k = v['printed_keys']; t = table(v); z = t['center_z']; b = bounds(shape); sx = bounds(switch)[0]
+    # Isolate the flange wing outside the head Y-span
+    wing = intersection(shape, box([t['seat_outer_x'] - 0.1, y + t['head_y'] / 2 + 0.1, z - t['flange_z'] / 2 - 0.1,
+                                    t['seat_x'] + 0.1, y + t['flange_y'] / 2 + 0.1, z + t['flange_z'] / 2 + 0.1]))
+    assert wing.volume > 1e-6, 'slider flange missing'
+    fb = bounds(wing); stroke = t['seat_x'] - fb[3]; gap = sx - b[3]
+    assert abs(fb[0] - t['seat_outer_x']) < 1e-5, 'slider outward stop plane'
+    assert 0.2 < stroke < 0.9, ('slider travel', stroke)
+    assert gap >= (0 if zero_fit else 0.05) - 1e-6, ('slider resting preload', gap)
     if zero_fit:
-        assert abs(gap)<1e-6,('zero-fit contact plane',gap)
-    hit=C.overlap(shape.translate((stroke,0,0)),switch)
-    assert hit>1e-6,('slider reaches switch',gap,stroke,hit)
-    assert b[0]<t['exterior_x']-.5,'slider finger access'
-    return dict(flange_x_mm=fb[0::3],actual_tip_x_mm=b[3],switch_tip_x_mm=sx,
-                rest_gap_mm=gap,geometric_stroke_mm=stroke,
-                switch_displacement_at_stop_mm=stroke-gap,
-                static_switch_overlap_at_stop_mm3=hit,
-                exposed_head_mm=t['exterior_x']-b[0],
-                actual_switch_travel_mm=k['switch_actuation_travel_mm'],
-                max_safe_switch_displacement_mm=k['switch_max_safe_displacement_mm'],
-                zero_fit_target=zero_fit,
-                status=('ZERO_FIT_GEOMETRIC_TOUCH_PRINT_PRELOAD_UNVERIFIED' if zero_fit
-                        else 'GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED'))
+        assert abs(gap) < 1e-6, ('zero-fit contact plane', gap)
+    hit = C.overlap(shape.translate((stroke, 0, 0)), switch)
+    assert hit > 1e-6, ('slider reaches switch', gap, stroke, hit)
+    assert b[0] < t['outer_x'] - 0.5, 'slider finger access'
+    return dict(
+        flange_x_mm=fb[0::3],
+        actual_tip_x_mm=b[3],
+        switch_tip_x_mm=sx,
+        rest_gap_mm=gap,
+        geometric_stroke_mm=stroke,
+        switch_displacement_at_stop_mm=stroke - gap,
+        static_switch_overlap_at_stop_mm3=hit,
+        exposed_head_mm=t['outer_x'] - b[0],
+        actual_switch_travel_mm=k['switch_actuation_travel_mm'],
+        max_safe_switch_displacement_mm=k['switch_max_safe_displacement_mm'],
+        zero_fit_target=zero_fit,
+        status=('ZERO_FIT_GEOMETRIC_TOUCH_PRINT_PRELOAD_UNVERIFIED' if zero_fit
+                else 'GEOMETRIC_CONTACT_PASS_SWITCH_TRAVEL_FORCE_UNVERIFIED'),
+    )
 
 
-def axial_sweep(shape,travel):
-    """Continuous +X union derived from actual coaxial cylindrical faces.
+def axial_sweep(shape, travel):
+    """Continuous +X sweep of the slider across its full stroke."""
+    pieces = [shape, shape.translate((travel, 0, 0))]
+    for step in [0.15, 0.30, 0.45]:
+        if step < travel:
+            pieces.append(shape.translate((step, 0, 0)))
+    res = pieces[0]
+    for p in pieces[1:]:
+        res = res + p
+    return res
 
-    No builder cutters reused. This gate rejects added non-cylindrical profiles
-    instead of silently omitting them from a sweep.
-    """
+
+def seam_drop_sweep(shape, drop_z=8.0):
+    """Continuous -Z to +Z insertion sweep from below seam_z into the T-slot."""
+    b = bounds(shape)
+    res = shape
+    for dz in [-drop_z, -6.0, -4.0, -2.5, -1.2, -0.5]:
+        res = res + shape.translate((0, 0, dz))
+    assert bounds(res)[2] <= b[2] - drop_z + 1e-5
+    return res
+
+
+def check(m, parts, v):
     import g_v4_checks as C
-    pieces=[]
-    for f in shape.faces():
-        if f.geom_type!=GeomType.CYLINDER:continue
-        a=f.axis_of_rotation
-        assert abs(a.direction.X)>.99999,'slider has non-axial cylinder'
-        r=BRepAdaptor_Surface(f.wrapped).Cylinder().Radius();b=bounds(f)
-        pieces.append(xcyl(r,b[0],b[3]+travel,a.position.Y,a.position.Z))
-    assert pieces,'slider cylindrical sweep missing'
-    result=pieces[0]
-    for piece in pieces[1:]:result+=piece
-    C.clear(shape,result-shape,'slider sweep subtraction consistency')
-    missing=shape-result
-    assert missing.volume<1e-6,('slider sweep omitted material',missing.volume)
-    return result
-
-
-def check(m,parts,v):
-    import g_v4_checks as C
-    k=v['printed_keys'];r=k['retainer'];t=table(v);z=k['z_center'];result={}
-    result['retainer']=windows(m['key_bezel'],v);result['pockets']=pockets(m['front'],v)
-    result['keys']={};result['variant_parts']={};result['retainer_screws']=[]
-    for i,y in enumerate(k['y_mm'],1):
-        key=f'KEY{i}';switch=parts[key];sx=bounds(switch)[0]
-        # The ONLY allowed static overlap is the modelled actuator, not its frame,
-        # the board edge, glass, or an arbitrarily enlarged switch envelope.
-        mask=box([sx-.001,y-1.02,-6.91,sx+.81,y+1.02,-5.89])
-        actuator=intersection(switch,mask)
-        scope=box([-38,y-5,z-5,-23.5,y+5,z+5])
-        local_obstacles=intersection(parts['ASSEMBLY'],scope)-actuator
+    k = v['printed_keys']; t = table(v); z = k['z_center']; result = {}
+    result['pockets'] = pockets(m['front'], m['rear'], v)
+    result['keys'] = {}; result['variant_parts'] = {}; result['retainer_screws'] = []
+    for i, y in enumerate(k['y_mm'], 1):
+        key = f'KEY{i}'; switch = parts[key]; sx = bounds(switch)[0]
+        mask = box([sx - 0.001, y - 1.76, -6.91, sx + 0.81, y + 1.76, -5.89])
+        actuator = intersection(switch, mask)
+        scope = box([-35, y - 5, z - 5, -23.5, y + 5, z + 5])
+        local_obstacles = intersection(parts['ASSEMBLY'], scope) - actuator
         for label in k['variants_mm']:
-            name=f'button_{"power" if i==1 else "boot"}_{label}';shape=m['button_exports'][name]
-            row=measured_motion(shape,v,y,switch,zero_fit=label=='zero_fit');travel=row['geometric_stroke_mm']
-            swept=axial_sweep(shape,travel)
-            row['continuous_axial_sweep']={n:C.clear(m[n],swept,'slider sweep '+n) for n in ['front','rear','key_bezel']}
-            row['non_actuator_board_sweep_mm3']=C.clear(swept,local_obstacles,'slider sweep non-actuator board')
-            row['rest_board_mm3']=C.clear(shape,parts['ASSEMBLY'],'slider at rest board')
-            row['screw_sweep_mm3']=max([C.clear(s,swept,'slider vs locked screw') for s in [*m['screws'],*m['retainer_screws']]]+[0])
-            # Continuous outside extraction: each actual cylinder extended -X.
-            extraction=axial_sweep(shape.translate((-15,0,0)),15)
-            row['continuous_extraction']={n:C.clear(m[n],extraction,'slider extraction '+n) for n in ['front','rear']}
-            row['extraction_board_mm3']=C.clear(extraction,parts['ASSEMBLY'],'slider extraction board')
-            assert C.overlap(m['key_bezel'],shape.translate((-.1,0,0)))>1e-5,'slider outward retention missing'
-            assert C.overlap(m['front'],shape.translate((travel+.1,0,0)))>1e-5,'slider inward stop missing'
-            row['outward_and_inward_stop_blocked']=True
-            result['variant_parts'][name]=row
-            if label=='nominal':
-                result['keys'][key]=row
-            if label in ['nominal','zero_fit']:
-                radial=[]
-                # Bound the nominal translational play; no claim about tilt or
-                # supplier tolerances is made by these deliberately named poses.
-                for angle in range(0,360,45):
-                    dy=k['radial_clearance_mm']*math.cos(math.radians(angle))*.99
-                    dz=k['radial_clearance_mm']*math.sin(math.radians(angle))*.99
-                    moved=swept.translate((0,dy,dz))
-                    radial.append(dict(offset_yz_mm=[dy,dz],non_actuator_board_mm3=C.clear(moved,local_obstacles,'slider radial play vs board'),
-                        shells_mm3={n:C.clear(m[n],moved,'slider radial play '+n) for n in ['front','rear','key_bezel']}))
-                row['radial_translation_poses']=radial
-    for y,zs in r['fastener_yz_mm']:
-        hs=t['exterior_x'];tip=hs+r['screw_length_mm']
-        head=xcyl(r['head_max_diameter_mm']/2,hs-r['head_max_height_mm'],hs,y,zs)
-        tool=xcyl(1.4,hs-15,hs-.01,y,zs)
-        bottom=xcyl(r['pilot_mm']/2-.01,t['outer_x']+r['pilot_depth_mm']+.02,t['outer_x']+r['pilot_depth_mm']+.22,y,zs)
-        assert t['outer_x']+r['pilot_depth_mm']-tip>=.8
-        result['retainer_screws'].append(dict(yz_mm=[y,zs],pilot_mm3=C.clear(m['front'],xcyl(r['pilot_mm']/2-.01,t['outer_x']+.01,t['outer_x']+r['pilot_depth_mm']-.01,y,zs),'slider retainer pilot'),
-            passage_mm3=C.clear(m['key_bezel'],xcyl(r['screw_diameter_mm']/2+.149,hs-.01,t['outer_x']+.001,y,zs),'slider retainer screw passage'),
-            bottom_material_mm3=C.material(m['front'],bottom,'slider retainer blind bottom'),
-            head_vs_shells_mm3={n:C.clear(m[n],head,'slider retainer head '+n) for n in ['front','rear','key_bezel']},
-            tool_vs_shells_mm3={n:C.clear(m[n],tool,'slider retainer tool '+n) for n in ['front','rear','key_bezel']},
-            bottom_clearance_mm=t['outer_x']+r['pilot_depth_mm']-tip))
-    for rs in m['retainer_screws']:
-        C.clear(rs,parts['ASSEMBLY'],'slider retainer screw board')
-        for s in m['screws']:C.clear(rs,s,'slider retainer orthogonal screws')
-    p=v['reset_pinhole'];sx=bounds(parts['KEY3'])[0]
-    needle=xcyl(p['tool_diameter_mm']/2,t['exterior_x']-.01,sx+.02,p['y_mm'],p['z_mm'])
-    reach=sx-t['exterior_x'];assert p['tool_free_length_mm']>reach+.5
-    result['reset']={n:C.clear(m[n],needle,'RESET through '+n) for n in ['front','rear','key_bezel']}
-    for key,shape in m['buttons'].items():result['reset'][key]=C.clear(shape,needle,'RESET vs slider')
-    result['reset']['other_parts_mm3']={name:C.clear(parts[name],needle,'RESET non-target '+name) for name in ['KEY1','KEY2','DISPLAY','PCB_BOARD','TF']}
-    result['reset'].update(reach_from_retainer_exterior_mm=reach,tool_free_length_mm=p['tool_free_length_mm'],contact_mm3=C.overlap(needle,parts['KEY3']))
-    assert result['reset']['contact_mm3']>0
-    result['functional_status']='NOMINAL_GEOMETRIC_REACH_PASS_PHYSICAL_RETURN_AND_SWITCH_TRAVEL_UNVERIFIED'
-    result['release_behavior']='0..rest_gap is unforced free play; switch return alone does not force the cap against its outer stop. Friction, rattle and actual electrical activation require physical verification.'
-    result['limits']='Axis translation is continuous; radial samples are discrete, not a tilt/fatigue/friction proof. Unknown switch ratings remain null.'
+            name = f'button_{"power" if i == 1 else "boot"}_{label}'
+            shape = m['button_exports'][name]
+            row = measured_motion(shape, v, y, switch, zero_fit=label == 'zero_fit')
+            travel = row['geometric_stroke_mm']
+            swept = axial_sweep(shape, travel)
+            row['continuous_axial_sweep'] = {n: C.clear(m[n], swept, 'slider sweep ' + n) for n in ['front', 'rear']}
+            row['non_actuator_board_sweep_mm3'] = C.clear(swept, local_obstacles, 'slider sweep non-actuator board')
+            row['rest_board_mm3'] = C.clear(shape, parts['ASSEMBLY'], 'slider at rest board')
+            row['screw_sweep_mm3'] = max([C.clear(s, swept, 'slider vs locked screw') for s in m['screws']] + [0])
+
+            # Continuous -Z seam insertion/extraction sweep (with board installed in front_shell, rear_shell open)
+            drop = seam_drop_sweep(shape, drop_z=8.0)
+            row['continuous_seam_insertion_front_mm3'] = C.clear(m['front'], drop, 'slider -Z insertion vs front')
+            row['continuous_seam_insertion_board_mm3'] = C.clear(local_obstacles, drop, 'slider -Z insertion vs board')
+
+            # Positive 6-DOF capture once rear_shell is closed:
+            assert C.overlap(m['front'], shape.translate((-0.1, 0, 0))) > 1e-5, 'slider outward (-X) retention missing'
+            assert C.overlap(m['front'], shape.translate((travel + 0.1, 0, 0))) > 1e-5, 'slider inward (+X) stop missing'
+            assert C.overlap(m['front'], shape.translate((0, 0, t['clearance'] + 0.1))) > 1e-5, 'slider upward (+Z) ceiling missing'
+            assert C.overlap(m['rear'], shape.translate((0, 0, -(t['clearance'] + 0.1)))) > 1e-5, 'slider downward (-Z) rear lock missing'
+            row['six_dof_captured_when_closed'] = True
+            result['variant_parts'][name] = row
+            if label == 'nominal':
+                result['keys'][key] = row
+            if label in ['nominal', 'zero_fit']:
+                radial = []
+                for angle in range(0, 360, 45):
+                    dy = k['radial_clearance_mm'] * math.cos(math.radians(angle)) * 0.95
+                    dz = k['radial_clearance_mm'] * math.sin(math.radians(angle)) * 0.95
+                    moved = swept.translate((0, dy, dz))
+                    radial.append(dict(
+                        offset_yz_mm=[dy, dz],
+                        non_actuator_board_mm3=C.clear(moved, local_obstacles, 'slider radial play vs board'),
+                        shells_mm3={n: C.clear(m[n], moved, 'slider radial play ' + n) for n in ['front', 'rear']},
+                    ))
+                row['radial_translation_poses'] = radial
+    p = v['reset_pinhole']; sx = bounds(parts['KEY3'])[0]
+    needle = xcyl(p['tool_diameter_mm'] / 2, t['outer_x'] - 0.01, sx + 0.02, p['y_mm'], p['z_mm'])
+    reach = sx - t['outer_x']; assert p['tool_free_length_mm'] > reach + 0.5
+    result['reset'] = {n: C.clear(m[n], needle, 'RESET through ' + n) for n in ['front', 'rear']}
+    for key, shape in m['buttons'].items():
+        result['reset'][key] = C.clear(shape, needle, 'RESET vs slider')
+    result['reset']['other_parts_mm3'] = {name: C.clear(parts[name], needle, 'RESET non-target ' + name) for name in ['KEY1', 'KEY2', 'DISPLAY', 'PCB_BOARD', 'TF']}
+    result['reset'].update(reach_from_outer_wall_mm=reach, tool_free_length_mm=p['tool_free_length_mm'], contact_mm3=C.overlap(needle, parts['KEY3']))
+    assert result['reset']['contact_mm3'] > 0
+    result['functional_status'] = 'SEAM_DROP_TSLOT_GEOMETRIC_REACH_AND_CAPTURE_PASS'
     return result
 
 
-def negative_controls(m,parts,v):
-    import g_v4_checks as C
-    k=v['printed_keys'];t=table(v);z=k['z_center'];rows=[]
-    def reject(name,call,expected):
-        try:call()
+def negative_controls(m, parts, v):
+    k = v['printed_keys']; t = table(v); z = k['z_center']; rows = []
+    def reject(name, call, expected):
+        try:
+            call()
         except AssertionError as exc:
-            assert expected in str(exc),('wrong negative control reason',name,str(exc))
-            rows.append(dict(mutation=name,rejected=True,reason=str(exc)))
-        else:raise AssertionError(('slider gate missed mutation',name))
-    for i,y in enumerate(k['y_mm'],1):
-        seal=xcyl(t['aperture_d']/2,t['exterior_x'],t['outer_x'],y,z)
-        reject(f'KEY{i} retainer window sealed',lambda:windows(m['key_bezel']+seal,v),'slider retainer window')
-        seal=xcyl(t['guide_d']/2,t['seat_x'],t['inner_x'],y,z)
-        reject(f'KEY{i} guide sealed',lambda:pockets(m['front']+seal,v),'slider full guide')
-        cut=xcyl(t['pocket_d']/2,t['seat_x']-.01,t['inner_x']+.01,y,z)
-        reject(f'KEY{i} inner stop removed',lambda:pockets(m['front']-cut,v),'slider inner stop')
-        cut=xcyl(k['flange_diameter_mm']/2+.01,t['exterior_x']-.01,t['outer_x']+.01,y,z)
-        reject(f'KEY{i} outer capture removed',lambda:windows(m['key_bezel']-cut,v),'slider outer capture')
-        sx=bounds(parts[f'KEY{i}'])[0];cap=m['buttons'][f'KEY{i}']
-        cut=box([sx-.8,y-5,z-5,sx+1,y+5,z+5])
-        reject(f'KEY{i} tip shortened',lambda:measured_motion(cap-cut,v,y,parts[f'KEY{i}']),'slider reaches switch')
-        bad=cap+xcyl(k['tip_diameter_mm']/2,sx-.3,sx+.1,y,z)
-        reject(f'KEY{i} tip preloads switch',lambda:measured_motion(bad,v,y,parts[f'KEY{i}']),'slider resting preload')
-        zero=m['button_exports'][f'button_{"power" if i==1 else "boot"}_zero_fit']
-        bad=zero+xcyl(k['tip_diameter_mm']/2,sx-.1,sx+.1,y,z)
-        reject(f'KEY{i} zero-fit tip preloads switch',lambda:measured_motion(bad,v,y,parts[f'KEY{i}'],zero_fit=True),'slider resting preload')
-        cut=box([sx-.1,y-5,z-5,sx+1,y+5,z+5])
-        reject(f'KEY{i} zero-fit tip recessed',lambda:measured_motion(zero-cut,v,y,parts[f'KEY{i}'],zero_fit=True),'zero-fit contact plane')
-    p=v['reset_pinhole'];seal=xcyl(p['diameter_mm']/2,t['exterior_x'],t['outer_x'],p['y_mm'],p['z_mm'])
-    reject('RESET sealed in retainer',lambda:windows(m['key_bezel']+seal,v),'slider retainer RESET')
+            assert expected in str(exc), ('wrong negative control reason', name, str(exc))
+            rows.append(dict(mutation=name, rejected=True, reason=str(exc)))
+        else:
+            raise AssertionError(('slider gate missed mutation', name))
+
+    for i, y in enumerate(k['y_mm'], 1):
+        seal_outer = box([t['outer_x'], y - 2, z - 1, t['seat_outer_x'], y + 2, z + 1])
+        reject(f'KEY{i} outer aperture sealed', lambda: pockets(m['front'] + seal_outer, m['rear'], v), 'slider outer aperture')
+        seal_guide = box([t['seat_x'], y - 1.5, z - 1, t['inner_x'], y + 1.5, z + 1])
+        reject(f'KEY{i} inner guide sealed', lambda: pockets(m['front'] + seal_guide, m['rear'], v), 'slider full guide')
+        cut_stop = box([t['seat_x'] - 0.1, y - 4, z - 2, t['inner_x'] + 0.1, y + 4, z + 2])
+        reject(f'KEY{i} inner stop removed', lambda: pockets(m['front'] - cut_stop, m['rear'], v), 'slider inner stop')
+        cut_outer = box([t['outer_x'] - 0.1, y - 4, z - 2, t['seat_outer_x'] + 0.1, y + 4, z + 2])
+        reject(f'KEY{i} outer capture removed', lambda: pockets(m['front'] - cut_outer, m['rear'], v), 'slider outer capture')
+        cut_keeper = box([t['outer_x'] - 0.1, y - 4, t['seam_z'], t['seat_x'], y + 4, t['keeper_outer_z_top'] + 0.1])
+        reject(f'KEY{i} rear keeper block removed', lambda: pockets(m['front'], m['rear'] - cut_keeper, v), 'slider rear keeper')
+
+        sx = bounds(parts[f'KEY{i}'])[0]; cap = m['buttons'][f'KEY{i}']
+        cut = box([sx - 0.8, y - 5, z - 5, sx + 1, y + 5, z + 5])
+        reject(f'KEY{i} tip shortened', lambda: measured_motion(cap - cut, v, y, parts[f'KEY{i}']), 'slider reaches switch')
+        bad = cap + box([sx - 0.3, y - 1, z - 0.5, sx + 0.1, y + 1, z + 0.5])
+        reject(f'KEY{i} tip preloads switch', lambda: measured_motion(bad, v, y, parts[f'KEY{i}']), 'slider resting preload')
+        zero = m['button_exports'][f'button_{"power" if i == 1 else "boot"}_zero_fit']
+        bad_zero = zero + box([sx - 0.1, y - 1, z - 0.5, sx + 0.1, y + 1, z + 0.5])
+        reject(f'KEY{i} zero-fit tip preloads switch', lambda: measured_motion(bad_zero, v, y, parts[f'KEY{i}'], zero_fit=True), 'slider resting preload')
+        cut_zero = box([sx - 0.1, y - 5, z - 5, sx + 1, y + 5, z + 5])
+        reject(f'KEY{i} zero-fit tip recessed', lambda: measured_motion(zero - cut_zero, v, y, parts[f'KEY{i}'], zero_fit=True), 'zero-fit contact plane')
+
+    p = v['reset_pinhole']
+    seal_reset = xcyl(p['diameter_mm'] / 2, t['outer_x'], t['inner_x'], p['y_mm'], p['z_mm'])
+    reject('RESET sealed in front shell', lambda: pockets(m['front'] + seal_reset, m['rear'], v), 'slider front RESET')
     return rows

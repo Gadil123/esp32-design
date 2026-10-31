@@ -1,8 +1,8 @@
-"""G-V1 V4-RECT: serviceable key retainer, non-clamping screen lip, ribbed rear."""
+"""G-V1 V4-CLEAN: 6-screw left-hook enclosure, rear-locked T-slot buttons, 0.8mm screen lip, 2.0mm ribbed rear."""
 import json
 from pathlib import Path
 from build123d import (
-    Align, Axis, Cylinder, GeomType, Plane, RectangleRounded, extrude,
+    Align, Axis, Cylinder, GeomType, Plane, Polygon, RectangleRounded, extrude,
 )
 
 from model import box_between as box
@@ -11,8 +11,7 @@ from p1_checks import intersection
 from t0_model import cyl, rr
 from t0_g_v1_integrated_keys import foundation
 from t0_g_v2_keys import build_keys
-from g_v4_interfaces import xcyl
-from g_v4_printed_keys import table as key_table, cutters as key_cutters, retainer as production_bezel, build_buttons
+from g_v4_printed_keys import table as key_table, cutters as key_cutters, rear_keeper, build_buttons
 
 
 def read(root, name):
@@ -32,9 +31,22 @@ def front_glass_face(display):
     return face, min(radii)
 
 
-def pad_post(front, x, y, z0, z1, half_y, x0, x1):
-    """A rectangular rear pad attached to the left inner wall."""
-    return front + box([x0, y - half_y, z0, x1, y + half_y, z1])
+def left_hook_groove(lh, y0, y1):
+    gx = lh['groove_peak_x_mm']
+    z0, z1, z2, z3 = lh['groove_z_mm']
+    ix = lh['wall_x_mm'][0] - 0.14  # -28.66
+    pts = [(ix + 0.05, z0), (gx, z1), (gx, z2), (ix + 0.05, z3)]
+    return extrude(Plane.XZ * Polygon(*pts, align=None), amount=(y1 - y0) + 0.4, dir=(0, 1, 0)).translate((0, y0 - 0.2, 0))
+
+
+def left_hook_rib(lh, seam, y0, y1):
+    wx0, wx1 = lh['wall_x_mm']
+    rx = lh['rib_peak_x_mm']
+    z0, z1, z2, z3 = lh['rib_z_mm']
+    wall = box([wx0, y0, seam - 0.01, wx1, y1, lh['wall_top_z_mm']])
+    pts = [(wx0 + 0.02, z0), (rx, z1), (rx, z2), (wx0 + 0.02, z3)]
+    rib = extrude(Plane.XZ * Polygon(*pts, align=None), amount=y1 - y0, dir=(0, 1, 0)).translate((0, y0, 0))
+    return wall + rib
 
 
 def build(parts, mounts, base, kp, p, q, v):
@@ -50,8 +62,7 @@ def build(parts, mounts, base, kp, p, q, v):
     tb = bounds(parts['TF']); ty = (tb[1] + tb[4]) / 2; tz = (tb[2] + tb[5]) / 2
     front = m['front'] + box([ox, ty - 6.2, tz - .8, ix, ty + 6.2, tz + .8])
 
-    # 2. V4-RECT: no integrated PA12 leaves. Add the left key slab and the
-    # two captive-slider guide pockets; RESET remains a Ø2.2 pinhole.
+    # 2. V4-CLEAN: Left button housing slab + two -Z drop-in T-slots + RESET pinhole.
     if v.get('v4'):
         ls = v['left_slab']
         front = front + box([ls['x_mm'][0], ls['y_mm'][0], ls['z_mm'][0],
@@ -69,11 +80,7 @@ def build(parts, mounts, base, kp, p, q, v):
         m = build_keys(parts, m, base, q)
         front = m['front']
 
-    # 2b. Replacement speaker exits at mid-Y (user, 2026-10-30).
-    # Keep foundation's original V1 central fence notch. Do not fill its
-    # opening or cut the later +Y-edge slot; frozen V1 sources stay unchanged.
-
-    # 3. Tight rounded window, screen-capturing lip and inner guide rib.
+    # 3. Tight rounded window (0.20mm/side), 0.80mm screen lip (0.10mm gap) and inner guide rib.
     glass, gr = front_glass_face(parts['DISPLAY'])
     gb = bounds(glass); gx = (gb[0] + gb[3]) / 2; gy = (gb[1] + gb[4]) / 2
     gw = gb[3] - gb[0]; gh = gb[4] - gb[1]
@@ -112,14 +119,13 @@ def build(parts, mounts, base, kp, p, q, v):
                        amount=z1 - z0 + .1).translate((gx, gy, 0)))
     front = front + guide
 
-    # 3b. V1 CAD MIC candidate ONLY; V1 printed hole has not been measured.
+    # 3b. Restored V1 T1 MIC hole at (27.3, 1.395).
     mp = v.get('mic_port')
     if mp:
         front = front - cyl(mp['diameter_mm'] / 2, mp['z_mm'][0], mp['z_mm'][1],
                             mp['xy_mm'][0], mp['xy_mm'][1])
 
-    # 4. Cut the front tub at the seam, keep the USB mouth bridge, add screw posts.
-    # Remove the old G shoulder pads; the clamped seam replaces them.
+    # 4. Cut the front tub at the seam, keep the USB mouth bridge, add 2 right screw posts & left hook grooves.
     for stop in m.get('stops', []):
         front = front - stop
     original = front
@@ -128,64 +134,62 @@ def build(parts, mounts, base, kp, p, q, v):
     bridge = intersection(original, box([ub[0] - 1.2, ey - wall - .3, bottom,
                                        ub[3] + 1.2, ey + .2, -3.5]))
     front = front + bridge
-    # Locally move the seam behind both key pockets, giving a real bottom bridge.
-    sk=v['printed_keys']; kt=key_table(v); ox=base['outer_x_min_mm']
-    tongue=box([ox,-29.5,sk['local_seam_z_mm'],kt['inner_x'],6.5,seam+.6])
-    for x,y in v['shell_screw']['axes_xy_mm']:
-        tongue=tongue-cyl(v['shell_screw']['boss_diameter_mm']/2+.45,sk['local_seam_z_mm']-.1,seam+.01,x,y)
-    front=front+tongue
+
+    # Cut T-slots cleanly to the seam
+    sk = v['printed_keys']; kt = key_table(v)
     for yc in sk['y_mm']:
-        for cutter in key_cutters(kt,yc): front=front-cutter
-    # Removable outer retaining bezel: two accessible screws, never actuator friction.
-    rk=sk['retainer']
-    key_bezel=production_bezel(v)
+        for cutter in key_cutters(kt, yc):
+            front = front - cutter
+
+    # Cut left-wall 45-degree locking grooves (monolithic snap/hinge interlock)
+    lh = v.get('left_hook')
+    if lh:
+        for y0, y1 in lh['y_spans_mm']:
+            front = front - left_hook_groove(lh, y0, y1)
+
+    # Two right-corner screw bosses only
     screw_axes = v['shell_screw']['axes_xy_mm']
-    if not v.get('v4'):
-        ears = v['shell_screw']['ears']; inset = ears['inset_mm']; over = ears['overhang_mm']
-        eh = ears['half_width_mm']; er = ears['corner_radius_mm']
-        def ear_span(x):
-            return (ox - over, ox + inset) if x < 0 else (ex - inset, ex + over)
-        for x, y in screw_axes:
-            ea, eb = ear_span(x)
-            front = front + rr(eb - ea, 2 * eh, er, seam, .7, (ea + eb) / 2, y)
     boss = v['shell_screw'].get('boss_diameter_mm')
     if boss:
         for x, y in screw_axes:
             front = front + cyl(boss / 2, seam, .7, x, y)
-    lf = v.get('left_flange')
-    if lf:
-        for y in lf['y_mm']:
-            front = front + box([ix, y - lf['half_y_mm'], seam,
-                                 ix + lf['width_mm'], y + lf['half_y_mm'], seam + lf['height_mm']])
     for x, y in screw_axes:
         front = front - cyl(v['shell_screw']['pilot_diameter_mm'] / 2,
                             seam - .05, v['shell_screw']['pilot_end_z_mm'], x, y)
 
-    # Cut retainer pilots AFTER fusing corner posts, so no later union refills them.
-    for yc,zc in rk['fastener_yz_mm']:
-        front=front-xcyl(rk['pilot_mm']/2,ox-.01,ox+rk['pilot_depth_mm'],yc,zc)
-
-    # 5. Uniform ribbed rear plate on the exact seam face.
+    # 5. Uniform 2.0mm ribbed rear plate on the exact seam face.
     rear = rr(ex - ox, ey - oy, base['corner_radius_mm'], B, seam, (ox + ex) / 2, (oy + ey) / 2)
     gc = .15; rt = 1.6
     reg = (rr(jx - ix - 2 * gc, jy - iy - 2 * gc, 1, seam - .01, seam + rt, (ix + jx) / 2, (iy + jy) / 2)
            - rr(jx - ix - 2 * gc - 2 * rt, jy - iy - 2 * gc - 2 * rt, .5, seam - .1,
                 seam + rt + .1, (ix + jx) / 2, (iy + jy) / 2))
+    # Clear register ring along the left button slab
+    ls = v['left_slab']
+    reg = reg - box([ox - 1, ls['y_mm'][0] - 0.25, seam - 0.1, ls['x_mm'][1] + 0.25, ls['y_mm'][1] + 0.25, seam + rt + 0.2])
     rear = rear + reg
+
+    # Add left-side 45-degree locking hook walls/ribs on rear shell
+    if lh:
+        for y0, y1 in lh['y_spans_mm']:
+            rear = rear + left_hook_rib(lh, seam, y0, y1)
+
+    # Add rear T-slot keeper blocks that lock the buttons in Z when rear cover closes
+    for yc in sk['y_mm']:
+        rear = rear + rear_keeper(kt, yc)
+
     b = base['battery']; bw, bh, bt = b['xyz_mm']; bx, by = b['center_xy_mm']
-    bs=v['battery_stack']; bz=seam+bs['adhesive_mm']
-    m['battery']=box([bx-bw/2,by-bh/2,bz,bx+bw/2,by+bh/2,bz+bt])
-    m['battery'].label='BATTERY_COMPLETE_V4'
-    m['adhesive']=box([bx-bw/2,by-bh/2,seam,bx+bw/2,by+bh/2,bz])
-    m['adhesive'].label='BATTERY_ADHESIVE_0_2'
-    c = bs['tray_clearance_mm']; tw = bs['tray_wall_mm']
-    tray = (rr(bw + 2 * c + 2 * tw, bh + 2 * c + 2 * tw, 1.5, seam - .01, seam + 1.0, bx, by)
-            - rr(bw + 2 * c, bh + 2 * c, .6, seam - .1, seam + 1.1, bx, by))
+    bs = v['battery_stack']; bz = seam + bs['adhesive_mm']
+    m['battery'] = box([bx - bw / 2, by - bh / 2, bz, bx + bw / 2, by + bh / 2, bz + bt])
+    m['battery'].label = 'BATTERY_COMPLETE_V4'
+    m['adhesive'] = box([bx - bw / 2, by - bh / 2, seam, bx + bw / 2, by + bh / 2, bz])
+    m['adhesive'].label = 'BATTERY_ADHESIVE_0_2'
+    c_tray = bs['tray_clearance_mm']; tw = bs['tray_wall_mm']
+    tray = (rr(bw + 2 * c_tray + 2 * tw, bh + 2 * c_tray + 2 * tw, 1.5, seam - .01, seam + 1.0, bx, by)
+            - rr(bw + 2 * c_tray, bh + 2 * c_tray, .6, seam - .1, seam + 1.1, bx, by))
     tray = tray - box([bx + bw / 2, 4, seam - .1, bx + bw / 2 + 4, 14, seam + 2])
     tray = intersection(tray, box([ix + gc, iy + gc, seam - .1, jx - gc, jy - gc, seam + 2]))
-    # Deliberate rail termination at RT; do not shave a thin accidental crescent.
-    tray=tray-box([59.0,34.0,seam-.1,ex+1,ey+1,seam+2])
-    m['battery_tray']=tray
+    tray = tray - box([59.0, 34.0, seam - .1, ex + 1, ey + 1, seam + 2])
+    m['battery_tray'] = tray
     rear = rear + tray
     s = base['speaker']; sx, sy = s['center_xy_mm']; sw, sh, _ = s['xyz_mm']
     dampback = bounds(m['damping'])[2]
@@ -197,14 +201,14 @@ def build(parts, mounts, base, kp, p, q, v):
     for x in v['rear_ribs']['x_mm']:
         rear = rear + box([x - rw / 2, iy + .7, seam, x + rw / 2, jy - .7, seam + rh])
     for y in v['rear_ribs']['y_mm']:
-        rear = rear + box([ix + .7, y - rw / 2, seam, 22, y + rw / 2, seam + rh])
+        rear = rear + box([max(ix + .7, ls['x_mm'][1] + .5), y - rw / 2, seam, 22, y + rw / 2, seam + rh])
     # Four PCB screws through the original metal inserts.
     pc = v['pcb_screw']; head_depth = pc['head_pocket_depth_mm']
     screw_rows = []
     for i, mount in enumerate(sorted(mounts, key=lambda st: (st.center().X, st.center().Y))):
-        f = next(f for f in mount.faces() if f.geom_type == GeomType.CYLINDER
-                 and abs(f.axis_of_rotation.direction.Z) > .99)
-        x, y, _ = f.axis_of_rotation.position; mb = bounds(mount)[2]
+        f_cyl = next(f for f in mount.faces() if f.geom_type == GeomType.CYLINDER
+                     and abs(f.axis_of_rotation.direction.Z) > .99)
+        x, y, _ = f_cyl.axis_of_rotation.position; mb = bounds(mount)[2]
         rear = rear + cyl(3.5, seam - .01, mb, x, y)
         rear = rear - cyl(pc['shaft_bore_diameter_mm'] / 2, B - .1, mb + .1, x, y)
         rear = rear - cyl(pc['head_pocket_diameter_mm'] / 2, B - .1, B + head_depth, x, y)
@@ -212,39 +216,19 @@ def build(parts, mounts, base, kp, p, q, v):
                                head_seat_z_mm=B + head_depth,
                                tip_z_mm=B + head_depth + pc['shaft_length_mm'],
                                kind='PCB_M2_5x5_machine'))
-    # Four shell screws with head pockets in the rear plate; all corner ears.
+    # Two right-side shell screws with head pockets in the rear plate.
     sc = v['shell_screw']
     for x, y in screw_axes:
-        if not v.get('v4'):
-            ea, eb = ear_span(x)
-            rear = rear + rr(eb - ea, 2 * eh, er, B, seam, (ea + eb) / 2, y)
         rear = rear - cyl(sc['thread_diameter_mm'] / 2 + .15, B - .1, seam + .1, x, y)
         rear = rear - cyl(sc['head_pocket_diameter_mm'] / 2, B - .1, B + sc['head_pocket_depth_mm'], x, y)
         if sc.get('boss_diameter_mm'):
-            if not v.get('v4'):
-                rear = rear + cyl(sc['boss_diameter_mm'] / 2, B, seam, x, y)
             rear = rear - cyl(sc['boss_diameter_mm'] / 2 + .3, seam, seam + rt + .1, x, y)
-    if lf:
-        for y in lf['y_mm']:
-            rear = rear - box([ix - .2, y - lf['half_y_mm'] - .2, seam - .1,
-                               ix + lf['width_mm'] + .2, y + lf['half_y_mm'] + .2,
-                               seam + lf['height_mm'] + .2])
+
     # USB mouth: panel notch gives the plug its lower clearance and keeps the bridge.
     rear = rear - box([ub[0] - 1.2, ey - wall - .3, B - .5, ub[3] + 1.2, ey + .2, -8.15])
-    # Matching rear relief for the locally extended key seam, with 1.55mm floor.
-    key_relief=box([ox-.01,-29.65,sk['local_seam_z_mm']-.15,kt['inner_x']+.15,6.65,seam+rt+.1])
-    # Preserve real under-head bearing seats where the local key seam crosses a screw.
-    for x,y in screw_axes:
-        key_relief=key_relief-cyl(sc['boss_diameter_mm']/2+.3,B-.1,seam,x,y)
-    rear=rear-key_relief
-    # The rebuilt rear/register must retain the native USB cable corridor too.
-    # Cutting only the outer wall (above) leaves the register across the plug
-    # body between the official socket mouth and the wall. Preserve the same
-    # 13.2 x 7.3 opening/cutter used by the front and the tested V1 baseline.
-    rear=rear-m['usbcut']
-    # No TF cut: the card is entirely inside.
+    rear = rear - m['usbcut']
 
-    # 6. Screw envelopes. Threads are envelopes, not cut metal.
+    # 6. Screw envelopes (4 PCB M2.5 screws + 2 right-side M2 shell screws = 6 screws total).
     screws = []
     for row in screw_rows:
         x, y = row['axis_xy_mm']; hs = row['head_seat_z_mm']
@@ -256,26 +240,36 @@ def build(parts, mounts, base, kp, p, q, v):
         screws.append(cyl(sc['head_diameter_mm'] / 2, hs - sc['head_height_mm'], hs, x, y)
                       + cyl(sc['thread_diameter_mm'] / 2, hs, hs + length, x, y))
 
-    retainer_screws=[]
-    for y,z in rk['fastener_yz_mm']:
-        hs=ox-rk['thickness_x_mm']
-        retainer_screws.append(xcyl(rk['head_max_diameter_mm']/2,hs-rk['head_max_height_mm'],hs,y,z)
-                               +xcyl(rk['screw_diameter_mm']/2,hs,hs+rk['screw_length_mm'],y,z))
-    assert abs(lip_top-v['screen_lip_top_z_mm'])<1e-6
-    assert abs(lip_top-lip_bottom-v['screen_lip_overhang_height_mm'])<1e-6
-    assert abs(seam-B-v['rear_panel_mm'])<1e-6
-    front.label = 'FRONT_V4_SCREEN_LIP_AND_POSTS'
-    rear.label = 'REAR_V4_3_5MM_RIBBED_CLAMP'
-    key_bezel.label='V4_PRINTED_BUTTON_RETAINER'
-    buttons,button_exports=build_buttons(v,parts)
-    m.update(buttons=buttons,button_exports=button_exports,front=front, rear=rear, key_bezel=key_bezel, retainer_screws=retainer_screws, screws=screws, screw_rows=screw_rows,
-             v4_parameters=v, mic_port=v.get('mic_port'), screen_geometry=dict(glass_bounds_mm=gb, glass_radius_mm=gr,
-             window_whr_mm=[ww, wh, wr], lip_inner_whr_mm=[lip_inner_w, lip_inner_h, lip_inner_r],
-             lip_base_whr_mm=[base_w, base_h, base_r], glass_front_z_mm=gb[5],
-             lip_top_z_mm=lip_top, lip_bottom_z_mm=lip_bottom),
-             dimensions=dict(front_top_z_mm=lip_top,
-                             front_face_z_mm=m['dimensions']['front_z_mm'],
-                             seam_z_mm=seam, rear_outer_z_mm=B,
-                             total_thickness_mm=lip_top - B,
-                             body_xy_mm=[ex - ox, ey - oy]))
+    assert abs(lip_top - v['screen_lip_top_z_mm']) < 1e-6
+    assert abs(lip_top - lip_bottom - v['screen_lip_overhang_height_mm']) < 1e-6
+    assert abs(seam - B - v['rear_panel_mm']) < 1e-6
+    front.label = 'FRONT_V4_CLEAN_HOOK_AND_TSLOT'
+    rear.label = 'REAR_V4_CLEAN_2MM_RIBBED'
+    buttons, button_exports = build_buttons(v, parts)
+    m.update(
+        buttons=buttons,
+        button_exports=button_exports,
+        front=front,
+        rear=rear,
+        key_bezel=None,
+        retainer_screws=[],
+        screws=screws,
+        screw_rows=screw_rows,
+        v4_parameters=v,
+        mic_port=v.get('mic_port'),
+        screen_geometry=dict(
+            glass_bounds_mm=gb, glass_radius_mm=gr,
+            window_whr_mm=[ww, wh, wr], lip_inner_whr_mm=[lip_inner_w, lip_inner_h, lip_inner_r],
+            lip_base_whr_mm=[base_w, base_h, base_r], glass_front_z_mm=gb[5],
+            lip_top_z_mm=lip_top, lip_bottom_z_mm=lip_bottom
+        ),
+        dimensions=dict(
+            front_top_z_mm=lip_top,
+            front_face_z_mm=m['dimensions']['front_z_mm'],
+            seam_z_mm=seam,
+            rear_outer_z_mm=B,
+            total_thickness_mm=lip_top - B,
+            body_xy_mm=[ex - ox, ey - oy]
+        )
+    )
     return m
